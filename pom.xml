@@ -48,64 +48,64 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-<!--
+        <!--
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-oauth2-client</artifactId>
+                </dependency>
+                -->
+
+        <!-- Apache Camel Core -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-spring-boot-starter</artifactId>
+            <version>4.4.0</version> <!-- latest stable -->
         </dependency>
 
+        <!-- (Optional) for HTTP calling if needed -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-http-starter</artifactId>
+            <version>4.4.0</version>
         </dependency>
-        -->
 
-    <!-- Apache Camel Core -->
-    <dependency>
-        <groupId>org.apache.camel.springboot</groupId>
-        <artifactId>camel-spring-boot-starter</artifactId>
-        <version>4.4.0</version> <!-- latest stable -->
-    </dependency>
+        <!-- (Optional) if you use JSON processing -->
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-jackson-starter</artifactId>
+            <version>4.4.0</version>
+        </dependency>
 
-    <!-- (Optional) for HTTP calling if needed -->
-    <dependency>
-        <groupId>org.apache.camel.springboot</groupId>
-        <artifactId>camel-http-starter</artifactId>
-        <version>4.4.0</version>
-    </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-amqp</artifactId>-->
+<!--        </dependency>-->
 
-    <!-- (Optional) if you use JSON processing -->
-    <dependency>
-        <groupId>org.apache.camel.springboot</groupId>
-        <artifactId>camel-jackson-starter</artifactId>
-        <version>4.4.0</version>
-    </dependency>
- 
-    <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-amqp</artifactId>
-</dependency>
- 
 
         <!-- PostgreSQL (or switch to MySQL if you prefer) -->
-      
-       
+
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
 
-<!--
+        <!--
+                <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc11</artifactId>
+         </dependency>
+        -->
         <dependency>
-    <groupId>com.oracle.database.jdbc</groupId>
-    <artifactId>ojdbc11</artifactId>
- </dependency>
--->
-<dependency>
-    <groupId>com.vladmihalcea</groupId>
-    <artifactId>hibernate-types-60</artifactId>
-    <version>2.21.1</version> <!-- Use latest version compatible with your Hibernate -->
-</dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>hibernate-types-60</artifactId>
+            <version>2.21.1</version> <!-- Use latest version compatible with your Hibernate -->
+        </dependency>
 
         <!-- Spring Boot Actuator for monitoring -->
         <dependency>
@@ -114,30 +114,29 @@
         </dependency>
 
         <!-- Optional: JSON Web Token support -->
-       <dependency>
-  <groupId>io.jsonwebtoken</groupId>
-  <artifactId>jjwt-api</artifactId>
-  <version>0.11.5</version>
-</dependency>
-<dependency>
-  <groupId>io.jsonwebtoken</groupId>
-  <artifactId>jjwt-impl</artifactId>
-  <version>0.11.5</version>
-  <scope>runtime</scope>
-</dependency>
-<dependency>
-  <groupId>io.jsonwebtoken</groupId>
-  <artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson -->
-  <version>0.11.5</version>
-  <scope>runtime</scope>
-</dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.5</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson -->
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
 
-<dependency>
-    <groupId>com.networknt</groupId>
-    <artifactId>json-schema-validator</artifactId>
-    <version>1.0.76</version>
-</dependency>
-
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>1.0.76</version>
+        </dependency>
 
 
         <!-- Optional: Scheduling -->
@@ -147,12 +146,11 @@
         </dependency>
 
 
-
-<dependency>
-    <groupId>org.projectlombok</groupId>
-    <artifactId>lombok</artifactId>
-    <scope>provided</scope>
-</dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
 
         <!-- Testing -->
@@ -163,16 +161,16 @@
         </dependency>
 
         <dependency>
-  <groupId>org.mapstruct</groupId>
-  <artifactId>mapstruct</artifactId>
-  <version>1.5.5.Final</version>
-</dependency>
-<dependency>
-  <groupId>org.mapstruct</groupId>
-  <artifactId>mapstruct-processor</artifactId>
-  <version>1.5.5.Final</version>
-  <scope>provided</scope>
-</dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.5.5.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>1.5.5.Final</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 
@@ -182,7 +180,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-               <!-- <version>3.4.4</version>-->
+                <!-- <version>3.4.4</version>-->
             </plugin>
         </plugins>
     </build>
