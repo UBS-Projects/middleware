@@ -1,0 +1,11 @@
+services:
+  oracle:
+    image: 'gvenzl/oracle-free:latest'
+    environment:
+      - 'ORACLE_PASSWORD=secret'
+    ports:
+      - '1521'
+  redis:
+    image: 'redis:latest'
+    ports:
+      - '6379'
