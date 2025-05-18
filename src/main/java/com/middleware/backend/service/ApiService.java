@@ -20,4 +20,6 @@ public class ApiService {
     public ApiEndpoint save(ApiEndpoint endpoint) {
         return apiEndpointRepository.save(endpoint);
     }
+
+    
 }

@@ -104,8 +104,9 @@
 <dependency>
     <groupId>com.vladmihalcea</groupId>
     <artifactId>hibernate-types-60</artifactId>
-    <version>2.21.1</version> <!-- Use latest version compatible with your Hibernate -->
+    <version>2.21.1</version>
 </dependency>
+
 
         <!-- Spring Boot Actuator for monitoring -->
         <dependency>
@@ -135,8 +136,9 @@
 <dependency>
     <groupId>com.networknt</groupId>
     <artifactId>json-schema-validator</artifactId>
-    <version>1.0.76</version>
+    <version>1.0.77</version>
 </dependency>
+
 
 
 

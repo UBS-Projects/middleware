@@ -3,30 +3,64 @@ package com.middleware.backend.util;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
-import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class ApplyTemplate {
 
-    public Object applySpelTemplate(String template, Object result) {
-        if (template == null || template.trim().isEmpty()) {
-            return result;
+    private final ExpressionParser parser = new SpelExpressionParser();
+
+    public Object applySpelTemplate(Map<String, Object> template, Map<String, Object> inputData) {
+        if (template == null || inputData == null) {
+            return null;
         }
 
-        ExpressionParser parser = new SpelExpressionParser();
-        StandardEvaluationContext context = new StandardEvaluationContext();
+        Map<String, Object> resolvedMap = new HashMap<>();
 
-     /*   // Flatten the map if needed
-        if (result instanceof java.util.Map<?, ?> map) {
-            for (var entry : map.entrySet()) {
-                context.setVariable(entry.getKey().toString(), entry.getValue());
+        // Set context root to inputData["variables"]
+              Object variables = inputData.get("variables");
+        if (variables== null )
+         variables = inputData;
+         
+        StandardEvaluationContext context = new StandardEvaluationContext(variables);
+
+        System.out.println("==== Evaluation Context Root (variables) ====");
+        System.out.println(variables);
+
+        // Process each entry
+        for (Map.Entry<String, Object> entry : template.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (value instanceof String strVal && strVal.contains("#{{")) {
+                String expression = extractExpression(strVal);
+                System.out.println("Evaluating SpEL: " + expression);
+
+                Object evaluated = evaluateExpression(expression, context, strVal);
+                resolvedMap.put(key, evaluated);
+            } else if (value instanceof Map<?, ?> nestedMap) {
+                resolvedMap.put(key, applySpelTemplate((Map<String, Object>) nestedMap, inputData));
+            } else {
+                resolvedMap.put(key, value);
             }
-        } else {
-          */
-            context.setVariable("variables", result); // fallback if not a map
-        
+        }
 
-        return parser.parseExpression(template, new TemplateParserContext()).getValue(context, Object.class);
+        return resolvedMap;
+    }
+
+    private String extractExpression(String strVal) {
+        return strVal.replace("#{{", "").replace("}}", "").trim();
+    }
+
+    private Object evaluateExpression(String expression, StandardEvaluationContext context, String originalValue) {
+        try {
+            return parser.parseExpression(expression).getValue(context);
+        } catch (Exception e) {
+            System.err.println("Failed to evaluate expression: " + expression + " | Error: " + e.getMessage());
+            return originalValue;
+        }
     }
 }

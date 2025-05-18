@@ -1,31 +1,46 @@
 package com.middleware.backend.service;
 
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class VariableService {
 
-    private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\{\\{(.*?)\\}\\}");
+    private final ExpressionParser parser = new SpelExpressionParser();
 
-    public  String replaceVariables(String input, Map<String, Object> variables) {
-        if (input == null || variables == null || variables.isEmpty()) {
-            return input;
+    /**
+     * Replaces {{variable}} placeholders in a BaseUri string using provided variables.
+     * @param templateString The BaseUri template with placeholders like {{variable}}
+     * @param variables Map of variable names and their values
+     * @return Resolved BaseUri string with variables replaced
+     */
+    public String replaceVariables(String templateString, Map<String, Object> variables) {
+        if (templateString == null || templateString.isEmpty() || variables == null) {
+            return templateString;
         }
 
-        Matcher matcher = VARIABLE_PATTERN.matcher(input);
-        StringBuffer result = new StringBuffer();
+        // Wrap variables in SpEL context
+        StandardEvaluationContext context = new StandardEvaluationContext();
+        context.setVariables(variables);
 
-        while (matcher.find()) {
-            String key = matcher.group(1).trim();
-            Object value = variables.getOrDefault(key, ""); // if variable not found, replace with empty string
-            matcher.appendReplacement(result, Matcher.quoteReplacement(String.valueOf(value)));
+        // Replace all {{variable}} occurrences
+        String resolved = templateString;
+        for (Map.Entry<String, Object> entry : variables.entrySet()) {
+            String placeholder = String.format("{{%s}}", entry.getKey());
+            if (resolved.contains(placeholder)) {
+                String value = String.valueOf(entry.getValue());
+                resolved = resolved.replace(placeholder, value);
+            }
         }
 
-        matcher.appendTail(result);
-        return result.toString();
+        // Optionally support SpEL expressions within {{ }}
+        resolved = resolved.replaceAll("\\{\\{(.*?)\\}\\}", "#{$1}");
+        String finalResult = parser.parseExpression('"' + resolved + '"').getValue(context, String.class);
+
+        return finalResult;
     }
 }

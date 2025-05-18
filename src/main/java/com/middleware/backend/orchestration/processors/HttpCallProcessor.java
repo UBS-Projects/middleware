@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.middleware.backend.model.WorkflowStep;
 import com.middleware.backend.orchestration.StepProcessor;
 
-@Component("API_CALL")
+@Component("API_CALL11")
 public class HttpCallProcessor implements StepProcessor {
 
     @Override

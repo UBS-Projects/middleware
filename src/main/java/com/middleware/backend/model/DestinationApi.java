@@ -1,14 +1,32 @@
 package com.middleware.backend.model;
 
-
-import jakarta.persistence.*;
-import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "destination_api")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class DestinationApi {
 
     @Id
@@ -24,23 +42,32 @@ public class DestinationApi {
     @Column(name = "http_method", nullable = false, length = 10)
     private String httpMethod;
 
-    @Column(name = "input_template", columnDefinition = "TEXT")
-    private String inputTemplate;
-    @Column(name = "input_header_template", columnDefinition = "TEXT")
-    private Map<String, String> inputHeaderTemplate;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "input_template", columnDefinition = "jsonb")
+    private Map<String, Object> inputTemplate;
 
-    @Column(name = "output_template", columnDefinition = "TEXT")
-    private String outputTemplate;
+  @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "input_header_template", columnDefinition = "jsonb")
+    private Map<String, Object> inputHeaderTemplate;
+
+ @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "query_params", columnDefinition = "jsonb")
+    private Map<String, Object> queryParams;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "output_template", columnDefinition = "jsonb")
+    private Map<String, Object> outputTemplate;
 
     @Column(name = "auth_type", length = 50)
     private String authType;
 
-    @Column(name = "auth_credentials", columnDefinition = "TEXT")
-    private String authCredentials;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "auth_credentials", columnDefinition = "jsonb")
+    private Map<String, Object> authCredentials;
 
-    @Column(columnDefinition = "JSONB")
-    @Convert(converter = JsonbConverter.class)
-    private Map<String, String> headers;
+   @JdbcTypeCode(SqlTypes.JSON)  //@Convert(converter = JsonbConverter.class)
+    @Column(name = "headers" , columnDefinition = "jsonb")
+    private Map<String, Object> headers;
 
     @Column(name = "created_by", nullable = false)
     private Long createdBy;
@@ -48,9 +75,11 @@ public class DestinationApi {
     @Column(name = "updated_by", nullable = false)
     private Long updatedBy;
 
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime updatedAt;
 }

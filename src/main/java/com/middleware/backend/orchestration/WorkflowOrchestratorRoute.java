@@ -7,11 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.LoggingLevel;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -64,7 +62,9 @@ public class WorkflowOrchestratorRoute extends RouteBuilder {
         Map<String, String> headers = exchange.getIn().getHeader("inputHeaders", Map.class);
         Map<String, Object> context = new HashMap<>(inputData);
         List<Map<String, Object>> auditLog = new ArrayList<>();
-        exchange.setProperty("requestbody", inputData);
+        exchange.setProperty("requestBody", inputData);
+        exchange.setProperty("inputHeaders", headers);
+        
         @SuppressWarnings("unchecked")
         Map<Integer, List<WorkflowStep>> groupedSteps = (Map<Integer, List<WorkflowStep>>) exchange.getProperty("workflowGroupedSteps");
 
@@ -72,7 +72,7 @@ public class WorkflowOrchestratorRoute extends RouteBuilder {
         groupedSteps.forEach((groupId, steps) -> {
             log.info("Group {}:", groupId);
             for (WorkflowStep step : steps) {
-                log.info("  - Step: {}", step.getId(),step.getStepName(),step.getForkGroupId());
+                log.info("  - Step: {}", step.getStepOrder(),step.getStepName(),step.getForkGroupId());
             }
         });
 
@@ -112,8 +112,6 @@ public class WorkflowOrchestratorRoute extends RouteBuilder {
         exchange.setProperty("workflowResults", result);
     }
 
-
-
     private Map<String, Object> executeStep(WorkflowStep step, Exchange exchange) {
         StepProcessor processor = processorRegistry.getProcessor(step.getStepType());
         if (processor == null) {
@@ -122,7 +120,7 @@ public class WorkflowOrchestratorRoute extends RouteBuilder {
         return processor.process(step, exchange);
     }
 
-    public Object executeWorkflow(Long workflowId, Map<String, Object> inputData, Map<String, String> headers) throws Exception {
+    public Map<String,Object> executeWorkflow(Long workflowId, Map<String, Object> inputData, Map<String, String> headers) throws Exception {
         Exchange exchange = producerTemplate.request("direct:workflow-route", ex -> {
             ex.getIn().setHeader("workflowId", workflowId);
             ex.getIn().setHeader("inputHeaders", headers);
@@ -133,6 +131,7 @@ public class WorkflowOrchestratorRoute extends RouteBuilder {
             throw exchange.getException();
         }
 
-        return exchange.getMessage().getBody(Object.class);
+       // return exchange.getMessage().getBody(Object.class);
+       return exchange.getAllProperties();
     }
 }

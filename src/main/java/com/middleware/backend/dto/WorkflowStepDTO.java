@@ -1,6 +1,7 @@
 package com.middleware.backend.dto;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class WorkflowStepDTO {
     private String stepType;          // API_CALL, TRANSFORMATION, DELAY, etc.
     private Long destinationApiId;    // Linked API if step type is API_CALL
 
-    private String transformationExpression; // SpEL Expression for transformations
+    private Map<String, Object> transformationExpression; // SpEL Expression for transformations
     private Integer delaySeconds;             // For delay steps
     private String conditionExpression;       // SpEL for condition steps
     private Integer retryCount;                // For retry steps

@@ -36,7 +36,7 @@ public class ApiGatewayController {
         return ResponseEntity
         .status(response.getStatus())
         .headers(response.getHeaders())
-        .body(response);
+        .body(response.getBody());
         }catch(Exception e){
             log.error("Validation Error: {}", e.getMessage());
 

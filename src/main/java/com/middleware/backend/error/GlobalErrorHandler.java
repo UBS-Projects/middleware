@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
-@ControllerAdvice
+//@ControllerAdvice
 @Slf4j
 public class GlobalErrorHandler {
 
@@ -15,6 +15,6 @@ public class GlobalErrorHandler {
     public ResponseEntity<String> handleException(Exception ex) {
         log.error("Unhandled Error: ", ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                             .body("Something went wrong.");
+                             .body("Something went wrong." +ex.getMessage());
     }
 }

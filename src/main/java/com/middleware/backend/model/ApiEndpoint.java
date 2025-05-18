@@ -1,28 +1,37 @@
 package com.middleware.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "api_endpoint")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class ApiEndpoint {
 
     @Id
@@ -31,7 +40,7 @@ public class ApiEndpoint {
 
     private String name;
 
-    @Column(name = "base_url", nullable = false)
+    @Column(name = "base_url", nullable = true)
     private String baseUrl;
 
     @Column(name = "endpoint_path", nullable = false)
@@ -43,18 +52,25 @@ public class ApiEndpoint {
     @Column(name = "authentication_type")
     private String authenticationType;
 
-    @Column(name = "input_template", columnDefinition = "TEXT")
-    private String inputTemplate;
+    //@Convert(converter = JsonbConverter.class)
+     @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "input_template", columnDefinition = "jsonb")
+    private Map<String, Object> inputTemplate;
 
-    @Column(name = "output_template", columnDefinition = "TEXT")
-    private String outputTemplate;
+      //@Convert(converter = JsonbConverter.class)
+      @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "input_header", columnDefinition = "jsonb")
+    private Map<String, Object> inputheader;
 
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "output_template", columnDefinition = "jsonb")
+    private Map<String, Object> outputTemplate;
 
-   // @Type(type = "jsonb")
-    @Column(columnDefinition = "jsonb")
-    private Map<String, Object> headers;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "output_headers", columnDefinition = "jsonb")
+    private Map<String, Object> outputheaders;
 
-   // @Type(type = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "query_params", columnDefinition = "jsonb")
     private Map<String, Object> queryParams;
 
@@ -65,7 +81,8 @@ public class ApiEndpoint {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "trigger_workflow_id")
+    @JoinColumn(name = "trigger_workflow_id", nullable=true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private WorkflowConfig triggerWorkflow;
 
     @Column(name = "created_by", nullable = false)

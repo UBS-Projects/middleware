@@ -1,7 +1,14 @@
 package com.middleware.backend.model;
 
-
 import java.time.LocalDateTime;
+import java.util.Map;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,11 +19,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "workflow_steps")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class WorkflowStep {
 
     @Id
@@ -24,12 +39,14 @@ public class WorkflowStep {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "workflow_config_id", nullable = false)
+    @JoinColumn(name = "workflow_config_id", nullable = true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private WorkflowConfig workflowConfig;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_step_id")
-    private WorkflowStep parentStep; // Recursive relationship
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private WorkflowStep parentStep;
 
     @Column(name = "step_order", nullable = false)
     private Integer stepOrder;
@@ -42,10 +59,13 @@ public class WorkflowStep {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "destination_api_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private DestinationApi destinationApi;
 
-    @Column(name = "transformation_expression", columnDefinition = "TEXT")
-    private String transformationExpression;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "transformation_expression", columnDefinition = "jsonb")
+    private Map<String,Object> transformationExpression;
 
     @Column(name = "delay_seconds")
     private Integer delaySeconds;
@@ -68,19 +88,11 @@ public class WorkflowStep {
     @Column(name = "updated_by", nullable = false)
     private Long updatedBy;
 
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt = LocalDateTime.now();
-
-
-    public WorkflowConfig getWorkflowConfig() {
-        return workflowConfig;
-    }
-    
-    public void setWorkflowConfig(WorkflowConfig workflowConfig) {
-        this.workflowConfig = workflowConfig;
-    }
-    
+    private LocalDateTime updatedAt;
 }
