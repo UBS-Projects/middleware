@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5433/middleware
     username: postgres
-    password:
+    password: postgres
     driver-class-name: org.postgresql.Driver
     
 
@@ -21,6 +21,15 @@ logging:
   level:
     org.springframework.web: DEBUG
     com.middleware.backend: DEBUG
+
+external-api:
+  url: https://reqbin.com/echo/post/json
+  transformation:
+    Id: "#root.productId"
+    Customer: "#root.customerName"
+    Quantity: "#root.qty"
+    Price: "#root.unitPrice * 1.05"
+
 
 
 
