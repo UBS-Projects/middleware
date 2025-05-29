@@ -3,14 +3,17 @@ package com.middleware.backend.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.middleware.backend.dto.ApiRequest;
 import com.middleware.backend.dto.ApiResponse;
-import com.middleware.backend.exception.ApiNotFoundException;
 import com.middleware.backend.service.ApiGatewayService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,17 +30,14 @@ public class ApiGatewayController {
 
     @PostMapping("/**")
     public ResponseEntity<Object> handleRequest(@RequestBody ApiRequest request,
-                                                @RequestHeader Map<String, String> headers,
-                                                HttpServletRequest servletRequest) {
+            @RequestHeader Map<String, String> headers, HttpServletRequest servletRequest) {
         String path = servletRequest.getRequestURI().replace("/gateway", "");
-        try{
-        ApiResponse response = apiGatewayService.handleRequest(path, RequestMethod.POST, request.getBody(), headers);
+        try {
+            ApiResponse response = apiGatewayService.handleRequest(path, RequestMethod.POST, request.getBody(),
+                    headers);
 
-        return ResponseEntity
-        .status(response.getStatus())
-        .headers(response.getHeaders())
-        .body(response.getBody());
-        }catch(Exception e){
+            return ResponseEntity.status(response.getStatus()).headers(response.getHeaders()).body(response.getBody());
+        } catch (Exception e) {
             log.error("Validation Error: {}", e.getMessage());
 
             Map<String, Object> errorBody = new HashMap<>();
@@ -47,26 +47,19 @@ public class ApiGatewayController {
             Map<String, String> responseHeaders = new HashMap<>();
             responseHeaders.put("API Validatin", "Failed");
 
-            ApiResponse response = ApiResponse.withHeaders(errorBody, HttpStatus.INTERNAL_SERVER_ERROR, responseHeaders);
-       
-            return ResponseEntity
-        .status(response.getStatus())
-        .headers(response.getHeaders())
-        .body(response);
+            ApiResponse response = ApiResponse.withHeaders(errorBody, HttpStatus.INTERNAL_SERVER_ERROR,
+                    responseHeaders);
+
+            return ResponseEntity.status(response.getStatus()).headers(response.getHeaders()).body(response);
         }
         /*
-        // Build HttpHeaders from ApiResponse
-        HttpHeaders responseHeaders = new HttpHeaders();
-        if (response.getHeaders() != null) {
-            response.getHeaders().forEach(responseHeaders::add);
-        }
-
-        return ResponseEntity
-                .status(response.getStatus())
-                .headers(responseHeaders)
-                .body(response.getBody());
-*/
-    
+         * // Build HttpHeaders from ApiResponse HttpHeaders responseHeaders = new
+         * HttpHeaders(); if (response.getHeaders() != null) {
+         * response.getHeaders().forEach(responseHeaders::add); }
+         * 
+         * return ResponseEntity .status(response.getStatus()) .headers(responseHeaders)
+         * .body(response.getBody());
+         */
 
     }
 

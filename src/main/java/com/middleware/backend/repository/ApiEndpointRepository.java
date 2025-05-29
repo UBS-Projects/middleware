@@ -8,7 +8,10 @@ import com.middleware.backend.model.ApiEndpoint;
 
 public interface ApiEndpointRepository extends JpaRepository<ApiEndpoint, Long> {
 
-   // Object findByPathAndMethod(String path, String method);
-    ApiEndpoint findByEndpointPathAndMethod(String endpointPath, String method); 
-    List<ApiEndpoint> findAll(); 
+    // Object findByPathAndMethod(String path, String method);
+    ApiEndpoint findByEndpointPathAndMethod(String endpointPath, String method);
+
+    List<ApiEndpoint> findAll();
+
+    // ApiEndpoint findById();
 }

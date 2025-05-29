@@ -1,98 +1,100 @@
 package com.middleware.backend.controller;
 
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.middleware.backend.dto.ErrorMappingDto;
+import com.middleware.backend.mapper.ErrorMappingMapper;
 import com.middleware.backend.model.ErrorMapping;
 import com.middleware.backend.repository.ErrorMappingRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.middleware.backend.spec.ErrorMappingSpecification;
 
-import java.util.List;
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/error-mappings")
-@RequiredArgsConstructor
-@Slf4j
 public class ErrorMappingController {
 
-    private final ErrorMappingRepository errorMappingRepository;
+    private final ErrorMappingRepository repository;
+    private final ErrorMappingMapper mapper;
 
-    //  Get all error mappings (optionally by destinationApiId)
+    public ErrorMappingController(ErrorMappingRepository repository, ErrorMappingMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
+
     @GetMapping
-    public List<ErrorMapping> getAll(@RequestParam(required = false) Long destinationApiId) {
-
-        if ( (destinationApiId != null)){
-        // List<ErrorMapping> mappings = 
-         return errorMappingRepository.findByDestinationApiId(destinationApiId);
-    } else {
-            return errorMappingRepository.findAll();
-                //orElseThrow(() -> new RuntimeException("ApiEndpoint not found"));;
-        //return ResponseEntity.ok(mappings);
+    public ResponseEntity<List<ErrorMappingDto>> getAll(@RequestParam Map<String, String> filters) {
+        var spec = ErrorMappingSpecification.filter(filters);
+        var dtos = repository.findAll(spec)
+                .stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
-}
-
-    //  Get error mapping by ID
     @GetMapping("/{id}")
-    public ResponseEntity<ErrorMapping> getById(@PathVariable Long id) {
-        return errorMappingRepository.findById(id)
+    public ResponseEntity<ErrorMappingDto> getById(@PathVariable Long id) {
+        return repository.findById(id)
+                .map(mapper::toDto)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new EntityNotFoundException("ErrorMapping not found"));
     }
 
-    //  Create new error mapping
     @PostMapping
-    public ResponseEntity<ErrorMapping> create(@RequestBody ErrorMapping errorMapping) {
-        ErrorMapping saved = errorMappingRepository.save(errorMapping);
-        log.info("Created ErrorMapping with ID: {}", saved.getId());
-        return ResponseEntity.ok(saved);
+    public ResponseEntity<ErrorMappingDto> create(@RequestBody ErrorMappingDto dto) {
+        var entity = mapper.toEntity(dto);
+        var saved = repository.save(entity);
+        return ResponseEntity.ok(mapper.toDto(saved));
     }
 
-    //  Update entire error mapping by ID (PUT)
     @PutMapping("/{id}")
-    public ResponseEntity<ErrorMapping> update(@PathVariable Long id, @RequestBody ErrorMapping updateData) {
-        return errorMappingRepository.findById(id)
-                .map(existing -> {
-                    updateData.setId(existing.getId());
-                    ErrorMapping saved = errorMappingRepository.save(updateData);
-                    log.info("Updated ErrorMapping with ID: {}", saved.getId());
-                    return ResponseEntity.ok(saved);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ErrorMappingDto> update(@PathVariable Long id, @RequestBody ErrorMappingDto dto) {
+        if (!repository.existsById(id)) {
+            throw new EntityNotFoundException("ErrorMapping not found");
+        }
+        var entity = mapper.toEntity(dto);
+        entity.setId(id);
+        return ResponseEntity.ok(mapper.toDto(repository.save(entity)));
     }
 
-    //  Patch error mapping (partial update)
     @PatchMapping("/{id}")
-    public ResponseEntity<ErrorMapping> patch(@PathVariable Long id, @RequestBody ErrorMapping patchData) {
-        return errorMappingRepository.findById(id)
-                .map(existing -> {
-                    if (patchData.getDestinationApi() != null) existing.setDestinationApi(patchData.getDestinationApi());
-                    if (patchData.getDestinationSystemName() != null) existing.setDestinationSystemName(patchData.getDestinationSystemName());
-                    if (patchData.getRawErrorSubstring() != null) existing.setRawErrorSubstring(patchData.getRawErrorSubstring());
-                    if (patchData.getMatchType() != null) existing.setMatchType(patchData.getMatchType());
-                    if (patchData.getMappedErrorCode() != null) existing.setMappedErrorCode(patchData.getMappedErrorCode());
-                    if (patchData.getMappedMessage() != null) existing.setMappedMessage(patchData.getMappedMessage());
-                    if (patchData.getErrorCategory() != null) existing.setErrorCategory(patchData.getErrorCategory());
-                    if (patchData.getHttpStatusCode() != null) existing.setHttpStatusCode(patchData.getHttpStatusCode());
-                    if (patchData.getLanguage() != null) existing.setLanguage(patchData.getLanguage());
-                    if (patchData.getActive() != null) existing.setActive(patchData.getActive());
-                    if (patchData.getCreatedBy() != null) existing.setCreatedBy(patchData.getCreatedBy());
+    public ResponseEntity<ErrorMappingDto> patch(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        var entity = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("ErrorMapping not found"));
 
-                    ErrorMapping saved = errorMappingRepository.save(existing);
-                    log.info("Patched ErrorMapping with ID: {}", saved.getId());
-                    return ResponseEntity.ok(saved);
-                })
-                .orElse(ResponseEntity.notFound().build());
+        updates.forEach((key, value) -> {
+            try {
+                Field field = ErrorMapping.class.getDeclaredField(key);
+                field.setAccessible(true);
+                field.set(entity, value);
+            } catch (Exception ignored) {
+            }
+        });
+
+        return ResponseEntity.ok(mapper.toDto(repository.save(entity)));
     }
 
-    //  Delete error mapping by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!errorMappingRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+        if (!repository.existsById(id)) {
+            throw new EntityNotFoundException("ErrorMapping not found");
         }
-        errorMappingRepository.deleteById(id);
-        log.info("Deleted ErrorMapping with ID: {}", id);
+        repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
