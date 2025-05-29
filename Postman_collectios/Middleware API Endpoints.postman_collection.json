@@ -1,0 +1,195 @@
+{
+	"info": {
+		"_postman_id": "34d1ce88-a71c-4ac1-a2db-64d6832510fa",
+		"name": "Middleware API Endpoints",
+		"description": "API to interact with middleware endpoints including SpEL templates",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44877713",
+		"_collection_link": "https://mohammad-7955556.postman.co/workspace/mohammad's-Workspace~5140c990-2650-4004-8386-4283f3e3d64f/collection/44877713-34d1ce88-a71c-4ac1-a2db-64d6832510fa?action=share&source=collection_link&creator=44877713"
+	},
+	"item": [
+		{
+			"name": "Create ApiEndpoint",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  //\"id\": 1,\r\n  \"endpointPath\": \"/workflow/test\",\r\n  \"method\": \"POST\",\r\n  \"inputTemplate\": {\r\n\"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstName\", \"lastName\", \"age\"],\r\n    \"properties\": {\r\n      \"firstName\": {\r\n        \"type\": \"string\",\r\n        \"minLength\": 1\r\n      },\r\n      \"lastName\": {\r\n        \"type\": \"string\",\r\n        \"minLength\": 1\r\n      },\r\n      \"age\": {\r\n        \"type\": \"integer\",\r\n        \"minimum\": 0\r\n      }\r\n    },\r\n    \"additionalProperties\": false\r\n  },\r\n  \"outputTemplate\": {\r\n    \"user\": \"#{{#FetchUserFromReqres['output']}}\",\r\n    \"product\": \"#{{#FetchProductFromDummyJson['output']}}\",\r\n    \"newUserResponse\": \"#{{#PostNewUserToDummyJson['output']}}\"\r\n  },\r\n  \"workflowConfigId\": {\r\n    \"id\": 1\r\n  },\r\n  \"createdBy\": 1,\r\n  \"updatedBy\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/endpoints",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"endpoints"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All ApiEndpoints",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/endpoints",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"endpoints"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ApiEndpoint ById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/endpoints/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"endpoints",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update ApiEndpoint",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   // \"name\": \"Get User Details v2\",\r\n   // \"inputTemplate\": \"{ \\\"userId\\\": \\\"${requestbody.userId}\\\", \\\"extraInfo\\\": \\\"${payload.extra}\\\" }\",\r\n   // \"outputTemplate\": \"{ \\\"result\\\": ${response.body}, \\\"message\\\": \\\"Processed ${response.status}\\\" }\",\r\n   // \"updatedAt\": \"2025-05-12T10:00:00\"\r\n    \"triggerWorkflow\": null\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/endpoints/10",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"endpoints",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch ApiEndpoint Patch",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n\r\n{\r\n    \"outputTemplate\": {\r\n   \"user\": \"#{{#FetchUserFromReqres['rawResponse']}}\",\r\n  \"product\": \"#{{#FetchProductFromDummyJson['rawResponse']['title']}}\",\r\n  \"newUserResponse\": \"#{{#PostNewUserToDummyJson['rawResponse']}}\"\r\n}\r\n\r\n\r\n}\r\n\r\n/*\r\n{\r\n\r\n\r\n\r\n\r\n    // \"endpointPath\": \"/payment/process\",\r\n\r\n    \"triggerWorkflow\": {\r\n        \"id\": \"1\"\r\n    }\r\n  /*  \"outputTemplate\": {\r\n    \"name\": \"#{{#requestbody['name']}}\"\r\n    },\r\n\r\n     \"inputTemplate\": {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"name\", \"job\"],\r\n    \"properties\": {\r\n     \r\n      \"name\": {\r\n        \"type\": \"string\",\r\n        \"minLength\": 1\r\n      },\r\n      \"job\": {\r\n        \"type\": \"string\",\r\n        \"minLength\": 1\r\n      }\r\n    },\r\n    \"additionalProperties\": false\r\n  }\r\n  */\r\n}\r\n*/"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/endpoints/3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"endpoints",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete ApiEndpoint",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/endpoints/11",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"endpoints",
+						"11"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"value": "",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}

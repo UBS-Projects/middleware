@@ -1,0 +1,238 @@
+{
+	"info": {
+		"_postman_id": "7cb54580-154d-4a1a-95d2-b744df21a17a",
+		"name": "Workflow Step Logs",
+		"description": "Postman collection to test WorkflowStepLogController endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44877713",
+		"_collection_link": "https://mohammad-7955556.postman.co/workspace/mohammad's-Workspace~5140c990-2650-4004-8386-4283f3e3d64f/collection/44877713-7cb54580-154d-4a1a-95d2-b744df21a17a?action=share&source=collection_link&creator=44877713"
+	},
+	"item": [
+		{
+			"name": "Get All Logs (Default Pagination)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-step-logs",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-step-logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Logs by Execution Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-step-logs?executionStatus=SUCCESS",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-step-logs"
+					],
+					"query": [
+						{
+							"key": "executionStatus",
+							"value": "SUCCESS"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter by Workflow Execution ID and Step ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-step-logs?workflowExecutionId=1001&stepId=2001",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-step-logs"
+					],
+					"query": [
+						{
+							"key": "workflowExecutionId",
+							"value": "1001"
+						},
+						{
+							"key": "stepId",
+							"value": "2001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter by Retry Count Range",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-step-logs?retryCountMin=1&retryCountMax=3",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-step-logs"
+					],
+					"query": [
+						{
+							"key": "retryCountMin",
+							"value": "1"
+						},
+						{
+							"key": "retryCountMax",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter by StartedAt Date Range",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-step-logs?startedAtFrom=2024-01-01T00:00:00&startedAtTo=2024-12-31T23:59:59",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-step-logs"
+					],
+					"query": [
+						{
+							"key": "startedAtFrom",
+							"value": "2024-01-01T00:00:00"
+						},
+						{
+							"key": "startedAtTo",
+							"value": "2024-12-31T23:59:59"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search by Transaction ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-step-logs?transactionId=abc-123",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-step-logs"
+					],
+					"query": [
+						{
+							"key": "transactionId",
+							"value": "abc-123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Paginate with Sorting",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-step-logs?page=1&size=5&sort=startedAt,desc;retryCount,asc",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-step-logs"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "sort",
+							"value": "startedAt,desc;retryCount,asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Export Logs to CSV (All Filters)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/csv"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-step-logs/export?executionStatus=RETRYING&retryCountMin=1&startedAtFrom=2024-05-01T00:00:00",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-step-logs",
+						"export"
+					],
+					"query": [
+						{
+							"key": "executionStatus",
+							"value": "RETRYING"
+						},
+						{
+							"key": "retryCountMin",
+							"value": "1"
+						},
+						{
+							"key": "startedAtFrom",
+							"value": "2024-05-01T00:00:00"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}

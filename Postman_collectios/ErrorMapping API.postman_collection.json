@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "c83d9f5c-86d1-472c-b2bc-1d86e8d42d2e",
+		"name": "ErrorMapping API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44877713",
+		"_collection_link": "https://mohammad-7955556.postman.co/workspace/mohammad's-Workspace~5140c990-2650-4004-8386-4283f3e3d64f/collection/44877713-c83d9f5c-86d1-472c-b2bc-1d86e8d42d2e?action=share&source=collection_link&creator=44877713"
+	},
+	"item": [
+		{
+			"name": "Create ErrorMapping",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"destinationApiId\": 1,\n  \"destinationSystemName\": \"SYSTEM-X\",\n  \"rawErrorSubstring\": \"Connection timeout\",\n  \"matchType\": \"CONTAINS\",\n  \"mappedErrorCode\": \"ERR_TIMEOUT\",\n  \"mappedMessage\": \"The connection has timed out.\",\n  \"errorCategory\": \"NETWORK\",\n  \"httpStatusCode\": 504,\n  \"language\": \"en\",\n  \"active\": true,\n  \"createdBy\": 101\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/error-mappings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"error-mappings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All ErrorMappings (with filters)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/error-mappings?rawErrorSubstring=Missing API k",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"error-mappings"
+					],
+					"query": [
+						{
+							"key": "rawErrorSubstring",
+							"value": "Missing API k"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ErrorMapping by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/error-mappings/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"error-mappings",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update ErrorMapping (PUT)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"destinationApiId\": 1,\n  \"destinationSystemName\": \"SYSTEM-Y\",\n  \"rawErrorSubstring\": \"Invalid token\",\n  \"matchType\": \"EQUALS\",\n  \"mappedErrorCode\": \"ERR_AUTH\",\n  \"mappedMessage\": \"Invalid authentication token.\",\n  \"errorCategory\": \"AUTH\",\n  \"httpStatusCode\": 401,\n  \"language\": \"en\",\n  \"active\": false,\n  \"createdBy\": 101\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/error-mappings/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"error-mappings",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Partial Update ErrorMapping (PATCH)",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n // \"mappedMessage\": \"New updated message\",\n  \"active\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/error-mappings/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"error-mappings",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete ErrorMapping (if supported)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/error-mappings/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"error-mappings",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
