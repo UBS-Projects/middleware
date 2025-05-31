@@ -1,51 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.4</version> <!-- You can change this to the latest 3.x version -->
+        <version>3.4.4</version><!-- You can change this to the latest 3.x version -->
         <relativePath/>
     </parent>
-
     <groupId>com.middleware</groupId>
     <artifactId>middleware-backend</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-
     <name>middleware-backend</name>
     <description>Advanced Middleware Backend</description>
-
     <properties>
         <java.version>23</java.version>
         <lombok.version>1.18.38</lombok.version>
     </properties>
-
-    <dependencies>
-        <!-- Spring Boot Core Dependencies -->
+    <dependencies><!-- Spring Boot Core Dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+<<<<<<< HEAD
         </dependency>
 
         <!--
@@ -61,6 +50,9 @@
                 -->
 
         <!-- Apache Camel Core -->
+=======
+        </dependency><!--
+>>>>>>> origin/changes_branch
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-spring-boot-starter</artifactId>
@@ -73,13 +65,28 @@
             <artifactId>camel-http-starter</artifactId>
             <version>4.4.0</version>
         </dependency>
+<<<<<<< HEAD
 
         <!-- (Optional) if you use JSON processing -->
+=======
+        --><!-- Apache Camel Core -->
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-spring-boot-starter</artifactId>
+            <version>4.4.0</version><!-- latest stable -->
+        </dependency><!-- (Optional) for HTTP calling if needed -->
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-http-starter</artifactId>
+            <version>4.4.0</version>
+        </dependency><!-- (Optional) if you use JSON processing -->
+>>>>>>> origin/changes_branch
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-jackson-starter</artifactId>
             <version>4.4.0</version>
         </dependency>
+<<<<<<< HEAD
 
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->
@@ -90,10 +97,17 @@
         <!-- PostgreSQL (or switch to MySQL if you prefer) -->
 
 
+=======
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency><!-- PostgreSQL (or switch to MySQL if you prefer) -->
+>>>>>>> origin/changes_branch
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
+<<<<<<< HEAD
 
         <!--
                 <dependency>
@@ -101,12 +115,17 @@
             <artifactId>ojdbc11</artifactId>
          </dependency>
         -->
+=======
+        
+        <!--
+>>>>>>> origin/changes_branch
         <dependency>
 <<<<<<< HEAD
     <groupId>com.oracle.database.jdbc</groupId>
     <artifactId>ojdbc11</artifactId>
  </dependency>
 -->
+<<<<<<< HEAD
 <dependency>
     <groupId>com.vladmihalcea</groupId>
     <artifactId>hibernate-types-60</artifactId>
@@ -120,13 +139,22 @@
 >>>>>>> 8d25c9ec9dfbbc79e7583cbda84cadd91a6a67fb
 
 
+=======
+        <dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>hibernate-types-60</artifactId>
+            <version>2.21.1</version>
+        </dependency>
+        
+>>>>>>> origin/changes_branch
         <!-- Spring Boot Actuator for monitoring -->
+        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
         <!-- Optional: JSON Web Token support -->
+<<<<<<< HEAD
 <<<<<<< HEAD
        <dependency>
   <groupId>io.jsonwebtoken</groupId>
@@ -152,6 +180,8 @@
     <version>1.0.77</version>
 </dependency>
 =======
+=======
+>>>>>>> origin/changes_branch
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -165,6 +195,7 @@
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
+<<<<<<< HEAD
             <artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson -->
             <version>0.11.5</version>
             <scope>runtime</scope>
@@ -180,26 +211,43 @@
 
 
         <!-- Optional: Scheduling -->
+=======
+            <artifactId>jjwt-jackson</artifactId><!-- or jjwt-gson -->
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>1.0.77</version>
+        </dependency><!-- Optional: Scheduling -->
+>>>>>>> origin/changes_branch
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/changes_branch
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
+<<<<<<< HEAD
         </dependency>
 
 
         <!-- Testing -->
+=======
+        </dependency><!-- Testing -->
+>>>>>>> origin/changes_branch
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
@@ -211,16 +259,21 @@
             <version>1.5.5.Final</version>
             <scope>provided</scope>
         </dependency>
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/changes_branch
     </dependencies>
-
     <build>
-        <plugins>
-            <!-- Spring Boot Plugin -->
+        <plugins><!-- Spring Boot Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
+<<<<<<< HEAD
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <!-- <version>3.4.4</version>-->
+=======
+                <artifactId>spring-boot-maven-plugin</artifactId><!-- <version>3.4.4</version>-->
+>>>>>>> origin/changes_branch
             </plugin>
         </plugins>
     </build>

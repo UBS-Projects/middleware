@@ -1,0 +1,243 @@
+{
+	"info": {
+		"_postman_id": "76be0a18-a1b1-4bc0-988b-1cc54027992b",
+		"name": "middleware_workflow_steps",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44877713",
+		"_collection_link": "https://mohammad-7955556.postman.co/workspace/mohammad's-Workspace~5140c990-2650-4004-8386-4283f3e3d64f/collection/44877713-76be0a18-a1b1-4bc0-988b-1cc54027992b?action=share&source=collection_link&creator=44877713"
+	},
+	"item": [
+		{
+			"name": "Get All WorkflowSteps",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-steps",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-steps"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get WorkflowStep by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-steps/4",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-steps",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get WorkflowStep byWorkflowId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-steps/by-config/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-steps",
+						"by-config",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create WorkflowSteps (Multiple Steps)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \"stepName\": \"FetchUserFromReqres\",\n    \"stepType\": \"API_CALL\",\n    \"transformationExpression\": null,\n    \"stepOrder\": 1,\n    \"workflowConfig\": {\n\t\"id\":1\n\t},\n    \"destinationApi\": {\n\t\"id\": 5\n    },\n    \"createdBy\":1,\n      \"updatedBy\":1\n  },\n  {\n    \"stepName\": \"FetchProductFromDummyJson\",\n    \"stepType\": \"API_CALL\",\n    \"transformationExpression\": null,\n    \"stepOrder\": 2,\n       \"workflowConfig\": {\n\t\"id\":1\n\t},\n    \"destinationApi\": {\n     \"id\":8\n    },\n    \"createdBy\":1,\n      \"updatedBy\":1\n  },\n  {\n    \"stepName\": \"PostNewUserToDummyJson\",\n    \"stepType\": \"API_CALL\",\n    \"transformationExpression\": null,\n    \"stepOrder\": 3,\n     \"workflowConfig\": {\n\t\"id\":1\n\t},\n    \"destinationApi\": {\n        \"id\":10\n    },\n    \"createdBy\":1,\n      \"updatedBy\":1\n  }\n]\n\n"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-steps/batch",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-steps",
+						"batch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create WorkflowStep",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n     \"workflowConfig\": {\n            \"id\": 4\n     },\n    \"stepOrder\": 1,\n    \"stepType\": \"mapper\",\n    \"stepName\": \"Transform Request\",\n    \"stepConfig\": {\n      \"mappingTemplate\": \"#{#inputField}\"\n    },\n    \"forkGroupId\": null,\n    \"createdBy\": 1,\n    \"updatedBy\":1\n  }\n]"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-steps/batch",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-steps",
+						"batch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update WorkflowStep",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": 1,\n  \"workflowConfigId\": 1,\n  \"stepOrder\": 1,\n  \"stepType\": \"mapper\",\n  \"stepName\": \"Updated Step\",\n  \"stepConfig\": {\n    \"mappingTemplate\": \"#{#updatedField}\"\n  },\n  \"forkGroupId\": null,\n  \"updatedBy\": 2\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-steps/21",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-steps",
+						"21"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch WorkflowStep",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n    \"stepOrder\":2\n}\n\n\n/*\n{\n  \n   \n  \n    \"workflowConfig\": {\n        \"id\": 4\n       \n    },\n    \"parentStep\": null,\n    \"stepOrder\": 1,\n    \"stepName\": \"call Reqrese\",\n    \"stepType\": \"API_CALL\",\n    \"destinationApi\": 5,\n    \"transformationExpression\": null,\n    \"delaySeconds\": null,\n    \"conditionExpression\": null,\n    \"retryCount\": 0,\n    \"retryDelaySeconds\": 0,\n    \"forkGroupId\": null,\n    \"createdBy\": 1,\n    \"updatedBy\": 1\n  \n}\n*/"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-steps/10",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-steps",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update ApiEndpoint Copy",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   // \"name\": \"Get User Details v2\",\r\n   // \"inputTemplate\": \"{ \\\"userId\\\": \\\"${requestbody.userId}\\\", \\\"extraInfo\\\": \\\"${payload.extra}\\\" }\",\r\n   // \"outputTemplate\": \"{ \\\"result\\\": ${response.body}, \\\"message\\\": \\\"Processed ${response.status}\\\" }\",\r\n   // \"updatedAt\": \"2025-05-12T10:00:00\"\r\n    \"triggerWorkflow\": null\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/endpoints/10",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"endpoints",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete WorkflowStep",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/workflow-steps/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workflow-steps",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}

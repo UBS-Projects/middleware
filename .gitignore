@@ -32,6 +32,11 @@ build/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
 .logs/*
 
 logs/*.log
+=======
+.logs
+logs/middleware.log
+>>>>>>> origin/changes_branch

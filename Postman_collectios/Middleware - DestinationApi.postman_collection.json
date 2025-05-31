@@ -1,0 +1,161 @@
+{
+	"info": {
+		"_postman_id": "b4a74a3e-7e13-4381-8a73-4fd76ec8e134",
+		"name": "Middleware - DestinationApi",
+		"description": "Collection to test DestinationApi CRUD operations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44877713",
+		"_collection_link": "https://mohammad-7955556.postman.co/workspace/mohammad's-Workspace~5140c990-2650-4004-8386-4283f3e3d64f/collection/44877713-b4a74a3e-7e13-4381-8a73-4fd76ec8e134?action=share&source=collection_link&creator=44877713"
+	},
+	"item": [
+		{
+			"name": "Get All DestinationApis",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/destination-apis",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"destination-apis"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get DestinationApi by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/destination-apis/4",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"destination-apis",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create DestinationApi",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"name\":\"Post New User To DummyJson\",\n \"baseUri\": \"https://dummyjson.com/users/add\",\n      \"httpMethod\": \"POST\",\n      \"inputTemplate\": {\n        \"firstName\": \"#{{#variables['firstName']}}\",\n        \"lastName\": \"#{{#variables['lastName']}}\",\n        \"age\": \"#{{#variables['age']}}\"\n      },\n      \"headerTemplate\": {\n        \"Content-Type\": \"application/json\"\n      },\n      \"authType\": \"BEARER\",\n      \"authCredentials\": {\n        \"token\": \"your_dummyjson_token_here\"\n      },\n      \"createdBy\":1,\n      \"updatedBy\":1\n\n}\n\n/*\n{\n  \"name\": \"Get Product Details - DummyJson\",\n  \"baseUri\": \"https://dummyjson.com/products/1\",\n  \"httpMethod\": \"GET\",\n  \"inputTemplate\": {},\n  \"headerTemplate\": {},\n  \"authType\": \"NONE\",\n  \"authCredentials\": {},\n  \"createdBy\" :1,\n  \"updatedBy\" :1\n}\n\n*/\n\n/*{\n  \"name\": \"Create User - Reqres\",\n  \"baseUri\": \"https://reqres.in/api/users\",\n  \"httpMethod\": \"POST\",\n  \"inputTemplate\": {\n    \"name\": \"#{#variables['name']}\",\n    \"job\": \"developer\"\n  },\n  \"inputHeaderTemplate\": {\n    \"X-API-Key\": \"dummy-api-key\",\n    \"Authorization\": \"Bearer dummy-api-key\"\n  },\n  \"createdBy\" :1,\n  \"updatedBy\" :1\n},\n*/\n/*{\n  \"name\": \"Get User - Reqres\",\n  \"baseUri\": \"https://reqres.in/api/users/2\",\n  \"httpMethod\": \"GET\",\n  \"inputTemplate\": {},\n  \"inputHeaderTemplate\": {},\n  \"createdBy\" :1,\n  \"updatedBy\" :1\n}\n*/\n"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/destination-apis",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"destination-apis"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update DestinationApi",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": {{destinationApiId}},\n  \"baseUri\": \"https://api.example.com/v2/data\",\n  \"httpMethod\": \"PUT\",\n  \"inputTemplate\": \"#{ {'userid': #variables['userId'], 'order': #variables['order']} }\",\n  \"inputHeaderTemplate\": {\n    \"Authorization\": \"Bearer xyz789\",\n    \"Content-Type\": \"application/json\"\n  },\n  \"outputTemplate\": \"#{ {'result': #thisResponse['result'], 'message': 'Updated'} }\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/destination-apis/{{destinationApiId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"destination-apis",
+						"{{destinationApiId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch DestinationApi",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": {{destinationApiId}},\n  \"baseUri\": \"https://api.example.com/v2/data\",\n  \"httpMethod\": \"PUT\",\n  \"inputTemplate\": \"#{ {'userid': #variables['userId'], 'order': #variables['order']} }\",\n  \"inputHeaderTemplate\": {\n    \"Authorization\": \"Bearer xyz789\",\n    \"Content-Type\": \"application/json\"\n  },\n  \"outputTemplate\": \"#{ {'result': #thisResponse['result'], 'message': 'Updated'} }\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/destination-apis/{{destinationApiId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"destination-apis",
+						"{{destinationApiId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete DestinationApi",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/destination-apis/{{destinationApiId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"destination-apis",
+						"{{destinationApiId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "destinationApiId",
+			"value": "1"
+		}
+	]
+}

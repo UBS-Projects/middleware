@@ -1,0 +1,274 @@
+{
+	"info": {
+		"_postman_id": "2822e81e-af75-4ac0-8347-097d395057c7",
+		"name": "middleware_api_call_logs",
+		"description": "Test scenarios for MiddlewareApiCallLogController",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44877713",
+		"_collection_link": "https://mohammad-7955556.postman.co/workspace/mohammad's-Workspace~5140c990-2650-4004-8386-4283f3e3d64f/collection/44877713-2822e81e-af75-4ac0-8347-097d395057c7?action=share&source=collection_link&creator=44877713"
+	},
+	"item": [
+		{
+			"name": "Get all logs (default)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/logs?sort=receivedAt,desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "receivedAt,desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter by duration range",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/logs?durationMsMin=100&durationMsMax=2000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "durationMsMin",
+							"value": "100"
+						},
+						{
+							"key": "durationMsMax",
+							"value": "2000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter by retry count",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/logs?retryCountMin=0&retryCountMax=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "retryCountMin",
+							"value": "0"
+						},
+						{
+							"key": "retryCountMax",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter by responseCode range",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/logs?responseCodeMin=400&responseCodeMax=499",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "responseCodeMin",
+							"value": "400"
+						},
+						{
+							"key": "responseCodeMax",
+							"value": "499"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter by timestamp range",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/logs?receivedAtFrom=2025-01-01T00:00:00&receivedAtTo=2025-12-31T23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "receivedAtFrom",
+							"value": "2025-01-01T00:00:00"
+						},
+						{
+							"key": "receivedAtTo",
+							"value": "2025-12-31T23:59:59"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pagination and sorting by durationMs descending",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/logs?page=0&size=10&sort=durationMs,desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "sort",
+							"value": "durationMs,desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid values (should be handled gracefully)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/logs?durationMsMin=abc&retryCountMax=xyz",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "durationMsMin",
+							"value": "abc"
+						},
+						{
+							"key": "retryCountMax",
+							"value": "xyz"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Text search by clientIp",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/logs?clientIp=192.168",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "clientIp",
+							"value": "192.168"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter by boolean (throttlingApplied)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/logs?throttlingApplied=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "throttlingApplied",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

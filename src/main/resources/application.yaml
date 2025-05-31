@@ -3,24 +3,33 @@ server:
 
 spring:
   datasource:
+<<<<<<< HEAD
     url: jdbc:postgresql://localhost:5433/middleware
     username: postgres
     password: postgres
+=======
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: 123
+>>>>>>> origin/changes_branch
     driver-class-name: org.postgresql.Driver
     
 
   jpa:
     hibernate:
-     ddl-auto: update
-     database-platform: org.hibernate.dialect.PostgreSQLDialect
-     #spring.jpa.database-platform: org.hibernate.dialect.Oracle12cDialect
-
-     show-sql: true
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
 
 logging:
   level:
     org.springframework.web: DEBUG
     com.middleware.backend: DEBUG
+<<<<<<< HEAD
 
 external-api:
   url: https://reqbin.com/echo/post/json
@@ -34,3 +43,5 @@ external-api:
 
 
 
+=======
+>>>>>>> origin/changes_branch

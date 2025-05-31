@@ -1,0 +1,436 @@
+{
+	"info": {
+		"_postman_id": "c29d319c-f9e9-413e-8b6c-9d78d6d35e65",
+		"name": "Notification API Suite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44877713",
+		"_collection_link": "https://mohammad-7955556.postman.co/workspace/mohammad's-Workspace~5140c990-2650-4004-8386-4283f3e3d64f/collection/44877713-c29d319c-f9e9-413e-8b6c-9d78d6d35e65?action=share&source=collection_link&creator=44877713"
+	},
+	"item": [
+		{
+			"name": "Create Notification",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"category\": \"SYSTEM_ERROR\",\n  \"severity\": \"CRITICAL\",\n  \"messageTemplate\": \"System failure occurred: {{details}}\",\n  \"channel\": \"EMAIL\",\n  \"status\": \"ACTIVE\",\n  \"relatedEntityType\": \"API\",\n  \"relatedEntityId\": 101,\n  \"createdBy\": 1,\n  \"updatedBy\": 1\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/notifications?ssssss",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notifications"
+					],
+					"query": [
+						{
+							"key": "ssssss",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Notifications",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/notifications",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notifications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Notifications Copy",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/notifications?category=SYSTEM_ERROR&severity=CRITICAL&status=ACTIVE&sort=createdAt,desc",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notifications"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "SYSTEM_ERROR"
+						},
+						{
+							"key": "severity",
+							"value": "CRITICAL"
+						},
+						{
+							"key": "status",
+							"value": "ACTIVE"
+						},
+						{
+							"key": "sort",
+							"value": "createdAt,desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Notification by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/notifications/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notifications",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Notification",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"category\": \"SYSTEM_ERROR\",\n  \"severity\": \"CRITICAL\",\n  \"messageTemplate\": \"System failure occurred: {{details}}\",\n  \"channel\": \"EMAIL\",\n  \"status\": \"ACTIVE\",\n  \"relatedEntityType\": \"API\",\n  \"relatedEntityId\": 101,\n  \"createdBy\": 1,\n  \"updatedBy\": 1\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/notifications/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notifications",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Notification",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/notifications/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notifications",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Recipient Group",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Ops Team\",\n  \"description\": \"Operations support team\",\n  \"createdBy\": 1,\n  \"updatedBy\": 1\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/recipient-groups",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"recipient-groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Recipient Groups",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/recipient-groups",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"recipient-groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recipient Group by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/recipient-groups/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"recipient-groups",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Recipient Group",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Ops Team\",\n  \"description\": \"Operations support team\",\n  \"createdBy\": 1,\n  \"updatedBy\": 1\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/notification-recipient-groups/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notification-recipient-groups",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Recipient Group",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/notification-recipient-groups/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notification-recipient-groups",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Recipient",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"groupId\": 1,\n  \"contactType\": \"EMAIL\",\n  \"contactValue\": \"ops@example.com\",\n  \"name\": \"Ops Email\",\n  \"active\": true,\n  \"createdBy\": 1,\n  \"updatedBy\": 1\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/recipients",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"recipients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Recipients",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/recipients",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"recipients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recipient by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/recipients/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"recipients",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Recipient",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"groupId\": 1,\n  \"contactType\": \"EMAIL\",\n  \"contactValue\": \"ops@example.com\",\n  \"name\": \"Ops Email\",\n  \"active\": true,\n  \"createdBy\": 1,\n  \"updatedBy\": 1\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/notification-recipients/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notification-recipients",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Recipient",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/notification-recipients/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notification-recipients",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

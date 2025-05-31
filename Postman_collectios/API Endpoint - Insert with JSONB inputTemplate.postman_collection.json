@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "f3d05baa-4d46-47c0-b70c-d6709b9a473b",
+		"name": "API Endpoint - Insert with JSONB inputTemplate",
+		"description": "Collection to insert ApiEndpoint with JSONB inputTemplate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44877713",
+		"_collection_link": "https://mohammad-7955556.postman.co/workspace/mohammad's-Workspace~5140c990-2650-4004-8386-4283f3e3d64f/collection/44877713-f3d05baa-4d46-47c0-b70c-d6709b9a473b?action=share&source=collection_link&creator=44877713"
+	},
+	"item": [
+		{
+			"name": "Create ApiEndpoint with inputTemplate (JSONB)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"path\": \"/api/test\",\n  \"httpMethod\": \"POST\",\n  \"baseUrl\": \"https://example.com\",\n  \"inputTemplate\": {\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n    \"type\": \"object\",\n    \"required\": [\"amount\", \"name\", \"userid\"],\n    \"properties\": {\n      \"amount\": {\n        \"type\": \"integer\",\n        \"minimum\": 1\n      },\n      \"name\": {\n        \"type\": \"string\",\n        \"minLength\": 1\n      },\n      \"userid\": {\n        \"type\": \"integer\",\n        \"minimum\": 1\n      }\n    },\n    \"additionalProperties\": false\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api-endpoints",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api-endpoints"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
