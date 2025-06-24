@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   datasource:
@@ -23,3 +23,10 @@ logging:
   level:
     org.springframework.web: DEBUG
     com.middleware.backend: DEBUG
+
+camel:
+  rest:
+    component: servlet     # or netty-http, undertow, http, etc. depending on your setup
+    host: localhost
+    port: 8081
+    context-path: /api    # optional, base context path for your REST endpoints

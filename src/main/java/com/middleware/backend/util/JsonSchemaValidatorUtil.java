@@ -1,5 +1,8 @@
 package com.middleware.backend.util;
 
+import java.util.Set;
+
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,10 +10,8 @@ import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
@@ -20,8 +21,9 @@ public class JsonSchemaValidatorUtil {
 
     /**
      * Validates the input JSON string against the given JSON schema string.
+     * 
      * @param schemaStr JSON Schema string (from inputTemplate column).
-     * @param inputStr Actual input JSON string to validate.
+     * @param inputStr  Actual input JSON string to validate.
      * @return true if valid, false otherwise.
      */
     public boolean validate(String schemaStr, String inputStr) {
