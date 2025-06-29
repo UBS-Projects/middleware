@@ -1,6 +1,8 @@
 package com.middleware.backend.kaotocamel.controller;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -123,5 +126,73 @@ public class DynamicRouteController {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         return routeService.getAllRoutes(spec, pageable);
+    }
+
+    @GetMapping("/latest")
+    public ResponseEntity<Page<DynamicRouteEntity>> getLatestRoutes(
+            @RequestParam(required = false) String routeId,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) String path,
+            @RequestParam(required = false) String httpMethod,
+            @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) String comment,
+            @RequestParam(required = false) String yamlContains,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        try {
+            // Validate pagination parameters
+            if (page < 0 || size <= 0 || size > 100) {
+                 return ResponseEntity.badRequest().build();
+            }
+
+            Pageable pageable = PageRequest.of(page, size);
+
+            // Check if any filters are provided
+            boolean hasFilters = Stream.of(routeId, description, path, httpMethod, comment, yamlContains)
+                    .anyMatch(Objects::nonNull) ||
+                    active != null || createdAfter != null || createdBefore != null;
+
+            Page<DynamicRouteEntity> result;
+
+            if (hasFilters) {
+                result = routeService.getLatestRoutesWithFiltersOptimized(
+                        routeId, description, path, httpMethod, active,
+                        comment, yamlContains, createdAfter, createdBefore, pageable);
+            } else {
+                result = routeService.getLatestRoutesOptimized(pageable);
+            }
+
+            // Add performance headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("X-Total-Count", String.valueOf(result.getTotalElements()));
+            headers.add("X-Total-Pages", String.valueOf(result.getTotalPages()));
+            headers.add("X-Current-Page", String.valueOf(result.getNumber()));
+            headers.add("X-Page-Size", String.valueOf(result.getSize()));
+
+            return ResponseEntity.ok().headers(headers).body(result);
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+
+        } catch (Exception e) {
+
+            // Emergency fallback - return regular routes
+            try {
+                Pageable pageable = PageRequest.of(page, size);
+                Page<DynamicRouteEntity> fallbackResult = routeService.getAllRoutes(pageable);
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("X-Fallback-Mode", "true");
+                headers.add("X-Total-Count", String.valueOf(fallbackResult.getTotalElements()));
+
+                return ResponseEntity.ok().headers(headers).body(fallbackResult);
+
+            } catch (Exception fallbackError) {
+                return ResponseEntity.internalServerError().build();
+            }
+        }
     }
 }

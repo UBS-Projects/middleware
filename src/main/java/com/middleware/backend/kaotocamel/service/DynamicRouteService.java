@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.middleware.backend.kaotocamel.spec.DynamicRouteSpecification;
 import org.apache.camel.CamelContext;
 import org.apache.camel.RoutesBuilder;
 import org.apache.camel.spi.Resource;
@@ -30,6 +31,10 @@ import com.middleware.backend.kaotocamel.repository.DynamicRouteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.data.domain.PageImpl;
+import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.ArrayList;
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -366,5 +371,226 @@ public class DynamicRouteService {
         public boolean exists() {
             return true;
         }
+    }
+
+
+    /**
+     * Get latest routes - Hybrid approach with performance optimization
+     * Tries native query first, falls back to Java processing if needed
+     */
+    public Page<DynamicRouteEntity> getLatestRoutesOptimized(Pageable pageable) {
+        long startTime = System.currentTimeMillis();
+
+        try {
+            log.debug("Attempting native query for latest routes");
+
+            int offset = (int) pageable.getOffset();
+            int limit = pageable.getPageSize();
+
+            // Try native query first
+            List<Object[]> results = routeRepository.findLatestRoutesNative(limit, offset);
+            long totalCount = routeRepository.countDistinctRouteIds();
+
+            List<DynamicRouteEntity> routes = mapNativeResultsToEntities(results);
+
+            long executionTime = System.currentTimeMillis() - startTime;
+            log.info("Native query executed successfully in {}ms, returned {} routes",
+                    executionTime, routes.size());
+
+            return new PageImpl<>(routes, pageable, totalCount);
+
+        } catch (Exception e) {
+            log.warn("Native query failed ({}ms), falling back to Java processing: {}",
+                    System.currentTimeMillis() - startTime, e.getMessage());
+
+            return getLatestRoutesJava(pageable);
+        }
+    }
+
+    /**
+     * Get latest routes with filters - Hybrid approach
+     */
+    public Page<DynamicRouteEntity> getLatestRoutesWithFiltersOptimized(
+            String routeId, String description, String path, String httpMethod,
+            Boolean active, String comment, String yamlContains,
+            LocalDateTime createdAfter, LocalDateTime createdBefore,
+            Pageable pageable) {
+
+        long startTime = System.currentTimeMillis();
+
+        try {
+            log.debug("Attempting native query for latest routes with filters");
+
+            int offset = (int) pageable.getOffset();
+            int limit = pageable.getPageSize();
+
+            // Try native query first
+            List<Object[]> results = routeRepository.findLatestRoutesWithFiltersNative(
+                    routeId, active, yamlContains, httpMethod, path,
+                    description, comment, createdAfter, createdBefore, limit, offset);
+
+            long totalCount = routeRepository.countLatestRoutesWithFilters(
+                    routeId, active, yamlContains, httpMethod, path,
+                    description, comment, createdAfter, createdBefore);
+
+            List<DynamicRouteEntity> routes = mapNativeResultsToEntities(results);
+
+            long executionTime = System.currentTimeMillis() - startTime;
+            log.info("Native query with filters executed successfully in {}ms, returned {} routes",
+                    executionTime, routes.size());
+
+            return new PageImpl<>(routes, pageable, totalCount);
+
+        } catch (Exception e) {
+            log.warn("Native query with filters failed ({}ms), falling back to Java processing: {}",
+                    System.currentTimeMillis() - startTime, e.getMessage());
+
+            return getLatestRoutesWithFiltersJava(
+                    routeId, description, path, httpMethod, active,
+                    comment, yamlContains, createdAfter, createdBefore, pageable);
+        }
+    }
+
+    /**
+     * Java-based fallback - reliable but slower
+     */
+    public Page<DynamicRouteEntity> getLatestRoutesJava(Pageable pageable) {
+        long startTime = System.currentTimeMillis();
+        log.debug("Using Java processing for latest routes");
+
+        List<DynamicRouteEntity> allRoutes = routeRepository.findAll();
+
+        // Group by routeId and get latest for each
+        Map<String, DynamicRouteEntity> latestRoutes = allRoutes.stream()
+                .collect(Collectors.groupingBy(
+                        DynamicRouteEntity::getRouteId,
+                        Collectors.reducing(null, this::selectLatestRoute)
+                ));
+
+        // Convert to list and sort
+        List<DynamicRouteEntity> routesList = latestRoutes.values().stream()
+                .filter(route -> route != null)
+                .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()))
+                .collect(Collectors.toList());
+
+        // Apply pagination
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), routesList.size());
+
+        List<DynamicRouteEntity> paginatedList = start >= routesList.size() ?
+                new ArrayList<>() : routesList.subList(start, end);
+
+        long executionTime = System.currentTimeMillis() - startTime;
+        log.info("Java processing completed in {}ms, returned {} routes",
+                executionTime, paginatedList.size());
+
+        return new PageImpl<>(paginatedList, pageable, routesList.size());
+    }
+
+    /**
+     * Java-based with filters fallback
+     */
+    public Page<DynamicRouteEntity> getLatestRoutesWithFiltersJava(
+            String routeId, String description, String path, String httpMethod,
+            Boolean active, String comment, String yamlContains,
+            LocalDateTime createdAfter, LocalDateTime createdBefore,
+            Pageable pageable) {
+
+        long startTime = System.currentTimeMillis();
+        log.debug("Using Java processing for latest routes with filters");
+
+        // Build specification for initial filtering
+        Specification<DynamicRouteEntity> spec = buildSpecification(
+                routeId, description, path, httpMethod, active, comment,
+                yamlContains, createdAfter, createdBefore);
+
+        List<DynamicRouteEntity> filteredRoutes = routeRepository.findAll(spec);
+
+        // Group by routeId and get latest for each
+        Map<String, DynamicRouteEntity> latestRoutes = filteredRoutes.stream()
+                .collect(Collectors.groupingBy(
+                        DynamicRouteEntity::getRouteId,
+                        Collectors.reducing(null, this::selectLatestRoute)
+                ));
+
+        // Convert to list and sort
+        List<DynamicRouteEntity> routesList = latestRoutes.values().stream()
+                .filter(route -> route != null)
+                .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()))
+                .collect(Collectors.toList());
+
+        // Apply pagination
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), routesList.size());
+
+        List<DynamicRouteEntity> paginatedList = start >= routesList.size() ?
+                new ArrayList<>() : routesList.subList(start, end);
+
+        long executionTime = System.currentTimeMillis() - startTime;
+        log.info("Java processing with filters completed in {}ms, returned {} routes",
+                executionTime, paginatedList.size());
+
+        return new PageImpl<>(paginatedList, pageable, routesList.size());
+    }
+
+    /**
+     * Helper method to select the latest route based on priority
+     */
+    private DynamicRouteEntity selectLatestRoute(DynamicRouteEntity a, DynamicRouteEntity b) {
+        if (a == null) return b;
+        if (b == null) return a;
+
+        // Priority: Active > DefaultVersion > Highest Version > Latest Created
+        if (b.isActive() && !a.isActive()) return b;
+        if (a.isActive() && !b.isActive()) return a;
+
+        if (b.isDefaultVersion() && !a.isDefaultVersion()) return b;
+        if (a.isDefaultVersion() && !b.isDefaultVersion()) return a;
+
+        if (b.getVersion() > a.getVersion()) return b;
+        if (a.getVersion() > b.getVersion()) return a;
+
+        return b.getCreatedAt().isAfter(a.getCreatedAt()) ? b : a;
+    }
+
+    /**
+     * Helper method to build specification
+     */
+    private Specification<DynamicRouteEntity> buildSpecification(
+            String routeId, String description, String path, String httpMethod,
+            Boolean active, String comment, String yamlContains,
+            LocalDateTime createdAfter, LocalDateTime createdBefore) {
+
+        return Specification
+                .where(DynamicRouteSpecification.hasField("routeId", routeId))
+                .and(DynamicRouteSpecification.hasField("description", description))
+                .and(DynamicRouteSpecification.hasField("path", path))
+                .and(DynamicRouteSpecification.hasField("httpMethod", httpMethod))
+                .and(DynamicRouteSpecification.hasField("active", active))
+                .and(DynamicRouteSpecification.containsComment(comment))
+                .and(DynamicRouteSpecification.containsInYaml(yamlContains))
+                .and(DynamicRouteSpecification.createdAfter(createdAfter))
+                .and(DynamicRouteSpecification.createdBefore(createdBefore));
+    }
+
+    /**
+     * Helper method to map native query results to entities
+     */
+    private List<DynamicRouteEntity> mapNativeResultsToEntities(List<Object[]> results) {
+        return results.stream().map(row -> {
+            DynamicRouteEntity entity = new DynamicRouteEntity();
+            entity.setId(((Number) row[0]).longValue());
+            entity.setRouteId((String) row[1]);
+            entity.setDescription((String) row[2]);
+            entity.setVersion(((Number) row[3]).intValue());
+            entity.setPath((String) row[4]);
+            entity.setHttpMethod((String) row[5]);
+            entity.setYamlContent((String) row[6]);
+            entity.setActive((Boolean) row[7]);
+            entity.setDefaultVersion((Boolean) row[8]);
+            entity.setCreatedAt(((java.sql.Timestamp) row[9]).toLocalDateTime());
+            entity.setComment((String) row[10]);
+            return entity;
+        }).collect(Collectors.toList());
     }
 }
