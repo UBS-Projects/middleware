@@ -1,7 +1,5 @@
 package com.middleware.backend.kaotocamel.model;
 
-//package com.example.kaotocamel.model;
-
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -10,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +29,7 @@ public class DynamicRouteEntity {
 
     private int version; // Version number of the route
 
+
     @Column(name = "path", nullable = false)
     private String path;
 
@@ -39,7 +39,7 @@ public class DynamicRouteEntity {
     // @Lob
     // private String yamlContent; // YAML source of the route
     @Lob
-    @Column(name = "yaml_content")
+    @Column(name = "yaml_content", columnDefinition = "TEXT")
     private String yamlContent;
 
     private boolean active; // Is this version currently active?
@@ -50,4 +50,11 @@ public class DynamicRouteEntity {
     private LocalDateTime createdAt;
 
     private String comment; // Admin comment for this version
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+    }
 }
