@@ -29,4 +29,9 @@ camel:
     component: servlet     # or netty-http, undertow, http, etc. depending on your setup
     host: localhost
     port: 8081
-    context-path: /api    # optional, base context path for your REST endpoints
+    context-path: /camel    # optional, base context path for your REST endpoints
+  servlet:
+    mapping:
+      context-path: /camel/*
+
+      

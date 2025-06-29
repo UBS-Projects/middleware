@@ -4,7 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.camel.CamelContext;
@@ -14,8 +16,11 @@ import org.apache.camel.spi.RoutesBuilderLoader;
 import org.apache.camel.support.ResourceSupport;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import com.middleware.backend.kaotocamel.model.DynamicRouteAudit;
 import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
@@ -40,8 +45,12 @@ public class DynamicRouteService {
      */
     @Transactional
     public String uploadRoute(String yamlContent, String comment) {
-        String routeId = extractRouteId(yamlContent);
-        if (routeId == null) {
+        Map<String, String> metaData = extractRouteMetadata(yamlContent);
+        String routeId = metaData.get("id");
+        String description = metaData.get("description");
+        String path = metaData.get("path");
+        String method = metaData.get("method");
+        if (routeId == null) { // verivication method should be added instead
             throw new RuntimeException("Route ID not found in YAML");
         }
 
@@ -60,6 +69,10 @@ public class DynamicRouteService {
         entity.setVersion(newVersion);
         entity.setYamlContent(yamlContent);
         entity.setActive(true);
+        entity.setDefaultVersion(true);
+        entity.setDescription(description);
+        entity.setPath(path);
+        entity.setHttpMethod(method);
         entity.setCreatedAt(LocalDateTime.now());
         entity.setComment(comment);
 
@@ -74,6 +87,7 @@ public class DynamicRouteService {
     /**
      * Deactivates a route (soft delete) and stops in Camel
      */
+    @Transactional
     public String deactivateRoute(String routeId) {
         List<DynamicRouteEntity> activeRoutes = routeRepository.findByRouteIdAndActiveTrue(routeId);
         if (activeRoutes.isEmpty()) {
@@ -98,6 +112,7 @@ public class DynamicRouteService {
     /**
      * Reverts to a previous version of a route
      */
+    @Transactional
     public String revertToVersion(String routeId, int version) {
         Optional<DynamicRouteEntity> targetOpt = routeRepository.findByRouteIdAndVersion(routeId, version);
         if (targetOpt.isEmpty()) {
@@ -108,7 +123,11 @@ public class DynamicRouteService {
         loadRoute(targetOpt.get().getYamlContent());
 
         List<DynamicRouteEntity> versions = routeRepository.findByRouteIdOrderByVersionDesc(routeId);
-        versions.forEach(v -> v.setActive(v.getVersion() == version));
+        versions.forEach(v -> {
+            boolean isTargetVersion = v.getVersion() == version;
+            v.setActive(isTargetVersion);
+            v.setDefaultVersion(isTargetVersion);
+        });
         routeRepository.saveAll(versions);
 
         log.info("Reverted {} to version {}", routeId, version);
@@ -153,6 +172,7 @@ public class DynamicRouteService {
             camelContext.getRouteController().startRoute(routeId);
 
             latest.setActive(true);
+            latest.setDefaultVersion(true);
             routeRepository.save(latest);
 
             log.info("Started route {}", routeId);
@@ -171,6 +191,12 @@ public class DynamicRouteService {
         log.info("Fetching all routes with pagination: page={}, size={}", pageable.getPageNumber(),
                 pageable.getPageSize());
         return routeRepository.findAll(pageable);
+    }
+
+    public Page<DynamicRouteEntity> getAllRoutes(Specification<DynamicRouteEntity> spec, Pageable pageable) {
+        log.info("Fetching all routes with pagination: page={}, size={}", pageable.getPageNumber(),
+                pageable.getPageSize());
+        return routeRepository.findAll(spec, pageable);
     }
 
     public Page<DynamicRouteEntity> getActiveRoutes(Pageable pageable) {
@@ -242,6 +268,68 @@ public class DynamicRouteService {
             }
         }
         return null;
+    }
+
+    private Map<String, String> extractRouteMetadata(String yamlContent) {
+        Map<String, String> metadata = new HashMap<>();
+        try {
+            Yaml yaml = new Yaml(new SafeConstructor(new org.yaml.snakeyaml.LoaderOptions()));
+            List<Object> parsed = yaml.load(yamlContent);
+
+            if (parsed == null || parsed.isEmpty()) {
+                throw new IllegalArgumentException("YAML content is empty or invalid");
+            }
+
+            for (Object item : parsed) {
+                if (item instanceof Map) {
+                    Map<String, Object> routeWrapper = (Map<String, Object>) item;
+                    Object routeObj = routeWrapper.get("route");
+                    if (routeObj instanceof Map) {
+                        Map<String, Object> route = (Map<String, Object>) routeObj;
+
+                        if (route.containsKey("id"))
+                            metadata.put("id", ((String) route.get("id")).trim());
+
+                        if (route.containsKey("description"))
+                            metadata.put("description", ((String) route.get("description")).trim());
+
+                        // Look inside `from`
+                        Object fromObj = route.get("from");
+                        if (fromObj instanceof Map) {
+                            Map<String, Object> from = (Map<String, Object>) fromObj;
+
+                            // 1. Try to extract from 'uri' like rest:post:/workflow/test
+                            if (from.containsKey("uri")) {
+                                String uri = from.get("uri").toString();
+                                if (uri.startsWith("rest:")) {
+                                    // e.g. rest:post:/workflow/test
+                                    String[] parts = uri.split(":", 3);
+                                    if (parts.length == 3) {
+                                        metadata.put("method", parts[1].trim());
+                                        metadata.put("path", parts[2].trim());
+                                    }
+                                }
+                            }
+
+                            // 2. Try to extract from 'parameters' map
+                            if (from.containsKey("parameters")) {
+                                Map<String, Object> params = (Map<String, Object>) from.get("parameters");
+                                if (params.containsKey("method")) {
+                                    metadata.put("method", params.get("method").toString().trim());
+                                }
+                                if (params.containsKey("path")) {
+                                    metadata.put("path", params.get("path").toString().trim());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to extract route metadata from YAML", e);
+        }
+        return metadata;
     }
 
     /**

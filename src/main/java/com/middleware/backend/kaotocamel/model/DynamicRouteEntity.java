@@ -23,17 +23,29 @@ public class DynamicRouteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "routeId", nullable = false)
     private String routeId; // The unique route identifier (from YAML)
+    @Column(name = "description", nullable = false)
+    private String description;
 
     private int version; // Version number of the route
+
+    @Column(name = "path", nullable = false)
+    private String path;
+
+    // @Column(name = "http_method", nullable = false)
+    private String httpMethod;
 
     // @Lob
     // private String yamlContent; // YAML source of the route
     @Lob
-    @Column(name = "yaml_content", columnDefinition = "CLOB")
+    @Column(name = "yaml_content")
     private String yamlContent;
 
     private boolean active; // Is this version currently active?
+
+    @Column(name = "default_version", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean defaultVersion = false;
 
     private LocalDateTime createdAt;
 

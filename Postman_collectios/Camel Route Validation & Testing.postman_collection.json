@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "67feb42e-8b89-489a-8522-0212ac60215a",
+		"name": "Camel Route Validation & Testing",
+		"description": "Validate and test dynamic Apache Camel routes with valid and invalid examples.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44877713",
+		"_collection_link": "https://mohammad-7955556.postman.co/workspace/mohammad's-Workspace~5140c990-2650-4004-8386-4283f3e3d64f/collection/44877713-67feb42e-8b89-489a-8522-0212ac60215a?action=share&source=collection_link&creator=44877713"
+	},
+	"item": [
+		{
+			"name": "Validate Route - Valid YAML",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"yamlContent\": \"- route:\\n    id: validRoute\\n    from:\\n      uri: direct:valid\\n      steps:\\n        - log: 'Valid route works!'\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/routes/validateRoute",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"routes",
+						"validateRoute"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validate Route - Invalid YAML",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"yamlContent\": \"- route:\\n    from:\\n      uri: direct:missingId\\n      steps:\\n        - log: 'Missing ID should fail'\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/routes/validateRoute",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"routes",
+						"validateRoute"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Route - Valid YAML",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"yamlContent\": \"- route:\\n    id: testRoute\\n    from:\\n      uri: direct:test\\n      steps:\\n        - setBody:\\n            constant: 'Hello from test'\\n        - log: ${body}\",\n  \"testMessage\": \"trigger\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/routes/testRoute",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"routes",
+						"testRoute"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Route - Invalid YAML",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"yamlContent\": \"- route:\\n    id: badTest\\n    steps:\\n        - log: 'Missing from block'\",\n  \"testMessage\": \"trigger\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/routes/testRoute",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"routes",
+						"testRoute"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -20,8 +20,6 @@ import com.middleware.backend.repository.WorkflowStepRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-
-
 @RequiredArgsConstructor
 @Slf4j
 @Component
@@ -33,26 +31,23 @@ public class WorkflowOrchestratorRoute extends RouteBuilder {
 
     @Override
     public void configure() {
-        from("direct:workflow-route")
-            .routeId("workflow-orchestrator")
-            .log("Executing workflow for ID: ${header.workflowId}")
-            .process(this::loadSteps)
-            .process(this::executeSteps)
-            .setBody(exchange -> exchange.getProperty("workflowResult"))
-            .log("Workflow completed.");
+
+        from("direct:workflow-route").routeId("workflow-orchestrator")
+                .log("Executing workflow for ID: ${header.workflowId}").process(this::loadSteps)
+                .process(this::executeSteps).setBody(exchange -> exchange.getProperty("workflowResult"))
+                .log("Workflow completed.");
+
     }
 
     private void loadSteps(Exchange exchange) {
         Long workflowId = exchange.getIn().getHeader("workflowId", Long.class);
         List<WorkflowStep> steps = workflowStepRepository.findByWorkflowConfigIdOrderByStepOrderAsc(workflowId);
-        
+
         log.info("Loaded {} steps from database", steps.size());
 
-        Map<Integer, List<WorkflowStep>> groupedSteps = Optional.ofNullable(steps)
-            .orElse(List.of())
-            .stream()
-            .sequential()
-            .collect(Collectors.groupingBy(step -> Optional.ofNullable(step.getStepOrder()).orElse(0)));
+        Map<Integer, List<WorkflowStep>> groupedSteps = Optional.ofNullable(steps).orElse(List.of()).stream()
+                .sequential()
+                .collect(Collectors.groupingBy(step -> Optional.ofNullable(step.getStepOrder()).orElse(0)));
 
         exchange.setProperty("workflowGroupedSteps", groupedSteps);
     }
@@ -64,15 +59,16 @@ public class WorkflowOrchestratorRoute extends RouteBuilder {
         List<Map<String, Object>> auditLog = new ArrayList<>();
         exchange.setProperty("requestBody", inputData);
         exchange.setProperty("inputHeaders", headers);
-        
+
         @SuppressWarnings("unchecked")
-        Map<Integer, List<WorkflowStep>> groupedSteps = (Map<Integer, List<WorkflowStep>>) exchange.getProperty("workflowGroupedSteps");
+        Map<Integer, List<WorkflowStep>> groupedSteps = (Map<Integer, List<WorkflowStep>>) exchange
+                .getProperty("workflowGroupedSteps");
 
         log.info("Grouped Workflow Steps:");
         groupedSteps.forEach((groupId, steps) -> {
             log.info("Group {}:", groupId);
             for (WorkflowStep step : steps) {
-                log.info("  - Step: {}", step.getStepOrder(),step.getStepName(),step.getForkGroupId());
+                log.info("  - Step: {}", step.getStepOrder(), step.getStepName(), step.getForkGroupId());
             }
         });
 
@@ -84,17 +80,17 @@ public class WorkflowOrchestratorRoute extends RouteBuilder {
 
         for (int i = 0; i <= maxGroupId; i++) {
             List<WorkflowStep> group = groupedSteps.get(i);
-            if (group == null) continue;
+            if (group == null)
+                continue;
 
             if (group.size() == 1) {
                 WorkflowStep step = group.get(0);
-                //Map<String, Object> result = executeStep(step, context, headers);
-                Map<String, Object> result = executeStep(step,exchange);
+                // Map<String, Object> result = executeStep(step, context, headers);
+                Map<String, Object> result = executeStep(step, exchange);
                 context.putAll(result);
                 auditLog.add(result);
             } else {
-                List<Map<String, Object>> results = group.parallelStream()
-                        .map(step -> executeStep(step,exchange))
+                List<Map<String, Object>> results = group.parallelStream().map(step -> executeStep(step, exchange))
                         .collect(Collectors.toList());
 
                 for (Map<String, Object> res : results) {
@@ -120,7 +116,8 @@ public class WorkflowOrchestratorRoute extends RouteBuilder {
         return processor.process(step, exchange);
     }
 
-    public Map<String,Object> executeWorkflow(Long workflowId, Map<String, Object> inputData, Map<String, String> headers) throws Exception {
+    public Map<String, Object> executeWorkflow(Long workflowId, Map<String, Object> inputData,
+            Map<String, String> headers) throws Exception {
         Exchange exchange = producerTemplate.request("direct:workflow-route", ex -> {
             ex.getIn().setHeader("workflowId", workflowId);
             ex.getIn().setHeader("inputHeaders", headers);
@@ -131,7 +128,7 @@ public class WorkflowOrchestratorRoute extends RouteBuilder {
             throw exchange.getException();
         }
 
-       // return exchange.getMessage().getBody(Object.class);
-       return exchange.getAllProperties();
+        // return exchange.getMessage().getBody(Object.class);
+        return exchange.getAllProperties();
     }
 }

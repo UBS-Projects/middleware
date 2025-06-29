@@ -1,25 +1,25 @@
-2025-06-24 08:19:32 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-06-24 08:19:33 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23.0.2 with PID 3960 (C:\Old D\Projects\middleware-backend\middleware\target\classes started by Mohammad.Imlaihat in C:\Old D\Projects\middleware-backend\middleware)
-2025-06-24 08:19:33 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
-2025-06-24 08:19:36 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
-2025-06-24 08:19:36 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-06-24 08:19:36 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
-2025-06-24 08:19:36 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-06-24 08:19:37 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
-2025-06-24 08:19:37 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-06-24 08:19:37 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
-2025-06-24 08:19:37 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-06-24 08:19:38 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-06-24 08:19:38 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@24b38e8f']
+2025-06-29 11:47:51 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-06-29 11:47:51 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23.0.2 with PID 25556 (C:\Old D\Projects\middleware-backend\middleware\target\classes started by Mohammad.Imlaihat in C:\Old D\Projects\middleware-backend\middleware)
+2025-06-29 11:47:51 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-29 11:47:55 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-06-29 11:47:55 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-29 11:47:55 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-06-29 11:47:55 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-29 11:47:55 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-06-29 11:47:55 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-29 11:47:56 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-06-29 11:47:56 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-06-29 11:47:56 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-06-29 11:47:56 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@2dc73024']
 	Database driver: undefined/unknown
 	Database version: 16.9
 	Autocommit mode: undefined/unknown
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-06-24 08:19:40 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-06-24 08:19:40 [main] WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
+2025-06-29 11:47:58 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-29 11:47:58 [main] WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
     alter table if exists destination_api 
        alter column auth_credentials set data type jsonb" via JDBC [ERROR: column "auth_credentials" cannot be cast automatically to type jsonb
   Hint: You might need to specify "USING auth_credentials::jsonb".]
@@ -78,12 +78,162 @@ Caused by: org.postgresql.util.PSQLException: ERROR: column "auth_credentials" c
 	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312)
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
 	... 37 common frames omitted
-2025-06-24 08:19:40 [main] WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
-    alter table if exists dynamic_routes 
-       alter column yaml_content set data type CLOB" via JDBC [ERROR: type "clob" does not exist]
+2025-06-29 11:47:58 [main] WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
+    create table dynamic_routes (
+        id bigint generated by default as identity,
+        active boolean not null,
+        comment varchar(255),
+        created_at timestamp(6),
+        default_version boolean not null,
+        description varchar(255),
+        http_method varchar(255),
+        path varchar(255),
+        route_id varchar(255),
+        version integer not null,
+        yaml_content CLOB,
+        primary key (id)
+    )" via JDBC [ERROR: type "clob" does not exist
+  Position: 419]
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
-    alter table if exists dynamic_routes 
-       alter column yaml_content set data type CLOB" via JDBC [ERROR: type "clob" does not exist]
+    create table dynamic_routes (
+        id bigint generated by default as identity,
+        active boolean not null,
+        comment varchar(255),
+        created_at timestamp(6),
+        default_version boolean not null,
+        description varchar(255),
+        http_method varchar(255),
+        path varchar(255),
+        route_id varchar(255),
+        version integer not null,
+        yaml_content CLOB,
+        primary key (id)
+    )" via JDBC [ERROR: type "clob" does not exist
+  Position: 419]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:576)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:516)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.createTable(AbstractSchemaMigrator.java:316)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:80)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:233)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:112)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:280)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1430)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:324)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:463)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1517)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1859)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:347)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.middleware.MiddlewareApplication.main(MiddlewareApplication.java:14)
+Caused by: org.postgresql.util.PSQLException: ERROR: type "clob" does not exist
+  Position: 419
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:517)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:434)
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:356)
+	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:341)
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:317)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 37 common frames omitted
+2025-06-29 11:48:00 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-06-29 11:48:00 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-29 11:48:01 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 236e578a-1c6b-43e1-8b95-902e4ee406bd
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-29 11:48:01 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 61 mappings in 'requestMappingHandlerMapping'
+2025-06-29 11:48:01 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-06-29 11:48:01 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-06-29 11:48:01 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-06-29 11:48:02 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-06-29 11:48:02 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-06-29 11:48:02 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-06-29 11:48:02 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-06-29 11:48:02 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-06-29 11:48:02 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-06-29 11:48:02 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-06-29 11:48:02 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@6cee8f5d
+2025-06-29 11:48:03 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-06-29 11:48:03 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-06-29 11:48:03 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-06-29 11:48:03 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-06-29 11:48:03 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:1)
+2025-06-29 11:48:03 [main] INFO  o.a.c.i.engine.AbstractCamelContext -     Started workflow-orchestrator (direct://workflow-route)
+2025-06-29 11:48:03 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 23ms (build:0ms init:0ms start:23ms)
+2025-06-29 11:48:03 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 13.085 seconds (process running for 14.507)
+2025-06-29 11:48:05 [RMI TCP Connection(2)-127.0.0.1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-29 11:48:05 [RMI TCP Connection(2)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-29 11:48:05 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-06-29 11:48:05 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-06-29 11:48:05 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-06-29 11:48:05 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@70efd6cf
+2025-06-29 11:48:05 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@1261fd82
+2025-06-29 11:48:05 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-06-29 11:48:05 [RMI TCP Connection(2)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+2025-06-29 12:15:13 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-06-29 12:15:13 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23.0.2 with PID 35828 (C:\Old D\Projects\middleware-backend\middleware\target\classes started by Mohammad.Imlaihat in C:\Old D\Projects\middleware-backend\middleware)
+2025-06-29 12:15:13 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-29 12:15:18 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-06-29 12:15:18 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-29 12:15:18 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-06-29 12:15:18 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-29 12:15:18 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-06-29 12:15:19 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-29 12:15:19 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-06-29 12:15:19 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-06-29 12:15:19 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-06-29 12:15:20 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@e5864c2']
+	Database driver: undefined/unknown
+	Database version: 16.9
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-29 12:15:22 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-29 12:15:22 [main] WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
+    alter table if exists destination_api 
+       alter column auth_credentials set data type jsonb" via JDBC [ERROR: column "auth_credentials" cannot be cast automatically to type jsonb
+  Hint: You might need to specify "USING auth_credentials::jsonb".]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
+    alter table if exists destination_api 
+       alter column auth_credentials set data type jsonb" via JDBC [ERROR: column "auth_credentials" cannot be cast automatically to type jsonb
+  Hint: You might need to specify "USING auth_credentials::jsonb".]
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
 	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:576)
 	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:516)
@@ -122,7 +272,8 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
 	at com.middleware.MiddlewareApplication.main(MiddlewareApplication.java:14)
-Caused by: org.postgresql.util.PSQLException: ERROR: type "clob" does not exist
+Caused by: org.postgresql.util.PSQLException: ERROR: column "auth_credentials" cannot be cast automatically to type jsonb
+  Hint: You might need to specify "USING auth_credentials::jsonb".
 	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733)
 	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420)
 	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)
@@ -134,23 +285,23 @@ Caused by: org.postgresql.util.PSQLException: ERROR: type "clob" does not exist
 	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312)
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
 	... 37 common frames omitted
-2025-06-24 08:19:42 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
-2025-06-24 08:19:42 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-06-24 08:19:43 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+2025-06-29 12:15:25 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-06-29 12:15:26 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-29 12:15:26 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
 
-Using generated security password: 372fc4b1-e82c-4a4b-980c-7c1d1eb065ea
+Using generated security password: a7a30bb8-fab2-4847-87c6-9ec4c97cb302
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2025-06-24 08:19:43 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 61 mappings in 'requestMappingHandlerMapping'
-2025-06-24 08:19:43 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2025-06-24 08:19:43 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-06-24 08:19:43 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2025-06-24 08:19:44 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
-2025-06-24 08:19:44 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
-2025-06-24 08:19:44 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
-2025-06-24 08:19:44 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
-2025-06-24 08:19:44 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+2025-06-29 12:15:27 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 61 mappings in 'requestMappingHandlerMapping'
+2025-06-29 12:15:27 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-06-29 12:15:27 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-06-29 12:15:27 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-06-29 12:15:28 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-06-29 12:15:28 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-06-29 12:15:28 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-06-29 12:15:28 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-06-29 12:15:28 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
   Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
   NOT STARTED.
   Currently in standby mode.
@@ -158,23 +309,655 @@ This generated password is for development use only. Your security configuration
   Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
   Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
 
-2025-06-24 08:19:44 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
-2025-06-24 08:19:44 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
-2025-06-24 08:19:44 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@52076187
-2025-06-24 08:19:45 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
-2025-06-24 08:19:45 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
-2025-06-24 08:19:45 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
-2025-06-24 08:19:46 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
-2025-06-24 08:19:46 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:1)
-2025-06-24 08:19:46 [main] INFO  o.a.c.i.engine.AbstractCamelContext -     Started workflow-orchestrator (direct://workflow-route)
-2025-06-24 08:19:46 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 20ms (build:0ms init:0ms start:20ms)
-2025-06-24 08:19:46 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 13.749 seconds (process running for 15.409)
-2025-06-24 08:19:46 [RMI TCP Connection(2)-127.0.0.1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-06-24 08:19:46 [RMI TCP Connection(2)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2025-06-24 08:19:46 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
-2025-06-24 08:19:46 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
-2025-06-24 08:19:46 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
-2025-06-24 08:19:46 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@8d0dcd9
-2025-06-24 08:19:46 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@2fa7a4d3
-2025-06-24 08:19:46 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2025-06-24 08:19:46 [RMI TCP Connection(2)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2025-06-29 12:15:28 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-06-29 12:15:28 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-06-29 12:15:28 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@72c3bc5e
+2025-06-29 12:15:29 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-06-29 12:15:29 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-06-29 12:15:29 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-06-29 12:15:30 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-06-29 12:15:30 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:1)
+2025-06-29 12:15:30 [main] INFO  o.a.c.i.engine.AbstractCamelContext -     Started workflow-orchestrator (direct://workflow-route)
+2025-06-29 12:15:30 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 43ms (build:0ms init:0ms start:43ms)
+2025-06-29 12:15:30 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 17.078 seconds (process running for 18.415)
+2025-06-29 12:15:31 [RMI TCP Connection(2)-127.0.0.1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-29 12:15:31 [RMI TCP Connection(2)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-29 12:15:31 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-06-29 12:15:31 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-06-29 12:15:31 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-06-29 12:15:31 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@285cf30a
+2025-06-29 12:15:31 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@3b5b6df4
+2025-06-29 12:15:31 [RMI TCP Connection(2)-127.0.0.1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-06-29 12:15:31 [RMI TCP Connection(2)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 32 ms
+2025-06-29 12:16:03 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?page=0&size=5", parameters={masked}
+2025-06-29 12:16:03 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:16:03 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=5
+2025-06-29 12:16:03 [http-nio-8081-exec-2] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-06-29 12:16:03 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:16:03 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
+2025-06-29 12:16:03 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:17:47 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/upload?comments=initial%20upload", parameters={masked}
+2025-06-29 12:17:47 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#upload(String, String)
+2025-06-29 12:17:47 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to ["- route:<EOL>    id: route-1348<EOL>    description: this is description for route<EOL>    autoStartup: false<EOL>   (truncated)..."]
+2025-06-29 12:17:48 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - found [] versions
+2025-06-29 12:17:49 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Uploaded route route-1348 version 1
+2025-06-29 12:17:49 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-06-29 12:17:49 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing ["Route route-1348 uploaded as version 1"]
+2025-06-29 12:17:49 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:18:01 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?page=0&size=5", parameters={masked}
+2025-06-29 12:18:01 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:18:01 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=5
+2025-06-29 12:18:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:18:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-06-29 12:18:02 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:18:55 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?active=true&page=0&size=5", parameters={masked}
+2025-06-29 12:18:55 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:18:55 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=5
+2025-06-29 12:18:56 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:18:56 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-06-29 12:18:56 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:19:07 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?active=false&page=0&size=5", parameters={masked}
+2025-06-29 12:19:07 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:19:07 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=5
+2025-06-29 12:19:07 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:19:07 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
+2025-06-29 12:19:07 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:20:30 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?routid=route-1348&page=0&size=5", parameters={masked}
+2025-06-29 12:20:30 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:20:30 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=5
+2025-06-29 12:20:30 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:20:30 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-06-29 12:20:30 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:20:40 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?routid=route-1342&page=0&size=5", parameters={masked}
+2025-06-29 12:20:40 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:20:40 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=5
+2025-06-29 12:20:40 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:20:40 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-06-29 12:20:40 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:21:10 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?routeId=route-1342&page=0&size=5", parameters={masked}
+2025-06-29 12:21:10 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:21:10 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=5
+2025-06-29 12:21:10 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:21:10 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
+2025-06-29 12:21:10 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:21:23 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?routeId=route-1348&page=0&size=5", parameters={masked}
+2025-06-29 12:21:23 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:21:23 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=5
+2025-06-29 12:21:23 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:21:23 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-06-29 12:21:23 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:23:21 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - "ERROR" dispatch for POST "/error", parameters={}
+2025-06-29 12:23:21 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2025-06-29 12:23:21 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:23:21 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{timestamp=Sun Jun 29 12:23:21 EEST 2025, status=404, error=Not Found, path=/camel/workflow/test}]
+2025-06-29 12:23:21 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Exiting from "ERROR" dispatch, status 404
+2025-06-29 12:24:59 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?createdAfter=2024-12-01T00:00:00&createdBefore=2025-01-01T00:00:00", parameters={masked}
+2025-06-29 12:24:59 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:24:59 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=10
+2025-06-29 12:24:59 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:24:59 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
+2025-06-29 12:24:59 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:25:17 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?createdAfter=2024-12-01T00:00:00&createdBefore=2025-07-01T00:00:00", parameters={masked}
+2025-06-29 12:25:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:25:17 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=10
+2025-06-29 12:25:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:25:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-06-29 12:25:17 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:25:38 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?createdAfter=2024-12-01&createdBefore=2025-07-01", parameters={masked}
+2025-06-29 12:25:38 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:25:38 [http-nio-8081-exec-2] DEBUG o.s.web.method.HandlerMethod - Could not resolve parameter [9] in public org.springframework.data.domain.Page<com.middleware.backend.kaotocamel.model.DynamicRouteEntity> com.middleware.backend.kaotocamel.controller.DynamicRouteController.getFilteredRoutes(java.lang.String,java.lang.String,java.lang.Integer,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String,java.lang.String,java.time.LocalDateTime,java.time.LocalDateTime,int,int): Method parameter 'createdAfter': Failed to convert value of type 'java.lang.String' to required type 'java.time.LocalDateTime'; Failed to convert from type [java.lang.String] to type [@org.springframework.web.bind.annotation.RequestParam @org.springframework.format.annotation.DateTimeFormat java.time.LocalDateTime] for value [2024-12-01]
+2025-06-29 12:25:38 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Using @ExceptionHandler com.middleware.backend.exception.GlobalExceptionHandler#handleTypeMismatch(MethodArgumentTypeMismatchException)
+2025-06-29 12:25:38 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:25:38 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{message=Invalid parameter type: createdAfter, timestamp=2025-06-29T12:25:38.522869900}]
+2025-06-29 12:25:38 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'createdAfter': Failed to convert value of type 'java.lang.String' to required type 'java.time.LocalDateTime'; Failed to convert from type [java.lang.String] to type [@org.springframework.web.bind.annotation.RequestParam @org.springframework.format.annotation.DateTimeFormat java.time.LocalDateTime] for value [2024-12-01]]
+2025-06-29 12:25:38 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2025-06-29 12:26:00 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?createdAfter=2024-12-01T00:00:00&createdBefore=2025-07-01T00:00:00", parameters={masked}
+2025-06-29 12:26:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:26:00 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=10
+2025-06-29 12:26:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:26:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-06-29 12:26:00 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:30:19 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes?routeId=route-1348&description=payment&version=2&path=/workflow/test&httpMethod=POST&active=true&defaultVersion=false&createdAfter=2024-12-01T00:00:00&createdBefore=2025-01-01T00:00:00&page=0&size=10", parameters={masked}
+2025-06-29 12:30:19 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getFilteredRoutes(String, String, Integer, String, String, Boolean, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-06-29 12:30:19 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=10
+2025-06-29 12:30:19 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:30:19 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
+2025-06-29 12:30:19 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:31:18 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/deploy?comments=initial%20upload", parameters={masked}
+2025-06-29 12:31:18 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Using @ExceptionHandler com.middleware.backend.exception.GlobalExceptionHandler#handleGenericException(Exception)
+2025-06-29 12:31:18 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:31:18 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{message=An unexpected error occurred, error=Request method 'POST' is not supported, timestamp=2025- (truncated)...]
+2025-06-29 12:31:18 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2025-06-29 12:31:18 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 500 INTERNAL_SERVER_ERROR
+2025-06-29 12:32:16 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-06-29 12:32:16 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23.0.2 with PID 30668 (C:\Old D\Projects\middleware-backend\middleware\target\classes started by Mohammad.Imlaihat in C:\Old D\Projects\middleware-backend\middleware)
+2025-06-29 12:32:16 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-29 12:32:31 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-06-29 12:32:31 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-29 12:32:31 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-06-29 12:32:31 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-29 12:32:33 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-06-29 12:32:34 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-29 12:32:35 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-06-29 12:32:35 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-06-29 12:32:37 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-06-29 12:32:37 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@2dc73024']
+	Database driver: undefined/unknown
+	Database version: 16.9
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-29 12:32:42 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-29 12:32:42 [main] WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
+    alter table if exists destination_api 
+       alter column auth_credentials set data type jsonb" via JDBC [ERROR: column "auth_credentials" cannot be cast automatically to type jsonb
+  Hint: You might need to specify "USING auth_credentials::jsonb".]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
+    alter table if exists destination_api 
+       alter column auth_credentials set data type jsonb" via JDBC [ERROR: column "auth_credentials" cannot be cast automatically to type jsonb
+  Hint: You might need to specify "USING auth_credentials::jsonb".]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:576)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:516)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.migrateTable(AbstractSchemaMigrator.java:334)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:84)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:233)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:112)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:280)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1430)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:324)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:463)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1517)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1859)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:347)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.middleware.MiddlewareApplication.main(MiddlewareApplication.java:14)
+Caused by: org.postgresql.util.PSQLException: ERROR: column "auth_credentials" cannot be cast automatically to type jsonb
+  Hint: You might need to specify "USING auth_credentials::jsonb".
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:517)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:434)
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:356)
+	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:341)
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:317)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 37 common frames omitted
+2025-06-29 12:32:47 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-06-29 12:32:48 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-29 12:32:49 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: f219401d-b406-4818-b104-15e798e64b46
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-29 12:32:50 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 61 mappings in 'requestMappingHandlerMapping'
+2025-06-29 12:32:50 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-06-29 12:32:50 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-06-29 12:32:50 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-06-29 12:32:52 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-06-29 12:32:52 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-06-29 12:32:52 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-06-29 12:32:52 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-06-29 12:32:52 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-06-29 12:32:52 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-06-29 12:32:52 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-06-29 12:32:52 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@2465e8be
+2025-06-29 12:32:54 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-06-29 12:32:54 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-06-29 12:32:54 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-06-29 12:32:54 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-06-29 12:32:54 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:1)
+2025-06-29 12:32:54 [main] INFO  o.a.c.i.engine.AbstractCamelContext -     Started workflow-orchestrator (direct://workflow-route)
+2025-06-29 12:32:54 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 25ms (build:0ms init:0ms start:25ms)
+2025-06-29 12:32:54 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 39.819 seconds (process running for 43.819)
+2025-06-29 12:33:00 [http-nio-8081-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-29 12:33:00 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-29 12:33:00 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-06-29 12:33:00 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-06-29 12:33:00 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-06-29 12:33:00 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@4ed56cfd
+2025-06-29 12:33:00 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@561a4a5
+2025-06-29 12:33:00 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-06-29 12:33:00 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 6 ms
+2025-06-29 12:33:00 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/deploy?comments=initial%20upload", parameters={masked}
+2025-06-29 12:33:00 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#upload(String, String)
+2025-06-29 12:33:00 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to ["- route:<EOL>    id: route-1348<EOL>    description: this is description for route<EOL>    autoStartup: false<EOL>   (truncated)..."]
+2025-06-29 12:33:01 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - found [DynamicRouteEntity(id=1, routeId=route-1348, description=this is description for route, version=1, path=/workflow/test, httpMethod=post, yamlContent=- route:
+    id: route-1348
+    description: this is description for route
+    autoStartup: false
+    from:
+      id: from-2705
+      description: this is a disc for rest from
+      uri: rest
+      parameters:
+        method: post
+        path: /workflow/test
+      steps:
+        - log:
+            id: log-1398
+            message: ${exchange}
+        - setHeader:
+            id: setHeader-2869
+            name: HTTP_PATH
+            simple:
+              id: HTTP_PATH
+              expression: /workflow/test
+        - to:
+            id: to-1861
+            uri: bean
+            parameters:
+              beanName: RequestValidator
+              method: validateJsonBody( ${exchange})
+        - log:
+            id: log-4755
+            message: Passed validation
+    trace: true
+, active=true, defaultVersion=true, createdAt=2025-06-29T12:17:48.910158, comment=null)] versions
+2025-06-29 12:33:01 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Uploaded route route-1348 version 2
+2025-06-29 12:33:01 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-06-29 12:33:01 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing ["Route route-1348 uploaded as version 2"]
+2025-06-29 12:33:01 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:34:31 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/route-1347/revert/1", parameters={}
+2025-06-29 12:34:31 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#revert(String, int)
+2025-06-29 12:34:32 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-06-29 12:34:32 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing ["Version not found"]
+2025-06-29 12:34:32 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:35:04 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/route-1348/revert/1", parameters={}
+2025-06-29 12:35:04 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#revert(String, int)
+2025-06-29 12:35:04 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Using @ExceptionHandler com.middleware.backend.exception.GlobalExceptionHandler#handleRuntimeException(RuntimeException)
+2025-06-29 12:35:04 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:35:04 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{message=Unable to access lob stream, timestamp=2025-06-29T12:35:04.447340500}]
+2025-06-29 12:35:04 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.orm.jpa.JpaSystemException: Unable to access lob stream]
+2025-06-29 12:35:04 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2025-06-29 12:37:48 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-06-29 12:37:48 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23.0.2 with PID 36696 (C:\Old D\Projects\middleware-backend\middleware\target\classes started by Mohammad.Imlaihat in C:\Old D\Projects\middleware-backend\middleware)
+2025-06-29 12:37:48 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-29 12:38:10 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-06-29 12:38:10 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-29 12:38:10 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-06-29 12:38:11 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-29 12:38:13 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-06-29 12:38:14 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-29 12:38:15 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-06-29 12:38:15 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-06-29 12:38:17 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-06-29 12:38:18 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@3d9c8c3c']
+	Database driver: undefined/unknown
+	Database version: 16.9
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-29 12:38:27 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-29 12:38:27 [main] WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
+    alter table if exists destination_api 
+       alter column auth_credentials set data type jsonb" via JDBC [ERROR: column "auth_credentials" cannot be cast automatically to type jsonb
+  Hint: You might need to specify "USING auth_credentials::jsonb".]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
+    alter table if exists destination_api 
+       alter column auth_credentials set data type jsonb" via JDBC [ERROR: column "auth_credentials" cannot be cast automatically to type jsonb
+  Hint: You might need to specify "USING auth_credentials::jsonb".]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:576)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:516)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.migrateTable(AbstractSchemaMigrator.java:334)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:84)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:233)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:112)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:280)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1430)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:324)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:463)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1517)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1859)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:347)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.middleware.MiddlewareApplication.main(MiddlewareApplication.java:14)
+Caused by: org.postgresql.util.PSQLException: ERROR: column "auth_credentials" cannot be cast automatically to type jsonb
+  Hint: You might need to specify "USING auth_credentials::jsonb".
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:517)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:434)
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:356)
+	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:341)
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:317)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 37 common frames omitted
+2025-06-29 12:38:35 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-06-29 12:38:38 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-29 12:38:39 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 405c21d4-5162-464b-9200-a22673291f9e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-29 12:38:41 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 60 mappings in 'requestMappingHandlerMapping'
+2025-06-29 12:38:41 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-06-29 12:38:42 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-06-29 12:38:42 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-06-29 12:38:46 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-06-29 12:38:46 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-06-29 12:38:46 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-06-29 12:38:46 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-06-29 12:38:46 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-06-29 12:38:46 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-06-29 12:38:46 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-06-29 12:38:46 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@486cb71f
+2025-06-29 12:38:49 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-06-29 12:38:49 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-06-29 12:38:49 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-06-29 12:38:52 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-06-29 12:38:52 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:1)
+2025-06-29 12:38:52 [main] INFO  o.a.c.i.engine.AbstractCamelContext -     Started workflow-orchestrator (direct://workflow-route)
+2025-06-29 12:38:52 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 191ms (build:0ms init:0ms start:191ms)
+2025-06-29 12:38:52 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 65.288 seconds (process running for 68.06)
+2025-06-29 12:40:01 [http-nio-8081-exec-4] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-29 12:40:01 [http-nio-8081-exec-4] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-29 12:40:01 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-06-29 12:40:01 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-06-29 12:40:01 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-06-29 12:40:01 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@299a0651
+2025-06-29 12:40:01 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@502356ec
+2025-06-29 12:40:01 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-06-29 12:40:01 [http-nio-8081-exec-4] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 112 ms
+2025-06-29 12:40:02 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/route-1348/revert/1", parameters={}
+2025-06-29 12:40:02 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#revert(String, int)
+2025-06-29 12:40:03 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Deactivated route route-1348
+2025-06-29 12:40:04 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Reverted route-1348 to version 1
+2025-06-29 12:40:04 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-06-29 12:40:04 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing ["Reverted to route route-1348 version 1"]
+2025-06-29 12:40:04 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:42:52 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/validate", parameters={}
+2025-06-29 12:42:52 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#validateRoute(RouteTestRequest)
+2025-06-29 12:42:53 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [RouteTestRequest(yamlContent=- route:<EOL>    id: route-1348<EOL>    description: route_descrption<EOL>    autoS (truncated)...]
+2025-06-29 12:42:53 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Using @ExceptionHandler com.middleware.backend.exception.GlobalExceptionHandler#handleRuntimeException(RuntimeException)
+2025-06-29 12:42:53 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:42:53 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{message=Failed to extract route metadata from YAML, timestamp=2025-06-29T12:42:53.092144900}]
+2025-06-29 12:42:53 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.RuntimeException: Failed to extract route metadata from YAML]
+2025-06-29 12:42:53 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2025-06-29 12:46:15 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/validateRoute", parameters={}
+2025-06-29 12:46:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Using @ExceptionHandler com.middleware.backend.exception.GlobalExceptionHandler#handleGenericException(Exception)
+2025-06-29 12:46:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-06-29 12:46:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{message=An unexpected error occurred, error=Request method 'POST' is not supported, timestamp=2025- (truncated)...]
+2025-06-29 12:46:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2025-06-29 12:46:15 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 500 INTERNAL_SERVER_ERROR
+2025-06-29 12:46:50 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/validate", parameters={}
+2025-06-29 12:46:50 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#validateRoute(RouteTestRequest)
+2025-06-29 12:46:50 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [RouteTestRequest(yamlContent=- route:<EOL>    from:<EOL>      uri: direct:missingId<EOL>      steps:<EOL>        - l (truncated)...]
+2025-06-29 12:46:50 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json]
+2025-06-29 12:46:50 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [RouteValidationResult(valid=false, errorMessage=Missing route ID in YAML.)]
+2025-06-29 12:46:50 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/test", parameters={}
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#testRoute(RouteTestRequest)
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [RouteTestRequest(yamlContent=- route:<EOL>    id: testRoute<EOL>    from:<EOL>      uri: rest<EOL>      parameters:<EOL> (truncated)...]
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG c.m.b.k.s.RouteValidationService - 
+
+ Extracted metadata: {id=testRoute_test}
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG c.m.b.k.s.RouteValidationService - 
+
+ Modified YAML: - route:
+    id: testRoute_test
+    from:
+      uri: direct:testRoute
+      steps:
+      - setBody:
+          constant: Hello from test
+      - log: ${body}
+
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG c.m.b.k.s.RouteValidationService - Registered routeId: workflow-orchestrator
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG c.m.b.k.s.RouteValidationService - Registered routeId: route-1348
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG c.m.b.k.s.RouteValidationService - Registered routeId: testRoute_test
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG c.m.b.k.s.RouteValidationService - routeId: testRoute_test
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG c.m.b.k.s.RouteValidationService - 
+
+ Route status: Started
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG c.m.b.k.s.RouteValidationService - 
+
+Extracted Uri direct://testRoute
+2025-06-29 12:47:21 [http-nio-8081-exec-10] INFO  t.yaml:8 - Hello from test
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG c.m.b.k.s.RouteValidationService - 
+
+ Route status from final : Started
+2025-06-29 12:47:21 [http-nio-8081-exec-10] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped testRoute_test (direct://testRoute)
+2025-06-29 12:47:21 [http-nio-8081-exec-10] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown testRoute_test (direct://testRoute)
+2025-06-29 12:47:21 [http-nio-8081-exec-10] INFO  c.m.b.k.s.RouteValidationService - Stopped and removed temporary route: testRoute_test
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json]
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [RouteTestResult(success=true, output=Hello from test, errorMessage=null)]
+2025-06-29 12:47:21 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-06-29 12:47:37 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/test", parameters={}
+2025-06-29 12:47:37 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#testRoute(RouteTestRequest)
+2025-06-29 12:47:37 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [RouteTestRequest(yamlContent=- route:<EOL>    id: badTest<EOL>    steps:<EOL>        - log: 'Missing from block' (truncated)...]
+2025-06-29 12:47:37 [http-nio-8081-exec-4] DEBUG c.m.b.k.s.RouteValidationService - 
+
+ Extracted metadata: {id=badTest_test}
+2025-06-29 12:47:37 [http-nio-8081-exec-4] DEBUG c.m.b.k.s.RouteValidationService - 
+
+ Modified YAML: - route:
+    id: badTest_test
+    steps:
+    - log: Missing from block
+
+2025-06-29 12:47:37 [http-nio-8081-exec-4] ERROR c.m.b.k.s.RouteValidationService - Failed to start test route: Failed to load route: Unsupported field: steps
+ in inline:test-route-f1591b43-184a-49ab-8267-cd09ef3ec838.yaml, line 2, column 5:
+        id: badTest_test
+        ^
+
+java.lang.RuntimeException: Failed to load route: Unsupported field: steps
+ in inline:test-route-f1591b43-184a-49ab-8267-cd09ef3ec838.yaml, line 2, column 5:
+        id: badTest_test
+        ^
+
+	at com.middleware.backend.kaotocamel.service.RouteValidationService.loadRoute(RouteValidationService.java:134)
+	at com.middleware.backend.kaotocamel.service.RouteValidationService.testRoute(RouteValidationService.java:85)
+	at com.middleware.backend.kaotocamel.controller.DynamicRouteController.testRoute(DynamicRouteController.java:96)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:243)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:114)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+Caused by: org.apache.camel.dsl.yaml.common.exception.UnsupportedFieldException: Unsupported field: steps
+ in inline:test-route-f1591b43-184a-49ab-8267-cd09ef3ec838.yaml, line 2, column 5:
+        id: badTest_test
+        ^
+
+	at org.apache.camel.dsl.yaml.deserializers.RouteDefinitionDeserializer.setProperties(RouteDefinitionDeserializer.java:142)
+	at org.apache.camel.dsl.yaml.deserializers.RouteDefinitionDeserializer.setProperties(RouteDefinitionDeserializer.java:34)
+	at org.apache.camel.dsl.yaml.common.YamlDeserializerBase.construct(YamlDeserializerBase.java:66)
+	at org.apache.camel.dsl.yaml.common.YamlDeserializationContext.lambda$resolve$1(YamlDeserializationContext.java:198)
+	at org.apache.camel.dsl.yaml.YamlRoutesBuilderLoader$1.configure(YamlRoutesBuilderLoader.java:150)
+	at org.apache.camel.builder.RouteBuilder.checkInitialized(RouteBuilder.java:780)
+	at org.apache.camel.builder.RouteBuilder.configureRoutes(RouteBuilder.java:725)
+	at org.apache.camel.builder.RouteBuilder.prepareModel(RouteBuilder.java:648)
+	at org.apache.camel.builder.RouteBuilder.addRoutesToCamelContext(RouteBuilder.java:666)
+	at org.apache.camel.impl.engine.AbstractCamelContext.addRoutes(AbstractCamelContext.java:983)
+	at com.middleware.backend.kaotocamel.service.RouteValidationService.loadRoute(RouteValidationService.java:132)
+	... 119 common frames omitted
+2025-06-29 12:47:37 [http-nio-8081-exec-4] DEBUG c.m.b.k.s.RouteValidationService - 
+
+ Route status from final : null
+2025-06-29 12:47:37 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json]
+2025-06-29 12:47:37 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [RouteTestResult(success=false, output=null, errorMessage=Failed to load route: Unsupported field: st (truncated)...]
+2025-06-29 12:47:37 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST

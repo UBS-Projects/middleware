@@ -1,0 +1,47 @@
+{
+	"info": {
+		"_postman_id": "bd6cadf4-d135-4201-9b93-b08f31804be1",
+		"name": "Kaoto Camel Route Loader",
+		"description": "Test loading YAML routes into Camel via REST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44877713",
+		"_collection_link": "https://mohammad-7955556.postman.co/workspace/mohammad's-Workspace~5140c990-2650-4004-8386-4283f3e3d64f/collection/44877713-bd6cadf4-d135-4201-9b93-b08f31804be1?action=share&source=collection_link&creator=44877713"
+	},
+	"item": [
+		{
+			"name": "Load YAML Route",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/plain"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "- route:\n    id: route-1347\n    from:\n      id: from-1022\n      uri: timer\n      parameters:\n        period: \"1000\"\n        timerName: template\n      steps:\n        - log:\n            id: log-1398\n            message: ${body}\n",
+					"options": {
+						"raw": {
+							"language": "plain"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/routes/load",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"routes",
+						"load"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
