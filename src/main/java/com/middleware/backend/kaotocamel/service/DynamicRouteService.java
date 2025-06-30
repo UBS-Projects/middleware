@@ -195,12 +195,15 @@ public class DynamicRouteService {
     public Page<DynamicRouteEntity> getAllRoutes(Pageable pageable) {
         log.info("Fetching all routes with pagination: page={}, size={}", pageable.getPageNumber(),
                 pageable.getPageSize());
+        System.out.println("Samer*****************777777777777777");
+
         return routeRepository.findAll(pageable);
     }
 
     public Page<DynamicRouteEntity> getAllRoutes(Specification<DynamicRouteEntity> spec, Pageable pageable) {
         log.info("Fetching all routes with pagination: page={}, size={}", pageable.getPageNumber(),
                 pageable.getPageSize());
+        System.out.println("Mohammad*****************777777777777777");
         return routeRepository.findAll(spec, pageable);
     }
 
@@ -380,7 +383,6 @@ public class DynamicRouteService {
      */
     public Page<DynamicRouteEntity> getLatestRoutesOptimized(Pageable pageable) {
         long startTime = System.currentTimeMillis();
-
         try {
             log.debug("Attempting native query for latest routes");
 
@@ -415,7 +417,6 @@ public class DynamicRouteService {
             Boolean active, String comment, String yamlContains,
             LocalDateTime createdAfter, LocalDateTime createdBefore,
             Pageable pageable) {
-
         long startTime = System.currentTimeMillis();
 
         try {
@@ -564,7 +565,7 @@ public class DynamicRouteService {
         return Specification
                 .where(DynamicRouteSpecification.hasField("routeId", routeId))
                 .and(DynamicRouteSpecification.hasField("description", description))
-                .and(DynamicRouteSpecification.hasField("path", path))
+                .and(DynamicRouteSpecification.containsIgnoreCase("path", path))
                 .and(DynamicRouteSpecification.hasField("httpMethod", httpMethod))
                 .and(DynamicRouteSpecification.hasField("active", active))
                 .and(DynamicRouteSpecification.containsComment(comment))

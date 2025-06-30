@@ -92,7 +92,7 @@ public interface DynamicRouteRepository
               AND (:active IS NULL OR active = :active)
               AND (:yamlContains IS NULL OR yaml_content ILIKE CONCAT('%', :yamlContains, '%'))
               AND (:httpMethod IS NULL OR http_method ILIKE CONCAT('%', :httpMethod, '%'))
-              AND (:path IS NULL OR path ILIKE CONCAT('%', :path, '%'))
+              AND (:path IS NULL OR path ILIKE '%' || :path || '%')
               AND (:description IS NULL OR description ILIKE CONCAT('%', :description, '%'))
               AND (:comment IS NULL OR comment ILIKE CONCAT('%', :comment, '%'))
               AND (:createdAfter IS NULL OR created_at >= :createdAfter)

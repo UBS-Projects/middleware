@@ -27,4 +27,13 @@ public class DynamicRouteSpecification {
     public static Specification<DynamicRouteEntity> createdBefore(LocalDateTime to) {
         return (root, query, cb) -> to == null ? null : cb.lessThanOrEqualTo(root.get("createdAt"), to);
     }
+    public static Specification<DynamicRouteEntity> containsIgnoreCase(String field, String value) {
+        return (root, query, cb) -> {
+            if (value == null || value.trim().isEmpty()) {
+                return cb.conjunction();
+            }
+            return cb.like(cb.lower(root.get(field)), "%" + value.toLowerCase() + "%");
+        };
+    }
+
 }

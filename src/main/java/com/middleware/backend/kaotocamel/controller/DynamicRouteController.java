@@ -115,7 +115,7 @@ public class DynamicRouteController {
                 .where(DynamicRouteSpecification.hasField("routeId", routeId))
                 .and(DynamicRouteSpecification.hasField("description", description))
                 .and(DynamicRouteSpecification.hasField("version", version))
-                .and(DynamicRouteSpecification.hasField("path", path))
+                .and(DynamicRouteSpecification.containsIgnoreCase("path", path))
                 .and(DynamicRouteSpecification.hasField("httpMethod", httpMethod))
                 .and(DynamicRouteSpecification.hasField("active", active))
                 .and(DynamicRouteSpecification.hasField("defaultVersion", defaultVersion))
