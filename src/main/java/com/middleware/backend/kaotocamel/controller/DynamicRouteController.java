@@ -3,6 +3,8 @@ package com.middleware.backend.kaotocamel.controller;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.stream.Stream;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,106 +32,102 @@ import com.middleware.backend.kaotocamel.service.RouteValidationService;
 import com.middleware.backend.kaotocamel.spec.DynamicRouteSpecification;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/routes")
 @RequiredArgsConstructor
+@Slf4j
 public class DynamicRouteController {
 
     private final DynamicRouteService routeService;
     private final RouteValidationService routeValidationService;
 
-    //يستقبل YAML content للـ route
-    //يستخرج metadata (ID, description, path, method) من الـ YAML
-    //ينشئ version جديد للـ route
-    //يلغي تفعيل النسخ السابقة ويفعل النسخة الجديدة
-    //يحفظ في قاعدة البيانات ويسجل في audit log
     @PostMapping("/deploy")
-    public String upload(@RequestBody String yaml, @RequestParam(required = false) String comment) {
-        return routeService.uploadRoute(yaml, comment);
+    public ResponseEntity<String> upload(@RequestBody String yaml, @RequestParam(required = false) String comment) {
+        try {
+            String result = routeService.uploadRoute(yaml, comment);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Failed to deploy route: {}", e.getMessage());
+            return ResponseEntity.badRequest().body("Failed to deploy route: " + e.getMessage());
+        }
     }
-//    يلغي تفعيل route معين (soft delete)
-//    يوقف الـ route في Camel context
-//    يحدث الحالة في قاعدة البيانات
+
     @DeleteMapping("/{routeId}")
-    public String deactivate(@PathVariable String routeId) {
-        return routeService.deactivateRoute(routeId);
+    public ResponseEntity<String> deactivate(@PathVariable String routeId) {
+        try {
+            String result = routeService.deactivateRoute(routeId);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Failed to deactivate route {}: {}", routeId, e.getMessage());
+            return ResponseEntity.badRequest().body("Failed to deactivate route: " + e.getMessage());
+        }
     }
 
-//    يعود إلى نسخة محددة من الـ route
-//    يلغي النسخة الحالية ويفعل النسخة المطلوبة
-//    يعيد تحميل الـ route في Camel
     @PostMapping("/{routeId}/revert/{version}")
-    public String revert(@PathVariable String routeId, @PathVariable int version) {
-        return routeService.revertToVersion(routeId, version);
+    public ResponseEntity<String> revert(@PathVariable String routeId, @PathVariable int version) {
+        try {
+            String result = routeService.revertToVersion(routeId, version);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Failed to revert route {} to version {}: {}", routeId, version, e.getMessage());
+            return ResponseEntity.badRequest().body("Failed to revert route: " + e.getMessage());
+        }
     }
 
-//    يوقف route معين في Camel context
-//    يحدث حالة الـ active إلى false
     @PostMapping("/{routeId}/stop")
-    public String stop(@PathVariable String routeId) {
-        return routeService.stopRoute(routeId);
+    public ResponseEntity<String> stop(@PathVariable String routeId) {
+        try {
+            String result = routeService.stopRoute(routeId);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Failed to stop route {}: {}", routeId, e.getMessage());
+            return ResponseEntity.badRequest().body("Failed to stop route: " + e.getMessage());
+        }
     }
 
-//    يشغل آخر نسخة من الـ route
-//    يحمل الـ YAML ويشغله في Camel
-//    يحدث الحالة إلى active
     @PostMapping("/{routeId}/start")
-    public String start(@PathVariable String routeId) {
-        return routeService.startRoute(routeId);
+    public ResponseEntity<String> start(@PathVariable String routeId) {
+        try {
+            String result = routeService.startRoute(routeId);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Failed to start route {}: {}", routeId, e.getMessage());
+            return ResponseEntity.badRequest().body("Failed to start route: " + e.getMessage());
+        }
     }
 
-//    يتحقق من صحة YAML syntax
-//    يتأكد من وجود route ID و description
-//    يحاول تحميل الـ route مؤقتاً للتأكد من صحته
     @PostMapping(value = "/validate", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RouteValidationResult> validateRoute(@RequestBody RouteTestRequest request) {
-        RouteValidationResult result = routeValidationService.validateRoute(request.getYamlContent());
-        return result.isValid() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
+        try {
+            RouteValidationResult result = routeValidationService.validateRoute(request.getYamlContent());
+            return result.isValid() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
+        } catch (Exception e) {
+            log.error("Route validation failed: {}", e.getMessage());
+            RouteValidationResult errorResult = new RouteValidationResult();
+            errorResult.setValid(false);
+            errorResult.setErrorMessage("Validation failed: " + e.getMessage());
+            return ResponseEntity.badRequest().body(errorResult);
+        }
     }
 
-//    ينشئ نسخة معدلة من الـ YAML للاختبار
-//    يحمل الـ route مؤقتاً
-//    يرسل test message ويرجع النتيجة
-//    ينظف الـ route المؤقت بعد الانتهاء
     @PostMapping(value = "/test", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RouteTestResult> testRoute(@RequestBody RouteTestRequest request) {
-        RouteTestResult result = routeValidationService.testRoute(request.getYamlContent(), request.getTestMessage());
-        return result.isSuccess() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
-    }
-
-    //يسترجع قائمة الـ routes مع إمكانية الفلترة
-    //يدعم البحث بـ: routeId, description, version, path, httpMethod, active status
-    //يدعم فلترة بالتاريخ والبحث في YAML content
-    //يرجع النتائج مع pagination
-    @GetMapping
-    public Page<DynamicRouteEntity> getFilteredRoutes(@RequestParam(required = false) String routeId,
-            @RequestParam(required = false) String description, @RequestParam(required = false) Integer version,
-            @RequestParam(required = false) String path, @RequestParam(required = false) String httpMethod,
-            @RequestParam(required = false) Boolean active, @RequestParam(required = false) Boolean defaultVersion,
-            @RequestParam(required = false) String comment, @RequestParam(required = false) String yamlContains,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
-        Specification<DynamicRouteEntity> spec = Specification
-                .where(DynamicRouteSpecification.hasField("routeId", routeId))
-                .and(DynamicRouteSpecification.hasField("description", description))
-                .and(DynamicRouteSpecification.hasField("version", version))
-                .and(DynamicRouteSpecification.hasField("path", path))
-                .and(DynamicRouteSpecification.hasField("httpMethod", httpMethod))
-                .and(DynamicRouteSpecification.hasField("active", active))
-                .and(DynamicRouteSpecification.hasField("defaultVersion", defaultVersion))
-                .and(DynamicRouteSpecification.containsComment(comment))
-                .and(DynamicRouteSpecification.containsInYaml(yamlContains))
-                .and(DynamicRouteSpecification.createdAfter(createdAfter))
-                .and(DynamicRouteSpecification.createdBefore(createdBefore));
-
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        return routeService.getAllRoutes(spec, pageable);
+        try {
+            RouteTestResult result = routeValidationService.testRoute(request.getYamlContent(), request.getTestMessage());
+            return result.isSuccess() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
+        } catch (Exception e) {
+            log.error("Route test failed: {}", e.getMessage());
+            RouteTestResult errorResult = new RouteTestResult();
+            errorResult.setSuccess(false);
+            errorResult.setErrorMessage("Test failed: " + e.getMessage());
+            return ResponseEntity.badRequest().body(errorResult);
+        }
     }
 
     @GetMapping("/latest")
-    public ResponseEntity<Page<DynamicRouteEntity>> getLatestRoutes(
+    public ResponseEntity<Page<DynamicRouteEntity>> getRoutes(
             @RequestParam(required = false) String routeId,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) String path,
@@ -142,44 +140,45 @@ public class DynamicRouteController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
+        long startTime = System.currentTimeMillis();
+
         try {
-            // Validate pagination parameters
             if (page < 0 || size <= 0 || size > 100) {
-                 return ResponseEntity.badRequest().build();
+                return ResponseEntity.badRequest().build();
             }
 
             Pageable pageable = PageRequest.of(page, size);
 
-            // Check if any filters are provided
             boolean hasFilters = Stream.of(routeId, description, path, httpMethod, comment, yamlContains)
                     .anyMatch(Objects::nonNull) ||
                     active != null || createdAfter != null || createdBefore != null;
 
             Page<DynamicRouteEntity> result;
+            String queryType;
 
             if (hasFilters) {
                 result = routeService.getLatestRoutesWithFiltersOptimized(
                         routeId, description, path, httpMethod, active,
                         comment, yamlContains, createdAfter, createdBefore, pageable);
+                queryType = "filtered";
             } else {
                 result = routeService.getLatestRoutesOptimized(pageable);
+                queryType = "simple";
             }
 
-            // Add performance headers
             HttpHeaders headers = new HttpHeaders();
             headers.add("X-Total-Count", String.valueOf(result.getTotalElements()));
             headers.add("X-Total-Pages", String.valueOf(result.getTotalPages()));
             headers.add("X-Current-Page", String.valueOf(result.getNumber()));
             headers.add("X-Page-Size", String.valueOf(result.getSize()));
+            headers.add("X-Query-Type", queryType);
+            headers.add("X-Execution-Time", String.valueOf(System.currentTimeMillis() - startTime) + "ms");
 
             return ResponseEntity.ok().headers(headers).body(result);
 
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-
         } catch (Exception e) {
+            log.error("Error retrieving routes", e);
 
-            // Emergency fallback - return regular routes
             try {
                 Pageable pageable = PageRequest.of(page, size);
                 Page<DynamicRouteEntity> fallbackResult = routeService.getAllRoutes(pageable);
@@ -191,8 +190,141 @@ public class DynamicRouteController {
                 return ResponseEntity.ok().headers(headers).body(fallbackResult);
 
             } catch (Exception fallbackError) {
+                log.error("Fallback query also failed", fallbackError);
                 return ResponseEntity.internalServerError().build();
             }
+        }
+    }
+
+    @GetMapping("/all-versions")
+    public ResponseEntity<Page<DynamicRouteEntity>> getAllVersionsWithFilters(
+            @RequestParam(required = false) String routeId,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) Integer version,
+            @RequestParam(required = false) String path,
+            @RequestParam(required = false) String httpMethod,
+            @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) Boolean defaultVersion,
+            @RequestParam(required = false) String comment,
+            @RequestParam(required = false) String yamlContains,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        try {
+            Specification<DynamicRouteEntity> spec = Specification
+                    .where(DynamicRouteSpecification.hasField("routeId", routeId))
+                    .and(DynamicRouteSpecification.hasField("description", description))
+                    .and(DynamicRouteSpecification.hasField("version", version))
+                    .and(DynamicRouteSpecification.hasField("path", path))
+                    .and(DynamicRouteSpecification.hasField("httpMethod", httpMethod))
+                    .and(DynamicRouteSpecification.hasField("active", active))
+                    .and(DynamicRouteSpecification.hasField("defaultVersion", defaultVersion))
+                    .and(DynamicRouteSpecification.containsComment(comment))
+                    .and(DynamicRouteSpecification.containsInYaml(yamlContains))
+                    .and(DynamicRouteSpecification.createdAfter(createdAfter))
+                    .and(DynamicRouteSpecification.createdBefore(createdBefore));
+
+            Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+            Page<DynamicRouteEntity> result = routeService.getAllRoutes(spec, pageable);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("X-Query-Type", "all-versions");
+            headers.add("X-Total-Count", String.valueOf(result.getTotalElements()));
+
+            return ResponseEntity.ok().headers(headers).body(result);
+
+        } catch (Exception e) {
+            log.error("Error in all-versions query", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/{routeId}/versions")
+    public ResponseEntity<Page<DynamicRouteEntity>> getRouteVersions(
+            @PathVariable String routeId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+
+        try {
+            Pageable pageable = PageRequest.of(page, size, Sort.by("version").descending());
+            Page<DynamicRouteEntity> versions = routeService.getRoutesByRouteId(routeId, pageable);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("X-Route-Id", routeId);
+            headers.add("X-Total-Versions", String.valueOf(versions.getTotalElements()));
+
+            return ResponseEntity.ok().headers(headers).body(versions);
+
+        } catch (Exception e) {
+            log.error("Error retrieving versions for route: {}", routeId, e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/{routeId}/versions/{version}")
+    public ResponseEntity<DynamicRouteEntity> getSpecificVersion(
+            @PathVariable String routeId,
+            @PathVariable int version) {
+
+        try {
+            return routeService.getSpecificVersion(routeId, version)
+                    .map(route -> {
+                        HttpHeaders headers = new HttpHeaders();
+                        headers.add("X-Route-Id", routeId);
+                        headers.add("X-Version", String.valueOf(version));
+                        return ResponseEntity.ok().headers(headers).body(route);
+                    })
+                    .orElse(ResponseEntity.notFound().build());
+
+        } catch (Exception e) {
+            log.error("Error retrieving version {} for route: {}", version, routeId, e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<Page<DynamicRouteEntity>> getActiveRoutes(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        try {
+            Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+            Page<DynamicRouteEntity> result = routeService.getActiveRoutes(pageable);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("X-Query-Type", "active-only");
+            headers.add("X-Total-Count", String.valueOf(result.getTotalElements()));
+
+            return ResponseEntity.ok().headers(headers).body(result);
+
+        } catch (Exception e) {
+            log.error("Error retrieving active routes", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/health")
+    public ResponseEntity<Map<String, Object>> healthCheck() {
+        try {
+            long totalRoutes = routeService.getAllRoutes(PageRequest.of(0, 1)).getTotalElements();
+
+            Map<String, Object> health = new HashMap<>();
+            health.put("status", "UP");
+            health.put("timestamp", LocalDateTime.now());
+            health.put("totalRoutes", totalRoutes);
+
+            return ResponseEntity.ok(health);
+
+        } catch (Exception e) {
+            log.error("Health check failed", e);
+            Map<String, Object> health = new HashMap<>();
+            health.put("status", "DOWN");
+            health.put("timestamp", LocalDateTime.now());
+            health.put("error", e.getMessage());
+
+            return ResponseEntity.status(500).body(health);
         }
     }
 }

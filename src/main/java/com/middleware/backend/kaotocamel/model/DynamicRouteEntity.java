@@ -38,8 +38,7 @@ public class DynamicRouteEntity {
 
     // @Lob
     // private String yamlContent; // YAML source of the route
-    @Lob
-    @Column(name = "yaml_content", columnDefinition = "TEXT")
+     @Column(name = "yaml_content", columnDefinition = "TEXT")
     private String yamlContent;
 
     private boolean active; // Is this version currently active?
