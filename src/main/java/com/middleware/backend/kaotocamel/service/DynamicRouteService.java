@@ -354,6 +354,7 @@ public class DynamicRouteService {
         auditRepository.save(audit);
     }
 
+
     static class StringResource extends ResourceSupport {
         private final String content;
 
@@ -371,5 +372,26 @@ public class DynamicRouteService {
         public boolean exists() {
             return true;
         }
+    }
+
+
+
+
+
+
+
+    public Page<DynamicRouteAudit> getLatestRoutesLogs(Pageable pageable) {
+        return auditRepository.findAll(pageable);
+    }
+    public Page<DynamicRouteAudit> getLatestRoutesLogsWithFilters(
+            Long id,
+            String routeId,
+            Integer version,
+            String action,
+            String details,
+            LocalDateTime timestamp,
+            Pageable pageable) {
+
+        return auditRepository.findByFilters(id, routeId, version, action, details, timestamp, pageable);
     }
 }

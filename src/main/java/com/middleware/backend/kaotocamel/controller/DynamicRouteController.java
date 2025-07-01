@@ -1,11 +1,14 @@
 package com.middleware.backend.kaotocamel.controller;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.middleware.backend.kaotocamel.model.DynamicRouteAudit;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -327,4 +330,51 @@ public class DynamicRouteController {
             return ResponseEntity.status(500).body(health);
         }
     }
+
+
+
+    //    Get Route Audits
+
+    @GetMapping("/audits")
+    public ResponseEntity<Page<DynamicRouteAudit>> getRouteAudits(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+            ){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<DynamicRouteAudit> result;
+        result = routeService.getLatestRoutesLogs(pageable);
+        return ResponseEntity.ok(result);
+    }
+
+//    @GetMapping("/audits")
+//    public ResponseEntity<Page<DynamicRouteAudit>> getRouteAudits(
+//            @RequestParam(required = false) long id,
+//            @RequestParam(required = false) String routeId,
+//            @RequestParam(required = false) int version,
+//            @RequestParam(required = false) String action,
+//            @RequestParam(required = false) String details,
+//            @RequestParam(required = false) LocalDateTime timestamp,
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "10") int size
+//    ){
+//        Pageable pageable = PageRequest.of(page, size);
+//
+//        boolean hasFilters = Stream.of(id, routeId, version, action, details)
+//                .anyMatch(Objects::nonNull) ||
+//                timestamp != null;
+//
+//        Page<DynamicRouteAudit> result;
+//
+//        if (hasFilters) {
+//            result = routeService.getLatestRoutesLogsWithFilters(
+//                    id, routeId, version, action, details, timestamp,  pageable);
+//            return ResponseEntity.ok().body(result);
+//
+//        } else {
+//            result = routeService.getLatestRoutesLogs(pageable);
+//        }
+//
+//        return ResponseEntity.ok(result);
+//    }
+
 }

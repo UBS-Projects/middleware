@@ -50,10 +50,4 @@ public class DynamicRouteEntity {
 
     private String comment; // Admin comment for this version
 
-    @PrePersist
-    protected void onCreate() {
-        if (createdAt == null) {
-            createdAt = LocalDateTime.now();
-        }
-    }
 }
