@@ -12,7 +12,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.middleware.backend.exception.ApiNotFoundException;
-import com.middleware.backend.exception.InvalidRequestException;
 import com.middleware.backend.logging.dto.MiddlewareApiCallLogDto;
 import com.middleware.backend.logging.service.MiddlewareApiCallLogService;
 import com.middleware.backend.model.ApiEndpoint;
@@ -47,7 +46,7 @@ public class RequestValidator {
 
     }
 
-    public void validateJsonBody(Exchange exchange) {
+    public void validateJsonBody(Exchange exchange) throws RuntimeException {
 
         String body = exchange.getIn().getBody(String.class);
         String method = exchange.getIn().getHeader(Exchange.HTTP_METHOD, String.class);
@@ -92,7 +91,7 @@ public class RequestValidator {
             logDto.setCompletedAt(LocalDateTime.now());
             logDto.setDurationMs(duration(receivedAt, logDto.getCompletedAt()));
             middlewareApiCallLogService.createTransaction(logDto);
-            throw new InvalidRequestException("Invalid JSON body " + body);
+            throw new RuntimeException("Invalid JSON body " + body);
         }
 
         if (!validateInput(endpoint.getInputTemplate(), body)) {
@@ -101,7 +100,7 @@ public class RequestValidator {
             logDto.setCompletedAt(LocalDateTime.now());
             logDto.setDurationMs(duration(receivedAt, logDto.getCompletedAt()));
             middlewareApiCallLogService.createTransaction(logDto);
-            throw new InvalidRequestException("Body validation failed");
+            throw new RuntimeException("Body validation failed");
 
         } else {
             log.debug("Valid JsonBody {} against template {}", jsonBody, endpoint.getInputTemplate());

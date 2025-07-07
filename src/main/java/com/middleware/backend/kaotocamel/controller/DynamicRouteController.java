@@ -23,7 +23,6 @@ import com.middleware.backend.kaotocamel.dto.RouteTestResult;
 import com.middleware.backend.kaotocamel.dto.RouteValidationResult;
 import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
 import com.middleware.backend.kaotocamel.service.DynamicRouteService;
-import com.middleware.backend.kaotocamel.service.RouteValidationService;
 import com.middleware.backend.kaotocamel.spec.DynamicRouteSpecification;
 
 import lombok.RequiredArgsConstructor;
@@ -34,7 +33,7 @@ import lombok.RequiredArgsConstructor;
 public class DynamicRouteController {
 
     private final DynamicRouteService routeService;
-    private final RouteValidationService routeValidationService;
+    // private final RouteValidationService routeValidationService;
 
     @PostMapping("/deploy")
     public String upload(@RequestBody String yaml, @RequestParam(required = false) String comment) {
@@ -87,13 +86,13 @@ public class DynamicRouteController {
 
     @PostMapping(value = "/validate", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RouteValidationResult> validateRoute(@RequestBody RouteTestRequest request) {
-        RouteValidationResult result = routeValidationService.validateRoute(request.getYamlContent());
+        RouteValidationResult result = routeService.validateRoute(request.getYamlContent());
         return result.isValid() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
     }
 
     @PostMapping(value = "/test", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RouteTestResult> testRoute(@RequestBody RouteTestRequest request) {
-        RouteTestResult result = routeValidationService.testRoute(request.getYamlContent(), request.getTestMessage());
+        RouteTestResult result = routeService.testRoute(request.getYamlContent(), request.getTestMessage());
         return result.isSuccess() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
     }
 

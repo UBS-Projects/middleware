@@ -14,5 +14,7 @@ public class CamelServletConfig {
                 new CamelHttpTransportServlet(), "/camel/*");
         servlet.setName("CamelServlet");
         return servlet;
+
     }
+
 }

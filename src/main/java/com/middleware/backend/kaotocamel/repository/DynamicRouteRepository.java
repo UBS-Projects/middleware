@@ -19,6 +19,8 @@ public interface DynamicRouteRepository
 
         List<DynamicRouteEntity> findByRouteIdAndActiveTrue(String routeId);
 
+        DynamicRouteEntity findByRouteIdAndDefaultVersionTrue(String routeId);
+
         Page<DynamicRouteEntity> findByActiveTrue(Pageable pageable);
 
         Page<DynamicRouteEntity> findByRouteId(String routeId, Pageable pageable);
