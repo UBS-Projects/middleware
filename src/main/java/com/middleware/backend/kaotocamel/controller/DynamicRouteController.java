@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import com.middleware.backend.kaotocamel.model.DynamicRouteAudit;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -111,7 +112,75 @@ public class DynamicRouteController {
         RouteTestResult result = routeService.testRoute(request.getYamlContent(), request.getTestMessage());
         return result.isSuccess() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
     }
+    @GetMapping("/latest")
+    public ResponseEntity<Page<DynamicRouteEntity>> getRoutes(
+            @RequestParam(required = false) String routeId,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) String path,
+            @RequestParam(required = false) String httpMethod,
+            @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) String comment,
+            @RequestParam(required = false) String yamlContains,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
 
+        long startTime = System.currentTimeMillis();
+
+        try {
+            if (page < 0 || size <= 0 || size > 100) {
+                return ResponseEntity.badRequest().build();
+            }
+
+            Pageable pageable = PageRequest.of(page, size);
+
+            boolean hasFilters = Stream.of(routeId, description, path, httpMethod, comment, yamlContains)
+                    .anyMatch(Objects::nonNull) ||
+                    active != null || createdAfter != null || createdBefore != null;
+
+            Page<DynamicRouteEntity> result;
+            String queryType;
+
+            if (hasFilters) {
+                result = routeService.getLatestRoutesWithFiltersOptimized(
+                        routeId, description, path, httpMethod, active,
+                        comment, yamlContains, createdAfter, createdBefore, pageable);
+                queryType = "filtered";
+            } else {
+                result = routeService.getLatestRoutesOptimized(pageable);
+                queryType = "simple";
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("X-Total-Count", String.valueOf(result.getTotalElements()));
+            headers.add("X-Total-Pages", String.valueOf(result.getTotalPages()));
+            headers.add("X-Current-Page", String.valueOf(result.getNumber()));
+            headers.add("X-Page-Size", String.valueOf(result.getSize()));
+            headers.add("X-Query-Type", queryType);
+            headers.add("X-Execution-Time", String.valueOf(System.currentTimeMillis() - startTime) + "ms");
+
+            return ResponseEntity.ok().headers(headers).body(result);
+
+        } catch (Exception e) {
+            log.error("Error retrieving routes", e);
+
+            try {
+                Pageable pageable = PageRequest.of(page, size);
+                Page<DynamicRouteEntity> fallbackResult = routeService.getAllRoutes(pageable);
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("X-Fallback-Mode", "true");
+                headers.add("X-Total-Count", String.valueOf(fallbackResult.getTotalElements()));
+
+                return ResponseEntity.ok().headers(headers).body(fallbackResult);
+
+            } catch (Exception fallbackError) {
+                log.error("Fallback query also failed", fallbackError);
+                return ResponseEntity.internalServerError().build();
+            }
+        }
+    }
     @GetMapping("/all-versions")
     public ResponseEntity<Page<DynamicRouteEntity>> getAllVersionsWithFilters(
             @RequestParam(required = false) String routeId,

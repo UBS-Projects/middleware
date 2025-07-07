@@ -3,10 +3,9 @@ server:
 
 spring:
   datasource:
-    # url: jdbc:postgresql://localhost:5432/marafq_test
-    url: jdbc:postgresql://localhost:5432/middleware2
+    url: jdbc:postgresql://localhost:5432/middleware
     username: postgres
-    password: 12345
+    password: root
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
