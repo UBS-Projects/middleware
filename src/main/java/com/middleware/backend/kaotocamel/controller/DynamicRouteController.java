@@ -31,7 +31,6 @@ import com.middleware.backend.kaotocamel.dto.RouteTestResult;
 import com.middleware.backend.kaotocamel.dto.RouteValidationResult;
 import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
 import com.middleware.backend.kaotocamel.service.DynamicRouteService;
-import com.middleware.backend.kaotocamel.service.RouteValidationService;
 import com.middleware.backend.kaotocamel.spec.DynamicRouteSpecification;
 
 import lombok.RequiredArgsConstructor;
@@ -44,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 public class DynamicRouteController {
 
     private final DynamicRouteService routeService;
-    private final RouteValidationService routeValidationService;
+    // private final RouteValidationService routeValidationService;
 
     @PostMapping("/deploy")
     public ResponseEntity<String> upload(@RequestBody String yaml, @RequestParam(required = false) String comment) {
@@ -103,100 +102,14 @@ public class DynamicRouteController {
 
     @PostMapping(value = "/validate", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RouteValidationResult> validateRoute(@RequestBody RouteTestRequest request) {
-        try {
-            RouteValidationResult result = routeValidationService.validateRoute(request.getYamlContent());
-            return result.isValid() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
-        } catch (Exception e) {
-            log.error("Route validation failed: {}", e.getMessage());
-            RouteValidationResult errorResult = new RouteValidationResult();
-            errorResult.setValid(false);
-            errorResult.setErrorMessage("Validation failed: " + e.getMessage());
-            return ResponseEntity.badRequest().body(errorResult);
-        }
+        RouteValidationResult result = routeService.validateRoute(request.getYamlContent());
+        return result.isValid() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
     }
 
     @PostMapping(value = "/test", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RouteTestResult> testRoute(@RequestBody RouteTestRequest request) {
-        try {
-            RouteTestResult result = routeValidationService.testRoute(request.getYamlContent(), request.getTestMessage());
-            return result.isSuccess() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
-        } catch (Exception e) {
-            log.error("Route test failed: {}", e.getMessage());
-            RouteTestResult errorResult = new RouteTestResult();
-            errorResult.setSuccess(false);
-            errorResult.setErrorMessage("Test failed: " + e.getMessage());
-            return ResponseEntity.badRequest().body(errorResult);
-        }
-    }
-
-    @GetMapping("/latest")
-    public ResponseEntity<Page<DynamicRouteEntity>> getRoutes(
-            @RequestParam(required = false) String routeId,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) String path,
-            @RequestParam(required = false) String httpMethod,
-            @RequestParam(required = false) Boolean active,
-            @RequestParam(required = false) String comment,
-            @RequestParam(required = false) String yamlContains,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-
-        long startTime = System.currentTimeMillis();
-
-        try {
-            if (page < 0 || size <= 0 || size > 100) {
-                return ResponseEntity.badRequest().build();
-            }
-
-            Pageable pageable = PageRequest.of(page, size);
-
-            boolean hasFilters = Stream.of(routeId, description, path, httpMethod, comment, yamlContains)
-                    .anyMatch(Objects::nonNull) ||
-                    active != null || createdAfter != null || createdBefore != null;
-
-            Page<DynamicRouteEntity> result;
-            String queryType;
-
-            if (hasFilters) {
-                result = routeService.getLatestRoutesWithFiltersOptimized(
-                        routeId, description, path, httpMethod, active,
-                        comment, yamlContains, createdAfter, createdBefore, pageable);
-                queryType = "filtered";
-            } else {
-                result = routeService.getLatestRoutesOptimized(pageable);
-                queryType = "simple";
-            }
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("X-Total-Count", String.valueOf(result.getTotalElements()));
-            headers.add("X-Total-Pages", String.valueOf(result.getTotalPages()));
-            headers.add("X-Current-Page", String.valueOf(result.getNumber()));
-            headers.add("X-Page-Size", String.valueOf(result.getSize()));
-            headers.add("X-Query-Type", queryType);
-            headers.add("X-Execution-Time", String.valueOf(System.currentTimeMillis() - startTime) + "ms");
-
-            return ResponseEntity.ok().headers(headers).body(result);
-
-        } catch (Exception e) {
-            log.error("Error retrieving routes", e);
-
-            try {
-                Pageable pageable = PageRequest.of(page, size);
-                Page<DynamicRouteEntity> fallbackResult = routeService.getAllRoutes(pageable);
-
-                HttpHeaders headers = new HttpHeaders();
-                headers.add("X-Fallback-Mode", "true");
-                headers.add("X-Total-Count", String.valueOf(fallbackResult.getTotalElements()));
-
-                return ResponseEntity.ok().headers(headers).body(fallbackResult);
-
-            } catch (Exception fallbackError) {
-                log.error("Fallback query also failed", fallbackError);
-                return ResponseEntity.internalServerError().build();
-            }
-        }
+        RouteTestResult result = routeService.testRoute(request.getYamlContent(), request.getTestMessage());
+        return result.isSuccess() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
     }
 
     @GetMapping("/all-versions")

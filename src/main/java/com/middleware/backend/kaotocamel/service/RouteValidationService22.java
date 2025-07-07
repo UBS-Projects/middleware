@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class RouteValidationService {
+public class RouteValidationService22 {
 
     private final CamelContext camelContext;
     private final RoutesBuilderLoader yamlRoutesLoader;
