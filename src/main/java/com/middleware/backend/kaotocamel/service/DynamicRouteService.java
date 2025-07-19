@@ -4,15 +4,14 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-import com.middleware.backend.kaotocamel.spec.DynamicRouteSpecification;
 import org.apache.camel.CamelContext;
 import org.apache.camel.CamelExecutionException;
 import org.apache.camel.RoutesBuilder;
@@ -47,6 +46,7 @@ import com.middleware.backend.kaotocamel.model.DynamicRouteAudit;
 import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
 import com.middleware.backend.kaotocamel.repository.DynamicRouteAuditRepository;
 import com.middleware.backend.kaotocamel.repository.DynamicRouteRepository;
+import com.middleware.backend.kaotocamel.spec.DynamicRouteSpecification;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,7 +67,7 @@ public class DynamicRouteService {
      * Uploads a new route version (or first version if new routeId)
      */
     @Transactional
-    public String uploadRoute(String yamlContent, String comment) {
+    public String updateRoute(String yamlContent, String comment, String operation) {
 
         RouteValidationResult checkRouteMandatoryFields = checkRouteMandatoryFields(yamlContent);
         if (!checkRouteMandatoryFields.isValid()) {
@@ -79,15 +79,23 @@ public class DynamicRouteService {
         String description = metaData.get("description");
         String path = metaData.get("path");
         String method = metaData.get("method");
-
-        if (routeId == null) {
-            throw new RuntimeException("Route ID not found in YAML");
-        }
+        /*
+         * if (routeId == null) { throw new
+         * RuntimeException("Route ID not found in YAML"); }
+         */
 
         List<DynamicRouteEntity> versions = routeRepository.findByRouteIdOrderByVersionDesc(routeId);
         log.info("found {} versions", versions);
-        int newVersion = versions.isEmpty() ? 1 : versions.get(0).getVersion() + 1;
-
+        int newVersion = 0;
+        if (versions.isEmpty() && "update".equals(operation)) {
+            throw new RuntimeException("No versions found for this route");
+        } else if (!versions.isEmpty() && "update".equals(operation)) {
+            newVersion = versions.get(0).getVersion() + 1;
+        } else if (!versions.isEmpty() && "create".equals(operation)) {
+            throw new RuntimeException("versions already found for this route");
+        } else if (versions.isEmpty() && "create".equals(operation)) {
+            newVersion = 1;
+        }
         // Deactivate existing
         versions.forEach(v -> {
             v.setActive(false);
@@ -557,58 +565,53 @@ public class DynamicRouteService {
     public Page<DynamicRouteEntity> getLatestRoutesOptimized(Pageable pageable) {
         List<DynamicRouteEntity> allRoutes = routeRepository.findAllOrderByCreatedAtDesc();
 
-        Map<String, DynamicRouteEntity> latestRoutes = allRoutes.stream()
-                .collect(Collectors.groupingBy(
-                        DynamicRouteEntity::getRouteId,
-                        Collectors.reducing(null, this::selectLatestRoute)
-                ));
+        Map<String, DynamicRouteEntity> latestRoutes = allRoutes.stream().collect(Collectors
+                .groupingBy(DynamicRouteEntity::getRouteId, Collectors.reducing(null, this::selectLatestRoute)));
 
-        List<DynamicRouteEntity> routesList = latestRoutes.values().stream()
-                .filter(route -> route != null)
-                .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()))
-                .collect(Collectors.toList());
+        List<DynamicRouteEntity> routesList = latestRoutes.values().stream().filter(route -> route != null)
+                .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt())).collect(Collectors.toList());
 
         return applyPagination(routesList, pageable);
     }
 
-    public Page<DynamicRouteEntity> getLatestRoutesWithFiltersOptimized(
-            String routeId, String description, String path, String httpMethod,
-            Boolean active, String comment, String yamlContains,
-            LocalDateTime createdAfter, LocalDateTime createdBefore,
-            Pageable pageable) {
+    public Page<DynamicRouteEntity> getLatestRoutesWithFiltersOptimized(String routeId, String description, String path,
+            String httpMethod, Boolean active, String comment, String yamlContains, LocalDateTime createdAfter,
+            LocalDateTime createdBefore, Pageable pageable) {
 
-        Specification<DynamicRouteEntity> spec = buildSpecification(
-                routeId, description, path, httpMethod, active, comment,
-                yamlContains, createdAfter, createdBefore);
+        Specification<DynamicRouteEntity> spec = buildSpecification(routeId, description, path, httpMethod, active,
+                comment, yamlContains, createdAfter, createdBefore);
 
         List<DynamicRouteEntity> filteredRoutes = routeRepository.findAll(spec);
 
-        Map<String, DynamicRouteEntity> latestRoutes = filteredRoutes.stream()
-                .collect(Collectors.groupingBy(
-                        DynamicRouteEntity::getRouteId,
-                        Collectors.reducing(null, this::selectLatestRoute)
-                ));
+        Map<String, DynamicRouteEntity> latestRoutes = filteredRoutes.stream().collect(Collectors
+                .groupingBy(DynamicRouteEntity::getRouteId, Collectors.reducing(null, this::selectLatestRoute)));
 
-        List<DynamicRouteEntity> routesList = latestRoutes.values().stream()
-                .filter(route -> route != null)
-                .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()))
-                .collect(Collectors.toList());
+        List<DynamicRouteEntity> routesList = latestRoutes.values().stream().filter(route -> route != null)
+                .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt())).collect(Collectors.toList());
 
         return applyPagination(routesList, pageable);
     }
 
     private DynamicRouteEntity selectLatestRoute(DynamicRouteEntity a, DynamicRouteEntity b) {
-        if (a == null) return b;
-        if (b == null) return a;
+        if (a == null)
+            return b;
+        if (b == null)
+            return a;
 
-        if (b.isActive() && !a.isActive()) return b;
-        if (a.isActive() && !b.isActive()) return a;
+        if (b.isActive() && !a.isActive())
+            return b;
+        if (a.isActive() && !b.isActive())
+            return a;
 
-        if (b.isDefaultVersion() && !a.isDefaultVersion()) return b;
-        if (a.isDefaultVersion() && !b.isDefaultVersion()) return a;
+        if (b.isDefaultVersion() && !a.isDefaultVersion())
+            return b;
+        if (a.isDefaultVersion() && !b.isDefaultVersion())
+            return a;
 
-        if (b.getVersion() > a.getVersion()) return b;
-        if (a.getVersion() > b.getVersion()) return a;
+        if (b.getVersion() > a.getVersion())
+            return b;
+        if (a.getVersion() > b.getVersion())
+            return a;
 
         return b.getCreatedAt().isAfter(a.getCreatedAt()) ? b : a;
     }
@@ -617,19 +620,17 @@ public class DynamicRouteService {
         int start = (int) pageable.getOffset();
         int end = Math.min(start + pageable.getPageSize(), routes.size());
 
-        List<DynamicRouteEntity> paginatedList = start >= routes.size() ?
-                new ArrayList<>() : routes.subList(start, end);
+        List<DynamicRouteEntity> paginatedList = start >= routes.size() ? new ArrayList<>()
+                : routes.subList(start, end);
 
         return new PageImpl<>(paginatedList, pageable, routes.size());
     }
 
-    private Specification<DynamicRouteEntity> buildSpecification(
-            String routeId, String description, String path, String httpMethod,
-            Boolean active, String comment, String yamlContains,
-            LocalDateTime createdAfter, LocalDateTime createdBefore) {
+    private Specification<DynamicRouteEntity> buildSpecification(String routeId, String description, String path,
+            String httpMethod, Boolean active, String comment, String yamlContains, LocalDateTime createdAfter,
+            LocalDateTime createdBefore) {
 
-        return Specification
-                .where(DynamicRouteSpecification.routeIdContains(routeId))
+        return Specification.where(DynamicRouteSpecification.routeIdContains(routeId))
                 .and(DynamicRouteSpecification.descriptionContains(description))
                 .and(DynamicRouteSpecification.pathContains(path))
                 .and(DynamicRouteSpecification.httpMethodContains(httpMethod))
@@ -764,23 +765,12 @@ public class DynamicRouteService {
         }
     }
 
-
-
-
-
-
-
     public Page<DynamicRouteAudit> getLatestRoutesLogs(Pageable pageable) {
         return auditRepository.findAll(pageable);
     }
-    public Page<DynamicRouteAudit> getLatestRoutesLogsWithFilters(
-            Long id,
-            String routeId,
-            Integer version,
-            String action,
-            String details,
-            LocalDateTime timestamp,
-            Pageable pageable) {
+
+    public Page<DynamicRouteAudit> getLatestRoutesLogsWithFilters(Long id, String routeId, Integer version,
+            String action, String details, LocalDateTime timestamp, Pageable pageable) {
 
         return auditRepository.findByFilters(id, routeId, version, action, details, timestamp, pageable);
     }
