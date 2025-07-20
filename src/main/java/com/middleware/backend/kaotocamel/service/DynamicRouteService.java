@@ -127,12 +127,7 @@ public class DynamicRouteService {
 
     public RouteValidationResult validateRoute(String yamlContent) {
 
-        // String tempRouteId = "test-" + UUID.randomUUID();
-        // yamlContent = rewriteRouteIdForTesting(yamlContent, tempRouteId);
-
-        // Map<String, String> metadata = extractRouteMetadata(yamlContent);
         String routeId = null;
-        // String description = metadata.get("description");
 
         try {
             RouteValidationResult checkRouteMandatoryFields = checkRouteMandatoryFields(yamlContent);
@@ -163,8 +158,6 @@ public class DynamicRouteService {
         }
 
         String modifiedYaml = null;
-        // String tempRouteId = "test-route-" + UUID.randomUUID();
-        // yamlContent = rewriteRouteIdForTesting(yamlContent, tempRouteId);
 
         String routeId = null;
         try {
