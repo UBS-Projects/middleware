@@ -1,15 +1,11 @@
 package com.middleware.backend.kaotocamel.controller;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
-import java.util.Map;
-import java.util.HashMap;
 
-import com.middleware.backend.kaotocamel.model.DynamicRouteAudit;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.middleware.backend.kaotocamel.dto.RouteTestRequest;
 import com.middleware.backend.kaotocamel.dto.RouteTestResult;
 import com.middleware.backend.kaotocamel.dto.RouteValidationResult;
+import com.middleware.backend.kaotocamel.model.DynamicRouteAudit;
 import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
 import com.middleware.backend.kaotocamel.service.DynamicRouteService;
 import com.middleware.backend.kaotocamel.spec.DynamicRouteSpecification;
@@ -46,10 +43,21 @@ public class DynamicRouteController {
     private final DynamicRouteService routeService;
     // private final RouteValidationService routeValidationService;
 
-    @PostMapping("/deploy")
-    public ResponseEntity<String> upload(@RequestBody String yaml, @RequestParam(required = false) String comment) {
+    @PostMapping("/create")
+    public ResponseEntity<String> create(@RequestBody String yaml, @RequestParam(required = false) String comment) {
         try {
-            String result = routeService.uploadRoute(yaml, comment);
+            String result = routeService.updateRoute(yaml, comment, "create");
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Failed to deploy route: {}", e.getMessage());
+            return ResponseEntity.badRequest().body("Failed to deploy route: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<String> update(@RequestBody String yaml, @RequestParam(required = false) String comment) {
+        try {
+            String result = routeService.updateRoute(yaml, comment, "update");
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             log.error("Failed to deploy route: {}", e.getMessage());
@@ -112,19 +120,15 @@ public class DynamicRouteController {
         RouteTestResult result = routeService.testRoute(request.getYamlContent(), request.getTestMessage());
         return result.isSuccess() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
     }
+
     @GetMapping("/latest")
-    public ResponseEntity<Page<DynamicRouteEntity>> getRoutes(
-            @RequestParam(required = false) String routeId,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) String path,
-            @RequestParam(required = false) String httpMethod,
-            @RequestParam(required = false) Boolean active,
-            @RequestParam(required = false) String comment,
-            @RequestParam(required = false) String yamlContains,
+    public ResponseEntity<Page<DynamicRouteEntity>> getRoutes(@RequestParam(required = false) String routeId,
+            @RequestParam(required = false) String description, @RequestParam(required = false) String path,
+            @RequestParam(required = false) String httpMethod, @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) String comment, @RequestParam(required = false) String yamlContains,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
 
         long startTime = System.currentTimeMillis();
 
@@ -136,16 +140,14 @@ public class DynamicRouteController {
             Pageable pageable = PageRequest.of(page, size);
 
             boolean hasFilters = Stream.of(routeId, description, path, httpMethod, comment, yamlContains)
-                    .anyMatch(Objects::nonNull) ||
-                    active != null || createdAfter != null || createdBefore != null;
+                    .anyMatch(Objects::nonNull) || active != null || createdAfter != null || createdBefore != null;
 
             Page<DynamicRouteEntity> result;
             String queryType;
 
             if (hasFilters) {
-                result = routeService.getLatestRoutesWithFiltersOptimized(
-                        routeId, description, path, httpMethod, active,
-                        comment, yamlContains, createdAfter, createdBefore, pageable);
+                result = routeService.getLatestRoutesWithFiltersOptimized(routeId, description, path, httpMethod,
+                        active, comment, yamlContains, createdAfter, createdBefore, pageable);
                 queryType = "filtered";
             } else {
                 result = routeService.getLatestRoutesOptimized(pageable);
@@ -181,21 +183,17 @@ public class DynamicRouteController {
             }
         }
     }
+
     @GetMapping("/all-versions")
     public ResponseEntity<Page<DynamicRouteEntity>> getAllVersionsWithFilters(
-            @RequestParam(required = false) String routeId,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) Integer version,
-            @RequestParam(required = false) String path,
-            @RequestParam(required = false) String httpMethod,
-            @RequestParam(required = false) Boolean active,
-            @RequestParam(required = false) Boolean defaultVersion,
-            @RequestParam(required = false) String comment,
+            @RequestParam(required = false) String routeId, @RequestParam(required = false) String description,
+            @RequestParam(required = false) Integer version, @RequestParam(required = false) String path,
+            @RequestParam(required = false) String httpMethod, @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) Boolean defaultVersion, @RequestParam(required = false) String comment,
             @RequestParam(required = false) String yamlContains,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
 
         try {
             Specification<DynamicRouteEntity> spec = Specification
@@ -227,10 +225,8 @@ public class DynamicRouteController {
     }
 
     @GetMapping("/{routeId}/versions")
-    public ResponseEntity<Page<DynamicRouteEntity>> getRouteVersions(
-            @PathVariable String routeId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
+    public ResponseEntity<Page<DynamicRouteEntity>> getRouteVersions(@PathVariable String routeId,
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
 
         try {
             Pageable pageable = PageRequest.of(page, size, Sort.by("version").descending());
@@ -249,19 +245,16 @@ public class DynamicRouteController {
     }
 
     @GetMapping("/{routeId}/versions/{version}")
-    public ResponseEntity<DynamicRouteEntity> getSpecificVersion(
-            @PathVariable String routeId,
+    public ResponseEntity<DynamicRouteEntity> getSpecificVersion(@PathVariable String routeId,
             @PathVariable int version) {
 
         try {
-            return routeService.getSpecificVersion(routeId, version)
-                    .map(route -> {
-                        HttpHeaders headers = new HttpHeaders();
-                        headers.add("X-Route-Id", routeId);
-                        headers.add("X-Version", String.valueOf(version));
-                        return ResponseEntity.ok().headers(headers).body(route);
-                    })
-                    .orElse(ResponseEntity.notFound().build());
+            return routeService.getSpecificVersion(routeId, version).map(route -> {
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("X-Route-Id", routeId);
+                headers.add("X-Version", String.valueOf(version));
+                return ResponseEntity.ok().headers(headers).body(route);
+            }).orElse(ResponseEntity.notFound().build());
 
         } catch (Exception e) {
             log.error("Error retrieving version {} for route: {}", version, routeId, e);
@@ -270,8 +263,7 @@ public class DynamicRouteController {
     }
 
     @GetMapping("/active")
-    public ResponseEntity<Page<DynamicRouteEntity>> getActiveRoutes(
-            @RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<DynamicRouteEntity>> getActiveRoutes(@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
         try {
@@ -313,50 +305,46 @@ public class DynamicRouteController {
         }
     }
 
-
-
-    //    Get Route Audits
+    // Get Route Audits
 
     @GetMapping("/audits")
-    public ResponseEntity<Page<DynamicRouteAudit>> getRouteAudits(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
-            ){
+    public ResponseEntity<Page<DynamicRouteAudit>> getRouteAudits(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<DynamicRouteAudit> result;
         result = routeService.getLatestRoutesLogs(pageable);
         return ResponseEntity.ok(result);
     }
 
-//    @GetMapping("/audits")
-//    public ResponseEntity<Page<DynamicRouteAudit>> getRouteAudits(
-//            @RequestParam(required = false) long id,
-//            @RequestParam(required = false) String routeId,
-//            @RequestParam(required = false) int version,
-//            @RequestParam(required = false) String action,
-//            @RequestParam(required = false) String details,
-//            @RequestParam(required = false) LocalDateTime timestamp,
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "10") int size
-//    ){
-//        Pageable pageable = PageRequest.of(page, size);
-//
-//        boolean hasFilters = Stream.of(id, routeId, version, action, details)
-//                .anyMatch(Objects::nonNull) ||
-//                timestamp != null;
-//
-//        Page<DynamicRouteAudit> result;
-//
-//        if (hasFilters) {
-//            result = routeService.getLatestRoutesLogsWithFilters(
-//                    id, routeId, version, action, details, timestamp,  pageable);
-//            return ResponseEntity.ok().body(result);
-//
-//        } else {
-//            result = routeService.getLatestRoutesLogs(pageable);
-//        }
-//
-//        return ResponseEntity.ok(result);
-//    }
+    // @GetMapping("/audits")
+    // public ResponseEntity<Page<DynamicRouteAudit>> getRouteAudits(
+    // @RequestParam(required = false) long id,
+    // @RequestParam(required = false) String routeId,
+    // @RequestParam(required = false) int version,
+    // @RequestParam(required = false) String action,
+    // @RequestParam(required = false) String details,
+    // @RequestParam(required = false) LocalDateTime timestamp,
+    // @RequestParam(defaultValue = "0") int page,
+    // @RequestParam(defaultValue = "10") int size
+    // ){
+    // Pageable pageable = PageRequest.of(page, size);
+    //
+    // boolean hasFilters = Stream.of(id, routeId, version, action, details)
+    // .anyMatch(Objects::nonNull) ||
+    // timestamp != null;
+    //
+    // Page<DynamicRouteAudit> result;
+    //
+    // if (hasFilters) {
+    // result = routeService.getLatestRoutesLogsWithFilters(
+    // id, routeId, version, action, details, timestamp, pageable);
+    // return ResponseEntity.ok().body(result);
+    //
+    // } else {
+    // result = routeService.getLatestRoutesLogs(pageable);
+    // }
+    //
+    // return ResponseEntity.ok(result);
+    // }
 
 }
