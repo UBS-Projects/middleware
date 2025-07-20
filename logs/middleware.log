@@ -1284,3 +1284,408 @@ This generated password is for development use only. Your security configuration
 2025-07-08 01:07:04 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
 2025-07-08 01:07:04 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
 2025-07-08 01:07:04 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-07-08 01:42:20 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-07-08 01:42:21 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 24.0.1 with PID 16204 (C:\Users\1\OneDrive\Desktop\middleware\target\classes started by 1 in C:\Users\1\OneDrive\Desktop\middleware)
+2025-07-08 01:42:21 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-08 01:42:25 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-07-08 01:42:25 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-08 01:42:25 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-07-08 01:42:25 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-08 01:42:26 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-07-08 01:42:26 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-08 01:42:26 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-07-08 01:42:26 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-08 01:42:26 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-08 01:42:26 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@1dfcf85a']
+	Database driver: undefined/unknown
+	Database version: 17.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-08 01:42:28 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-08 01:42:30 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-07-08 01:42:31 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 87d3d2be-5bfd-4321-9561-68fd1de86acf
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-07-08 01:42:32 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 66 mappings in 'requestMappingHandlerMapping'
+2025-07-08 01:42:32 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-07-08 01:42:32 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-07-08 01:42:32 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-07-08 01:42:32 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-07-08 01:42:33 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-07-08 01:42:33 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-07-08 01:42:33 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-07-08 01:42:33 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-07-08 01:42:33 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-07-08 01:42:33 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-07-08 01:42:33 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@693d2f8d
+2025-07-08 01:42:33 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-07-08 01:42:33 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-07-08 01:42:33 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-07-08 01:42:33 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-07-08 01:42:33 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:1)
+2025-07-08 01:42:34 [main] INFO  o.a.c.i.engine.AbstractCamelContext -     Started workflow-orchestrator (direct://workflow-route)
+2025-07-08 01:42:34 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 12ms (build:0ms init:0ms start:12ms)
+2025-07-08 01:42:34 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 13.669 seconds (process running for 24.662)
+2025-07-08 01:42:34 [RMI TCP Connection(3)-192.168.18.4] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-07-08 01:42:34 [RMI TCP Connection(3)-192.168.18.4] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-07-08 01:42:34 [RMI TCP Connection(3)-192.168.18.4] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-07-08 01:42:34 [RMI TCP Connection(3)-192.168.18.4] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-07-08 01:42:34 [RMI TCP Connection(3)-192.168.18.4] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-07-08 01:42:34 [RMI TCP Connection(3)-192.168.18.4] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@432005ce
+2025-07-08 01:42:34 [RMI TCP Connection(3)-192.168.18.4] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@574c8a2a
+2025-07-08 01:42:34 [RMI TCP Connection(3)-192.168.18.4] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-07-08 01:42:34 [RMI TCP Connection(3)-192.168.18.4] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-07-08 01:42:38 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:42:38 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:42:38 [http-nio-8081-exec-1] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-07-08 01:42:38 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:42:38 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:42:38 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:42:48 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/test", parameters={}
+2025-07-08 01:42:48 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#testRoute(RouteTestRequest)
+2025-07-08 01:42:48 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [RouteTestRequest(yamlContent=- route:<EOL>    id: "my-new-route22"<EOL>    description: "New route descripti (truncated)...]
+2025-07-08 01:42:48 [http-nio-8081-exec-2] DEBUG c.m.b.k.service.DynamicRouteService - 
+
+ Extracted metadata after modification: {path=/api/hello22!a6029cd3-009a-45b6-967b-7ec34ef532b9, method=POST, description=New route description, id=my-new-route22_test-route, uri=rest}
+2025-07-08 01:42:48 [http-nio-8081-exec-2] DEBUG c.m.b.k.service.DynamicRouteService - 
+
+ Modified YAML: - route:
+    id: my-new-route22_test-route
+    description: New route description
+    from:
+      uri: rest
+      parameters:
+        method: POST
+        path: /api/hello22!a6029cd3-009a-45b6-967b-7ec34ef532b9
+      steps:
+      - log:
+          message: 'Received: ${body}'
+      - setBody:
+          constant: Hello from new route!
+      - to: log:output
+
+2025-07-08 01:42:49 [http-nio-8081-exec-2] DEBUG c.m.b.k.service.DynamicRouteService - Registered routeId: workflow-orchestrator Status: Started 
+
+2025-07-08 01:42:49 [http-nio-8081-exec-2] DEBUG c.m.b.k.service.DynamicRouteService - Registered routeId: my-new-route22_test-route Status: Started 
+
+2025-07-08 01:42:49 [http-nio-8081-exec-2] DEBUG c.m.b.k.service.DynamicRouteService -  current routeId: my-new-route22_test-route
+2025-07-08 01:42:49 [http-nio-8081-exec-2] DEBUG o.s.web.client.RestTemplate - HTTP POST http://localhost:8081/camel/api/hello22!a6029cd3-009a-45b6-967b-7ec34ef532b9
+2025-07-08 01:42:49 [http-nio-8081-exec-2] DEBUG o.s.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+2025-07-08 01:42:49 [http-nio-8081-exec-2] DEBUG o.s.web.client.RestTemplate - Writing [Test message from UI] as "application/json"
+2025-07-08 01:42:49 [http-nio-8081-exec-4] INFO  dynamic.yaml:10 - Received: Test message from UI
+2025-07-08 01:42:49 [http-nio-8081-exec-4] INFO  output - Exchange[ExchangePattern: InOut, BodyType: String, Body: Hello from new route!]
+2025-07-08 01:42:49 [http-nio-8081-exec-2] DEBUG o.s.web.client.RestTemplate - Response 200 OK
+2025-07-08 01:42:49 [http-nio-8081-exec-2] DEBUG o.s.web.client.RestTemplate - Reading to [java.lang.String] as "application/json"
+2025-07-08 01:42:49 [http-nio-8081-exec-2] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped my-new-route22_test-route (rest://POST:/api/hello22!a6029cd3-009a-45b6-967b-7ec34ef532b9)
+2025-07-08 01:42:49 [http-nio-8081-exec-2] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown my-new-route22_test-route (rest://POST:/api/hello22!a6029cd3-009a-45b6-967b-7ec34ef532b9)
+2025-07-08 01:42:49 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Stopped and removed temporary route: my-new-route22_test-route
+2025-07-08 01:42:49 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json]
+2025-07-08 01:42:49 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [RouteTestResult(success=true, output=Hello from new route!, errorMessage=null)]
+2025-07-08 01:42:49 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:42:53 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/validate", parameters={}
+2025-07-08 01:42:53 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#validateRoute(RouteTestRequest)
+2025-07-08 01:42:53 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [RouteTestRequest(yamlContent=- route:<EOL>    id: "my-new-route22"<EOL>    description: "New route descripti (truncated)...]
+2025-07-08 01:42:53 [http-nio-8081-exec-6] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped my-new-route22_test-route (rest://POST:/api/hello22!70e826d6-091e-4cb8-a6b6-d4b91ce95e45)
+2025-07-08 01:42:53 [http-nio-8081-exec-6] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown my-new-route22_test-route (rest://POST:/api/hello22!70e826d6-091e-4cb8-a6b6-d4b91ce95e45)
+2025-07-08 01:42:53 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Stopped and removed temporary route: my-new-route22_test-route
+2025-07-08 01:42:53 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json]
+2025-07-08 01:42:53 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [RouteValidationResult(valid=true, errorMessage=null)]
+2025-07-08 01:42:53 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:42:58 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/deploy", parameters={}
+2025-07-08 01:42:58 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#upload(String, String)
+2025-07-08 01:42:58 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: "my-new-route22"<EOL>    description: "New route description"<EOL>    from:<EOL>      uri: rest (truncated)..."]
+2025-07-08 01:42:58 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - found [] versions
+2025-07-08 01:42:58 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Uploaded route my-new-route22 version 1
+2025-07-08 01:42:58 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-07-08 01:42:58 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Route my-new-route22 uploaded as version 1"]
+2025-07-08 01:42:58 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:42:58 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:42:58 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:42:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:42:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:42:59 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:43:01 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:43:01 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:43:01 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:43:01 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:43:01 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:43:04 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/my-new-route2/start", parameters={}
+2025-07-08 01:43:04 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#start(String)
+2025-07-08 01:43:04 [http-nio-8081-exec-10] ERROR c.m.b.k.c.DynamicRouteController - Failed to start route my-new-route2: Query did not return a unique result: 2 results were returned
+2025-07-08 01:43:04 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-07-08 01:43:04 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Failed to start route: Query did not return a unique result: 2 results were returned"]
+2025-07-08 01:43:04 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2025-07-08 01:43:12 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/my-new-route2/start", parameters={}
+2025-07-08 01:43:12 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#start(String)
+2025-07-08 01:43:12 [http-nio-8081-exec-1] ERROR c.m.b.k.c.DynamicRouteController - Failed to start route my-new-route2: Query did not return a unique result: 2 results were returned
+2025-07-08 01:43:12 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-07-08 01:43:12 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Failed to start route: Query did not return a unique result: 2 results were returned"]
+2025-07-08 01:43:12 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2025-07-08 01:43:30 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/my-new-route/stop", parameters={}
+2025-07-08 01:43:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#stop(String)
+2025-07-08 01:43:30 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Stopped route my-new-route
+2025-07-08 01:43:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-07-08 01:43:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Route stopped: my-new-route"]
+2025-07-08 01:43:30 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:43:30 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:43:30 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:43:30 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:43:30 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:43:30 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:43:34 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/my-new-route/start", parameters={}
+2025-07-08 01:43:34 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#start(String)
+2025-07-08 01:43:34 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Started route my-new-route
+2025-07-08 01:43:35 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-07-08 01:43:35 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Route started: my-new-route"]
+2025-07-08 01:43:35 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:43:35 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:43:35 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:43:35 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:43:35 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:43:35 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:43:38 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/my-new-route2/start", parameters={}
+2025-07-08 01:43:38 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#start(String)
+2025-07-08 01:43:38 [http-nio-8081-exec-6] ERROR c.m.b.k.c.DynamicRouteController - Failed to start route my-new-route2: Query did not return a unique result: 2 results were returned
+2025-07-08 01:43:38 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-07-08 01:43:38 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Failed to start route: Query did not return a unique result: 2 results were returned"]
+2025-07-08 01:43:38 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2025-07-08 01:43:46 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/my-new-route2/start", parameters={}
+2025-07-08 01:43:46 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#start(String)
+2025-07-08 01:43:46 [http-nio-8081-exec-7] ERROR c.m.b.k.c.DynamicRouteController - Failed to start route my-new-route2: Query did not return a unique result: 2 results were returned
+2025-07-08 01:43:46 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-07-08 01:43:46 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Failed to start route: Query did not return a unique result: 2 results were returned"]
+2025-07-08 01:43:46 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2025-07-08 01:43:54 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6&active=true", parameters={masked}
+2025-07-08 01:43:54 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:43:55 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:43:55 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:43:55 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:07 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6&active=false", parameters={masked}
+2025-07-08 01:44:07 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:44:08 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:44:08 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:44:08 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:15 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:44:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:44:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:44:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:44:15 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:19 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6&active=true", parameters={masked}
+2025-07-08 01:44:19 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:44:19 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:44:19 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:44:19 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:25 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6&active=false", parameters={masked}
+2025-07-08 01:44:25 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:44:25 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:44:25 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:44:25 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:29 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/my-new-route/start", parameters={}
+2025-07-08 01:44:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#start(String)
+2025-07-08 01:44:29 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Started route my-new-route
+2025-07-08 01:44:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-07-08 01:44:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Route started: my-new-route"]
+2025-07-08 01:44:29 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:29 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6&active=false", parameters={masked}
+2025-07-08 01:44:29 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:44:29 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:44:29 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:44:29 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:33 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:44:33 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:44:33 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:44:33 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:44:33 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:39 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/my-new-route22/versions?size=50", parameters={masked}
+2025-07-08 01:44:39 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRouteVersions(String, int, int)
+2025-07-08 01:44:39 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching routes for routeId=my-new-route22 with pagination
+2025-07-08 01:44:39 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:44:39 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:44:39 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:43 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?routeId=my-new-route22&size=1", parameters={masked}
+2025-07-08 01:44:43 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:44:43 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:44:43 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:44:43 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/test", parameters={}
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#testRoute(RouteTestRequest)
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [RouteTestRequest(yamlContent=- route:<EOL>    id: "my-new-route22"<EOL>    description: "New route descripti (truncated)...]
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG c.m.b.k.service.DynamicRouteService - 
+
+ Extracted metadata after modification: {path=/api/hello22!98006b0d-c602-4e61-a1f3-71f4d2a573f8, method=POST, description=New route descriptiokfjdkdjksdkjdsn, id=my-new-route22_test-route, uri=rest}
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG c.m.b.k.service.DynamicRouteService - 
+
+ Modified YAML: - route:
+    id: my-new-route22_test-route
+    description: New route descriptiokfjdkdjksdkjdsn
+    from:
+      uri: rest
+      parameters:
+        method: POST
+        path: /api/hello22!98006b0d-c602-4e61-a1f3-71f4d2a573f8
+      steps:
+      - log:
+          message: 'Received: ${body}'
+      - setBody:
+          constant: Hello from new route!
+      - to: log:output
+
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG c.m.b.k.service.DynamicRouteService - Registered routeId: workflow-orchestrator Status: Started 
+
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG c.m.b.k.service.DynamicRouteService - Registered routeId: my-new-route22 Status: Started 
+
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG c.m.b.k.service.DynamicRouteService - Registered routeId: my-new-route22_test-route Status: Started 
+
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG c.m.b.k.service.DynamicRouteService -  current routeId: my-new-route22_test-route
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG o.s.web.client.RestTemplate - HTTP POST http://localhost:8081/camel/api/hello22!98006b0d-c602-4e61-a1f3-71f4d2a573f8
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG o.s.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG o.s.web.client.RestTemplate - Writing [Test message from UI] as "application/json"
+2025-07-08 01:44:54 [http-nio-8081-exec-10] INFO  dynamic.yaml:10 - Received: Test message from UI
+2025-07-08 01:44:54 [http-nio-8081-exec-10] INFO  output - Exchange[ExchangePattern: InOut, BodyType: String, Body: Hello from new route!]
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG o.s.web.client.RestTemplate - Response 200 OK
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG o.s.web.client.RestTemplate - Reading to [java.lang.String] as "application/json"
+2025-07-08 01:44:54 [http-nio-8081-exec-9] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped my-new-route22_test-route (rest://POST:/api/hello22!98006b0d-c602-4e61-a1f3-71f4d2a573f8)
+2025-07-08 01:44:54 [http-nio-8081-exec-9] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown my-new-route22_test-route (rest://POST:/api/hello22!98006b0d-c602-4e61-a1f3-71f4d2a573f8)
+2025-07-08 01:44:54 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Stopped and removed temporary route: my-new-route22_test-route
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json]
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [RouteTestResult(success=true, output=Hello from new route!, errorMessage=null)]
+2025-07-08 01:44:54 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:55 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/validate", parameters={}
+2025-07-08 01:44:55 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#validateRoute(RouteTestRequest)
+2025-07-08 01:44:55 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [RouteTestRequest(yamlContent=- route:<EOL>    id: "my-new-route22"<EOL>    description: "New route descripti (truncated)...]
+2025-07-08 01:44:55 [http-nio-8081-exec-1] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped my-new-route22_test-route (rest://POST:/api/hello22!f0bc0313-4e39-43d0-b317-f36fd760ceef)
+2025-07-08 01:44:55 [http-nio-8081-exec-1] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown my-new-route22_test-route (rest://POST:/api/hello22!f0bc0313-4e39-43d0-b317-f36fd760ceef)
+2025-07-08 01:44:55 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Stopped and removed temporary route: my-new-route22_test-route
+2025-07-08 01:44:55 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json]
+2025-07-08 01:44:55 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [RouteValidationResult(valid=true, errorMessage=null)]
+2025-07-08 01:44:55 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:57 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/deploy", parameters={}
+2025-07-08 01:44:57 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#upload(String, String)
+2025-07-08 01:44:57 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: "my-new-route22"<EOL>    description: "New route descriptiokfjdkdjksdkjdsn"<EOL>    from:<EOL>  (truncated)..."]
+2025-07-08 01:44:57 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - found [DynamicRouteEntity(id=5, routeId=my-new-route22, description=New route description, version=1, path=/api/hello22, httpMethod=POST, yamlContent=- route:
+    id: "my-new-route22"
+    description: "New route description"
+    from:
+      uri: rest
+      parameters:
+        method: POST
+        path: /api/hello22
+      steps:
+        - log:
+            message: 'Received: ${body}'
+        - setBody:
+            constant: 'Hello from new route!'
+        - to: 'log:output', active=true, defaultVersion=true, createdAt=2025-07-08T01:42:58.602839, comment=null)] versions
+2025-07-08 01:44:57 [http-nio-8081-exec-3] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped my-new-route22 (rest://POST:/api/hello22)
+2025-07-08 01:44:57 [http-nio-8081-exec-3] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown my-new-route22 (rest://POST:/api/hello22)
+2025-07-08 01:44:57 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Uploaded route my-new-route22 version 2
+2025-07-08 01:44:57 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-07-08 01:44:57 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Route my-new-route22 uploaded as version 2"]
+2025-07-08 01:44:57 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:44:57 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:44:57 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:44:58 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:44:58 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:44:58 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:45:04 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/my-new-route22/versions?size=50", parameters={masked}
+2025-07-08 01:45:04 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRouteVersions(String, int, int)
+2025-07-08 01:45:04 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching routes for routeId=my-new-route22 with pagination
+2025-07-08 01:45:04 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:45:04 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:45:04 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:45:08 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/my-new-route22/revert/1", parameters={}
+2025-07-08 01:45:08 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#revert(String, int)
+2025-07-08 01:45:08 [http-nio-8081-exec-5] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped my-new-route22 (rest://POST:/api/hello22)
+2025-07-08 01:45:08 [http-nio-8081-exec-5] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown my-new-route22 (rest://POST:/api/hello22)
+2025-07-08 01:45:08 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Deactivated route my-new-route22
+2025-07-08 01:45:08 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Reverted my-new-route22 to version 1
+2025-07-08 01:45:09 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-07-08 01:45:09 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Reverted to route my-new-route22 version 1"]
+2025-07-08 01:45:09 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:45:09 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:45:09 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:45:09 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:45:09 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:45:09 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:45:34 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - POST "/routes/my-new-route2/start", parameters={}
+2025-07-08 01:45:34 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#start(String)
+2025-07-08 01:45:34 [http-nio-8081-exec-7] ERROR c.m.b.k.c.DynamicRouteController - Failed to start route my-new-route2: Query did not return a unique result: 2 results were returned
+2025-07-08 01:45:34 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-07-08 01:45:34 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Failed to start route: Query did not return a unique result: 2 results were returned"]
+2025-07-08 01:45:34 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2025-07-08 01:45:44 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6&httpMethod=GET", parameters={masked}
+2025-07-08 01:45:44 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:45:44 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:45:45 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
+2025-07-08 01:45:45 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:45:53 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6&httpMethod=POST", parameters={masked}
+2025-07-08 01:45:53 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:45:53 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:45:53 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:45:53 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:46:03 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6&active=false", parameters={masked}
+2025-07-08 01:46:03 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:46:03 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:46:03 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:46:03 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:46:07 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:46:07 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:46:07 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:46:07 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:46:07 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:46:10 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:46:10 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:46:10 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:46:10 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:46:10 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:46:11 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:46:11 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:46:11 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:46:11 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:46:11 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:46:17 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6&path=api", parameters={masked}
+2025-07-08 01:46:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:46:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:46:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:46:17 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:46:21 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6&path=22", parameters={masked}
+2025-07-08 01:46:21 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:46:21 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:46:21 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:46:21 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:46:25 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6&path=2", parameters={masked}
+2025-07-08 01:46:25 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:46:25 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:46:25 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:46:25 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:46:29 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-07-08 01:46:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-07-08 01:46:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-07-08 01:46:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-07-08 01:46:29 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-07-08 01:46:55 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-07-08 01:46:55 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-07-08 01:46:55 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:2)
+2025-07-08 01:46:55 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route22 (rest://POST:/api/hello22)
+2025-07-08 01:46:55 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped workflow-orchestrator (direct://workflow-route)
+2025-07-08 01:46:55 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 3ms (uptime:4m21s)
+2025-07-08 01:46:55 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-07-08 01:46:55 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-07-08 01:46:55 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-07-08 01:46:55 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
