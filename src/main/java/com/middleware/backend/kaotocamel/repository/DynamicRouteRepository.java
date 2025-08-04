@@ -20,7 +20,7 @@ public interface DynamicRouteRepository
 
         Optional<DynamicRouteEntity> findByRouteIdAndVersion(String routeId, int version);
 
-        List<DynamicRouteEntity> findByRouteIdAndActiveTrue(String routeId);
+//        List<DynamicRouteEntity> findByRouteIdAndActiveTrue(String routeId);
 
         DynamicRouteEntity findByRouteIdAndDefaultVersionTrue(String routeId);
 
@@ -33,4 +33,14 @@ public interface DynamicRouteRepository
 
         @Query("SELECT r FROM DynamicRouteEntity r ORDER BY r.createdAt DESC")
         List<DynamicRouteEntity> findAllOrderByCreatedAtDesc();
+        // أضف هذه الـ Methods لـ DynamicRouteRepository الموجود عندك
+
+        @Query("SELECT dr FROM DynamicRouteEntity dr WHERE dr.active = true AND dr.defaultVersion = true ORDER BY dr.routeId")
+        List<DynamicRouteEntity> findLatestActiveRoutes();
+
+        @Query("SELECT dr FROM DynamicRouteEntity dr WHERE dr.routeId = :routeId AND dr.active = true")
+        List<DynamicRouteEntity> findByRouteIdAndActiveTrue(@Param("routeId") String routeId);
+
+        @Query("SELECT COUNT(dr) > 0 FROM DynamicRouteEntity dr WHERE dr.routeId = :routeId AND dr.active = true")
+        boolean existsByRouteIdAndActiveTrue(@Param("routeId") String routeId);
 }
