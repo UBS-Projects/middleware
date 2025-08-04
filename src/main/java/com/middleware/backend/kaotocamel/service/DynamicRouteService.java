@@ -232,7 +232,9 @@ public class DynamicRouteService {
         HttpMethod httpMethod = HttpMethod.valueOf(methodStr.toUpperCase());
         String baseUrl = restTemplateConfig.getBaseUrl();
         // Construct the full URI
-        String uri = baseUrl + path;
+// Replace path variables (e.g. {id}) with dummy test values
+        String resolvedPath = path.replaceAll("\\{[^/]+\\}", "123");
+        String uri = baseUrl + resolvedPath;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -345,7 +347,7 @@ public class DynamicRouteService {
             List<RouteDefinition> routeDefinitions = model.getRouteDefinitions();
 
             return routeDefinitions.stream().filter(r -> r.getInput() != null && r.getInput().getUri() != null)// &&
-                                                                                                               // id.equals(r.getInput().getId())
+                    // id.equals(r.getInput().getId())
                     .map(r -> r.getInput().getUri())
                     .filter(uri -> uri.startsWith("direct:") || uri.startsWith("seda:") || uri.startsWith("rest:"))
                     .findFirst();
@@ -568,8 +570,8 @@ public class DynamicRouteService {
     }
 
     public Page<DynamicRouteEntity> getLatestRoutesWithFiltersOptimized(String routeId, String description, String path,
-            String httpMethod, Boolean active, String comment, String yamlContains, LocalDateTime createdAfter,
-            LocalDateTime createdBefore, Pageable pageable) {
+                                                                        String httpMethod, Boolean active, String comment, String yamlContains, LocalDateTime createdAfter,
+                                                                        LocalDateTime createdBefore, Pageable pageable) {
 
         Specification<DynamicRouteEntity> spec = buildSpecification(routeId, description, path, httpMethod, active,
                 comment, yamlContains, createdAfter, createdBefore);
@@ -620,8 +622,8 @@ public class DynamicRouteService {
     }
 
     private Specification<DynamicRouteEntity> buildSpecification(String routeId, String description, String path,
-            String httpMethod, Boolean active, String comment, String yamlContains, LocalDateTime createdAfter,
-            LocalDateTime createdBefore) {
+                                                                 String httpMethod, Boolean active, String comment, String yamlContains, LocalDateTime createdAfter,
+                                                                 LocalDateTime createdBefore) {
 
         return Specification.where(DynamicRouteSpecification.routeIdContains(routeId))
                 .and(DynamicRouteSpecification.descriptionContains(description))
@@ -763,7 +765,7 @@ public class DynamicRouteService {
     }
 
     public Page<DynamicRouteAudit> getLatestRoutesLogsWithFilters(Long id, String routeId, Integer version,
-            String action, String details, LocalDateTime timestamp, Pageable pageable) {
+                                                                  String action, String details, LocalDateTime timestamp, Pageable pageable) {
 
         return auditRepository.findByFilters(id, routeId, version, action, details, timestamp, pageable);
     }
