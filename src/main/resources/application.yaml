@@ -19,6 +19,13 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
+        # Quartz properties
+      quartz:
+        properties:
+          spring.quartz.job-store-type: jdbc
+          spring.quartz.jdbc.initialize-schema: always
+#          spring.quartz.properties.org.quartz.jobStore.isClustered: false
+#          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
 
 management:
   health:
@@ -44,4 +51,4 @@ camel:
     mapping:
       context-path: /camel/*
 
-      
+
