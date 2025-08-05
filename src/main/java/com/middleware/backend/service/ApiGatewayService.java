@@ -23,7 +23,6 @@ import com.middleware.backend.orchestration.WorkflowResult;
 import com.middleware.backend.repository.ApiEndpointRepository;
 import com.middleware.backend.util.ApplyTemplate;
 import com.middleware.backend.util.JsonSchemaValidatorUtil;
-import com.middleware.backend.util.RequestValidator;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +34,6 @@ public class ApiGatewayService {
 
     private final ApiEndpointRepository apiEndpointRepository;
     private final ObjectMapper objectMapper;
-    private final WorkflowExecutionService workflowExecutionService;
-    private final RequestValidator requestValidator;
     private final ApplyTemplate applyTemplate;
     private final WorkflowOrchestratorRoute workflowOrchestratorRoute;
     private final ProducerTemplate producerTemplate;
@@ -50,9 +47,8 @@ public class ApiGatewayService {
         LocalDateTime receivedAt = LocalDateTime.now();
 
         MiddlewareApiCallLogDto logDto = MiddlewareApiCallLogDto.builder().transactionId(transactionId)
-                .requestMethod(method.name()).requestUri(path).requestHeaders(toJsonSafe(headers))
-                .requestBody(toJsonSafe(requestBody)).receivedAt(receivedAt)
-                .clientIp(headers.getOrDefault("X-Forwarded-For", "unknown")).build();
+                .requestMethod(method.name()).requestHeaders(toJsonSafe(headers)).requestBody(toJsonSafe(requestBody))
+                .receivedAt(receivedAt).clientIp(headers.getOrDefault("X-Forwarded-For", "unknown")).build();
 
         ApiEndpoint endpoint = apiEndpointRepository.findByEndpointPathAndMethod(path, method.name());
         if (endpoint == null) {
@@ -60,13 +56,13 @@ public class ApiGatewayService {
             logDto.setErrorMessage("Endpoint not found");
             logDto.setCompletedAt(LocalDateTime.now());
             logDto.setDurationMs(duration(receivedAt, logDto.getCompletedAt()));
-            middlewareApiCallLogService.createTransaction(logDto); // Async save
+            // middlewareApiCallLogService.createTransaction(logDto); // Async save
             throw new ApiNotFoundException("Endpoint not found for path: " + path + " and method: " + method.name());
         }
-        logDto.setApiEndpointId(endpoint.getId());
-        if (endpoint.getTriggerWorkflow() != null) {
-            logDto.setWorkflowId(endpoint.getTriggerWorkflow().getId());
-        }
+        // logDto.setApiEndpointId(endpoint.getId());
+        // if (endpoint.getTriggerWorkflow() != null) {
+        // logDto.setWorkflowId(endpoint.getTriggerWorkflow().getId());
+        // }
 
         JsonNode jsonBody;
         try {
@@ -76,7 +72,7 @@ public class ApiGatewayService {
             logDto.setErrorMessage("Invalid JSON body");
             logDto.setCompletedAt(LocalDateTime.now());
             logDto.setDurationMs(duration(receivedAt, logDto.getCompletedAt()));
-            middlewareApiCallLogService.createTransaction(logDto);
+            // middlewareApiCallLogService.createTransaction(logDto);
             throw new InvalidRequestException("Invalid JSON body " + requestBody);
         }
 
@@ -85,7 +81,7 @@ public class ApiGatewayService {
             logDto.setErrorMessage("Body validation failed");
             logDto.setCompletedAt(LocalDateTime.now());
             logDto.setDurationMs(duration(receivedAt, logDto.getCompletedAt()));
-            middlewareApiCallLogService.createTransaction(logDto);
+            // middlewareApiCallLogService.createTransaction(logDto);
             throw new InvalidRequestException("Body validation failed");
         } else {
             log.debug("Valid JsonBody {} against template {}", jsonBody, endpoint.getInputTemplate());
@@ -109,7 +105,7 @@ public class ApiGatewayService {
             logDto.setResponseBody(toJsonSafe((Map<String, Object>) apiResponse.getBody()));
             logDto.setCompletedAt(LocalDateTime.now());
             logDto.setDurationMs(duration(receivedAt, logDto.getCompletedAt()));
-            middlewareApiCallLogService.createTransaction(logDto);
+            // middlewareApiCallLogService.createTransaction(logDto);
 
             return apiResponse;
         } catch (Exception e) {
@@ -117,7 +113,7 @@ public class ApiGatewayService {
             logDto.setErrorMessage("Workflow execution failed: " + e.getMessage());
             logDto.setCompletedAt(LocalDateTime.now());
             logDto.setDurationMs(duration(receivedAt, logDto.getCompletedAt()));
-            middlewareApiCallLogService.createTransaction(logDto);
+            // middlewareApiCallLogService.createTransaction(logDto);
 
             ApiResponse errorResponse = new ApiResponse();
             errorResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
