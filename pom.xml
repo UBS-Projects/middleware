@@ -153,6 +153,13 @@
             <version>1.5.5.Final</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--        Quartz Dependency "For the Scheduled Jobs"             -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins><!-- Spring Boot Plugin -->

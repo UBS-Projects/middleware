@@ -1,100 +1,264 @@
 package com.middleware.backend.controller;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.middleware.backend.dto.ErrorMappingDto;
-import com.middleware.backend.mapper.ErrorMappingMapper;
-import com.middleware.backend.model.ErrorMapping;
-import com.middleware.backend.repository.ErrorMappingRepository;
-import com.middleware.backend.spec.ErrorMappingSpecification;
+import com.middleware.backend.dto.RouteOptionDto;
+import com.middleware.backend.dto.SourceSystemOptionDto;
+import com.middleware.backend.service.ErrorMappingService;
+import com.middleware.backend.service.SourceSystemService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.persistence.EntityNotFoundException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/error-mappings")
+@RequiredArgsConstructor
+@Slf4j
 public class ErrorMappingController {
 
-    private final ErrorMappingRepository repository;
-    private final ErrorMappingMapper mapper;
-
-    public ErrorMappingController(ErrorMappingRepository repository, ErrorMappingMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
+    private final ErrorMappingService errorMappingService;
+    private final SourceSystemService sourceSystemService;
 
     @GetMapping
-    public ResponseEntity<List<ErrorMappingDto>> getAll(@RequestParam Map<String, String> filters) {
-        var spec = ErrorMappingSpecification.filter(filters);
-        var dtos = repository.findAll(spec)
-                .stream()
-                .map(mapper::toDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(dtos);
+    public ResponseEntity<Page<ErrorMappingDto>> getAllErrorMappings(
+            @RequestParam Map<String, String> filters,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDir) {
+
+        try {
+            Sort sort = sortDir.equalsIgnoreCase("desc")
+                    ? Sort.by(sortBy).descending()
+                    : Sort.by(sortBy).ascending();
+
+            Pageable pageable = PageRequest.of(page, size, sort);
+            Page<ErrorMappingDto> result = errorMappingService.getAllErrorMappings(filters, pageable);
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error retrieving error mappings", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ErrorMappingDto> getById(@PathVariable Long id) {
-        return repository.findById(id)
-                .map(mapper::toDto)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new EntityNotFoundException("ErrorMapping not found"));
+    @GetMapping("/routes")
+    public ResponseEntity<List<RouteOptionDto>> getAvailableRoutes() {
+        try {
+            List<RouteOptionDto> routes = errorMappingService.getAvailableRoutes();
+            return ResponseEntity.ok(routes);
+        } catch (Exception e) {
+            log.error("Error retrieving available routes", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/source-systems")
+    public ResponseEntity<List<SourceSystemOptionDto>> getAvailableSourceSystems() {
+        try {
+            List<SourceSystemOptionDto> sourceSystems = sourceSystemService.getActiveSourceSystems()
+                    .stream()
+                    .map(dto -> new SourceSystemOptionDto(dto.getId(), dto.getName(), dto.getDescription(), dto.getActive()))
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(sourceSystems);
+        } catch (Exception e) {
+            log.error("Error retrieving available source systems", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+// Update the findMatchingErrorMapping endpoint in ErrorMappingController
+
+    /**
+     * Smart error matching endpoint with universal search logic
+     * Automatically prioritizes specific source system matches over general ones
+     *
+     * @param routeId The route identifier (required)
+     * @param sourceSystemId The source system ID (optional - if null, searches general mappings)
+     * @param errorMessage The error message to match (required)
+     * @return ResponseEntity with matching ErrorMappingDto or 404 if not found
+     */
+    @GetMapping("/match")
+    public ResponseEntity<?> findMatchingErrorMapping(
+            @RequestParam String routeId,
+            @RequestParam(required = false) Long sourceSystemId,
+            @RequestParam String errorMessage) {
+
+        try {
+            log.info("Smart Error Matching Request - Route: '{}', SourceSystem: {}, Error: '{}'",
+                    routeId, sourceSystemId != null ? sourceSystemId : "ANY", errorMessage);
+
+            Optional<ErrorMappingDto> result = errorMappingService.findMatchingErrorMapping(routeId, sourceSystemId, errorMessage);
+
+            if (result.isPresent()) {
+                ErrorMappingDto mapping = result.get();
+                log.info("Match found - Returning ErrorMapping ID: {}, Code: '{}', Message: '{}'",
+                        mapping.getId(), mapping.getMappedErrorCode(), mapping.getMappedMessage());
+                return ResponseEntity.ok(result.get());
+            } else {
+                log.info(" No match found for route: '{}', sourceSystemId: {}, error: '{}'",
+                        routeId, sourceSystemId, errorMessage);
+                return ResponseEntity.notFound().build();
+            }
+
+        } catch (Exception e) {
+            log.error("Error during smart matching for route: '{}', sourceSystemId: {}, error: '{}'",
+                    routeId, sourceSystemId, errorMessage, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(createErrorResponse("Failed to find matching error mapping: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * Test endpoint to validate the smart matching logic
+     * Returns detailed information about the matching process
+     */
+    @GetMapping("/match/debug")
+    public ResponseEntity<?> debugErrorMatching(
+            @RequestParam String routeId,
+            @RequestParam(required = false) Long sourceSystemId,
+            @RequestParam String errorMessage) {
+
+        try {
+            Map<String, Object> debugInfo = new HashMap<>();
+            debugInfo.put("routeId", routeId);
+            debugInfo.put("sourceSystemId", sourceSystemId);
+            debugInfo.put("errorMessage", errorMessage);
+
+            Optional<ErrorMappingDto> result = errorMappingService.findMatchingErrorMapping(routeId, sourceSystemId, errorMessage);
+
+            debugInfo.put("matchFound", result.isPresent());
+            if (result.isPresent()) {
+                debugInfo.put("matchedMapping", result.get());
+            }
+
+            return ResponseEntity.ok(debugInfo);
+
+        } catch (Exception e) {
+            log.error("Error in debug matching", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(createErrorResponse("Debug matching failed: " + e.getMessage()));
+        }
+    }
+    @GetMapping("/count/{routeId}")
+    public ResponseEntity<Map<String, Long>> getErrorMappingCount(@PathVariable String routeId) {
+        try {
+            long count = errorMappingService.getCountByRouteId(routeId);
+            Map<String, Long> response = new HashMap<>();
+            response.put("count", count);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("Error getting error mapping count for route: {}", routeId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<List<ErrorMappingDto>> exportErrorMappings(
+            @RequestParam(required = false) String routeId) {
+        try {
+            Map<String, String> filters = new HashMap<>();
+            if (routeId != null) {
+                filters.put("routeId", routeId);
+            }
+
+            Pageable pageable = PageRequest.of(0, Integer.MAX_VALUE);
+            Page<ErrorMappingDto> result = errorMappingService.getAllErrorMappings(filters, pageable);
+
+            return ResponseEntity.ok(result.getContent());
+        } catch (Exception e) {
+            log.error("Error exporting error mappings", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+     @GetMapping("/{id}")
+    public ResponseEntity<ErrorMappingDto> getErrorMappingById(@PathVariable Long id) {
+        try {
+            return errorMappingService.getErrorMappingById(id)
+                    .map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            log.error("Error retrieving error mapping with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PostMapping
-    public ResponseEntity<ErrorMappingDto> create(@RequestBody ErrorMappingDto dto) {
-        var entity = mapper.toEntity(dto);
-        var saved = repository.save(entity);
-        return ResponseEntity.ok(mapper.toDto(saved));
+    public ResponseEntity<?> createErrorMapping(@RequestBody ErrorMappingDto dto) {
+        try {
+            ErrorMappingDto created = errorMappingService.createErrorMapping(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        } catch (IllegalArgumentException e) {
+            log.warn("Invalid error mapping data: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
+        } catch (Exception e) {
+            log.error("Error creating error mapping", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(createErrorResponse("Failed to create error mapping"));
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ErrorMappingDto> update(@PathVariable Long id, @RequestBody ErrorMappingDto dto) {
-        if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("ErrorMapping not found");
+    public ResponseEntity<?> updateErrorMapping(@PathVariable Long id, @RequestBody ErrorMappingDto dto) {
+        try {
+            ErrorMappingDto updated = errorMappingService.updateErrorMapping(id, dto);
+            return ResponseEntity.ok(updated);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalArgumentException e) {
+            log.warn("Invalid error mapping data: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
+        } catch (Exception e) {
+            log.error("Error updating error mapping with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(createErrorResponse("Failed to update error mapping"));
         }
-        var entity = mapper.toEntity(dto);
-        entity.setId(id);
-        return ResponseEntity.ok(mapper.toDto(repository.save(entity)));
-    }
-
-    @PatchMapping("/{id}")
-    public ResponseEntity<ErrorMappingDto> patch(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
-        var entity = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("ErrorMapping not found"));
-
-        updates.forEach((key, value) -> {
-            try {
-                Field field = ErrorMapping.class.getDeclaredField(key);
-                field.setAccessible(true);
-                field.set(entity, value);
-            } catch (Exception ignored) {
-            }
-        });
-
-        return ResponseEntity.ok(mapper.toDto(repository.save(entity)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("ErrorMapping not found");
+    public ResponseEntity<?> deleteErrorMapping(@PathVariable Long id) {
+        try {
+            errorMappingService.deleteErrorMapping(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            log.error("Error deleting error mapping with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(createErrorResponse("Failed to delete error mapping"));
         }
-        repository.deleteById(id);
-        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/toggle")
+    public ResponseEntity<?> toggleErrorMapping(@PathVariable Long id) {
+        try {
+            errorMappingService.toggleErrorMapping(id);
+            return ResponseEntity.ok().body(Map.of("message", "Error mapping status toggled successfully"));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            log.error("Error toggling error mapping with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(createErrorResponse("Failed to toggle error mapping"));
+        }
+    }
+
+    private Map<String, String> createErrorResponse(String message) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", message);
+        return error;
     }
 }
