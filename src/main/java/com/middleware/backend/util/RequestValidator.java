@@ -54,19 +54,20 @@ public class RequestValidator {
         Map<String, Object> headers = exchange.getIn().getHeaders();
         // path = path.replace("/camel", "");
 
-        log.debug("Exchange {}", exchange);
-        log.debug("recived Body {} \n method {}\npath {}", body, method, path);
+        log.debug("validateJsonBody Exchange {}", exchange);
+        log.debug("validateJsonBody recived Body {} \n method {}\npath {}", body, method, path);
         String transactionId = UUID.randomUUID().toString();
         LocalDateTime receivedAt = LocalDateTime.now();
         String clientIp = exchange.getIn().getHeader("X-Forwarded-For", String.class);
         if (clientIp == null) {
             clientIp = "unknown";
         }
-        MiddlewareApiCallLogDto dto = MiddlewareApiCallLogDto.builder().clientIp(clientIp).build();
+        // MiddlewareApiCallLogDto dto =
+        // MiddlewareApiCallLogDto.builder().clientIp(clientIp).build();
 
         MiddlewareApiCallLogDto logDto = MiddlewareApiCallLogDto.builder().transactionId(transactionId)
-                .requestMethod(method).requestUri(path).requestHeaders(toJsonSafe(headers))
-                .requestBody(toJsonSafe(body)).receivedAt(receivedAt).clientIp(clientIp).build();
+                .requestMethod(method).requestHeaders(toJsonSafe(headers)).requestBody(toJsonSafe(body))
+                .receivedAt(receivedAt).clientIp(clientIp).build();
 
         ApiEndpoint endpoint = apiEndpointRepository.findByEndpointPathAndMethod(path, method);
         if (endpoint == null) {
@@ -74,12 +75,12 @@ public class RequestValidator {
             logDto.setErrorMessage("Endpoint not found");
             logDto.setCompletedAt(LocalDateTime.now());
             logDto.setDurationMs(duration(receivedAt, logDto.getCompletedAt()));
-            middlewareApiCallLogService.createTransaction(logDto); // Async save
+            // middlewareApiCallLogService.createTransaction(logDto); // Async save
             throw new ApiNotFoundException("Endpoint not found for path: " + path + " and method: " + method);
         }
-        logDto.setApiEndpointId(endpoint.getId());
+        // logDto.setApiEndpointId(endpoint.getId());
         if (endpoint.getTriggerWorkflow() != null) {
-            logDto.setWorkflowId(endpoint.getTriggerWorkflow().getId());
+            // logDto.setWorkflowId(endpoint.getTriggerWorkflow().getId());
         }
 
         JsonNode jsonBody;
@@ -87,11 +88,11 @@ public class RequestValidator {
             jsonBody = objectMapper.valueToTree(body);
         } catch (Exception e) {
             logDto.setResponseCode(400);
-            logDto.setErrorMessage("Invalid JSON body");
+            logDto.setErrorMessage("validateJsonBody Invalid JSON body");
             logDto.setCompletedAt(LocalDateTime.now());
             logDto.setDurationMs(duration(receivedAt, logDto.getCompletedAt()));
-            middlewareApiCallLogService.createTransaction(logDto);
-            throw new RuntimeException("Invalid JSON body " + body);
+            // middlewareApiCallLogService.createTransaction(logDto);
+            throw new RuntimeException("validateJsonBody Invalid JSON body " + body);
         }
 
         if (!validateInput(endpoint.getInputTemplate(), body)) {
@@ -99,11 +100,11 @@ public class RequestValidator {
             logDto.setErrorMessage("Body validation failed");
             logDto.setCompletedAt(LocalDateTime.now());
             logDto.setDurationMs(duration(receivedAt, logDto.getCompletedAt()));
-            middlewareApiCallLogService.createTransaction(logDto);
+            // middlewareApiCallLogService.createTransaction(logDto);
             throw new RuntimeException("Body validation failed");
 
         } else {
-            log.debug("Valid JsonBody {} against template {}", jsonBody, endpoint.getInputTemplate());
+            log.debug("validateJsonBody Valid JsonBody {} against template {}", jsonBody, endpoint.getInputTemplate());
 
         }
 

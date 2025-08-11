@@ -2,16 +2,11 @@ package com.middleware.backend.logging.model;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,10 +30,10 @@ public class WorkflowStepLog {
     @Column(name = "transaction_id")
     private String transactionId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Api_CallLog", nullable = true)
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    private MiddlewareApiCallLog middlewareApiCallLog;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "Api_CallLog", nullable = true)
+    // @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    private String middlewareApiCallLog;
 
     @Column(name = "workflow_execution_id", nullable = false)
     private Long workflowExecutionId;

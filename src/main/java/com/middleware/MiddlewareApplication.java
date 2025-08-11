@@ -14,4 +14,10 @@ public class MiddlewareApplication {
 		SpringApplication.run(MiddlewareApplication.class, args);
 
 	}
+
+	/*
+	 * @Bean public org.apache.camel.spi.CamelContextCustomizer
+	 * customizer(RoutePolicyFactory policyFactory) { return camelContext ->
+	 * camelContext.addRoutePolicyFactory(policyFactory); }
+	 */
 }
