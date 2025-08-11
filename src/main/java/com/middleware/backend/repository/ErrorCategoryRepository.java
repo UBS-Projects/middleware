@@ -5,13 +5,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface ErrorCategoryRepository extends JpaRepository<ErrorCategory, Long> {
 
     // To check for uniqueness before creating a new category
     boolean existsByNameIgnoreCase(String name);
+
+    // To get only active categories
+    List<ErrorCategory> findByActiveTrue();
 
     // To prevent deleting a category if it's already used
     @Query("SELECT COUNT(em) FROM ErrorMapping em WHERE em.errorCategory.id = :categoryId")

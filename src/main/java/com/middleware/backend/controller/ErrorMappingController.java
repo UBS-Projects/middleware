@@ -1,3 +1,4 @@
+// تعديل ErrorMappingController.java
 package com.middleware.backend.controller;
 
 import com.middleware.backend.dto.ErrorMappingDto;
@@ -5,6 +6,7 @@ import com.middleware.backend.dto.RouteOptionDto;
 import com.middleware.backend.dto.SourceSystemOptionDto;
 import com.middleware.backend.service.ErrorMappingService;
 import com.middleware.backend.service.SourceSystemService;
+import com.middleware.backend.service.ErrorCategoryService; // إضافة هذا
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -30,6 +32,7 @@ public class ErrorMappingController {
 
     private final ErrorMappingService errorMappingService;
     private final SourceSystemService sourceSystemService;
+    private final ErrorCategoryService errorCategoryService; // إضافة هذا
 
     @GetMapping
     public ResponseEntity<Page<ErrorMappingDto>> getAllErrorMappings(
@@ -79,17 +82,29 @@ public class ErrorMappingController {
         }
     }
 
-// Update the findMatchingErrorMapping endpoint in ErrorMappingController
+    // إضافة endpoint جديد للحصول على Error Categories النشطة فقط
+    @GetMapping("/error-categories")
+    public ResponseEntity<List<Map<String, Object>>> getActiveErrorCategories() {
+        try {
+            List<Map<String, Object>> categories = errorCategoryService.getActiveCategories()
+                    .stream()
+                    .map(dto -> {
+                        Map<String, Object> categoryMap = new HashMap<>();
+                        categoryMap.put("id", dto.getId());
+                        categoryMap.put("name", dto.getName());
+                        categoryMap.put("description", dto.getDescription());
+                        categoryMap.put("active", dto.getActive());
+                        return categoryMap;
+                    })
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(categories);
+        } catch (Exception e) {
+            log.error("Error retrieving active error categories", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
-    /**
-     * Smart error matching endpoint with universal search logic
-     * Automatically prioritizes specific source system matches over general ones
-     *
-     * @param routeId The route identifier (required)
-     * @param sourceSystemId The source system ID (optional - if null, searches general mappings)
-     * @param errorMessage The error message to match (required)
-     * @return ResponseEntity with matching ErrorMappingDto or 404 if not found
-     */
+    // باقي methods تبقى كما هي...
     @GetMapping("/match")
     public ResponseEntity<?> findMatchingErrorMapping(
             @RequestParam String routeId,
@@ -121,10 +136,6 @@ public class ErrorMappingController {
         }
     }
 
-    /**
-     * Test endpoint to validate the smart matching logic
-     * Returns detailed information about the matching process
-     */
     @GetMapping("/match/debug")
     public ResponseEntity<?> debugErrorMatching(
             @RequestParam String routeId,
@@ -152,6 +163,7 @@ public class ErrorMappingController {
                     .body(createErrorResponse("Debug matching failed: " + e.getMessage()));
         }
     }
+
     @GetMapping("/count/{routeId}")
     public ResponseEntity<Map<String, Long>> getErrorMappingCount(@PathVariable String routeId) {
         try {
@@ -184,7 +196,7 @@ public class ErrorMappingController {
         }
     }
 
-     @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ErrorMappingDto> getErrorMappingById(@PathVariable Long id) {
         try {
             return errorMappingService.getErrorMappingById(id)

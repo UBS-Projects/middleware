@@ -15,6 +15,7 @@ public class ErrorCategoryMapper {
                 .id(entity.getId())
                 .name(entity.getName())
                 .description(entity.getDescription())
+                .active(entity.getActive())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();
@@ -28,6 +29,7 @@ public class ErrorCategoryMapper {
                 .id(dto.getId())
                 .name(dto.getName())
                 .description(dto.getDescription())
+                .active(dto.getActive())
                 .build();
     }
 }
