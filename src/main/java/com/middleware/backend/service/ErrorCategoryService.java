@@ -4,7 +4,11 @@ import com.middleware.backend.dto.ErrorCategoryDto;
 import com.middleware.backend.mapper.ErrorCategoryMapper;
 import com.middleware.backend.model.ErrorCategory;
 import com.middleware.backend.repository.ErrorCategoryRepository;
+import com.middleware.backend.scheduledJobs.model.ScheduledJobs;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +23,8 @@ public class ErrorCategoryService {
     private final ErrorCategoryRepository categoryRepository;
     private final ErrorCategoryMapper categoryMapper;
 
-    public List<ErrorCategoryDto> getAllCategories() {
-        return categoryRepository.findAll().stream()
-                .map(categoryMapper::toDto)
-                .collect(Collectors.toList());
+    public Page<ErrorCategory> getAllCategories(Specification<ErrorCategory> spec, Pageable pageable) {
+        return categoryRepository.findAll(spec, pageable);
     }
 
     public ErrorCategoryDto getCategoryById(Long id) {

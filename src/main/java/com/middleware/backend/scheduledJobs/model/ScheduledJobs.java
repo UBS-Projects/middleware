@@ -76,6 +76,8 @@ public class ScheduledJobs {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
+    private boolean active = true;
+
 
 
 }

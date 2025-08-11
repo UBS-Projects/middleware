@@ -13,6 +13,6 @@ import java.util.List;
 @Repository
 public interface ScheduledJobRepository extends JpaRepository<ScheduledJobs,Long> {
     List<ScheduledJobs> findByEnabledTrue();
-    ScheduledJobs findByApiEndpointAndMethod(String apiEndPoint, String method);
+    ScheduledJobs findByApiEndpointAndMethodAndEnabledTrue(String apiEndPoint, String method);
     Page<ScheduledJobs> findAll(Specification<ScheduledJobs> spec, Pageable pageable);
 }

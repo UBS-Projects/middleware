@@ -19,6 +19,7 @@ public abstract class Mapper {
                 .updatedBy(job.getUpdatedBy())
                 .updatedAt(job.getUpdatedAt())
                 .method(job.getMethod())
+                .active(job.isActive())
                 .build();
     }
     public static JobRequest mapToDTO (ScheduledJobs job){
@@ -37,6 +38,7 @@ public abstract class Mapper {
                 .updatedBy(job.getUpdatedBy())
                 .updatedAt(job.getUpdatedAt())
                 .method(job.getMethod())
+                .active(job.isActive())
                 .build();
     }
 }

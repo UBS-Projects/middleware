@@ -26,6 +26,9 @@ spring:
           spring.quartz.jdbc.initialize-schema: always
 #          spring.quartz.properties.org.quartz.jobStore.isClustered: false
 #          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
+# JWT SECRET
+jwt:
+  secret: 1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p
 
 management:
   health:
