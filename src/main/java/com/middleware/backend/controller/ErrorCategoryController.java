@@ -1,9 +1,16 @@
 package com.middleware.backend.controller;
 
 import com.middleware.backend.dto.ErrorCategoryDto;
+import com.middleware.backend.model.ErrorCategory;
 import com.middleware.backend.service.ErrorCategoryService;
+import com.middleware.backend.spec.ErrorCategorySpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.persistence.EntityNotFoundException;
 import java.net.URI;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/error-categories")
+@RequestMapping("/error-categories")
 @RequiredArgsConstructor
 @Slf4j
 public class ErrorCategoryController {
@@ -23,22 +29,24 @@ public class ErrorCategoryController {
     private final ErrorCategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<ErrorCategoryDto>> getAllCategories() {
+    public ResponseEntity<Page<?>> getAll(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false, defaultValue = "createdAt") String sortedBy,
+            @RequestParam(defaultValue = "desc") String sortDirection,
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size
+    ) {
         try {
-            return ResponseEntity.ok(categoryService.getAllCategories());
+            Specification<ErrorCategory> spec = Specification
+                    .where(ErrorCategorySpecification.hasField("name", name, ErrorCategorySpecification.MatchMode.CONTAINS))
+                    .and(ErrorCategorySpecification.hasField("description", description, ErrorCategorySpecification.MatchMode.CONTAINS));
+            Pageable pageable = PageRequest.of(page, size, sortDirection.equalsIgnoreCase("asc")
+                    ? Sort.by(sortedBy).ascending()
+                    : Sort.by(sortedBy).descending());
+            Page<?> result = categoryService.getAllCategories(spec, pageable);
+            return ResponseEntity.ok().body(result);
         } catch (Exception e) {
-            log.error("Error retrieving all error categories", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @GetMapping("/active")
-    public ResponseEntity<List<ErrorCategoryDto>> getActiveCategories() {
-        try {
-            return ResponseEntity.ok(categoryService.getActiveCategories());
-        } catch (Exception e) {
-            log.error("Error retrieving active error categories", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.internalServerError().build();
         }
     }
 
