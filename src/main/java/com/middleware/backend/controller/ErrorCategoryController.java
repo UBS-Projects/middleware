@@ -1,69 +1,124 @@
 package com.middleware.backend.controller;
 
 import com.middleware.backend.dto.ErrorCategoryDto;
-import com.middleware.backend.model.ErrorCategory;
 import com.middleware.backend.service.ErrorCategoryService;
-import com.middleware.backend.spec.ErrorCategorySpecification;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/error-categories")
+@RequestMapping("/api/v1/error-categories")
 @RequiredArgsConstructor
+@Slf4j
 public class ErrorCategoryController {
 
     private final ErrorCategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<Page<?>> getAll(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false, defaultValue = "createdAt") String sortedBy,
-            @RequestParam(defaultValue = "desc") String sortDirection,
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size
-    ) {
+    public ResponseEntity<List<ErrorCategoryDto>> getAllCategories() {
         try {
-            Specification<ErrorCategory> spec = Specification
-                    .where(ErrorCategorySpecification.hasField("name", name, ErrorCategorySpecification.MatchMode.CONTAINS))
-                    .and(ErrorCategorySpecification.hasField("description", description, ErrorCategorySpecification.MatchMode.CONTAINS));
-            Pageable pageable = PageRequest.of(page, size, sortDirection.equalsIgnoreCase("asc")
-                    ? Sort.by(sortedBy).ascending()
-                    : Sort.by(sortedBy).descending());
-            Page<?> result = categoryService.getAllCategories(spec, pageable);
-            return ResponseEntity.ok().body(result);
+            return ResponseEntity.ok(categoryService.getAllCategories());
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
+            log.error("Error retrieving all error categories", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<ErrorCategoryDto>> getActiveCategories() {
+        try {
+            return ResponseEntity.ok(categoryService.getActiveCategories());
+        } catch (Exception e) {
+            log.error("Error retrieving active error categories", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ErrorCategoryDto> getCategoryById(@PathVariable Long id) {
-        return ResponseEntity.ok(categoryService.getCategoryById(id));
+    public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(categoryService.getCategoryById(id));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            log.error("Error retrieving error category with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(createErrorResponse("Failed to retrieve error category"));
+        }
     }
 
     @PostMapping
-    public ResponseEntity<ErrorCategoryDto> createCategory(@RequestBody ErrorCategoryDto dto) {
-        ErrorCategoryDto createdDto = categoryService.createCategory(dto);
-        return ResponseEntity.created(URI.create("/api/v1/error-categories/" + createdDto.getId())).body(createdDto);
+    public ResponseEntity<?> createCategory(@RequestBody ErrorCategoryDto dto) {
+        try {
+            ErrorCategoryDto createdDto = categoryService.createCategory(dto);
+            return ResponseEntity.created(URI.create("/api/v1/error-categories/" + createdDto.getId())).body(createdDto);
+        } catch (IllegalArgumentException e) {
+            log.warn("Invalid error category data: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
+        } catch (Exception e) {
+            log.error("Error creating error category", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(createErrorResponse("Failed to create error category"));
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ErrorCategoryDto> updateCategory(@PathVariable Long id, @RequestBody ErrorCategoryDto dto) {
-        return ResponseEntity.ok(categoryService.updateCategory(id, dto));
+    public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody ErrorCategoryDto dto) {
+        try {
+            return ResponseEntity.ok(categoryService.updateCategory(id, dto));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalArgumentException e) {
+            log.warn("Invalid error category data: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
+        } catch (Exception e) {
+            log.error("Error updating error category with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(createErrorResponse("Failed to update error category"));
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-        categoryService.deleteCategory(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
+        try {
+            categoryService.deleteCategory(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
+        } catch (Exception e) {
+            log.error("Error deleting error category with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(createErrorResponse("Failed to delete error category"));
+        }
+    }
+
+    @PostMapping("/{id}/toggle")
+    public ResponseEntity<?> toggleCategory(@PathVariable Long id) {
+        try {
+            ErrorCategoryDto updatedDto = categoryService.toggleCategory(id);
+            return ResponseEntity.ok(updatedDto);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            log.error("Error toggling error category with ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(createErrorResponse("Failed to toggle error category"));
+        }
+    }
+
+    private Map<String, String> createErrorResponse(String message) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", message);
+        return error;
     }
 }
