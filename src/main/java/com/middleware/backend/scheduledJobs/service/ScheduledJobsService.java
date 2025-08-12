@@ -235,7 +235,7 @@ public class ScheduledJobsService{
 
         if ("CSV".equalsIgnoreCase(type)) {
             return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
-        } else if ("Excel".equalsIgnoreCase(type)) {
+        } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
             return convertToExcel(data);
         } else {
             throw new IllegalArgumentException("Unsupported export type: " + type);

@@ -8803,3 +8803,649 @@ Current exchange content: {CamelCharsetName=UTF-8, CamelToEndpoint=log://output,
 2025-08-12 15:07:43 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
 2025-08-12 15:07:43 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
 2025-08-12 15:07:43 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-08-12 15:09:20 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-08-12 15:09:20 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 24.0.1 with PID 25044 (C:\Users\1\OneDrive\Desktop\middleware\target\classes started by 1 in C:\Users\1\OneDrive\Desktop\middleware)
+2025-08-12 15:09:20 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-12 15:09:21 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-08-12 15:09:21 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-12 15:09:21 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-08-12 15:09:21 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-12 15:09:22 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-08-12 15:09:22 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-08-12 15:09:22 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-12 15:09:22 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-12 15:09:22 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@29532e91']
+	Database driver: undefined/unknown
+	Database version: 17.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-08-12 15:09:23 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-12 15:09:23 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-08-12 15:09:23 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-08-12 15:09:24 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-08-12 15:09:25 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-08-12 15:09:25 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-08-12 15:09:25 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-08-12 15:09:25 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-08-12 15:09:25 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-08-12 15:09:25 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-08-12 15:09:25 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-08-12 15:09:25 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@7f4358b8
+2025-08-12 15:09:25 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 92 mappings in 'requestMappingHandlerMapping'
+2025-08-12 15:09:25 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-08-12 15:09:25 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-08-12 15:09:25 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-08-12 15:09:26 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-08-12 15:09:26 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-08-12 15:09:26 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-08-12 15:09:26 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-08-12 15:09:26 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-08-12 15:09:26 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 5ms (build:0ms init:0ms start:5ms)
+2025-08-12 15:09:26 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 6.497 seconds (process running for 7.098)
+2025-08-12 15:09:26 [RMI TCP Connection(2)-192.168.18.6] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-12 15:09:26 [RMI TCP Connection(2)-192.168.18.6] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-08-12 15:09:26 [RMI TCP Connection(2)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-08-12 15:09:26 [RMI TCP Connection(2)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-08-12 15:09:26 [RMI TCP Connection(2)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-08-12 15:09:26 [RMI TCP Connection(2)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@6f6ce71d
+2025-08-12 15:09:26 [RMI TCP Connection(2)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@5c537c01
+2025-08-12 15:09:26 [RMI TCP Connection(2)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-08-12 15:09:26 [RMI TCP Connection(2)-192.168.18.6] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-08-12 15:09:30 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:09:30 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:09:30 [http-nio-8081-exec-1] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-08-12 15:09:30 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:09:30 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:09:30 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:10:59 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/source-systems", parameters={}
+2025-08-12 15:10:59 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/error-categories", parameters={}
+2025-08-12 15:10:59 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/routes", parameters={}
+2025-08-12 15:10:59 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc", parameters={masked}
+2025-08-12 15:10:59 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableSourceSystems()
+2025-08-12 15:10:59 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getActiveErrorCategories()
+2025-08-12 15:10:59 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableRoutes()
+2025-08-12 15:10:59 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAllErrorMappings(Map, int, int, String, String)
+2025-08-12 15:11:00 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:11:00 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:11:00 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[{name=cat1, description=desc1, active=true, id=1}, {name=aaa, description=fgrtegre, active=true, id (truncated)...]
+2025-08-12 15:11:00 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[SourceSystemOptionDto(id=1, name=Hakeem, description=dsw, active=true), SourceSystemOptionDto(id=3, (truncated)...]
+2025-08-12 15:11:00 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:11:00 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:11:00 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:11:00 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.dto.ErrorMappingDto instances]
+2025-08-12 15:11:00 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:11:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:11:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RouteOptionDto(routeId=my-new-route, path=/api/hello, httpMethod=post, description=New route descri (truncated)...]
+2025-08-12 15:11:00 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:14:47 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/source-systems", parameters={}
+2025-08-12 15:14:47 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/routes", parameters={}
+2025-08-12 15:14:47 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc", parameters={masked}
+2025-08-12 15:14:47 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/error-categories", parameters={}
+2025-08-12 15:14:47 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getActiveErrorCategories()
+2025-08-12 15:14:47 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableRoutes()
+2025-08-12 15:14:47 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableSourceSystems()
+2025-08-12 15:14:47 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAllErrorMappings(Map, int, int, String, String)
+2025-08-12 15:14:47 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:14:47 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[SourceSystemOptionDto(id=1, name=Hakeem, description=dsw, active=true), SourceSystemOptionDto(id=3, (truncated)...]
+2025-08-12 15:14:47 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:14:47 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:14:47 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RouteOptionDto(routeId=my-new-route, path=/api/hello, httpMethod=post, description=New route descri (truncated)...]
+2025-08-12 15:14:47 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:14:48 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:14:48 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.dto.ErrorMappingDto instances]
+2025-08-12 15:14:48 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:14:48 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:14:48 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[{name=cat1, description=desc1, active=true, id=1}, {name=aaa, description=fgrtegre, active=true, id (truncated)...]
+2025-08-12 15:14:48 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:15:35 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/export/XLSX?type=XLSX", parameters={masked}
+2025-08-12 15:15:35 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#export(Map, int, int, String, String, String)
+2025-08-12 15:15:36 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Found 'Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' in response
+2025-08-12 15:15:36 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{80, 75, 3, 4, 20, 0, 8, 8, 8, 0, -14, 121, 12, 91, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, (truncated)...]
+2025-08-12 15:15:36 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:15:39 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:15:39 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:15:39 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:15:39 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:15:39 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:16:18 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:16:18 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:16:18 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:16:18 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:16:18 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:16:25 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:16:25 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:16:25 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:16:25 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:16:25 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:17:13 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:17:13 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:17:13 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:17:13 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:17:13 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:17:30 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:17:30 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:17:30 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:17:30 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:17:30 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:17:45 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:17:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:17:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:17:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:17:45 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:18:16 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:18:16 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:18:17 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:18:17 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:18:17 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:18:44 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:18:44 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:18:44 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:18:44 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:18:44 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:21:11 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:21:11 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:21:11 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:21:11 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:21:11 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:21:40 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:21:40 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:21:40 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:21:40 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:21:40 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:21:42 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs/export/XLSX?page=0&size=100000", parameters={masked}
+2025-08-12 15:21:42 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#exportFile(String, String, String, Boolean, String, String, String)
+2025-08-12 15:21:42 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', given [application/vnd.openxmlformats-officedocument.spreadsheetml.sheet] and supported [application/octet-stream, */*, application/json, application/*+json]
+2025-08-12 15:21:42 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Nothing to write: null body
+2025-08-12 15:21:42 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 500 INTERNAL_SERVER_ERROR
+2025-08-12 15:22:16 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:22:16 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:22:16 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:22:16 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:22:16 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:22:20 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-08-12 15:22:20 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-08-12 15:22:20 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:0)
+2025-08-12 15:22:20 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 7ms (uptime:12m54s)
+2025-08-12 15:22:20 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-08-12 15:22:20 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-08-12 15:22:20 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-08-12 15:22:20 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-08-12 15:22:23 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-08-12 15:22:23 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 24.0.1 with PID 12568 (C:\Users\1\OneDrive\Desktop\middleware\target\classes started by 1 in C:\Users\1\OneDrive\Desktop\middleware)
+2025-08-12 15:22:23 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-12 15:22:24 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-08-12 15:22:24 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-12 15:22:24 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-08-12 15:22:24 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-12 15:22:24 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-08-12 15:22:24 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-08-12 15:22:24 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-12 15:22:25 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-12 15:22:25 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@450d10cb']
+	Database driver: undefined/unknown
+	Database version: 17.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-08-12 15:22:26 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-12 15:22:26 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-08-12 15:22:26 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-08-12 15:22:26 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-08-12 15:22:28 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-08-12 15:22:28 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-08-12 15:22:28 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-08-12 15:22:28 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-08-12 15:22:28 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-08-12 15:22:28 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-08-12 15:22:28 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-08-12 15:22:28 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@5c73535b
+2025-08-12 15:22:28 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 92 mappings in 'requestMappingHandlerMapping'
+2025-08-12 15:22:28 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-08-12 15:22:28 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-08-12 15:22:28 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-08-12 15:22:29 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-08-12 15:22:29 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-08-12 15:22:29 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-08-12 15:22:29 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-08-12 15:22:29 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-08-12 15:22:29 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 6ms (build:0ms init:0ms start:6ms)
+2025-08-12 15:22:29 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 6.802 seconds (process running for 7.529)
+2025-08-12 15:22:29 [RMI TCP Connection(4)-192.168.18.6] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-12 15:22:29 [RMI TCP Connection(4)-192.168.18.6] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-08-12 15:22:29 [RMI TCP Connection(4)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-08-12 15:22:29 [RMI TCP Connection(4)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-08-12 15:22:29 [RMI TCP Connection(4)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-08-12 15:22:29 [RMI TCP Connection(4)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@57084740
+2025-08-12 15:22:29 [RMI TCP Connection(4)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@5c66d83b
+2025-08-12 15:22:29 [RMI TCP Connection(4)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-08-12 15:22:29 [RMI TCP Connection(4)-192.168.18.6] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-08-12 15:22:53 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:22:53 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:22:53 [http-nio-8081-exec-3] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-08-12 15:22:53 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:22:53 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:22:53 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:22:54 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs/export/XLSX", parameters={}
+2025-08-12 15:22:54 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#exportFile(String, String, String, Boolean, String, String, String)
+2025-08-12 15:22:55 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', given [application/vnd.openxmlformats-officedocument.spreadsheetml.sheet] and supported [application/octet-stream, */*, application/json, application/*+json]
+2025-08-12 15:22:55 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Nothing to write: null body
+2025-08-12 15:22:55 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 500 INTERNAL_SERVER_ERROR
+2025-08-12 15:25:59 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-08-12 15:25:59 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-08-12 15:25:59 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:0)
+2025-08-12 15:25:59 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 4ms (uptime:3m29s)
+2025-08-12 15:25:59 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-08-12 15:25:59 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-08-12 15:25:59 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-08-12 15:25:59 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-08-12 15:26:03 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-08-12 15:26:03 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 24.0.1 with PID 7756 (C:\Users\1\OneDrive\Desktop\middleware\target\classes started by 1 in C:\Users\1\OneDrive\Desktop\middleware)
+2025-08-12 15:26:03 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-12 15:26:05 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-08-12 15:26:05 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-12 15:26:05 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-08-12 15:26:05 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-12 15:26:05 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-08-12 15:26:05 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-08-12 15:26:05 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-12 15:26:05 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-12 15:26:05 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@5100c143']
+	Database driver: undefined/unknown
+	Database version: 17.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-08-12 15:26:06 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-12 15:26:07 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-08-12 15:26:07 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-08-12 15:26:07 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-08-12 15:26:08 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-08-12 15:26:08 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-08-12 15:26:08 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-08-12 15:26:08 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-08-12 15:26:08 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-08-12 15:26:08 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-08-12 15:26:08 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-08-12 15:26:08 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@5c0be4db
+2025-08-12 15:26:08 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 92 mappings in 'requestMappingHandlerMapping'
+2025-08-12 15:26:08 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-08-12 15:26:09 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-08-12 15:26:09 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-08-12 15:26:09 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-08-12 15:26:09 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-08-12 15:26:09 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-08-12 15:26:09 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-08-12 15:26:09 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-08-12 15:26:09 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 5ms (build:0ms init:0ms start:5ms)
+2025-08-12 15:26:09 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 6.493 seconds (process running for 7.076)
+2025-08-12 15:26:10 [RMI TCP Connection(3)-192.168.18.6] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-12 15:26:10 [RMI TCP Connection(3)-192.168.18.6] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-08-12 15:26:10 [RMI TCP Connection(3)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-08-12 15:26:10 [RMI TCP Connection(3)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-08-12 15:26:10 [RMI TCP Connection(3)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-08-12 15:26:10 [RMI TCP Connection(3)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@2b21842a
+2025-08-12 15:26:10 [RMI TCP Connection(3)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@2990495d
+2025-08-12 15:26:10 [RMI TCP Connection(3)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-08-12 15:26:10 [RMI TCP Connection(3)-192.168.18.6] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-08-12 15:26:18 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs/export/XLSX", parameters={}
+2025-08-12 15:26:18 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#exportFile(String, String, String, Boolean, String, String, String)
+2025-08-12 15:26:18 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', given [application/vnd.openxmlformats-officedocument.spreadsheetml.sheet] and supported [application/octet-stream, */*, application/json, application/*+json]
+2025-08-12 15:26:18 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Nothing to write: null body
+2025-08-12 15:26:18 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 500 INTERNAL_SERVER_ERROR
+2025-08-12 15:28:47 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs/export/XLSX", parameters={}
+2025-08-12 15:28:47 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#exportFile(String, String, String, Boolean, String, String, String)
+2025-08-12 15:28:47 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', given [application/vnd.openxmlformats-officedocument.spreadsheetml.sheet] and supported [application/octet-stream, */*, application/json, application/*+json]
+2025-08-12 15:28:47 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Nothing to write: null body
+2025-08-12 15:28:47 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 500 INTERNAL_SERVER_ERROR
+2025-08-12 15:30:09 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-08-12 15:30:09 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-08-12 15:30:09 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:0)
+2025-08-12 15:30:09 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 4ms (uptime:3m59s)
+2025-08-12 15:30:09 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-08-12 15:30:09 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-08-12 15:30:09 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-08-12 15:30:09 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-08-12 15:30:13 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-08-12 15:30:13 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 24.0.1 with PID 21016 (C:\Users\1\OneDrive\Desktop\middleware\target\classes started by 1 in C:\Users\1\OneDrive\Desktop\middleware)
+2025-08-12 15:30:13 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-12 15:30:15 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-08-12 15:30:15 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-12 15:30:15 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-08-12 15:30:15 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-12 15:30:15 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-08-12 15:30:15 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-08-12 15:30:15 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-12 15:30:16 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-12 15:30:16 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@1af82ba8']
+	Database driver: undefined/unknown
+	Database version: 17.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-08-12 15:30:17 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-12 15:30:17 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-08-12 15:30:17 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-08-12 15:30:18 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-08-12 15:30:19 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-08-12 15:30:19 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-08-12 15:30:19 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-08-12 15:30:19 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-08-12 15:30:19 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-08-12 15:30:19 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-08-12 15:30:19 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-08-12 15:30:19 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@5bda90af
+2025-08-12 15:30:19 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 92 mappings in 'requestMappingHandlerMapping'
+2025-08-12 15:30:19 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-08-12 15:30:20 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-08-12 15:30:20 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-08-12 15:30:20 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-08-12 15:30:20 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-08-12 15:30:20 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-08-12 15:30:20 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-08-12 15:30:20 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-08-12 15:30:20 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 4ms (build:0ms init:0ms start:4ms)
+2025-08-12 15:30:20 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 7.525 seconds (process running for 8.093)
+2025-08-12 15:30:21 [RMI TCP Connection(3)-192.168.18.6] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-12 15:30:21 [RMI TCP Connection(3)-192.168.18.6] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-08-12 15:30:21 [RMI TCP Connection(3)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-08-12 15:30:21 [RMI TCP Connection(3)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-08-12 15:30:21 [RMI TCP Connection(3)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-08-12 15:30:21 [RMI TCP Connection(3)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@551e7852
+2025-08-12 15:30:21 [RMI TCP Connection(3)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@bb3b9e5
+2025-08-12 15:30:21 [RMI TCP Connection(3)-192.168.18.6] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-08-12 15:30:21 [RMI TCP Connection(3)-192.168.18.6] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-08-12 15:30:26 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs/export/XLSX", parameters={}
+2025-08-12 15:30:26 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#exportFile(String, String, String, Boolean, String, String, String)
+2025-08-12 15:30:26 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Found 'Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' in response
+2025-08-12 15:30:26 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{80, 75, 3, 4, 20, 0, 8, 8, 8, 0, -51, 123, 12, 91, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, (truncated)...]
+2025-08-12 15:30:26 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:30:35 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/routes", parameters={}
+2025-08-12 15:30:35 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/source-systems", parameters={}
+2025-08-12 15:30:35 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/error-categories", parameters={}
+2025-08-12 15:30:35 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableRoutes()
+2025-08-12 15:30:35 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getActiveErrorCategories()
+2025-08-12 15:30:35 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableSourceSystems()
+2025-08-12 15:30:35 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc", parameters={masked}
+2025-08-12 15:30:35 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAllErrorMappings(Map, int, int, String, String)
+2025-08-12 15:30:35 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:30:35 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[SourceSystemOptionDto(id=1, name=Hakeem, description=dsw, active=true), SourceSystemOptionDto(id=3, (truncated)...]
+2025-08-12 15:30:35 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:30:35 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RouteOptionDto(routeId=my-new-route, path=/api/hello, httpMethod=post, description=New route descri (truncated)...]
+2025-08-12 15:30:35 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:30:35 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:30:35 [http-nio-8081-exec-5] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-08-12 15:30:35 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:30:35 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.dto.ErrorMappingDto instances]
+2025-08-12 15:30:35 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:30:35 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:30:35 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[{name=cat1, description=desc1, active=true, id=1}, {name=aaa, description=fgrtegre, active=true, id (truncated)...]
+2025-08-12 15:30:35 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:30:40 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc&sourceSystemId=1", parameters={masked}
+2025-08-12 15:30:40 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAllErrorMappings(Map, int, int, String, String)
+2025-08-12 15:30:40 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:30:40 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.dto.ErrorMappingDto instances]
+2025-08-12 15:30:40 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:30:42 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/export/XLSX?sourceSystemId=1&type=XLSX", parameters={masked}
+2025-08-12 15:30:42 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#export(Map, int, int, String, String, String)
+2025-08-12 15:30:42 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Found 'Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' in response
+2025-08-12 15:30:42 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{80, 75, 3, 4, 20, 0, 8, 8, 8, 0, -43, 123, 12, 91, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, (truncated)...]
+2025-08-12 15:30:42 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:30:48 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:30:48 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:30:49 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:30:49 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:30:49 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:30:54 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/routes", parameters={}
+2025-08-12 15:30:54 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc", parameters={masked}
+2025-08-12 15:30:54 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/error-categories", parameters={}
+2025-08-12 15:30:54 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/source-systems", parameters={}
+2025-08-12 15:30:54 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableRoutes()
+2025-08-12 15:30:54 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAllErrorMappings(Map, int, int, String, String)
+2025-08-12 15:30:54 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getActiveErrorCategories()
+2025-08-12 15:30:54 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableSourceSystems()
+2025-08-12 15:30:54 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:30:54 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[SourceSystemOptionDto(id=1, name=Hakeem, description=dsw, active=true), SourceSystemOptionDto(id=3, (truncated)...]
+2025-08-12 15:30:54 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:30:54 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:30:54 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.dto.ErrorMappingDto instances]
+2025-08-12 15:30:54 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:30:54 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:30:54 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RouteOptionDto(routeId=my-new-route, path=/api/hello, httpMethod=post, description=New route descri (truncated)...]
+2025-08-12 15:30:54 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:30:54 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:30:54 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[{name=cat1, description=desc1, active=true, id=1}, {name=aaa, description=fgrtegre, active=true, id (truncated)...]
+2025-08-12 15:30:54 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:30:56 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:30:56 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:30:56 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:30:56 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:30:56 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:06 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:31:06 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:31:06 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:06 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:31:06 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:16 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:31:16 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:31:16 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:16 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:31:16 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:22 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:31:22 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:31:22 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:22 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:31:22 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:29 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:31:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:31:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:31:29 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:32 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-08-12 15:31:32 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-08-12 15:31:32 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:32 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-08-12 15:31:32 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:34 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:31:34 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:31:34 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:34 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:31:34 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:36 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=6", parameters={masked}
+2025-08-12 15:31:36 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, int, int)
+2025-08-12 15:31:36 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:36 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-08-12 15:31:36 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:48 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:31:48 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:31:48 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:48 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:31:48 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:49 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/routes", parameters={}
+2025-08-12 15:31:49 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableRoutes()
+2025-08-12 15:31:49 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/source-systems", parameters={}
+2025-08-12 15:31:49 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/error-categories", parameters={}
+2025-08-12 15:31:49 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc", parameters={masked}
+2025-08-12 15:31:49 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableSourceSystems()
+2025-08-12 15:31:49 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getActiveErrorCategories()
+2025-08-12 15:31:49 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAllErrorMappings(Map, int, int, String, String)
+2025-08-12 15:31:49 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:49 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:49 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RouteOptionDto(routeId=my-new-route, path=/api/hello, httpMethod=post, description=New route descri (truncated)...]
+2025-08-12 15:31:49 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[{name=cat1, description=desc1, active=true, id=1}, {name=aaa, description=fgrtegre, active=true, id (truncated)...]
+2025-08-12 15:31:49 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:49 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:49 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:49 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[SourceSystemOptionDto(id=1, name=Hakeem, description=dsw, active=true), SourceSystemOptionDto(id=3, (truncated)...]
+2025-08-12 15:31:49 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:49 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:49 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.dto.ErrorMappingDto instances]
+2025-08-12 15:31:49 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:51 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:31:51 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:31:51 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:51 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:31:51 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:51 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/source-systems", parameters={}
+2025-08-12 15:31:51 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/routes", parameters={}
+2025-08-12 15:31:51 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc", parameters={masked}
+2025-08-12 15:31:51 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/error-categories", parameters={}
+2025-08-12 15:31:51 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableSourceSystems()
+2025-08-12 15:31:51 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAllErrorMappings(Map, int, int, String, String)
+2025-08-12 15:31:51 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableRoutes()
+2025-08-12 15:31:51 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getActiveErrorCategories()
+2025-08-12 15:31:52 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:52 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:52 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[SourceSystemOptionDto(id=1, name=Hakeem, description=dsw, active=true), SourceSystemOptionDto(id=3, (truncated)...]
+2025-08-12 15:31:52 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[{name=cat1, description=desc1, active=true, id=1}, {name=aaa, description=fgrtegre, active=true, id (truncated)...]
+2025-08-12 15:31:52 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:52 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:52 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:52 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.dto.ErrorMappingDto instances]
+2025-08-12 15:31:52 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:52 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:52 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RouteOptionDto(routeId=my-new-route, path=/api/hello, httpMethod=post, description=New route descri (truncated)...]
+2025-08-12 15:31:52 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:53 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/source-systems?page=0&size=10", parameters={masked}
+2025-08-12 15:31:53 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.SourceSystemController#getAllSourceSystems(String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-08-12 15:31:54 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:54 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.model.SourceSystem instances]
+2025-08-12 15:31:54 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:55 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-categories?page=0&size=10&name=&description=&sortedBy=&sortDirection=desc&status=&startDate=&endDate=", parameters={masked}
+2025-08-12 15:31:55 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorCategoryController#getAll(String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-08-12 15:31:55 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:55 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.model.ErrorCategory instances]
+2025-08-12 15:31:55 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:57 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/source-systems?page=0&size=10", parameters={masked}
+2025-08-12 15:31:57 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.SourceSystemController#getAllSourceSystems(String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-08-12 15:31:57 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:57 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.model.SourceSystem instances]
+2025-08-12 15:31:57 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:59 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/role", parameters={}
+2025-08-12 15:31:59 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.RoleController#getAllRoles()
+2025-08-12 15:31:59 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:31:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getAllUsers(Long, String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-08-12 15:31:59 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:59 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RoleRequest(id=1, roleName=SYSTEM_USER), RoleRequest(id=3, roleName=ROLE), RoleRequest(id=4, roleNa (truncated)...]
+2025-08-12 15:31:59 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:31:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:31:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 3 containing com.middleware.backend.users.model.User instances]
+2025-08-12 15:31:59 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:32:04 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/role", parameters={}
+2025-08-12 15:32:04 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:32:04 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.RoleController#getAllRoles()
+2025-08-12 15:32:04 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getAllUsers(Long, String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-08-12 15:32:04 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:32:04 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RoleRequest(id=1, roleName=SYSTEM_USER), RoleRequest(id=3, roleName=ROLE), RoleRequest(id=4, roleNa (truncated)...]
+2025-08-12 15:32:04 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:32:04 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:32:04 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 3 containing com.middleware.backend.users.model.User instances]
+2025-08-12 15:32:04 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:32:08 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:32:08 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:32:08 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:32:08 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:32:08 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:32:14 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:32:14 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:32:14 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:32:14 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:32:14 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:32:17 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/scheduledjobs/16?status=resume", parameters={masked}
+2025-08-12 15:32:17 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#changeStatus(Long, String)
+2025-08-12 15:32:18 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-08-12 15:32:18 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Job Resumed successfully."]
+2025-08-12 15:32:18 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:32:18 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:32:18 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:32:18 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:32:18 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:32:18 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:32:20 [quartzScheduler_Worker-1] DEBUG o.s.web.client.RestTemplate - HTTP GET https://publicapi.dev/sellgate-api
+2025-08-12 15:32:20 [quartzScheduler_Worker-1] DEBUG o.s.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+2025-08-12 15:32:20 [quartzScheduler_Worker-1] DEBUG o.s.web.client.RestTemplate - Writing [] as "application/json"
+2025-08-12 15:32:20 [quartzScheduler_Worker-1] DEBUG o.s.web.client.RestTemplate - Response 200 OK
+2025-08-12 15:32:20 [quartzScheduler_Worker-1] DEBUG o.s.web.client.RestTemplate - Reading to [java.lang.String] as "text/html;charset=utf-8"
+2025-08-12 15:32:24 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc&enabled=true", parameters={masked}
+2025-08-12 15:32:24 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:32:25 [quartzScheduler_Worker-2] DEBUG o.s.web.client.RestTemplate - HTTP GET https://publicapi.dev/sellgate-api
+2025-08-12 15:32:25 [quartzScheduler_Worker-2] DEBUG o.s.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+2025-08-12 15:32:25 [quartzScheduler_Worker-2] DEBUG o.s.web.client.RestTemplate - Writing [] as "application/json"
+2025-08-12 15:32:25 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:32:25 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:32:25 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:32:25 [quartzScheduler_Worker-2] DEBUG o.s.web.client.RestTemplate - Response 200 OK
+2025-08-12 15:32:25 [quartzScheduler_Worker-2] DEBUG o.s.web.client.RestTemplate - Reading to [java.lang.String] as "text/html;charset=utf-8"
+2025-08-12 15:32:26 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs/export/XLSX?enabled=true", parameters={masked}
+2025-08-12 15:32:26 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#exportFile(String, String, String, Boolean, String, String, String)
+2025-08-12 15:32:26 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Found 'Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' in response
+2025-08-12 15:32:26 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{80, 75, 3, 4, 20, 0, 8, 8, 8, 0, 13, 124, 12, 91, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0,  (truncated)...]
+2025-08-12 15:32:26 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:32:30 [quartzScheduler_Worker-3] DEBUG o.s.web.client.RestTemplate - HTTP GET https://publicapi.dev/sellgate-api
+2025-08-12 15:32:30 [quartzScheduler_Worker-3] DEBUG o.s.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
+2025-08-12 15:32:30 [quartzScheduler_Worker-3] DEBUG o.s.web.client.RestTemplate - Writing [] as "application/json"
+2025-08-12 15:32:30 [quartzScheduler_Worker-3] DEBUG o.s.web.client.RestTemplate - Response 200 OK
+2025-08-12 15:32:30 [quartzScheduler_Worker-3] DEBUG o.s.web.client.RestTemplate - Reading to [java.lang.String] as "text/html;charset=utf-8"
+2025-08-12 15:32:33 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/scheduledjobs/16?status=pause", parameters={masked}
+2025-08-12 15:32:33 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#changeStatus(Long, String)
+2025-08-12 15:32:33 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json]
+2025-08-12 15:32:33 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Job paused successfully."]
+2025-08-12 15:32:33 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:32:33 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-12 15:32:33 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-12 15:32:33 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-12 15:32:33 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-08-12 15:32:33 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-12 15:32:36 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-08-12 15:32:36 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-08-12 15:32:36 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:0)
+2025-08-12 15:32:36 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 4ms (uptime:2m15s)
+2025-08-12 15:32:36 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-08-12 15:32:36 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-08-12 15:32:36 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-08-12 15:32:36 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
