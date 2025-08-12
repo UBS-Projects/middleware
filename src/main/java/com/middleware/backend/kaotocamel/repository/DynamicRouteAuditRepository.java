@@ -2,6 +2,7 @@ package com.middleware.backend.kaotocamel.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.middleware.backend.kaotocamel.model.DynamicRouteAudit;
@@ -26,4 +27,6 @@ public interface DynamicRouteAuditRepository extends JpaRepository<DynamicRouteA
             @Param("details") String details,
             @Param("timestamp") LocalDateTime timestamp,
             Pageable pageable);
+
+    Page<DynamicRouteAudit> findAll(Specification<DynamicRouteAudit> spec, Pageable pageable);
 }

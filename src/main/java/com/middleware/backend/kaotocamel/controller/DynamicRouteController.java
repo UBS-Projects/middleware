@@ -1,11 +1,13 @@
 package com.middleware.backend.kaotocamel.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import com.middleware.backend.kaotocamel.spec.DynamicRouteLogsSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -308,43 +310,36 @@ public class DynamicRouteController {
     // Get Route Audits
 
     @GetMapping("/audits")
-    public ResponseEntity<Page<DynamicRouteAudit>> getRouteAudits(@RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<DynamicRouteAudit> result;
-        result = routeService.getLatestRoutesLogs(pageable);
-        return ResponseEntity.ok(result);
+    public ResponseEntity<Page<?>> getRouteAudits(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) String action,
+            @RequestParam(required = false) Integer version,
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdAfter,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdBefore,
+            @RequestParam(required = false, defaultValue = "timestamp") String sortedBy,
+            @RequestParam(defaultValue = "desc") String sortDirection
+            ) {
+        try {
+        Specification<DynamicRouteAudit> spec = Specification
+                .where(DynamicRouteLogsSpecification.hasField("userName", userName, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                .and(DynamicRouteLogsSpecification.hasField("action", action, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                .and(version != null
+                        ? DynamicRouteLogsSpecification.hasField("version", String.valueOf(version), DynamicRouteLogsSpecification.MatchMode.EXACT)
+                        : null)
+                .and(DynamicRouteLogsSpecification.createdBetween(createdAfter,createdBefore));
+            Pageable pageable = PageRequest.of(page, size,
+                    sortDirection.equalsIgnoreCase("asc")
+                            ? Sort.by(sortedBy).ascending()
+                            : Sort.by(sortedBy).descending());
+
+            Page<?> result = routeService.getLatestRoutesLogs(spec, pageable);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
-    // @GetMapping("/audits")
-    // public ResponseEntity<Page<DynamicRouteAudit>> getRouteAudits(
-    // @RequestParam(required = false) long id,
-    // @RequestParam(required = false) String routeId,
-    // @RequestParam(required = false) int version,
-    // @RequestParam(required = false) String action,
-    // @RequestParam(required = false) String details,
-    // @RequestParam(required = false) LocalDateTime timestamp,
-    // @RequestParam(defaultValue = "0") int page,
-    // @RequestParam(defaultValue = "10") int size
-    // ){
-    // Pageable pageable = PageRequest.of(page, size);
-    //
-    // boolean hasFilters = Stream.of(id, routeId, version, action, details)
-    // .anyMatch(Objects::nonNull) ||
-    // timestamp != null;
-    //
-    // Page<DynamicRouteAudit> result;
-    //
-    // if (hasFilters) {
-    // result = routeService.getLatestRoutesLogsWithFilters(
-    // id, routeId, version, action, details, timestamp, pageable);
-    // return ResponseEntity.ok().body(result);
-    //
-    // } else {
-    // result = routeService.getLatestRoutesLogs(pageable);
-    // }
-    //
-    // return ResponseEntity.ok(result);
-    // }
 
 }
