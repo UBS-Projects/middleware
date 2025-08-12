@@ -46,11 +46,11 @@ public class DynamicRouteLogsSpecification {
             }
 
             if (startDateTime != null && endDateTime != null) {
-                return cb.between(root.get("createdAt"), startDateTime, endDateTime);
+                return cb.between(root.get("timestamp"), startDateTime, endDateTime);
             } else if (startDateTime != null) {
-                return cb.greaterThanOrEqualTo(root.get("createdAt"), startDateTime);
+                return cb.greaterThanOrEqualTo(root.get("timestamp"), startDateTime);
             } else {
-                return cb.lessThanOrEqualTo(root.get("createdAt"), endDateTime);
+                return cb.lessThanOrEqualTo(root.get("timestamp"), endDateTime);
             }
         };
     }

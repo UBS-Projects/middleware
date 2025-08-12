@@ -316,19 +316,21 @@ public class DynamicRouteController {
             @RequestParam(required = false) String userName,
             @RequestParam(required = false) String action,
             @RequestParam(required = false) Integer version,
-            @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdAfter,
-            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdBefore,
-            @RequestParam(required = false, defaultValue = "timestamp") String sortedBy,
+            @RequestParam(required = false) String routeId,
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+            ,@RequestParam(required = false, defaultValue = "timestamp") String sortedBy,
             @RequestParam(defaultValue = "desc") String sortDirection
             ) {
         try {
-        Specification<DynamicRouteAudit> spec = Specification
-                .where(DynamicRouteLogsSpecification.hasField("userName", userName, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
-                .and(DynamicRouteLogsSpecification.hasField("action", action, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
-                .and(version != null
-                        ? DynamicRouteLogsSpecification.hasField("version", String.valueOf(version), DynamicRouteLogsSpecification.MatchMode.EXACT)
-                        : null)
-                .and(DynamicRouteLogsSpecification.createdBetween(createdAfter,createdBefore));
+            Specification<DynamicRouteAudit> spec = Specification
+                    .where(DynamicRouteLogsSpecification.hasField("userName", userName, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .and(DynamicRouteLogsSpecification.hasField("action", action, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .and(DynamicRouteLogsSpecification.hasField("routeId", routeId, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .and(DynamicRouteLogsSpecification.createdBetween(startDate, endDate));
+            if (version != null) {
+                spec = spec.and(DynamicRouteLogsSpecification.hasField("version", String.valueOf(version), DynamicRouteLogsSpecification.MatchMode.EXACT));
+            }
             Pageable pageable = PageRequest.of(page, size,
                     sortDirection.equalsIgnoreCase("asc")
                             ? Sort.by(sortedBy).ascending()
