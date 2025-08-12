@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,14 +26,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/error-mappings")
+@RequestMapping("/error-mappings")
 @RequiredArgsConstructor
 @Slf4j
 public class ErrorMappingController {
 
     private final ErrorMappingService errorMappingService;
     private final SourceSystemService sourceSystemService;
-    private final ErrorCategoryService errorCategoryService; // إضافة هذا
+    private final ErrorCategoryService errorCategoryService;
 
     @GetMapping
     public ResponseEntity<Page<ErrorMappingDto>> getAllErrorMappings(
@@ -272,5 +273,41 @@ public class ErrorMappingController {
         Map<String, String> error = new HashMap<>();
         error.put("error", message);
         return error;
+    }
+
+
+
+    @GetMapping("/export/{type}")
+    public ResponseEntity<byte[]> export(
+            @RequestParam Map<String, String> filters,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @PathVariable("type") String type,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDir) {
+
+        try {
+            Sort sort = sortDir.equalsIgnoreCase("desc")
+                    ? Sort.by(sortBy).descending()
+                    : Sort.by(sortBy).ascending();
+
+            Pageable pageable = PageRequest.of(page, size, sort);
+
+
+            byte[] fileBytes = errorMappingService.exportFile(filters, pageable, type);
+
+            String fileName = "error_configuration." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            String contentType = type.equalsIgnoreCase("CSV")
+                    ? "text/csv"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(fileBytes);
+        } catch (Exception e) {
+            log.error("Error retrieving error mappings", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

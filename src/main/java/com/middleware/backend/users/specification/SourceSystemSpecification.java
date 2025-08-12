@@ -1,31 +1,28 @@
-package com.middleware.backend.spec;
+package com.middleware.backend.users.specification;
+
 
 import com.middleware.backend.model.ErrorCategory;
+import com.middleware.backend.model.SourceSystem;
 import org.springframework.data.jpa.domain.Specification;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class ErrorCategorySpecification {
+public class SourceSystemSpecification {
 
     public enum MatchMode {
-        EXACT,
+        EQUALS,
+        CONTAINS,
         STARTS_WITH,
-        ENDS_WITH,
-        CONTAINS
+        ENDS_WITH
     }
 
-    public static Specification<ErrorCategory> hasField(String fieldName, String value, MatchMode matchMode) {
-        return (Root<ErrorCategory> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
+    public static Specification<SourceSystem> hasField(String fieldName, String value, MatchMode matchMode) {
+        return (root, query, cb) -> {
             if (value == null || value.trim().isEmpty()) {
-                return null; // return null so Spring ignores this spec
+                return null;
             }
-
-            String pattern;
+            String pattern = value;
             switch (matchMode) {
                 case CONTAINS:
                     pattern = "%" + value + "%";
@@ -36,14 +33,22 @@ public class ErrorCategorySpecification {
                 case ENDS_WITH:
                     pattern = "%" + value;
                     return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
-                case EXACT:
                 default:
                     return cb.equal(cb.lower(root.get(fieldName)), value.toLowerCase());
             }
         };
     }
 
-    public static Specification<ErrorCategory> createdBetween(LocalDate start, LocalDate end) {
+    public static Specification<SourceSystem> hasBooleanField(String fieldName, Boolean value) {
+        return (root, query, cb) -> {
+            if (value == null) {
+                return null;
+            }
+            return cb.equal(root.get(fieldName), value);
+        };
+    }
+
+    public static Specification<SourceSystem> createdBetween(LocalDate start, LocalDate end) {
         return (root, query, cb) -> {
             if (start == null && end == null) {
                 return null;
@@ -57,15 +62,5 @@ public class ErrorCategorySpecification {
             return cb.lessThanOrEqualTo(root.get("createdAt"), end.atTime(23, 59, 59));
         };
     }
-
-    public static Specification<ErrorCategory> hasBooleanField(String fieldName, Boolean value) {
-        return (Root<ErrorCategory> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
-            if (value == null) {
-                return null;
-            }
-            return cb.equal(root.get(fieldName), value);
-        };
-    }
-
-
 }
+

@@ -11,12 +11,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,23 +35,40 @@ public class ErrorCategoryController {
     public ResponseEntity<Page<?>> getAll(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description,
+            @RequestParam(required = false) String status,
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdAfter,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdBefore,
             @RequestParam(required = false, defaultValue = "createdAt") String sortedBy,
             @RequestParam(defaultValue = "desc") String sortDirection,
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
     ) {
         try {
+            Boolean activeValue = null;
+            if ("active".equalsIgnoreCase(status)) {
+                activeValue = true;
+            } else if ("inactive".equalsIgnoreCase(status)) {
+                activeValue = false;
+            }
+
             Specification<ErrorCategory> spec = Specification
                     .where(ErrorCategorySpecification.hasField("name", name, ErrorCategorySpecification.MatchMode.CONTAINS))
-                    .and(ErrorCategorySpecification.hasField("description", description, ErrorCategorySpecification.MatchMode.CONTAINS));
-            Pageable pageable = PageRequest.of(page, size, sortDirection.equalsIgnoreCase("asc")
-                    ? Sort.by(sortedBy).ascending()
-                    : Sort.by(sortedBy).descending());
+                    .and(ErrorCategorySpecification.hasField("description", description, ErrorCategorySpecification.MatchMode.CONTAINS))
+                    .and(ErrorCategorySpecification.hasBooleanField("active", activeValue))
+                    .and(ErrorCategorySpecification.createdBetween(createdAfter,createdBefore));
+
+            Pageable pageable = PageRequest.of(page, size,
+                    sortDirection.equalsIgnoreCase("asc")
+                            ? Sort.by(sortedBy).ascending()
+                            : Sort.by(sortedBy).descending());
+
             Page<?> result = categoryService.getAllCategories(spec, pageable);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
@@ -128,5 +148,53 @@ public class ErrorCategoryController {
         Map<String, String> error = new HashMap<>();
         error.put("error", message);
         return error;
+    }
+
+
+    @GetMapping("/export/{type}")
+    public ResponseEntity<byte[]> export(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) String status,
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdAfter,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdBefore,
+            @RequestParam(required = false, defaultValue = "createdAt") String sortedBy,
+            @RequestParam(defaultValue = "desc") String sortDirection,
+            @PathVariable("type") String type
+    ) {
+        try {
+            Boolean activeValue = null;
+            if ("active".equalsIgnoreCase(status)) {
+                activeValue = true;
+            } else if ("inactive".equalsIgnoreCase(status)) {
+                activeValue = false;
+            }
+
+            Specification<ErrorCategory> spec = Specification
+                    .where(ErrorCategorySpecification.hasField("name", name, ErrorCategorySpecification.MatchMode.CONTAINS))
+                    .and(ErrorCategorySpecification.hasField("description", description, ErrorCategorySpecification.MatchMode.CONTAINS))
+                    .and(ErrorCategorySpecification.hasBooleanField("active", activeValue))
+                    .and(ErrorCategorySpecification.createdBetween(createdAfter,createdBefore));
+
+            Pageable pageable = PageRequest.of(0, 100000,
+                    sortDirection.equalsIgnoreCase("asc")
+                            ? Sort.by(sortedBy).ascending()
+                            : Sort.by(sortedBy).descending());
+
+            byte[] fileBytes = categoryService.exportFile(spec, pageable, type);
+
+            String fileName = "error_category." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            String contentType = type.equalsIgnoreCase("CSV")
+                    ? "text/csv"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(fileBytes);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }
