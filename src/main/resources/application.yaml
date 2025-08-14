@@ -43,6 +43,7 @@ logging:
   level:
     org.springframework.web: DEBUG
     com.middleware.backend: DEBUG
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
 
 camel:
   rest:
