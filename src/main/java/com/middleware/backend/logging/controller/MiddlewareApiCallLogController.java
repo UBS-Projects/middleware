@@ -1,29 +1,25 @@
 package com.middleware.backend.logging.controller;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.middleware.backend.logging.dto.MiddlewareApiCallLogDto;
-import com.middleware.backend.logging.mapper.MiddlewareApiCallLogMapper;
 import com.middleware.backend.logging.model.MiddlewareApiCallLog;
+import com.middleware.backend.logging.mapper.MiddlewareApiCallLogMapper;
 import com.middleware.backend.logging.repository.MiddlewareApiCallLogRepository;
+import com.middleware.backend.spec.MiddlewareApiCallLogSpecification;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -35,64 +31,16 @@ public class MiddlewareApiCallLogController {
     private final MiddlewareApiCallLogMapper mapper;
 
     @GetMapping
-    // public ResponseEntity<Map<String, Object>>
-    public ResponseEntity<?> getAll(@RequestParam Map<String, String> filters,
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size,
+    public ResponseEntity<?> getAll(
+            @RequestParam Map<String, String> filters,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
             @RequestParam(value = "sort", defaultValue = "id,desc") String sortParam) {
 
-        Specification<MiddlewareApiCallLog> spec = (root, query, cb) -> {
-            List<Predicate> predicates = new ArrayList<>();
-
-            filters.forEach((key, value) -> {
-                if (value == null || value.isBlank())
-                    return;
-
-                try {
-                    switch (key) {
-                    case "durationMsMin" -> predicates.add(cb.ge(root.get("durationMs"), Long.parseLong(value)));
-                    case "durationMsMax" -> predicates.add(cb.le(root.get("durationMs"), Long.parseLong(value)));
-                    case "retryCountMin" -> predicates.add(cb.ge(root.get("retryCount"), Integer.parseInt(value)));
-                    case "retryCountMax" -> predicates.add(cb.le(root.get("retryCount"), Integer.parseInt(value)));
-
-                    case "responseCode" -> predicates.add(cb.equal(root.get(key), Integer.parseInt(value)));
-                    case "throttlingApplied" -> predicates.add(cb.equal(root.get(key), Boolean.parseBoolean(value)));
-
-                    case "receivedAtFrom" -> predicates
-                            .add(cb.greaterThanOrEqualTo(root.get("receivedAt"), LocalDateTime.parse(value)));
-                    case "receivedAtTo" -> predicates
-                            .add(cb.lessThanOrEqualTo(root.get("receivedAt"), LocalDateTime.parse(value)));
-
-                    case "completedAtFrom" -> predicates
-                            .add(cb.greaterThanOrEqualTo(root.get("completedAt"), LocalDateTime.parse(value)));
-                    case "completedAtTo" -> predicates
-                            .add(cb.lessThanOrEqualTo(root.get("completedAt"), LocalDateTime.parse(value)));
-
-                    case "id", "apiEndpointId", "workflowId", "apiKeyId", "userId" -> predicates
-                            .add(cb.equal(root.get(key), Long.parseLong(value)));
-
-                    case "responseCodeGt" -> predicates.add(cb.gt(root.get("responseCode"), Integer.parseInt(value)));
-                    case "responseCodeLt" -> predicates.add(cb.lt(root.get("responseCode"), Integer.parseInt(value)));
-                    case "responseCodeMin" -> predicates.add(cb.ge(root.get("responseCode"), Integer.parseInt(value)));
-                    case "responseCodeMax" -> predicates.add(cb.le(root.get("responseCode"), Integer.parseInt(value)));
-
-                    default -> predicates.add(cb.like(cb.lower(root.get(key)), "%" + value.toLowerCase() + "%"));
-                    }
-                } catch (Exception ignored) {
-                }
-            });
-
-            return cb.and(predicates.toArray(new Predicate[0]));
-        };
-        /*
-         * List<Sort.Order> orders = new ArrayList<>(); for (String sortItem : sort) {
-         * String[] parts = sortItem.split(","); if (parts.length == 2) { orders.add(new
-         * Sort.Order(Sort.Direction.fromString(parts[1].toUpperCase()), parts[0])); }
-         * else { orders.add(new Sort.Order(Sort.Direction.ASC, parts[0])); } }
-         */
+        Specification<MiddlewareApiCallLog> spec = MiddlewareApiCallLogSpecification.fromFilters(filters);
 
         String[] sortFields = sortParam.split(";");
-
-        List<Sort.Order> orders = new ArrayList<>();
+        List<Sort.Order> orders = new java.util.ArrayList<>();
         for (String sortField : sortFields) {
             String[] parts = sortField.split(",");
             if (parts.length == 2) {
@@ -101,24 +49,121 @@ public class MiddlewareApiCallLogController {
                 orders.add(new Sort.Order(Sort.Direction.ASC, sortField));
             }
         }
+
         Pageable pageable = PageRequest.of(page, size, Sort.by(orders));
-        Page<MiddlewareApiCallLog> pageLogs = repository.findAll(spec, pageable);
+        Page<?> result = repository.findAll(spec, pageable).map(mapper::toDto);
 
-        List<MiddlewareApiCallLogDto> dtos = pageLogs.getContent().stream().map(mapper::toDto)
-                .collect(Collectors.toList());
+        return ResponseEntity.ok(result);
+    }
 
-        // Pageable pageable = PageRequest.of(page, size, Sort.by(parseSort(sort)));
-        Page<MiddlewareApiCallLogDto> result = repository.findAll(spec, pageable).map(mapper::toDto);
+    @GetMapping("/export/{type}")
+    public ResponseEntity<byte[]> exportFile(
+            @RequestParam Map<String, String> filters,
+            @PathVariable("type") String type) {
 
-        // List<MiddlewareApiCallLog> ent =
-        // pageLogs.getContent().stream().collect(Collectors.toList());
+        try {
+            Pageable pageable = PageRequest.of(0, 100_000); // large page for export
+            Specification<MiddlewareApiCallLog> spec = MiddlewareApiCallLogSpecification.fromFilters(filters);
+            List<MiddlewareApiCallLog> data = repository.findAll(spec, pageable).getContent();
 
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("content", dtos);
-        response.put("currentPage", pageLogs.getNumber());
-        response.put("totalItems", pageLogs.getTotalElements());
-        response.put("totalPages", pageLogs.getTotalPages());
+            byte[] fileBytes;
+            if ("CSV".equalsIgnoreCase(type)) {
+                fileBytes = convertToCSV(data).getBytes(StandardCharsets.UTF_8);
+            } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
+                fileBytes = convertToExcel(data);
+            } else {
+                throw new IllegalArgumentException("Unsupported export type: " + type);
+            }
 
-        return ResponseEntity.ok(result); // or response
+            String fileName = "middleware_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            String contentType = type.equalsIgnoreCase("CSV")
+                    ? "text/csv"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(fileBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    private String convertToCSV(List<MiddlewareApiCallLog> logs) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID,TransactionID,RouteID,ApiEndpoint,RequestMethod,Status,ResponseCode,ReceivedAt,CompletedAt,DurationMs,ClientIP,ApiKeyID,UserID,ErrorMessage,RetryCount\n");
+
+        for (MiddlewareApiCallLog log : logs) {
+            sb.append(log.getId()).append(",");
+            sb.append(safeCsv(log.getTransactionId())).append(",");
+            sb.append(safeCsv(log.getRouteId())).append(",");
+            sb.append(safeCsv(log.getApiEndpoint())).append(",");
+            sb.append(safeCsv(log.getRequestMethod())).append(",");
+            sb.append(safeCsv(log.getStatus())).append(",");
+            sb.append(log.getResponseCode() != null ? log.getResponseCode() : "").append(",");
+            sb.append(log.getReceivedAt() != null ? log.getReceivedAt() : "").append(",");
+            sb.append(log.getCompletedAt() != null ? log.getCompletedAt() : "").append(",");
+            sb.append(log.getDurationMs() != null ? log.getDurationMs() : "").append(",");
+            sb.append(safeCsv(log.getClientIp())).append(",");
+            sb.append(log.getApiKeyId() != null ? log.getApiKeyId() : "").append(",");
+            sb.append(log.getUserId() != null ? log.getUserId() : "").append(",");
+            sb.append(safeCsv(log.getErrorMessage())).append(",");
+            sb.append(log.getRetryCount() != null ? log.getRetryCount() : "").append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    private String safeCsv(String value) {
+        if (value == null) return "";
+        String escaped = value.replace("\"", "\"\"");
+        if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
+            return "\"" + escaped + "\"";
+        }
+        return escaped;
+    }
+
+    private byte[] convertToExcel(List<MiddlewareApiCallLog> logs) throws IOException {
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Middleware API Logs");
+
+            String[] headers = {
+                    "ID","TransactionID","RouteID","ApiEndpoint","RequestMethod","Status","ResponseCode",
+                    "ReceivedAt","CompletedAt","DurationMs","ClientIP","ApiKeyID","UserID","ErrorMessage","RetryCount"
+            };
+            Row headerRow = sheet.createRow(0);
+            for (int i = 0; i < headers.length; i++) {
+                headerRow.createCell(i).setCellValue(headers[i]);
+            }
+
+            int rowIdx = 1;
+            for (MiddlewareApiCallLog log : logs) {
+                Row row = sheet.createRow(rowIdx++);
+                row.createCell(0).setCellValue(log.getId());
+                row.createCell(1).setCellValue(log.getTransactionId() != null ? log.getTransactionId() : "");
+                row.createCell(2).setCellValue(log.getRouteId() != null ? log.getRouteId() : "");
+                row.createCell(3).setCellValue(log.getApiEndpoint() != null ? log.getApiEndpoint() : "");
+                row.createCell(4).setCellValue(log.getRequestMethod() != null ? log.getRequestMethod() : "");
+                row.createCell(5).setCellValue(log.getStatus() != null ? log.getStatus() : "");
+                row.createCell(6).setCellValue(log.getResponseCode() != null ? log.getResponseCode() : 0);
+                row.createCell(7).setCellValue(log.getReceivedAt() != null ? log.getReceivedAt().toString() : "");
+                row.createCell(8).setCellValue(log.getCompletedAt() != null ? log.getCompletedAt().toString() : "");
+                row.createCell(9).setCellValue(log.getDurationMs() != null ? log.getDurationMs() : 0);
+                row.createCell(10).setCellValue(log.getClientIp() != null ? log.getClientIp() : "");
+                row.createCell(11).setCellValue(log.getApiKeyId() != null ? log.getApiKeyId() : 0);
+                row.createCell(12).setCellValue(log.getUserId() != null ? log.getUserId() : 0);
+                row.createCell(13).setCellValue(log.getErrorMessage() != null ? log.getErrorMessage() : "");
+                row.createCell(14).setCellValue(log.getRetryCount() != null ? log.getRetryCount() : 0);
+            }
+
+            for (int i = 0; i < headers.length; i++) sheet.autoSizeColumn(i);
+
+            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+                workbook.write(bos);
+                return bos.toByteArray();
+            }
+        }
     }
 }

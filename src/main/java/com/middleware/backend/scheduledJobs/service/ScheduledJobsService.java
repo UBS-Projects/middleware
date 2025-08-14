@@ -73,7 +73,7 @@ public class ScheduledJobsService{
 
     public ResponseEntity<?> createNewJob(JobRequest job) {
         try {
-            ScheduledJobs exists = repo.findByApiEndpointAndMethodAndEnabledTrue(
+            ScheduledJobs exists = repo.findByApiEndpointAndMethodAndActiveTrue(
                     job.getApiEndpoint(),
                     job.getMethod()
             );
