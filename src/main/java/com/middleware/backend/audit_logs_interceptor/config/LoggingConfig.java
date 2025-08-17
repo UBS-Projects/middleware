@@ -1,4 +1,4 @@
-package com.middleware.backend.audit_logs_interceptor;
+package com.middleware.backend.audit_logs_interceptor.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

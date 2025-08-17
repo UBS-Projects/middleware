@@ -1,9 +1,9 @@
 //package com.middleware.backend.service;
 //
 //import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.middleware.backend.model.AuditLog;
+//import com.middleware.backend.audit_logs_interceptor.model.AuditLog;
 //import com.middleware.backend.model.WorkflowStep;
-//import com.middleware.backend.repository.AuditLogRepository;
+//import com.middleware.backend.audit_logs_interceptor.repository.AuditLogRepository;
 //
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.stereotype.Service;

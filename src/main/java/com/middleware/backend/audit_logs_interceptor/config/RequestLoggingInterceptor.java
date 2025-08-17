@@ -1,4 +1,4 @@
-package com.middleware.backend.audit_logs_interceptor;
+package com.middleware.backend.audit_logs_interceptor.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

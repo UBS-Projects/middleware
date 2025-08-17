@@ -1,8 +1,8 @@
 //package com.middleware.backend.audit;
 //
 //import org.springframework.stereotype.Service;
-//import com.middleware.backend.model.AuditLog;
-//import com.middleware.backend.repository.AuditLogRepository;
+//import com.middleware.backend.audit_logs_interceptor.model.AuditLog;
+//import com.middleware.backend.audit_logs_interceptor.repository.AuditLogRepository;
 //import lombok.RequiredArgsConstructor;
 //
 //@Service

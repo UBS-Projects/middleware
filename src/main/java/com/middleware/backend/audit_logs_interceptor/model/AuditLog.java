@@ -1,4 +1,4 @@
-package com.middleware.backend.model;
+package com.middleware.backend.audit_logs_interceptor.model;
 
 import jakarta.persistence.*;
 import lombok.*;

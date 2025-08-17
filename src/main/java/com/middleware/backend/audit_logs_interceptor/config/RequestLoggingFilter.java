@@ -1,10 +1,10 @@
-package com.middleware.backend.audit_logs_interceptor;
+package com.middleware.backend.audit_logs_interceptor.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.middleware.backend.model.AuditLog;
-import com.middleware.backend.repository.AuditLogRepository;
+import com.middleware.backend.audit_logs_interceptor.model.AuditLog;
+import com.middleware.backend.audit_logs_interceptor.repository.AuditLogRepository;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -38,6 +38,12 @@ public class RequestLoggingFilter implements Filter {
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRes = (HttpServletResponse) response;
 
+        String path = httpReq.getRequestURI();
+
+        if (path.startsWith("/auditlogs")) {
+            chain.doFilter(request, response);
+            return;
+        }
         // Wrap request/response to cache body
         ContentCachingRequestWrapper wrappedRequest = new ContentCachingRequestWrapper(httpReq);
         ContentCachingResponseWrapper wrappedResponse = new ContentCachingResponseWrapper(httpRes);

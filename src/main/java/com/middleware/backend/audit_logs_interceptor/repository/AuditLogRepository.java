@@ -1,8 +1,8 @@
-package com.middleware.backend.repository;
+package com.middleware.backend.audit_logs_interceptor.repository;
 
 
 
-import com.middleware.backend.model.AuditLog;
+import com.middleware.backend.audit_logs_interceptor.model.AuditLog;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
