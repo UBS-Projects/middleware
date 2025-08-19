@@ -15,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -33,6 +34,7 @@ public class SourceSystemController {
     private final SourceSystemService sourceSystemService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('sourceSystems:view')")
     public ResponseEntity<Page<?>> getAllSourceSystems(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description,
@@ -74,6 +76,7 @@ public class SourceSystemController {
     }
 
     @GetMapping("/active")
+    @PreAuthorize("hasAuthority('sourceSystems:view')")
     public ResponseEntity<List<SourceSystemDto>> getActiveSourceSystems() {
         try {
             return ResponseEntity.ok(sourceSystemService.getActiveSourceSystems());
@@ -84,6 +87,7 @@ public class SourceSystemController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('sourceSystems:view')")
     public ResponseEntity<?> getSourceSystemById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(sourceSystemService.getSourceSystemById(id));
@@ -97,6 +101,7 @@ public class SourceSystemController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('sourceSystems:create')")
     public ResponseEntity<?> createSourceSystem(@RequestBody SourceSystemDto dto) {
         try {
             SourceSystemDto createdDto = sourceSystemService.createSourceSystem(dto);
@@ -112,6 +117,7 @@ public class SourceSystemController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('sourceSystems:edit')")
     public ResponseEntity<?> updateSourceSystem(@PathVariable Long id, @RequestBody SourceSystemDto dto) {
         try {
             return ResponseEntity.ok(sourceSystemService.updateSourceSystem(id, dto));
@@ -128,6 +134,7 @@ public class SourceSystemController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('sourceSystems:delete')")
     public ResponseEntity<?> deleteSourceSystem(@PathVariable Long id) {
         try {
             sourceSystemService.deleteSourceSystem(id);
@@ -144,6 +151,7 @@ public class SourceSystemController {
     }
 
     @PostMapping("/{id}/toggle")
+    @PreAuthorize("hasAuthority('sourceSystems:create')")
     public ResponseEntity<?> toggleSourceSystem(@PathVariable Long id) {
         try {
             SourceSystemDto updatedDto = sourceSystemService.toggleSourceSystem(id);
@@ -166,6 +174,7 @@ public class SourceSystemController {
 
 
     @GetMapping("/export/{type}")
+    @PreAuthorize("hasAuthority('sourceSystems:export')")
     public ResponseEntity<byte[]> export(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description,
@@ -211,8 +220,6 @@ public class SourceSystemController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
-
-
     }
 
 

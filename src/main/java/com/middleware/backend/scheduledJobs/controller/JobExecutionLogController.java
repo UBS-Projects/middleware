@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ import java.time.LocalDate;
 public class JobExecutionLogController {
     private final JobExecutionlogsService service;
     @GetMapping
+    @PreAuthorize("hasAuthority('jobExecutionLogs:view')")
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String jobName,
             @RequestParam(required = false) String apiEndpoint,
@@ -51,6 +53,7 @@ public class JobExecutionLogController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('jobExecutionLogs:viewById')")
     public ResponseEntity<?> getById(
             @PathVariable("id") Long id
     ){
@@ -61,6 +64,7 @@ public class JobExecutionLogController {
 
 
     @GetMapping("/export/{type}")
+    @PreAuthorize("hasAuthority('jobExecutionLogs:export')")
     public ResponseEntity<byte[]> exportFile(
             @RequestParam(required = false) String jobName,
             @RequestParam(required = false) String apiEndpoint,

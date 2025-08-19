@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -36,6 +37,7 @@ public class ErrorMappingController {
     private final ErrorCategoryService errorCategoryService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('errorMappings:view')")
     public ResponseEntity<Page<ErrorMappingDto>> getAllErrorMappings(
             @RequestParam Map<String, String> filters,
             @RequestParam(defaultValue = "0") int page,
@@ -59,6 +61,7 @@ public class ErrorMappingController {
     }
 
     @GetMapping("/routes")
+    @PreAuthorize("hasAuthority('errorMappings:view')")
     public ResponseEntity<List<RouteOptionDto>> getAvailableRoutes() {
         try {
             List<RouteOptionDto> routes = errorMappingService.getAvailableRoutes();
@@ -70,6 +73,7 @@ public class ErrorMappingController {
     }
 
     @GetMapping("/source-systems")
+    @PreAuthorize("hasAuthority('sourceSystems:view')")
     public ResponseEntity<List<SourceSystemOptionDto>> getAvailableSourceSystems() {
         try {
             List<SourceSystemOptionDto> sourceSystems = sourceSystemService.getActiveSourceSystems()
@@ -85,6 +89,7 @@ public class ErrorMappingController {
 
     // إضافة endpoint جديد للحصول على Error Categories النشطة فقط
     @GetMapping("/error-categories")
+    @PreAuthorize("hasAuthority('errorCategories:view')")
     public ResponseEntity<List<Map<String, Object>>> getActiveErrorCategories() {
         try {
             List<Map<String, Object>> categories = errorCategoryService.getActiveCategories()
@@ -107,6 +112,7 @@ public class ErrorMappingController {
 
     // باقي methods تبقى كما هي...
     @GetMapping("/match")
+    @PreAuthorize("hasAuthority('errorMappings:view')")
     public ResponseEntity<?> findMatchingErrorMapping(
             @RequestParam String routeId,
             @RequestParam(required = false) Long sourceSystemId,
@@ -138,6 +144,7 @@ public class ErrorMappingController {
     }
 
     @GetMapping("/match/debug")
+    @PreAuthorize("hasAuthority('errorMappings:view')")
     public ResponseEntity<?> debugErrorMatching(
             @RequestParam String routeId,
             @RequestParam(required = false) Long sourceSystemId,
@@ -166,6 +173,7 @@ public class ErrorMappingController {
     }
 
     @GetMapping("/count/{routeId}")
+    @PreAuthorize("hasAuthority('errorMappings:view')")
     public ResponseEntity<Map<String, Long>> getErrorMappingCount(@PathVariable String routeId) {
         try {
             long count = errorMappingService.getCountByRouteId(routeId);
@@ -179,6 +187,7 @@ public class ErrorMappingController {
     }
 
     @GetMapping("/export")
+    @PreAuthorize("hasAuthority('errorMappings:export')")
     public ResponseEntity<List<ErrorMappingDto>> exportErrorMappings(
             @RequestParam(required = false) String routeId) {
         try {
@@ -198,6 +207,7 @@ public class ErrorMappingController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('errorMappings:view')")
     public ResponseEntity<ErrorMappingDto> getErrorMappingById(@PathVariable Long id) {
         try {
             return errorMappingService.getErrorMappingById(id)
@@ -210,6 +220,7 @@ public class ErrorMappingController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('errorMappings:create')")
     public ResponseEntity<?> createErrorMapping(@RequestBody ErrorMappingDto dto) {
         try {
             ErrorMappingDto created = errorMappingService.createErrorMapping(dto);
@@ -225,6 +236,7 @@ public class ErrorMappingController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('errorMappings:edit')")
     public ResponseEntity<?> updateErrorMapping(@PathVariable Long id, @RequestBody ErrorMappingDto dto) {
         try {
             ErrorMappingDto updated = errorMappingService.updateErrorMapping(id, dto);
@@ -242,6 +254,7 @@ public class ErrorMappingController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('errorMappings:delete')")
     public ResponseEntity<?> deleteErrorMapping(@PathVariable Long id) {
         try {
             errorMappingService.deleteErrorMapping(id);
@@ -256,6 +269,7 @@ public class ErrorMappingController {
     }
 
     @PostMapping("/{id}/toggle")
+    @PreAuthorize("hasAuthority('errorMappings:create')")
     public ResponseEntity<?> toggleErrorMapping(@PathVariable Long id) {
         try {
             errorMappingService.toggleErrorMapping(id);
@@ -278,6 +292,7 @@ public class ErrorMappingController {
 
 
     @GetMapping("/export/{type}")
+    @PreAuthorize("hasAuthority('errorMappings:export')")
     public ResponseEntity<byte[]> export(
             @RequestParam Map<String, String> filters,
             @RequestParam(defaultValue = "0") int page,

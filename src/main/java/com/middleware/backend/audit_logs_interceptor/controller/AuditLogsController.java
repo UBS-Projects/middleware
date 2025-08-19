@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,7 @@ public class AuditLogsController {
     private final AuditLogsService service;
 
     @GetMapping("")
+    @PreAuthorize("hasAuthority('auditLogs:view')")
     public ResponseEntity<Page<AuditResponse>> getAll(
             @RequestParam(required = false) String user,
             @RequestParam(required = false) String method,
@@ -59,6 +61,7 @@ public class AuditLogsController {
 
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('auditLogs:view')")
     public ResponseEntity<?> getAll(
             @PathVariable("id") Long id) {
         return service.findById(id);
@@ -69,6 +72,7 @@ public class AuditLogsController {
 //    ********************************************** Export File ***************************************************
 
     @GetMapping("/export/{type}")
+    @PreAuthorize("hasAuthority('auditLogs:export')")
     public ResponseEntity<byte[]> export(
             @RequestParam(required = false) String user,
             @RequestParam(required = false) String method,

@@ -15,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -32,6 +33,7 @@ public class ErrorCategoryController {
     private final ErrorCategoryService categoryService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('errorCategories:view')")
     public ResponseEntity<Page<?>> getAll(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description,
@@ -71,6 +73,7 @@ public class ErrorCategoryController {
 
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('errorCategories:view')")
     public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(categoryService.getCategoryById(id));
@@ -84,6 +87,7 @@ public class ErrorCategoryController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('errorCategories:create')")
     public ResponseEntity<?> createCategory(@RequestBody ErrorCategoryDto dto) {
         try {
             ErrorCategoryDto createdDto = categoryService.createCategory(dto);
@@ -99,6 +103,7 @@ public class ErrorCategoryController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('errorCategories:edit')")
     public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody ErrorCategoryDto dto) {
         try {
             return ResponseEntity.ok(categoryService.updateCategory(id, dto));
@@ -115,6 +120,7 @@ public class ErrorCategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('errorCategories:delete')")
     public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
         try {
             categoryService.deleteCategory(id);
@@ -131,6 +137,7 @@ public class ErrorCategoryController {
     }
 
     @PostMapping("/{id}/toggle")
+    @PreAuthorize("hasAuthority('errorCategories:create')")
     public ResponseEntity<?> toggleCategory(@PathVariable Long id) {
         try {
             ErrorCategoryDto updatedDto = categoryService.toggleCategory(id);
@@ -152,6 +159,7 @@ public class ErrorCategoryController {
 
 
     @GetMapping("/export/{type}")
+    @PreAuthorize("hasAuthority('errorCategories:export')")
     public ResponseEntity<byte[]> export(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description,
