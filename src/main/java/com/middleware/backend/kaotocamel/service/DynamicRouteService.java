@@ -149,16 +149,13 @@ public class DynamicRouteService {
             }
         }
     }
-
     public RouteTestResult testRoute(String yamlContent, String testMessage) {
-
         RouteValidationResult checkRouteMandatoryFields = checkRouteMandatoryFields(yamlContent);
         if (!checkRouteMandatoryFields.isValid()) {
             return new RouteTestResult(false, null, checkRouteMandatoryFields.getErrorMessage());
         }
 
         String modifiedYaml = null;
-
         String routeId = null;
         try {
             modifiedYaml = modifyYamlForTest(yamlContent);
@@ -171,36 +168,34 @@ public class DynamicRouteService {
             log.debug("\n\n Extracted metadata after modification: {}", metadata);
             log.debug("\n\n Modified YAML: {}", modifiedYaml);
             loadRoute(modifiedYaml);
-            // camelContext.start();
             camelContext.getRouteController().startRoute(routeId);
 
-            // camelContext.getRouteController().getRouteStatus(routeId);
-            camelContext.getRoutes().forEach(route -> log.debug("Registered routeId: {} Status: {} \n", route.getId(),
-                    camelContext.getRouteController().getRouteStatus(route.getId())));
-            log.debug(" current routeId: " + routeId);
-            // og.debug("\n\n Route status: {}",
-            // camelContext.getRouteController().getRouteStatus(routeId));
-            if ("rest".equals(uri)) {
-                String response = testRestRoute(path, method, testMessage != null ? testMessage : "Test Message", null);
+            // HTTP-like schemes
+            if ("rest".equals(uri) || "servlet".equals(uri) || "platform-http".equals(uri)) {
+                // تحضير المسار الحقيقي لاستدعاء HTTP
+                String effectivePath = path;
+                if ("servlet".equals(uri)) {
+                    // غيّر الـ prefix حسب ضبطك الفعلي (مثلاً "/camel")
+                    final String camelServletPrefix = "/camel";
+                    if (!effectivePath.startsWith("/")) {
+                        effectivePath = "/" + effectivePath;
+                    }
+                    effectivePath = camelServletPrefix + effectivePath;
+                }
+                String response = testRestRoute(effectivePath, method, testMessage != null ? testMessage : "Test Message", null);
                 return new RouteTestResult(true, response, null);
             } else {
+                // non-HTTP (direct/seda)
                 Optional<String> inputUri = detectInputUriByRouteId(routeId);
-                if (inputUri.isEmpty()) { // no need
-                    return new RouteTestResult(false, null,
-                            "No suitable input endpoint found (e.g. direct:*, seda:*, rest:*)");
+                if (inputUri.isEmpty()) {
+                    return new RouteTestResult(false, null, "No suitable input endpoint found (e.g. direct:*, seda:*, rest:*).");
                 }
-
-                uri = inputUri.get();
-                // log.debug("getEndpointRegistry {}\n getRuntimeEndpointRegistry {}\n
-                // getRestConfiguration {}\n",
-                // camelContext.getEndpointRegistry().toString(),
-                // camelContext.getRuntimeEndpointRegistry(),
-                // camelContext.getRestConfiguration());
-
-                log.debug("\n\nExtracted Uri method detectInputUriByRouteId  {}", uri);
-                String response = camelContext.createProducerTemplate().requestBody(uri,
-                        testMessage != null ? testMessage : "Test Message", String.class);
-
+                String inUri = inputUri.get();
+                String response = camelContext.createProducerTemplate().requestBody(
+                        inUri,
+                        testMessage != null ? testMessage : "Test Message",
+                        String.class
+                );
                 return new RouteTestResult(true, response, null);
             }
 
@@ -217,13 +212,13 @@ public class DynamicRouteService {
             log.error("Failed to start test route: {}", e.getMessage(), e);
             return new RouteTestResult(false, null, e.getMessage());
         } finally {
-            // log.debug("\n\n Route status from final : {}",
-            // camelContext.getRouteController().getRouteStatus(routeId));
             if (routeId != null) {
                 tryStopAndRemoveRoute(routeId);
             }
         }
     }
+
+
 
     public String testRestRoute(String path, String methodStr, String payload, Map<String, String> additionalHeaders)
             throws CamelExecutionException {
@@ -657,37 +652,38 @@ public class DynamicRouteService {
             }
 
             for (Object item : parsed) {
-                if (!(item instanceof Map)) {
-                    continue;
-                }
+                if (!(item instanceof Map)) continue;
 
                 Map<String, Object> routeWrapper = (Map<String, Object>) item;
                 Object routeObj = routeWrapper.get("route");
-
-                if (!(routeObj instanceof Map)) {
-                    continue;
-                }
+                if (!(routeObj instanceof Map)) continue;
 
                 Map<String, Object> route = (Map<String, Object>) routeObj;
 
-                // Route ID and description
+                // id & description
                 if (route.containsKey("id")) {
                     metadata.put("id", route.get("id").toString().trim());
                 } else {
                     log.error("Route 'id' is missing.");
                 }
-
                 if (route.containsKey("description")) {
                     metadata.put("description", route.get("description").toString().trim());
                 }
 
-                // Extract from `from` section
+                // from
                 Object fromObj = route.get("from");
                 if (fromObj instanceof Map) {
                     Map<String, Object> from = (Map<String, Object>) fromObj;
+                    String uri = from.get("uri") != null ? from.get("uri").toString().trim() : null;
 
-                    String uri = from.get("uri") != null ? from.get("uri").toString() : null;
+                    Map<String, Object> params = null;
+                    Object paramsObj = from.get("parameters");
+                    if (paramsObj instanceof Map) {
+                        params = (Map<String, Object>) paramsObj;
+                    }
+
                     if (uri != null) {
+                        // rest:METHOD:PATH
                         if (uri.startsWith("rest:")) {
                             String[] parts = uri.split(":", 3);
                             if (parts.length == 3) {
@@ -695,20 +691,42 @@ public class DynamicRouteService {
                                 metadata.put("path", parts[2].trim());
                                 metadata.put("uri", "rest");
                             } else {
-                                log.error("Invalid rest: URI format looking into parameters: " + uri);
+                                log.error("Invalid rest: URI format: " + uri);
                             }
-                        } else if (uri.equalsIgnoreCase("rest")) {
-                            // Handle Kaoto YAML style: method and path in parameters
-                            Object paramsObj = from.get("parameters");
-                            if (paramsObj instanceof Map) {
-                                Map<String, Object> params = (Map<String, Object>) paramsObj;
+                        }
+                        // Kaoto rest مع parameters
+                        else if (uri.equalsIgnoreCase("rest")) {
+                            if (params != null) {
                                 metadata.put("method", String.valueOf(params.getOrDefault("method", "")).trim());
                                 metadata.put("path", String.valueOf(params.getOrDefault("path", "")).trim());
                                 metadata.put("uri", "rest");
+                            } else {
+                                log.error("Missing parameters for rest uri.");
                             }
-                        } else if (uri.startsWith("direct:") || uri.startsWith("seda:")) {
-                            metadata.put("uri", uri.trim());
-                        } else {
+                        }
+                        // servlet:/path
+                        else if (uri.startsWith("servlet:/")) {
+                            String path = uri.substring("servlet:".length()); // يحافظ على البداية بـ "/"
+                            metadata.put("path", path.trim());
+                            String method = params != null ? String.valueOf(params.getOrDefault("httpMethodRestrict", "")).trim() : "";
+                            if (method.contains(",")) method = method.split(",", 2)[0].trim();
+                            metadata.put("method", method.isEmpty() ? "POST" : method);
+                            metadata.put("uri", "servlet");
+                        }
+                        // platform-http:/path
+                        else if (uri.startsWith("platform-http:/")) {
+                            String path = uri.substring("platform-http:".length());
+                            metadata.put("path", path.trim());
+                            String method = params != null ? String.valueOf(params.getOrDefault("httpMethodRestrict", "")).trim() : "";
+                            if (method.contains(",")) method = method.split(",", 2)[0].trim();
+                            metadata.put("method", method.isEmpty() ? "POST" : method);
+                            metadata.put("uri", "platform-http");
+                        }
+                        // direct/seda: فقط خزّن الـ uri (لا يوجد path/method)
+                        else if (uri.startsWith("direct:") || uri.startsWith("seda:")) {
+                            metadata.put("uri", uri);
+                        }
+                        else {
                             log.error("Unrecognized 'uri' scheme: " + uri);
                         }
                     } else {
@@ -716,11 +734,9 @@ public class DynamicRouteService {
                     }
                 }
             }
-
         } catch (Exception e) {
             throw new RuntimeException("Failed to extract route metadata from YAML", e);
         }
-
         return metadata;
     }
 
