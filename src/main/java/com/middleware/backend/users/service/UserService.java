@@ -1,15 +1,19 @@
 package com.middleware.backend.users.service;
 
+import com.middleware.backend.users.Roles.dto.RoleRequest;
 import com.middleware.backend.users.Roles.mapper.RoleMapper;
+import com.middleware.backend.users.Roles.model.Permission;
 import com.middleware.backend.users.config.JwtUtil;
 import com.middleware.backend.users.dto.UserRequest;
 import com.middleware.backend.users.dto.UserResponse;
+import com.middleware.backend.users.dto.UserResponseRoles;
 import com.middleware.backend.users.mapper.UserMapper;
 import com.middleware.backend.users.model.Status;
 import com.middleware.backend.users.model.User;
 import com.middleware.backend.users.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -18,6 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -33,10 +39,16 @@ public class UserService {
         Optional<User> user = repo.findById(id);
         return user.isPresent()? ResponseEntity.ok(userMapper.mapToDto(user.get())):
                 ResponseEntity.badRequest().body("Not Found");
-
-//        String token = jwtUtil.generateToken("tessdfdsdfs2332t@mail.com",5*60*1000);
+//        List<String> roles = new ArrayList<>();
+//        roles.add("ADMIN");
+//        roles.add("SYSTEM_USER");
+//        List<String> pers = new ArrayList<>();
+//        pers.add("audit:create");
+//        pers.add("user:show");
+//        String token = jwtUtil.generateToken("admin@mail.com",roles,pers, 2L * 7 * 24 * 60 * 60 * 1000);
 //        System.out.println("**************************************************");
 //        System.out.println("System User Token: " + token);
+//
 //        return null;
     }
 
@@ -109,5 +121,15 @@ public class UserService {
         user.get().setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         repo.save(user.get());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getUsersByRole(String role, int page) {
+        Page<UserResponseRoles> users = repo.findByRoles_RoleName(role.toUpperCase(), PageRequest.of(page,10)).map(
+                user -> UserResponseRoles.builder()
+                        .id(user.getId())
+                        .userName(user.getUserName())
+                        .email(user.getEmail())
+                        .status(user.getStatus()).build());
+        return ResponseEntity.ok(users);
     }
 }

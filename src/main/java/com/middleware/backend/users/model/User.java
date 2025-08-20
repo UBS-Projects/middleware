@@ -24,7 +24,7 @@ public class User {
     @Column(nullable = false,name = "user_name")
     private String userName;
 
-    @Column(nullable = false,name = "email")
+    @Column(unique = true,nullable = false,name = "email")
     private String email;
 
     @Enumerated(EnumType.STRING)

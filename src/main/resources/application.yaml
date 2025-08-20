@@ -3,11 +3,14 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/middleware
+    url: jdbc:postgresql://localhost:5432/middleware2
     username: postgres
     password: 12345
     driver-class-name: org.postgresql.Driver
 
+  sql:
+    init:
+      mode: always
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:

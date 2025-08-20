@@ -18,6 +18,7 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class MiddlewareApiCallLogController {
     private final MiddlewareApiCallLogMapper mapper;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('middlewareLogs:view')")
     public ResponseEntity<?> getAll(
             @RequestParam Map<String, String> filters,
             @RequestParam(defaultValue = "0") int page,
@@ -57,6 +59,7 @@ public class MiddlewareApiCallLogController {
     }
 
     @GetMapping("/export/{type}")
+    @PreAuthorize("hasAuthority('middlewareLogs:export')")
     public ResponseEntity<byte[]> exportFile(
             @RequestParam Map<String, String> filters,
             @PathVariable("type") String type) {

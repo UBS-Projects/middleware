@@ -3,6 +3,7 @@ package com.middleware.backend.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,11 +31,13 @@ public class ApiEndpointController {
     private final ApiEndpointRepository repository;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('apiEndpoints:create')")
     public ApiEndpoint create(@RequestBody ApiEndpoint apiEndpoint) {
         return repository.save(apiEndpoint);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('apiEndpoints:view')")
     public ApiEndpoint getById(@PathVariable Long id) throws Exception {
         return  repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("ApiEndpoint not found"));
@@ -42,11 +45,13 @@ public class ApiEndpointController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('apiEndpoints:view')")
     public List<ApiEndpoint> getAll() {
         return repository.findAll();
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('apiEndpoints:edit')")
     public ApiEndpoint update(@PathVariable Long id, @RequestBody ApiEndpoint updated) {
         ApiEndpoint existing = repository.findById(id).orElseThrow(() -> new RuntimeException("ApiEndpoint not found"));
         updated.setId(existing.getId());
@@ -86,6 +91,7 @@ public class ApiEndpointController {
      */
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAuthority('apiEndpoints:edit')")
     public ApiEndpoint partialUpdate(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
         ApiEndpoint existing = repository.findById(id).orElseThrow(() -> new RuntimeException("ApiEndpoint not found"));
 
@@ -130,6 +136,7 @@ public class ApiEndpointController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('apiEndpoints:delete')")
     public void delete(@PathVariable Long id) {
         repository.deleteById(id);
     }

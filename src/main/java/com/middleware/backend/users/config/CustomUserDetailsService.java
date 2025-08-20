@@ -4,6 +4,8 @@ package com.middleware.backend.users.config;
 import com.middleware.backend.users.model.User;
 import com.middleware.backend.users.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,17 +23,21 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with email: " + email);
-        }
-        String[] roles = user.get().getRoles().stream()
-                .map(role -> role.getRoleName())
-                .toArray(String[]::new);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        // Get authorities from roles + permissions
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .flatMap(role -> role.getPermissions().stream())
+                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
+                .collect(Collectors.toList());
+
+
         return org.springframework.security.core.userdetails.User
-                    .withUsername(email)
-                    .password(user.get().getPassword())
-                    .roles(roles)
-                    .build();
+                .withUsername(email)
+                .password(user.getPassword())
+                .authorities(authorities)
+                .build();
     }
+
 }

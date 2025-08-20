@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class RoleController {
     private final RoleService service;
+
     @GetMapping("")
     public ResponseEntity<?> getAllRoles(){
         return service.getAll();
@@ -21,5 +22,6 @@ public class RoleController {
     public ResponseEntity<?> addNewRole(@RequestBody RoleRequest role){
         return  service.addNewRole(role);
     }
+
 
 }

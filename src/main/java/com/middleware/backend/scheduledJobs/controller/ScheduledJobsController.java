@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/scheduledjobs")
@@ -22,6 +23,7 @@ public class ScheduledJobsController {
     private final ScheduledJobsService service;
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('scheduledJobs:pause','scheduledJobs:resume')")
     public ResponseEntity<?> changeStatus(@PathVariable Long id,
                                           @RequestParam("status") String status) throws SchedulerException {
         if (status.equals("pause"))
@@ -31,17 +33,20 @@ public class ScheduledJobsController {
     }
 
     @PatchMapping("")
+    @PreAuthorize("hasAuthority('scheduledJobs:edit')")
     public ResponseEntity<?> edit(@RequestBody JobRequest job) throws SchedulerException {
         return service.editJob(job);
     }
 
 
     @PostMapping()
+    @PreAuthorize("hasAuthority('scheduledJobs:create')")
     public ResponseEntity<?> CreateJob(@RequestBody JobRequest job) {
         return service.createNewJob(job);
     }
 
     @GetMapping("")
+    @PreAuthorize("hasAuthority('scheduledJobs:view')")
     public ResponseEntity<Page<?>> getAll(
             @RequestParam(required = false) String jobName,
             @RequestParam(required = false) String apiEndpoint,
@@ -69,16 +74,19 @@ public class ScheduledJobsController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('scheduledJobs:delete')")
     public ResponseEntity<?> deactivateJob(@PathVariable Long id) throws SchedulerException {
         return service.deactivateJob(id);
     }
 
     @PostMapping("/test")
+    @PreAuthorize("hasAuthority('scheduledJobs:test')")
     public ResponseEntity<?> test(@RequestBody JobRequest jobRequest) {
         return service.test(jobRequest);
     }
 
     @GetMapping("/export/{type}")
+    @PreAuthorize("hasAuthority('scheduledJobs:export')")
     public ResponseEntity<byte[]> exportFile(
             @RequestParam(required = false) String jobName,
             @RequestParam(required = false) String apiEndpoint,

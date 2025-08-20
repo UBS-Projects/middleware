@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Component
@@ -16,12 +17,14 @@ public class JwtUtil {
     private String secret;
 
 
-    public String generateToken(String email, long customExpirationMs) {
+    public String generateToken(String email, List<String> roles, List<String> permissions, long customExpirationMs) {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + customExpirationMs))
                 .signWith(SignatureAlgorithm.HS256, secret.getBytes())
+                .claim("roles", roles)
+                .claim("permissions",permissions)
                 .compact();
     }
     public String extractEmail(String token) {

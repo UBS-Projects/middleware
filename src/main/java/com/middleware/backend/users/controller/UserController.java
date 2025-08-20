@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ public class UserController {
     private final UserService service;
 
     @GetMapping("")
+    @PreAuthorize("hasAuthority('user:view')")
     public ResponseEntity<?> getAllUsers(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String userName,
@@ -52,18 +54,20 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('user:viewById')")
     public ResponseEntity<?> getUserById(@PathVariable Long id){
         return service.getUserById(id);
     }
 
 
-
     @PostMapping("")
+    @PreAuthorize("hasAuthority('user:create')")
     public ResponseEntity<?> createNewUser(@RequestBody UserRequest user){
         return service.createNewUser(user);
     }
 
     @PutMapping("/{id}/{status}")
+    @PreAuthorize("hasAnyAuthority('user:edit','user:activate','user:delete')")
     public ResponseEntity<?> deleteUser(@PathVariable Long id,
                                         @PathVariable String status){
         if(status.equals("DELETE"))
@@ -72,10 +76,21 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAuthority('user:edit')")
     public ResponseEntity<?> EditUser(@PathVariable("id") Long id, @RequestBody UserRequest user){
         return service.editUser(id, user);
     }
 
+
+
+    @GetMapping("/role/{role}")
+    @PreAuthorize("hasAuthority('user:viewByRole')")
+    public ResponseEntity<?> getUsersByRole(@PathVariable String role,
+    @RequestParam(defaultValue = "0") int page
+
+    ){
+        return service.getUsersByRole(role,page);
+    }
 
 }
 
