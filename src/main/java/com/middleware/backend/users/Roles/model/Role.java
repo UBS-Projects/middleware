@@ -19,7 +19,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, name = "role_name")
+    @Column(unique = true,nullable = false, name = "role_name")
     private String roleName;
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
