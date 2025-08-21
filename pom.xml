@@ -17,6 +17,8 @@
     <properties>
         <java.version>23</java.version>
         <lombok.version>1.18.38</lombok.version>
+        <camel.version>4.4.0</camel.version> <!-- Add this line -->
+
     </properties>
     <dependencies><!-- Spring Boot Core Dependencies -->
         <dependency>
@@ -153,7 +155,11 @@
             <version>1.5.5.Final</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-groovy</artifactId>
+            <version>${camel.version}</version> <!-- Use your Camel version -->
+        </dependency>
         <!--        Quartz Dependency "For the Scheduled Jobs"             -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -164,9 +170,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.10.0</version>
+        </dependency>
 
-
-
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-sql-starter</artifactId>
+            <version>${camel.version}</version> <!-- لازم تطابق نسخة Camel عندك -->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jsonpath</artifactId>
+            <version>${camel.version}</version> <!-- لازم تطابق نسخة Camel عندك -->
+        </dependency>
 <!--        PDF,CSV EXPORT      -->
         <dependency>
             <groupId>org.apache.poi</groupId>
