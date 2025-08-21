@@ -60,24 +60,21 @@
             <artifactId>camel-jackson-starter</artifactId>
             <version>4.4.0</version>
         </dependency>
-    <dependency>
-      <groupId>org.apache.camel.springboot</groupId>
-      <artifactId>camel-yaml-dsl-starter</artifactId>
-      <version>4.4.0</version> 
-    </dependency>
-
-    <dependency>
-  <groupId>org.apache.camel.springboot</groupId>
-  <artifactId>camel-servlet-starter</artifactId>
-   <version>4.4.0</version> 
-</dependency>
-
-<dependency>
-  <groupId>org.apache.camel</groupId>
-  <artifactId>camel-core-model</artifactId>
-  <version>4.4.0</version>
-</dependency>
-
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-yaml-dsl-starter</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-servlet-starter</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core-model</artifactId>
+            <version>4.4.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
@@ -85,9 +82,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-        </dependency>
-        
-        <!--
+        </dependency><!--
         <dependency>
     <groupId>com.oracle.database.jdbc</groupId>
     <artifactId>ojdbc11</artifactId>
@@ -97,15 +92,11 @@
             <groupId>com.vladmihalcea</groupId>
             <artifactId>hibernate-types-60</artifactId>
             <version>2.21.1</version>
-        </dependency>
-        
-        <!-- Spring Boot Actuator for monitoring -->
-        
+        </dependency><!-- Spring Boot Actuator for monitoring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <!-- Optional: JSON Web Token support -->
+        </dependency><!-- Optional: JSON Web Token support -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -128,10 +119,7 @@
             <artifactId>json-schema-validator</artifactId>
             <version>1.0.77</version>
         </dependency><!-- Optional: Scheduling -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-quartz</artifactId>
-        </dependency>
+       
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -152,14 +140,16 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>1.5.5.Final</version>
             <scope>provided</scope>
-        </dependency>
-
-        <!--        Quartz Dependency "For the Scheduled Jobs"             -->
+        </dependency><!--        Quartz Dependency "For the Scheduled Jobs"             -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.middleware.component</groupId>
+            <artifactId>camel-errormapper-component</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins><!-- Spring Boot Plugin -->
