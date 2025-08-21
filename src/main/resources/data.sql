@@ -53,9 +53,11 @@ INSERT INTO public.permissions (id, name) VALUES
                                               (52, 'user:activate'),
                                               (53, 'user:edit'),
                                               (54, 'user:viewByRole'),
-                                              (55, 'role:view'),
-                                              (56, 'role:create')
-ON CONFLICT (id) DO NOTHING;
+                                              (55, 'user:generate-token'),
+                                              (56, 'role:view'),
+                                              (57, 'role:create')
+ON CONFLICT DO NOTHING;
+
 
 INSERT INTO public.users
 (created_at, updated_at, email, password, status, user_name)
@@ -65,6 +67,9 @@ VALUES
      'ACTIVE', 'admin')
     ON CONFLICT (email) DO NOTHING;
 
+
+-- ALTER TABLE public.role
+--     ADD CONSTRAINT uq_role_name UNIQUE (role_name);
 INSERT INTO public.role (role_name)
 VALUES ('ADMIN')
     ON CONFLICT (role_name) DO NOTHING;
@@ -76,10 +81,10 @@ VALUES (1, 1)
 INSERT INTO public.role_permissions (role_id, permission_id)
 SELECT 1, id
 FROM public.permissions
-WHERE id BETWEEN 1 AND 56
-    ON CONFLICT DO NOTHING;  -- optional, avoids duplicate entries
+WHERE id BETWEEN 1 AND 57
+    ON CONFLICT DO NOTHING;
 
 
 -- user
-                             -- email: admin@mail.com
-                             --pass: S123@231
+-- email: admin@mail.com
+--pass: S123@231
