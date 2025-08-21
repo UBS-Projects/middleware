@@ -30,32 +30,39 @@ INSERT INTO public.permissions (id, name) VALUES
                                               (29, 'dynamicRoutes:create'),
                                               (30, 'dynamicRoutes:edit'),
                                               (31, 'dynamicRoutes:delete'),
-                                              (32, 'dynamicRoutes:export'),
-                                              (33, 'middlewareLogs:view'),
-                                              (34, 'middlewareLogs:export'),
-                                              (35, 'jobExecutionLogs:view'),
-                                              (36, 'jobExecutionLogs:viewById'),
-                                              (37, 'jobExecutionLogs:export'),
-                                              (38, 'scheduledJobsLogs:view'),
-                                              (39, 'scheduledJobsLogs:export'),
-                                              (40, 'scheduledJobs:create'),
-                                              (41, 'scheduledJobs:pause'),
-                                              (42, 'scheduledJobs:resume'),
-                                              (43, 'scheduledJobs:edit'),
-                                              (44, 'scheduledJobs:view'),
-                                              (45, 'scheduledJobs:delete'),
-                                              (46, 'scheduledJobs:test'),
-                                              (47, 'scheduledJobs:export'),
-                                              (48, 'user:view'),
-                                              (49, 'user:viewById'),
-                                              (50, 'user:create'),
-                                              (51, 'user:delete'),
-                                              (52, 'user:activate'),
-                                              (53, 'user:edit'),
-                                              (54, 'user:viewByRole'),
-                                              (55, 'user:generate-token'),
-                                              (56, 'role:view'),
-                                              (57, 'role:create')
+                                              (32, 'dynamicRoutes:revert'),
+                                              (33, 'dynamicRoutes:stop'),
+                                              (34, 'dynamicRoutes:start'),
+                                              (35, 'dynamicRoutes:validate'),
+                                              (36, 'dynamicRoutes:test'),
+                                              (37, 'dynamicRoutes:export'),
+                                              (38, 'middlewareLogs:view'),
+                                              (39, 'middlewareLogs:export'),
+                                              (40, 'jobExecutionLogs:view'),
+                                              (41, 'jobExecutionLogs:viewById'),
+                                              (42, 'jobExecutionLogs:export'),
+                                              (43, 'scheduledJobsLogs:view'),
+                                              (44, 'scheduledJobsLogs:export'),
+                                              (45, 'scheduledJobs:create'),
+                                              (46, 'scheduledJobs:pause'),
+                                              (47, 'scheduledJobs:resume'),
+                                              (48, 'scheduledJobs:edit'),
+                                              (49, 'scheduledJobs:view'),
+                                              (50, 'scheduledJobs:delete'),
+                                              (51, 'scheduledJobs:test'),
+                                              (52, 'scheduledJobs:export'),
+                                              (53, 'user:view'),
+                                              (54, 'user:viewById'),
+                                              (55, 'user:create'),
+                                              (56, 'user:delete'),
+                                              (57, 'user:activate'),
+                                              (58, 'user:edit'),
+                                              (59, 'user:viewByRole'),
+                                              (60, 'user:generate-token'),
+                                              (61, 'role:view'),
+                                              (62, 'role:create'),
+                                              (63, 'dynamicRoutesLogs:view')
+
 ON CONFLICT DO NOTHING;
 
 
@@ -74,15 +81,28 @@ INSERT INTO public.role (role_name)
 VALUES ('ADMIN')
     ON CONFLICT (role_name) DO NOTHING;
 
-INSERT INTO public.users_roles (user_id, roles_id)
-VALUES (30, 6)
-    ON CONFLICT DO NOTHING;
 
+
+ALTER TABLE public.users_roles
+DROP CONSTRAINT IF EXISTS uq_users_roles;
+
+ALTER TABLE public.users_roles
+    ADD CONSTRAINT uq_users_roles UNIQUE (user_id, roles_id);
+
+INSERT INTO public.users_roles (user_id, roles_id)
+VALUES (1, 1)
+    ON CONFLICT(user_id,roles_id) DO NOTHING;
+
+
+ALTER TABLE public.role_permissions
+    DROP CONSTRAINT IF EXISTS uq_role_permission;
+ALTER TABLE public.role_permissions
+    ADD CONSTRAINT uq_role_permission UNIQUE (role_id, permission_id);
 INSERT INTO public.role_permissions (role_id, permission_id)
-SELECT 6, id
+SELECT 1, id
 FROM public.permissions
-WHERE id BETWEEN 1 AND 57
-    ON CONFLICT DO NOTHING;
+WHERE id BETWEEN 1 AND 63
+    ON CONFLICT(role_id, permission_id) DO NOTHING;
 
 
 -- user
