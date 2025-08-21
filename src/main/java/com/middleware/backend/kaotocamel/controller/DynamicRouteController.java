@@ -2,6 +2,7 @@ package com.middleware.backend.kaotocamel.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -124,13 +126,20 @@ public class DynamicRouteController {
     }
 
     @GetMapping("/latest")
-    public ResponseEntity<Page<DynamicRouteEntity>> getRoutes(@RequestParam(required = false) String routeId,
-            @RequestParam(required = false) String description, @RequestParam(required = false) String path,
-            @RequestParam(required = false) String httpMethod, @RequestParam(required = false) Boolean active,
-            @RequestParam(required = false) String comment, @RequestParam(required = false) String yamlContains,
+    public ResponseEntity<Page<DynamicRouteEntity>> getRoutes(
+            @RequestParam(required = false) String routeId,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) String path,
+            @RequestParam(required = false) String httpMethod,
+            @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) String comment,
+            @RequestParam(required = false) String yamlContains,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String sortDirection,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
 
         long startTime = System.currentTimeMillis();
 
@@ -139,7 +148,23 @@ public class DynamicRouteController {
                 return ResponseEntity.badRequest().build();
             }
 
-            Pageable pageable = PageRequest.of(page, size);
+            // Create sort object
+            Sort sort = Sort.unsorted();
+            if (sortBy != null && !sortBy.trim().isEmpty()) {
+                Sort.Direction direction = Sort.Direction.ASC;
+                if ("desc".equalsIgnoreCase(sortDirection)) {
+                    direction = Sort.Direction.DESC;
+                }
+
+                // Map frontend column names to entity field names
+                String fieldName = mapColumnToField(sortBy);
+                sort = Sort.by(direction, fieldName);
+            } else {
+                // Default sort by createdAt descending if no sort specified
+                sort = Sort.by(Sort.Direction.DESC, "createdAt");
+            }
+
+            Pageable pageable = PageRequest.of(page, size, sort);
 
             boolean hasFilters = Stream.of(routeId, description, path, httpMethod, comment, yamlContains)
                     .anyMatch(Objects::nonNull) || active != null || createdAfter != null || createdBefore != null;
@@ -164,13 +189,19 @@ public class DynamicRouteController {
             headers.add("X-Query-Type", queryType);
             headers.add("X-Execution-Time", String.valueOf(System.currentTimeMillis() - startTime) + "ms");
 
+            // Add sorting information to headers
+            if (sortBy != null) {
+                headers.add("X-Sort-By", sortBy);
+                headers.add("X-Sort-Direction", sortDirection != null ? sortDirection : "asc");
+            }
+
             return ResponseEntity.ok().headers(headers).body(result);
 
         } catch (Exception e) {
             log.error("Error retrieving routes", e);
 
             try {
-                Pageable pageable = PageRequest.of(page, size);
+                Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
                 Page<DynamicRouteEntity> fallbackResult = routeService.getAllRoutes(pageable);
 
                 HttpHeaders headers = new HttpHeaders();
@@ -183,6 +214,29 @@ public class DynamicRouteController {
                 log.error("Fallback query also failed", fallbackError);
                 return ResponseEntity.internalServerError().build();
             }
+        }
+    }
+
+     private String mapColumnToField(String column) {
+        switch (column.toLowerCase()) {
+            case "routeid":
+                return "routeId";
+            case "version":
+                return "version";
+            case "active":
+                return "active";
+            case "comment":
+                return "comment";
+            case "createdat":
+                return "createdAt";
+            case "description":
+                return "description";
+            case "path":
+                return "path";
+            case "httpmethod":
+                return "httpMethod";
+            default:
+                return "createdAt"; // Default fallback
         }
     }
 
@@ -307,8 +361,127 @@ public class DynamicRouteController {
         }
     }
 
-    // Get Route Audits
+// Add these methods to your DynamicRouteController
 
+    @GetMapping("/export/excel")
+    public ResponseEntity<byte[]> exportToExcel(
+            @RequestParam(required = false) String routeId,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) String path,
+            @RequestParam(required = false) String httpMethod,
+            @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) String comment,
+            @RequestParam(required = false) String yamlContains,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String sortDirection) {
+
+        try {
+            // Create sort object
+            Sort sort = Sort.unsorted();
+            if (sortBy != null && !sortBy.trim().isEmpty()) {
+                Sort.Direction direction = Sort.Direction.ASC;
+                if ("desc".equalsIgnoreCase(sortDirection)) {
+                    direction = Sort.Direction.DESC;
+                }
+                String fieldName = mapColumnToField(sortBy);
+                sort = Sort.by(direction, fieldName);
+            } else {
+                sort = Sort.by(Sort.Direction.DESC, "createdAt");
+            }
+
+            // Use a large page size to get all results for export
+            Pageable pageable = PageRequest.of(0, 10000, sort);
+
+            boolean hasFilters = Stream.of(routeId, description, path, httpMethod, comment, yamlContains)
+                    .anyMatch(Objects::nonNull) || active != null || createdAfter != null || createdBefore != null;
+
+            Page<DynamicRouteEntity> result;
+            if (hasFilters) {
+                result = routeService.getLatestRoutesWithFiltersOptimized(routeId, description, path, httpMethod,
+                        active, comment, yamlContains, createdAfter, createdBefore, pageable);
+            } else {
+                result = routeService.getLatestRoutesOptimized(pageable);
+            }
+
+            byte[] excelData = routeService.exportToExcel(result.getContent());
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", "routes_export_" +
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")) + ".xlsx");
+            headers.setContentLength(excelData.length);
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(excelData);
+
+        } catch (Exception e) {
+            log.error("Error exporting to Excel", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/export/csv")
+    public ResponseEntity<byte[]> exportToCSV(
+            @RequestParam(required = false) String routeId,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) String path,
+            @RequestParam(required = false) String httpMethod,
+            @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) String comment,
+            @RequestParam(required = false) String yamlContains,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String sortDirection) {
+
+        try {
+            // Create sort object
+            Sort sort = Sort.unsorted();
+            if (sortBy != null && !sortBy.trim().isEmpty()) {
+                Sort.Direction direction = Sort.Direction.ASC;
+                if ("desc".equalsIgnoreCase(sortDirection)) {
+                    direction = Sort.Direction.DESC;
+                }
+                String fieldName = mapColumnToField(sortBy);
+                sort = Sort.by(direction, fieldName);
+            } else {
+                sort = Sort.by(Sort.Direction.DESC, "createdAt");
+            }
+
+            // Use a large page size to get all results for export
+            Pageable pageable = PageRequest.of(0, 10000, sort);
+
+            boolean hasFilters = Stream.of(routeId, description, path, httpMethod, comment, yamlContains)
+                    .anyMatch(Objects::nonNull) || active != null || createdAfter != null || createdBefore != null;
+
+            Page<DynamicRouteEntity> result;
+            if (hasFilters) {
+                result = routeService.getLatestRoutesWithFiltersOptimized(routeId, description, path, httpMethod,
+                        active, comment, yamlContains, createdAfter, createdBefore, pageable);
+            } else {
+                result = routeService.getLatestRoutesOptimized(pageable);
+            }
+
+            byte[] csvData = routeService.exportToCSV(result.getContent());
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("text/csv"));
+            headers.setContentDispositionFormData("attachment", "routes_export_" +
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")) + ".csv");
+            headers.setContentLength(csvData.length);
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(csvData);
+
+        } catch (Exception e) {
+            log.error("Error exporting to CSV", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
     @GetMapping("/audits")
     public ResponseEntity<Page<?>> getRouteAudits(
             @RequestParam(defaultValue = "0") int page,
