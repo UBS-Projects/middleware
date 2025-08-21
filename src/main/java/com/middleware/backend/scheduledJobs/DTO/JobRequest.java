@@ -37,4 +37,7 @@ public class JobRequest {
 
 
     private Timestamp updatedAt;
+
+    private boolean active = true;
+
 }

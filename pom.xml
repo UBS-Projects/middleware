@@ -145,10 +145,26 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
+<<<<<<< HEAD
         <dependency>
             <groupId>com.middleware.component</groupId>
             <artifactId>camel-errormapper-component</artifactId>
             <version>1.0.0-SNAPSHOT</version>
+=======
+        <!-- BCryptPasswordEncoder Dep-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+
+
+<!--        PDF,CSV EXPORT      -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.3</version>
+>>>>>>> d51d4dca5574fab3829207250e6e80c2a4e2c2ec
         </dependency>
     </dependencies>
     <build>

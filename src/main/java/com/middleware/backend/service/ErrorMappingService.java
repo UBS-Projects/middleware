@@ -14,12 +14,19 @@ import com.middleware.backend.spec.ErrorMappingSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -252,5 +259,106 @@ public class ErrorMappingService {
         log.info("NO MATCH FOUND for routeId: '{}', sourceSystemId: {}, errorMessage: '{}'",
                 routeId, sourceSystemId, errorMessage);
         return Optional.empty();
+    }
+
+    public byte[] exportFile(Map<String, String> filters, Pageable pageable, String type) {
+        // Build dynamic specification from filters
+        Specification<ErrorMapping> spec = ErrorMappingSpecification.filter(filters);
+
+        // Fetch filtered data
+        Page<ErrorMapping> page = errorMappingRepository.findAll(spec, pageable);
+        List<ErrorMapping> data = page.getContent();
+
+        try {
+            if ("CSV".equalsIgnoreCase(type)) {
+                return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
+            } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
+                return convertToExcel(data);
+            } else {
+                throw new IllegalArgumentException("Unsupported export type: " + type);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error generating export file", e);
+        }
+    }
+
+    // === CSV Export ===
+    private String convertToCSV(List<ErrorMapping> mappings) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Route ID,Route Path,Source System,Raw Error Substring,Match Type,Mapped Error Code,Mapped Message,Error Category,HTTP Status,Language,Active,Created At,Updated At\n");
+
+        for (ErrorMapping em : mappings) {
+            sb.append(escapeCsv(em.getRouteId())).append(",");
+            sb.append(escapeCsv(em.getRoutePath())).append(",");
+            sb.append(em.getSourceSystem() != null ? escapeCsv(em.getSourceSystem().getName()) : "").append(",");
+            sb.append(escapeCsv(em.getRawErrorSubstring())).append(",");
+            sb.append(em.getMatchType() != null ? escapeCsv(em.getMatchType().name()) : "").append(",");
+            sb.append(escapeCsv(em.getMappedErrorCode())).append(",");
+            sb.append(escapeCsv(em.getMappedMessage())).append(",");
+            sb.append(em.getErrorCategory() != null ? escapeCsv(em.getErrorCategory().getName()) : "").append(",");
+            sb.append(em.getHttpStatusCode() != null ? em.getHttpStatusCode() : "").append(",");
+            sb.append(escapeCsv(em.getLanguage())).append(",");
+            sb.append(em.getActive() != null ? em.getActive() : "").append(",");
+            sb.append(em.getCreatedAt() != null ? em.getCreatedAt() : "").append(",");
+            sb.append(em.getUpdatedAt() != null ? em.getUpdatedAt() : "").append("\n");
+        }
+        return sb.toString();
+    }
+
+    private String escapeCsv(String value) {
+        if (value == null) return "";
+        String escaped = value.replace("\"", "\"\"");
+        if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
+            return "\"" + escaped + "\"";
+        }
+        return escaped;
+    }
+
+    // === Excel Export ===
+    private byte[] convertToExcel(List<ErrorMapping> mappings) throws IOException {
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Error Mappings");
+
+            // Header row
+            Row header = sheet.createRow(0);
+            String[] headers = {
+                    "Route ID", "Route Path", "Source System", "Raw Error Substring",
+                    "Match Type", "Mapped Error Code", "Mapped Message", "Error Category",
+                    "HTTP Status", "Language", "Active", "Created At", "Updated At"
+            };
+
+            for (int i = 0; i < headers.length; i++) {
+                header.createCell(i).setCellValue(headers[i]);
+            }
+
+            // Data rows
+            int rowIdx = 1;
+            for (ErrorMapping em : mappings) {
+                Row row = sheet.createRow(rowIdx++);
+                row.createCell(0).setCellValue(em.getRouteId());
+                row.createCell(1).setCellValue(em.getRoutePath() != null ? em.getRoutePath() : "");
+                row.createCell(2).setCellValue(em.getSourceSystem() != null ? em.getSourceSystem().getName() : "");
+                row.createCell(3).setCellValue(em.getRawErrorSubstring() != null ? em.getRawErrorSubstring() : "");
+                row.createCell(4).setCellValue(em.getMatchType() != null ? em.getMatchType().name() : "");
+                row.createCell(5).setCellValue(em.getMappedErrorCode() != null ? em.getMappedErrorCode() : "");
+                row.createCell(6).setCellValue(em.getMappedMessage() != null ? em.getMappedMessage() : "");
+                row.createCell(7).setCellValue(em.getErrorCategory() != null ? em.getErrorCategory().getName() : "");
+                row.createCell(8).setCellValue(em.getHttpStatusCode() != null ? em.getHttpStatusCode() : 0);
+                row.createCell(9).setCellValue(em.getLanguage() != null ? em.getLanguage() : "");
+                row.createCell(10).setCellValue(em.getActive() != null ? em.getActive() : false);
+                row.createCell(11).setCellValue(em.getCreatedAt() != null ? em.getCreatedAt().toString() : "");
+                row.createCell(12).setCellValue(em.getUpdatedAt() != null ? em.getUpdatedAt().toString() : "");
+            }
+
+            // Auto-size columns
+            for (int i = 0; i < headers.length; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+                workbook.write(bos);
+                return bos.toByteArray();
+            }
+        }
     }
 }

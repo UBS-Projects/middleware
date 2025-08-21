@@ -2,13 +2,25 @@ package com.middleware.backend.service;
 
 import com.middleware.backend.dto.SourceSystemDto;
 import com.middleware.backend.mapper.SourceSystemMapper;
+import com.middleware.backend.model.ErrorCategory;
 import com.middleware.backend.model.SourceSystem;
 import com.middleware.backend.repository.SourceSystemRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,11 +31,7 @@ public class SourceSystemService {
     private final SourceSystemRepository sourceSystemRepository;
     private final SourceSystemMapper sourceSystemMapper;
 
-    public List<SourceSystemDto> getAllSourceSystems() {
-        return sourceSystemRepository.findAll().stream()
-                .map(sourceSystemMapper::toDto)
-                .collect(Collectors.toList());
-    }
+
 
     public List<SourceSystemDto> getActiveSourceSystems() {
         return sourceSystemRepository.findByActiveTrue().stream()
@@ -89,5 +97,83 @@ public class SourceSystemService {
         sourceSystem.setActive(!sourceSystem.getActive());
         SourceSystem savedSourceSystem = sourceSystemRepository.save(sourceSystem);
         return sourceSystemMapper.toDto(savedSourceSystem);
+    }
+
+    public Page<SourceSystem> getAllSourceSystems(Specification<SourceSystem> spec, Pageable pageable) {
+        return sourceSystemRepository.findAll(spec, pageable);
+    }
+
+    public byte[] exportFile(Specification<SourceSystem> spec, Pageable pageable, String type) throws IOException {
+        // Fetch filtered & paged data
+        Page<SourceSystem> page = sourceSystemRepository.findAll(spec, pageable);
+        List<SourceSystem> data = page.getContent();
+
+        if ("CSV".equalsIgnoreCase(type)) {
+            return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
+        } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
+            return convertToExcel(data);
+        } else {
+            throw new IllegalArgumentException("Unsupported export type: " + type);
+        }
+    }
+
+    // Convert List<SourceSystem> to CSV string
+    private String convertToCSV(List<SourceSystem> systems) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name,Description,Active,Created At,Updated At\n");
+
+        for (SourceSystem sys : systems) {
+            sb.append(escapeCsv(sys.getName())).append(",");
+            sb.append(escapeCsv(sys.getDescription())).append(",");
+            sb.append(sys.getActive()).append(",");
+            sb.append(sys.getCreatedAt()).append(",");
+            sb.append(sys.getUpdatedAt()).append("\n");
+        }
+        return sb.toString();
+    }
+
+    // CSV escaping helper
+    private String escapeCsv(String value) {
+        if (value == null) return "";
+        String escaped = value.replace("\"", "\"\"");
+        if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
+            return "\"" + escaped + "\"";
+        }
+        return escaped;
+    }
+
+    // Convert List<SourceSystem> to Excel bytes
+    private byte[] convertToExcel(List<SourceSystem> systems) throws IOException {
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Source Systems");
+
+            // Header row
+            Row header = sheet.createRow(0);
+            header.createCell(0).setCellValue("Name");
+            header.createCell(1).setCellValue("Description");
+            header.createCell(2).setCellValue("Active");
+            header.createCell(3).setCellValue("Created At");
+            header.createCell(4).setCellValue("Updated At");
+
+            int rowIdx = 1;
+            for (SourceSystem sys : systems) {
+                Row row = sheet.createRow(rowIdx++);
+                row.createCell(0).setCellValue(sys.getName());
+                row.createCell(1).setCellValue(sys.getDescription() != null ? sys.getDescription() : "");
+                row.createCell(2).setCellValue(sys.getActive() != null ? sys.getActive() : false);
+                row.createCell(3).setCellValue(sys.getCreatedAt() != null ? sys.getCreatedAt().toString() : "");
+                row.createCell(4).setCellValue(sys.getUpdatedAt() != null ? sys.getUpdatedAt().toString() : "");
+            }
+
+            // Autosize columns for better formatting
+            for (int i = 0; i <= 4; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+                workbook.write(bos);
+                return bos.toByteArray();
+            }
+        }
     }
 }

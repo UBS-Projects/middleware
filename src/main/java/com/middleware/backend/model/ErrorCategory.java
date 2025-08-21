@@ -1,3 +1,4 @@
+// ErrorCategory Model
 package com.middleware.backend.model;
 
 import jakarta.persistence.*;
@@ -26,6 +27,9 @@ public class ErrorCategory {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "active", nullable = false)
+    private Boolean active = true;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -36,6 +40,9 @@ public class ErrorCategory {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
+        if (active == null) {
+            active = true;
+        }
     }
 
     @PreUpdate

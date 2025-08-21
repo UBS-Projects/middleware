@@ -760,8 +760,8 @@ public class DynamicRouteService {
         }
     }
 
-    public Page<DynamicRouteAudit> getLatestRoutesLogs(Pageable pageable) {
-        return auditRepository.findAll(pageable);
+    public Page<?> getLatestRoutesLogs(Specification<DynamicRouteAudit> spec, Pageable pageable) {
+        return auditRepository.findAll(spec,pageable);
     }
 
     public Page<DynamicRouteAudit> getLatestRoutesLogsWithFilters(Long id, String routeId, Integer version,
