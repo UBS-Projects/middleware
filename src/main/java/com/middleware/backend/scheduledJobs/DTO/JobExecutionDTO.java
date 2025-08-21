@@ -25,4 +25,5 @@ public class JobExecutionDTO {
     private String errorMessage;
     private String action;
     private Timestamp createdAt;
+    private String userEmail;
 }

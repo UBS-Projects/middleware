@@ -75,11 +75,11 @@ VALUES ('ADMIN')
     ON CONFLICT (role_name) DO NOTHING;
 
 INSERT INTO public.users_roles (user_id, roles_id)
-VALUES (1, 1)
+VALUES (30, 6)
     ON CONFLICT DO NOTHING;
 
 INSERT INTO public.role_permissions (role_id, permission_id)
-SELECT 1, id
+SELECT 6, id
 FROM public.permissions
 WHERE id BETWEEN 1 AND 57
     ON CONFLICT DO NOTHING;

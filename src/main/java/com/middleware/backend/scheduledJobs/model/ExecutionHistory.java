@@ -39,4 +39,7 @@ public class ExecutionHistory {
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
+
+    @Column(name = "user_email")
+    private String userEmail;
 }

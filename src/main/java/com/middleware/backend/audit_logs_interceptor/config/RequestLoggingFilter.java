@@ -22,11 +22,12 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 @Component
 @AllArgsConstructor
 public class RequestLoggingFilter implements Filter {
     private final AuditLogRepository repo;
-    private static final String STATIC_USER = "test-user"; // hardcoded for now
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter
             .ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
             .withZone(ZoneId.systemDefault());
@@ -105,9 +106,13 @@ public class RequestLoggingFilter implements Filter {
         StringBuilder resHeaders = new StringBuilder();
         response.getHeaderNames().forEach(name ->
                 resHeaders.append(name).append(": ").append(response.getHeader(name)).append("\n"));
-
+        String userEmail = "anonymous"; // fallback
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() != null) {
+            userEmail = auth.getName(); // Usually the `sub` claim (email/username)
+        }
         AuditLog log = AuditLog.builder()
-                .userName(STATIC_USER)
+                .userName(userEmail)
                 .method(request.getMethod())
                 .apiPath(request.getRequestURI())
                 .queryString(request.getQueryString())

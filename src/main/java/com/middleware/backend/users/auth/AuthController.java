@@ -101,11 +101,6 @@ public class AuthController {
                 .flatMap(r -> r.getPermissions().stream()
                         .map(p -> p.getName()))
                 .toList();
-        System.out.println("--------------------------------------");
-        System.out.println(roles);
-        System.out.println("--------------------------------------");
-        System.out.println(pers);
-        System.out.println("--------------------------------------");
 
 
         String jwt = jwtUtil.generateToken(userDetails.getUsername(), roles, pers, expirationMillis);

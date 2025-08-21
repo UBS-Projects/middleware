@@ -9,10 +9,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ScheduledJobRepository extends JpaRepository<ScheduledJobs,Long> {
     List<ScheduledJobs> findByEnabledTrue();
-    ScheduledJobs findByApiEndpointAndMethodAndActiveTrue(String apiEndPoint, String method);
+    Optional<ScheduledJobs> findByJobNameAndActiveTrue(String name);
+    ScheduledJobs findByApiEndpointAndMethodAndHeadersAndPayloadAndActiveTrue(String apiEndPoint,String headers,String payload, String method);
     Page<ScheduledJobs> findAll(Specification<ScheduledJobs> spec, Pageable pageable);
 }
