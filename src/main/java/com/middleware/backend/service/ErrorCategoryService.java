@@ -1,11 +1,11 @@
 package com.middleware.backend.service;
 
-import com.middleware.backend.dto.ErrorCategoryDto;
-import com.middleware.backend.mapper.ErrorCategoryMapper;
-import com.middleware.backend.model.ErrorCategory;
-import com.middleware.backend.repository.ErrorCategoryRepository;
-import com.middleware.backend.scheduledJobs.model.ScheduledJobs;
-import lombok.RequiredArgsConstructor;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -16,13 +16,13 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
+import com.middleware.backend.dto.ErrorCategoryDto;
+import com.middleware.backend.mapper.ErrorCategoryMapper;
+import com.middleware.backend.model.ErrorCategory;
+import com.middleware.backend.repository.ErrorCategoryRepository;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.stream.Collectors;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -36,14 +36,11 @@ public class ErrorCategoryService {
     }
 
     public List<ErrorCategoryDto> getActiveCategories() {
-        return categoryRepository.findByActiveTrue().stream()
-                .map(categoryMapper::toDto)
-                .collect(Collectors.toList());
+        return categoryRepository.findByActiveTrue().stream().map(categoryMapper::toDto).collect(Collectors.toList());
     }
 
     public ErrorCategoryDto getCategoryById(Long id) {
-        return categoryRepository.findById(id)
-                .map(categoryMapper::toDto)
+        return categoryRepository.findById(id).map(categoryMapper::toDto)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
     }
 
@@ -63,8 +60,8 @@ public class ErrorCategoryService {
                 .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
 
         // Check if name is changing and if new name already exists
-        if (!existingCategory.getName().equalsIgnoreCase(dto.getName()) &&
-                categoryRepository.existsByNameIgnoreCase(dto.getName())) {
+        if (!existingCategory.getName().equalsIgnoreCase(dto.getName())
+                && categoryRepository.existsByNameIgnoreCase(dto.getName())) {
             throw new IllegalArgumentException("Category with name '" + dto.getName() + "' already exists.");
         }
 
@@ -84,7 +81,8 @@ public class ErrorCategoryService {
 
         long usageCount = categoryRepository.countErrorMappingsByCategoryId(id);
         if (usageCount > 0) {
-            throw new IllegalStateException("Cannot delete category with id " + id + " because it is used by " + usageCount + " error mapping(s).");
+            throw new IllegalStateException("Cannot delete category with id " + id + " because it is used by "
+                    + usageCount + " error mapping(s).");
         }
         categoryRepository.deleteById(id);
     }
@@ -133,7 +131,8 @@ public class ErrorCategoryService {
     }
 
     private String escapeCsv(String value) {
-        if (value == null) return "";
+        if (value == null)
+            return "";
         String escaped = value.replace("\"", "\"\"");
         if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
             return "\"" + escaped + "\"";

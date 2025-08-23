@@ -1,16 +1,16 @@
 package com.middleware.backend.audit_logs_interceptor.model;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class AuditResponse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
