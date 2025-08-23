@@ -84,3 +84,66 @@ public class MiddlewareApiCallLogService {
     }
 
 }
+
+
+/*
+@Transactional
+    public Long createTransactionSync(String routeId, Exchange exchange) {
+        log.debug("createTransactionSync... creating log for Route [{}] - Exchange content: {}", routeId,
+                exchange.getAllProperties());
+
+        String userEmail = "anonymous";
+
+        // Option 1: From Spring Security context (if Camel route runs in secured thread)
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("**************************************");
+        System.out.println(auth);
+        if (auth instanceof JwtAuthenticationToken jwtAuth) {
+            // Use "email" claim or "sub"
+            System.out.println("**************************************");
+            System.out.println(jwtAuth);
+            System.out.println("**************************************");
+            System.out.println(jwtAuth.getToken());
+            System.out.println();
+            System.out.println("**************************************");
+            userEmail = jwtAuth.getToken().getClaimAsString("email");
+            if (userEmail == null) {
+                userEmail = jwtAuth.getName(); // fallback to sub
+            }
+        }
+
+        // Option 2: Directly decode from Authorization header if above is empty
+        if ("anonymous".equals(userEmail)) {
+            String authHeader = exchange.getIn().getHeader("Authorization", String.class);
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                String token = authHeader.substring(7);
+                try {
+                    com.nimbusds.jwt.JWT jwt = com.nimbusds.jwt.JWTParser.parse(token);
+                    userEmail = jwt.getJWTClaimsSet().getStringClaim("email");
+                    if (userEmail == null) {
+                        userEmail = jwt.getJWTClaimsSet().getSubject();
+                    }
+                } catch (Exception e) {
+                    log.warn("Failed to parse JWT for user email", e);
+                }
+            }
+        }
+
+        MiddlewareApiCallLog logEntity = MiddlewareApiCallLog.builder()
+                .transactionId(UUID.randomUUID().toString())
+                .routeId(routeId)
+                .apiEndpoint(exchange.getFromEndpoint().getEndpointUri())
+                .requestMethod(exchange.getIn().getHeader(Exchange.HTTP_METHOD, String.class))
+                .requestHeaders(exchange.getIn().getHeaders().toString())
+                .requestBody(exchange.getIn().getBody(String.class))
+                .receivedAt(java.time.LocalDateTime.now())
+                .status("IN_PROGRESS")
+                .clientIp(userEmail) // 👈 add this field to your entity
+                .build();
+
+        MiddlewareApiCallLog saved = callLogRepository.save(logEntity);
+        return saved.getId();
+    }
+
+
+* */

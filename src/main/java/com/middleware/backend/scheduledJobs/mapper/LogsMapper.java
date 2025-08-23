@@ -16,6 +16,7 @@ public class LogsMapper {
                 .errorMessage(job.getErrorMessage())
                 .createdAt(job.getCreatedAt())
                 .action(job.getAction())
+                .userEmail(job.getUserEmail())
                 .build();
     }
 
@@ -32,6 +33,7 @@ public class LogsMapper {
                 .errorMessage(job.getErrorMessage())
                 .createdAt(job.getCreatedAt())
                 .action(job.getAction())
+                .userEmail(job.getUserEmail())
                 .build();
     }
 }

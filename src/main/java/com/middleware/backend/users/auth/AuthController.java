@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,41 +61,51 @@ public class AuthController {
         return new AuthResponse(jwt);
     }
 
-//    @PostMapping("/token")
-//    @Transactional  // optional but recommended to keep session open
-//    public AuthResponse generateToken(@RequestParam Long id,
-//                                      @RequestParam(required = false) Integer expirationDays,
-//                                      @RequestParam(required = false) String customExpirationDate) {
-//
-//        User user = userRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("User not found with id " + id));
-//
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
-//
-//    long expirationMillis;
-//        if (customExpirationDate != null && !customExpirationDate.isEmpty()) {
-//            // Parse customExpirationDate and calculate millis from now
-//            LocalDate customDate = LocalDate.parse(customExpirationDate); // yyyy-MM-dd format expected
-//            LocalDateTime customDateTime = customDate.atStartOfDay();
-//            ZonedDateTime zonedCustomDateTime = customDateTime.atZone(ZoneId.systemDefault());
-//            long customExpirationEpochMillis = zonedCustomDateTime.toInstant().toEpochMilli();
-//
-//            long nowMillis = System.currentTimeMillis();
-//            expirationMillis = customExpirationEpochMillis - nowMillis;
-//
-//            if (expirationMillis <= 0) {
-//                throw new IllegalArgumentException("Custom expiration date must be in the future");
-//            }
-//        } else if (expirationDays != null) {
-//            expirationMillis = expirationDays * 24L * 60 * 60 * 1000;
-//        } else {
-//            // Default expiration 1 day
-//            expirationMillis = 24L * 60 * 60 * 1000;
-//        }
-//        String jwt = jwtUtil.generateToken(userDetails.getUsername(), expirationMillis);
-//        return new AuthResponse(jwt);
-//        return null;
-//    }
+    @PostMapping("/token")
+    @Transactional  // optional but recommended to keep session open
+    public AuthResponse generateToken(@RequestParam Long id,
+                                      @RequestParam(required = false) Integer expirationDays,
+                                      @RequestParam(required = false) String customExpirationDate) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id " + id));
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
+
+    long expirationMillis;
+        if (customExpirationDate != null && !customExpirationDate.isEmpty()) {
+            // Parse customExpirationDate and calculate millis from now
+            LocalDate customDate = LocalDate.parse(customExpirationDate); // yyyy-MM-dd format expected
+            LocalDateTime customDateTime = customDate.atStartOfDay();
+            ZonedDateTime zonedCustomDateTime = customDateTime.atZone(ZoneId.systemDefault());
+            long customExpirationEpochMillis = zonedCustomDateTime.toInstant().toEpochMilli();
+
+            long nowMillis = System.currentTimeMillis();
+            expirationMillis = customExpirationEpochMillis - nowMillis;
+
+            if (expirationMillis <= 0) {
+                throw new IllegalArgumentException("Custom expiration date must be in the future");
+            }
+        } else if (expirationDays != null) {
+            expirationMillis = expirationDays * 24L * 60 * 60 * 1000;
+        } else {
+            // Default expiration 1 day
+            expirationMillis = 24L * 60 * 60 * 1000;
+        }
+
+        List<String> roles = user.getRoles().stream().map(
+                r -> r.getRoleName()
+        ).toList();
+
+        List<String> pers = user.getRoles().stream()
+                .flatMap(r -> r.getPermissions().stream()
+                        .map(p -> p.getName()))
+                .toList();
+
+
+        String jwt = jwtUtil.generateToken(userDetails.getUsername(), roles, pers, expirationMillis);
+        return new AuthResponse(jwt);
+    }
 
 //    @PostMapping("/register")
 //    public String register(@RequestBody RegisterRequest request) {

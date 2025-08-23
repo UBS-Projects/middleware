@@ -38,7 +38,7 @@ public class JobExecution implements Job {
         log.setStartTime(start);
 
         try {
-            ScheduledJobs scheduledJob = jobRepo.findByApiEndpointAndMethodAndActiveTrue(url,method);
+            ScheduledJobs scheduledJob = jobRepo.findByApiEndpointAndMethodAndHeadersAndPayloadAndActiveTrue(url,method,headers,payload);
             log.setJob(scheduledJob);
             log.setRequestHeaders(headers);
             log.setRequestBody(payload);

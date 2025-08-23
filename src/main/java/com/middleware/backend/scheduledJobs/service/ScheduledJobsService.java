@@ -40,7 +40,6 @@ public class ScheduledJobsService{
     private final ScheduledJobRepository repo;
     private Scheduler scheduler;
     private final RestTemplate restTemplate;
-    private final JobLogsService logsService;
 
 
     public void scheduleAllActiveJobs() {
@@ -71,250 +70,92 @@ public class ScheduledJobsService{
         }
     }
 
-    public ResponseEntity<?> createNewJob(JobRequest job) {
-        try {
-            ScheduledJobs exists = repo.findByApiEndpointAndMethodAndActiveTrue(
-                    job.getApiEndpoint(),
-                    job.getMethod()
-            );
-
-            if (exists != null) {
-                return ResponseEntity
-                        .badRequest()
-                        .body("A job with the same API endpoint and method already exists.");
-            }
-
-            job.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-            job.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-            job.setActive(true);
-
-            ScheduledJobs savedJob = repo.save(Mapper.mapToEntity(job));
-            job.setId(savedJob.getId());
-
-            // Schedule the job
-            scheduleJob(job);
-
-            // Log success
-            JobExecutionDTO log = JobExecutionDTO.builder()
-                    .scheduledJobName(savedJob.getJobName())
-                    .scheduledJobMethod(savedJob.getMethod())
-                    .scheduledJobPath(savedJob.getApiEndpoint())
-                    .status(Status.SUCCESS)
-                    .action("Create")
-                    .createdAt(new Timestamp(System.currentTimeMillis()))
-                    .build();
-            logsService.save(log);
-
-            return ResponseEntity.ok(savedJob);
-
-        } catch (Exception e) {
-            // Log failure
-            JobExecutionDTO log = JobExecutionDTO.builder()
-                    .scheduledJobName(job.getJobName())
-                    .scheduledJobMethod(job.getMethod())
-                    .scheduledJobPath(job.getApiEndpoint())
-                    .status(Status.FAILURE)
-                    .action("Create")
-                    .errorMessage(e.getMessage())
-                    .createdAt(new Timestamp(System.currentTimeMillis()))
-                    .build();
-            logsService.save(log);
-
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of(
-                            "status", "fail",
-                            "error", e.getMessage()
-                    ));
+    public ScheduledJobs createNewJob(JobRequest job) {
+        Optional<ScheduledJobs> sc = repo.findByJobNameAndActiveTrue(job.getJobName());
+        if(sc.isPresent()){
+            throw new RuntimeException("Job with same Name already exists.");
         }
+        ScheduledJobs exists = repo.findByApiEndpointAndMethodAndHeadersAndPayloadAndActiveTrue(
+                job.getApiEndpoint(),
+                job.getMethod(),
+                job.getHeaders(),
+                job.getPayload()
+        );
+        if (exists != null) {
+            throw new RuntimeException("Job with same API endpoint, method, Headers, and Payload already exists.");
+        }
+
+        job.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        job.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        job.setActive(true);
+
+        ScheduledJobs savedJob = repo.save(Mapper.mapToEntity(job));
+        job.setId(savedJob.getId());
+
+        scheduleJob(job);
+        return savedJob;
     }
 
-    public ResponseEntity<?> pauseJob(Long id) {
-        try {
-            Optional<ScheduledJobs> exists = repo.findById(id);
-
-            if (exists.isEmpty()) {
-                return ResponseEntity
-                        .badRequest()
-                        .body("Job was not found.");
-            }
-
-            ScheduledJobs job = exists.get();
-            job.setEnabled(false);
-            job.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-            repo.save(job);
-
-            scheduler.pauseJob(JobKey.jobKey(job.getJobName(), "http-jobs"));
-
-            // Log success
-            JobExecutionDTO log = JobExecutionDTO.builder()
-                    .scheduledJobName(job.getJobName())
-                    .scheduledJobMethod(job.getMethod())
-                    .scheduledJobPath(job.getApiEndpoint())
-                    .status(Status.SUCCESS)
-                    .action("pause")
-                    .createdAt(new Timestamp(System.currentTimeMillis()))
-                    .build();
-            logsService.save(log);
-
-            return ResponseEntity.ok("Job paused successfully.");
-        } catch (Exception e) {
-            // Log failure
-            JobExecutionDTO log = JobExecutionDTO.builder()
-                    .scheduledJobName(id != null ? String.valueOf(id) : "Unknown Job ID")
-                    .scheduledJobMethod(null)
-                    .scheduledJobPath(null)
-                    .status(Status.FAILURE)
-                    .action("pause")
-                    .errorMessage(e.getMessage())
-                    .createdAt(new Timestamp(System.currentTimeMillis()))
-                    .build();
-            logsService.save(log);
-
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of(
-                            "status", "fail",
-                            "error", e.getMessage()
-                    ));
-        }
+    public ScheduledJobs pauseJob(Long id) throws SchedulerException {
+        ScheduledJobs job = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Job not found"));
+        job.setEnabled(false);
+        job.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        repo.save(job);
+        scheduler.pauseJob(JobKey.jobKey(job.getJobName(), "http-jobs"));
+        return job;
     }
 
 
 
-    public ResponseEntity<?> resumeJob(Long id) {
-        try {
-            Optional<ScheduledJobs> exists = repo.findById(id);
+    public ScheduledJobs resumeJob(Long id) throws SchedulerException {
+        ScheduledJobs job = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Job not found"));
+        job.setEnabled(true);
+        job.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        repo.save(job);
 
-            if (exists.isEmpty()) {
-                return ResponseEntity
-                        .badRequest()
-                        .body("Job was not found.");
-            }
-
-            ScheduledJobs job = exists.get();
-            job.setEnabled(true);
-            job.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-            repo.save(job);
-
-            JobKey jobKey = JobKey.jobKey(job.getJobName(), "http-jobs");
-            TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName() + "-trigger", "http-triggers");
-
-            if (!scheduler.checkExists(jobKey)) {
-                scheduleJob(Mapper.mapToDTO(job));
-            } else {
-                scheduler.resumeJob(jobKey);
-            }
-
-            // Success log
-            JobExecutionDTO log = JobExecutionDTO.builder()
-                    .scheduledJobName(job.getJobName())
-                    .scheduledJobMethod(job.getMethod())
-                    .scheduledJobPath(job.getApiEndpoint())
-                    .status(Status.SUCCESS)
-                    .action("resume")
-                    .createdAt(new Timestamp(System.currentTimeMillis()))
-                    .build();
-            logsService.save(log);
-
-            return ResponseEntity.ok("Job resumed successfully.");
-        } catch (Exception e) {
-            // Failure log
-            JobExecutionDTO log = JobExecutionDTO.builder()
-                    .scheduledJobName(id != null ? String.valueOf(id) : "Unknown Job ID")
-                    .scheduledJobMethod(null)
-                    .scheduledJobPath(null)
-                    .status(Status.FAILURE)
-                    .action("resume")
-                    .errorMessage(e.getMessage())
-                    .createdAt(new Timestamp(System.currentTimeMillis()))
-                    .build();
-            logsService.save(log);
-
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of(
-                            "status", "fail",
-                            "error", e.getMessage()
-                    ));
+        JobKey jobKey = JobKey.jobKey(job.getJobName(), "http-jobs");
+        if (!scheduler.checkExists(jobKey)) {
+            scheduleJob(Mapper.mapToDTO(job));
+        } else {
+            scheduler.resumeJob(jobKey);
         }
+        return job;
     }
 
 
 
-    public ResponseEntity<?> editJob(JobRequest job) {
-        try {
-            Optional<ScheduledJobs> exists = repo.findById(job.getId());
+    public ScheduledJobs editJob(JobRequest job) throws SchedulerException {
+        ScheduledJobs existingJob = repo.findById(job.getId())
+                .orElseThrow(() -> new RuntimeException("Job not found"));
 
-            if (exists.isEmpty()) {
-                return ResponseEntity
-                        .badRequest()
-                        .body("Job was not found.");
-            }
+        JobKey jobKey = JobKey.jobKey(existingJob.getJobName(), "http-jobs");
+        TriggerKey triggerKey = TriggerKey.triggerKey(existingJob.getJobName() + "-trigger", "http-triggers");
 
-            ScheduledJobs existingJob = exists.get();
+        scheduler.pauseTrigger(triggerKey);
+        scheduler.unscheduleJob(triggerKey);
+        scheduler.deleteJob(jobKey);
 
-            // Unschedule the existing job
-            JobKey jobKey = JobKey.jobKey(existingJob.getJobName(), "http-jobs");
-            TriggerKey triggerKey = TriggerKey.triggerKey(existingJob.getJobName() + "-trigger", "http-triggers");
+        if (job.getJobName() != null) existingJob.setJobName(job.getJobName());
+        if (job.getDescription() != null) existingJob.setDescription(job.getDescription());
+        if (job.getScheduleExpression() != null) existingJob.setScheduleExpression(job.getScheduleExpression());
+        if (job.getApiEndpoint() != null) existingJob.setApiEndpoint(job.getApiEndpoint());
+        if (job.getMethod() != null) existingJob.setMethod(job.getMethod());
+        if (job.getHeaders() != null) existingJob.setHeaders(job.getHeaders());
+        if (job.getPayload() != null) existingJob.setPayload(job.getPayload());
+        if (job.getUpdatedBy() != null) existingJob.setUpdatedBy(job.getUpdatedBy());
 
-            scheduler.pauseTrigger(triggerKey);
-            scheduler.unscheduleJob(triggerKey);
-            scheduler.deleteJob(jobKey);
+        existingJob.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        existingJob.setEnabled(true);
 
-            // Update fields
-            if (job.getJobName() != null) existingJob.setJobName(job.getJobName());
-            if (job.getDescription() != null) existingJob.setDescription(job.getDescription());
-            if (job.getScheduleExpression() != null) existingJob.setScheduleExpression(job.getScheduleExpression());
-            if (job.getApiEndpoint() != null) existingJob.setApiEndpoint(job.getApiEndpoint());
-            if (job.getMethod() != null) existingJob.setMethod(job.getMethod());
-            if (job.getHeaders() != null) existingJob.setHeaders(job.getHeaders());
-            if (job.getPayload() != null) existingJob.setPayload(job.getPayload());
-            if (job.getUpdatedBy() != null) existingJob.setUpdatedBy(job.getUpdatedBy());
-            existingJob.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-            existingJob.setEnabled(true);
+        ScheduledJobs updatedJob = repo.save(existingJob);
 
-            // Save updated job to DB
-            ScheduledJobs updatedJob = repo.save(existingJob);
-
-            // Reschedule if enabled
-            if (updatedJob.isEnabled()) {
-                scheduleJob(Mapper.mapToDTO(existingJob));
-            }
-
-            // Success log
-            JobExecutionDTO log = JobExecutionDTO.builder()
-                    .scheduledJobName(existingJob.getJobName())
-                    .scheduledJobMethod(existingJob.getMethod())
-                    .scheduledJobPath(existingJob.getApiEndpoint())
-                    .status(Status.SUCCESS)
-                    .action("edit")
-                    .createdAt(new Timestamp(System.currentTimeMillis()))
-                    .build();
-            logsService.save(log);
-
-            return ResponseEntity.ok(updatedJob);
-
-        } catch (Exception e) {
-            // Failure log
-            JobExecutionDTO log = JobExecutionDTO.builder()
-                    .scheduledJobName(job.getJobName() != null ? job.getJobName() : "Unknown")
-                    .scheduledJobMethod(job.getMethod())
-                    .scheduledJobPath(job.getApiEndpoint())
-                    .status(Status.FAILURE)
-                    .action("edit")
-                    .errorMessage(e.getMessage())
-                    .createdAt(new Timestamp(System.currentTimeMillis()))
-                    .build();
-            logsService.save(log);
-
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of(
-                            "status", "fail",
-                            "error", e.getMessage()
-                    ));
+        if (updatedJob.isEnabled()) {
+            scheduleJob(Mapper.mapToDTO(existingJob));
         }
+
+        return updatedJob;
     }
 
 
@@ -324,110 +165,32 @@ public class ScheduledJobsService{
         return repo.findAll(spec.and(activeSpec), pageable);
     }
 
-    public ResponseEntity<?> deactivateJob(Long id) {
-        try {
-            Optional<ScheduledJobs> jobOpt = repo.findById(id);
-
-            if (jobOpt.isEmpty()) {
-                JobExecutionDTO failLog = JobExecutionDTO.builder()
-                        .scheduledJobName("Unknown")
-                        .status(Status.FAILURE)
-                        .action("deactivate")
-                        .errorMessage("Job not found")
-                        .createdAt(new Timestamp(System.currentTimeMillis()))
-                        .build();
-                logsService.save(failLog);
-
-                return ResponseEntity
-                        .badRequest()
-                        .body("Job was not found.");
-            }
-
-            ScheduledJobs job = jobOpt.get();
-            job.setActive(false);
-            repo.save(job);
-
-            // Pause job in scheduler
-            pauseJob(id);
-
-            JobExecutionDTO log = JobExecutionDTO.builder()
-                    .scheduledJobName(job.getJobName())
-                    .scheduledJobMethod(job.getMethod())
-                    .scheduledJobPath(job.getApiEndpoint())
-                    .status(Status.SUCCESS)
-                    .action("deactivate")
-                    .createdAt(new Timestamp(System.currentTimeMillis()))
-                    .build();
-            logsService.save(log);
-
-            return ResponseEntity.ok(Mapper.mapToDTO(job));
-
-        } catch (Exception e) {
-            JobExecutionDTO failLog = JobExecutionDTO.builder()
-                    .scheduledJobName("Unknown")
-                    .status(Status.FAILURE)
-                    .action("deactivate")
-                    .errorMessage(e.getMessage())
-                    .createdAt(new Timestamp(System.currentTimeMillis()))
-                    .build();
-            logsService.save(failLog);
-
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of(
-                            "status", "fail",
-                            "error", e.getMessage()
-                    ));
-        }
+    public ScheduledJobs deactivateJob(Long id) throws SchedulerException {
+        ScheduledJobs job = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Job not found"));
+        job.setActive(false);
+        repo.save(job);
+        pauseJob(id);
+        return job;
     }
 
 
-    public ResponseEntity<?> test(JobRequest job) {
-        try {
-            // Prepare headers
-            HttpHeaders headers = new HttpHeaders();
-            ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, String> headersMap = objectMapper.readValue(job.getHeaders(), new TypeReference<>() {});
-            headersMap.forEach(headers::add);
+    public boolean test(JobRequest job) throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, String> headersMap = objectMapper.readValue(job.getHeaders(), new TypeReference<>() {});
+        headersMap.forEach(headers::add);
 
-            // Prepare body
-            HttpEntity<String> entity = new HttpEntity<>(job.getPayload(), headers);
+        HttpEntity<String> entity = new HttpEntity<>(job.getPayload(), headers);
 
-            // Make request
-            ResponseEntity<String> response = restTemplate.exchange(
-                    job.getApiEndpoint(),
-                    HttpMethod.valueOf(job.getMethod().toUpperCase()),
-                    entity,
-                    String.class
-            );
+        ResponseEntity<String> response = restTemplate.exchange(
+                job.getApiEndpoint(),
+                HttpMethod.valueOf(job.getMethod().toUpperCase()),
+                entity,
+                String.class
+        );
 
-
-            JobExecutionDTO log = JobExecutionDTO.builder()
-                    .scheduledJobName(job.getJobName())
-                    .scheduledJobMethod(job.getMethod())
-                    .scheduledJobPath(job.getApiEndpoint())
-                    .status(Status.SUCCESS)
-                    .action("test")
-                    .createdAt(new Timestamp(System.currentTimeMillis()))
-                    .build();
-            logsService.save(log);
-
-            boolean success = response.getStatusCode().is2xxSuccessful();
-            return ResponseEntity.ok(Map.of("status", success ? "pass" : "fail"));
-
-        } catch (Exception e) {
-            JobExecutionDTO log = JobExecutionDTO.builder()
-                    .scheduledJobName(job.getJobName())
-                    .scheduledJobMethod(job.getMethod())
-                    .scheduledJobPath(job.getApiEndpoint())
-                    .status(Status.FAILURE)
-                    .action("test")
-                    .errorMessage(e.getMessage())
-                    .createdAt(new Timestamp(System.currentTimeMillis()))
-                    .build();
-            logsService.save(log);
-            return ResponseEntity.ok(Map.of("status", "fail"));
-        }
+        return response.getStatusCode().is2xxSuccessful();
     }
 
     public byte[] exportFile(Specification<ScheduledJobs> spec, Pageable pageable, String type) throws IOException {

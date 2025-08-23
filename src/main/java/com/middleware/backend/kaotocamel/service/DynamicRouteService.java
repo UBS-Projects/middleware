@@ -1,15 +1,13 @@
 package com.middleware.backend.kaotocamel.service;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.apache.camel.CamelContext;
@@ -20,10 +18,13 @@ import org.apache.camel.model.RouteDefinition;
 import org.apache.camel.spi.Resource;
 import org.apache.camel.spi.RoutesBuilderLoader;
 import org.apache.camel.support.ResourceSupport;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -79,13 +80,9 @@ public class DynamicRouteService {
         String description = metaData.get("description");
         String path = metaData.get("path");
         String method = metaData.get("method");
-        /*
-         * if (routeId == null) { throw new
-         * RuntimeException("Route ID not found in YAML"); }
-         */
 
         List<DynamicRouteEntity> versions = routeRepository.findByRouteIdOrderByVersionDesc(routeId);
-        log.info("found {} versions", versions);
+        log.info("found {} versions", versions.size());
         int newVersion = 0;
         if (versions.isEmpty() && "update".equals(operation)) {
             throw new RuntimeException("No versions found for this route");
@@ -96,6 +93,7 @@ public class DynamicRouteService {
         } else if (versions.isEmpty() && "create".equals(operation)) {
             newVersion = 1;
         }
+
         // Deactivate existing
         versions.forEach(v -> {
             v.setActive(false);
@@ -126,7 +124,6 @@ public class DynamicRouteService {
     }
 
     public RouteValidationResult validateRoute(String yamlContent) {
-
         String routeId = null;
 
         try {
@@ -151,14 +148,12 @@ public class DynamicRouteService {
     }
 
     public RouteTestResult testRoute(String yamlContent, String testMessage) {
-
         RouteValidationResult checkRouteMandatoryFields = checkRouteMandatoryFields(yamlContent);
         if (!checkRouteMandatoryFields.isValid()) {
             return new RouteTestResult(false, null, checkRouteMandatoryFields.getErrorMessage());
         }
 
         String modifiedYaml = null;
-
         String routeId = null;
         try {
             modifiedYaml = modifyYamlForTest(yamlContent);
@@ -171,36 +166,32 @@ public class DynamicRouteService {
             log.debug("\n\n Extracted metadata after modification: {}", metadata);
             log.debug("\n\n Modified YAML: {}", modifiedYaml);
             loadRoute(modifiedYaml);
-            // camelContext.start();
             camelContext.getRouteController().startRoute(routeId);
 
-            // camelContext.getRouteController().getRouteStatus(routeId);
-            camelContext.getRoutes().forEach(route -> log.debug("Registered routeId: {} Status: {} \n", route.getId(),
-                    camelContext.getRouteController().getRouteStatus(route.getId())));
-            log.debug(" current routeId: " + routeId);
-            // og.debug("\n\n Route status: {}",
-            // camelContext.getRouteController().getRouteStatus(routeId));
-            if ("rest".equals(uri)) {
-                String response = testRestRoute(path, method, testMessage != null ? testMessage : "Test Message", null);
+            // HTTP-like schemes
+            if ("rest".equals(uri) || "servlet".equals(uri) || "platform-http".equals(uri)) {
+                String effectivePath = path;
+                if ("servlet".equals(uri)) {
+                    final String camelServletPrefix = "/camel";
+                    if (!effectivePath.startsWith("/")) {
+                        effectivePath = "/" + effectivePath;
+                    }
+                    effectivePath = camelServletPrefix + effectivePath;
+                }
+                String response = testRestRoute(effectivePath, method, testMessage != null ? testMessage : "Test Message", null);
                 return new RouteTestResult(true, response, null);
             } else {
+                // non-HTTP (direct/seda)
                 Optional<String> inputUri = detectInputUriByRouteId(routeId);
-                if (inputUri.isEmpty()) { // no need
-                    return new RouteTestResult(false, null,
-                            "No suitable input endpoint found (e.g. direct:*, seda:*, rest:*)");
+                if (inputUri.isEmpty()) {
+                    return new RouteTestResult(false, null, "No suitable input endpoint found (e.g. direct:*, seda:*, rest:*).");
                 }
-
-                uri = inputUri.get();
-                // log.debug("getEndpointRegistry {}\n getRuntimeEndpointRegistry {}\n
-                // getRestConfiguration {}\n",
-                // camelContext.getEndpointRegistry().toString(),
-                // camelContext.getRuntimeEndpointRegistry(),
-                // camelContext.getRestConfiguration());
-
-                log.debug("\n\nExtracted Uri method detectInputUriByRouteId  {}", uri);
-                String response = camelContext.createProducerTemplate().requestBody(uri,
-                        testMessage != null ? testMessage : "Test Message", String.class);
-
+                String inUri = inputUri.get();
+                String response = camelContext.createProducerTemplate().requestBody(
+                        inUri,
+                        testMessage != null ? testMessage : "Test Message",
+                        String.class
+                );
                 return new RouteTestResult(true, response, null);
             }
 
@@ -217,8 +208,6 @@ public class DynamicRouteService {
             log.error("Failed to start test route: {}", e.getMessage(), e);
             return new RouteTestResult(false, null, e.getMessage());
         } finally {
-            // log.debug("\n\n Route status from final : {}",
-            // camelContext.getRouteController().getRouteStatus(routeId));
             if (routeId != null) {
                 tryStopAndRemoveRoute(routeId);
             }
@@ -231,8 +220,8 @@ public class DynamicRouteService {
 
         HttpMethod httpMethod = HttpMethod.valueOf(methodStr.toUpperCase());
         String baseUrl = restTemplateConfig.getBaseUrl();
-        // Construct the full URI
-// Replace path variables (e.g. {id}) with dummy test values
+
+        // Replace path variables (e.g. {id}) with dummy test values
         String resolvedPath = path.replaceAll("\\{[^/]+\\}", "123");
         String uri = baseUrl + resolvedPath;
 
@@ -243,7 +232,7 @@ public class DynamicRouteService {
         if (additionalHeaders != null) {
             additionalHeaders.forEach(headers::set);
         }
-        Object bodyObj = (Object) payload;
+
         HttpEntity<String> entity = new HttpEntity<>(payload, headers);
         try {
             ResponseEntity<String> response = restTemplate.exchange(uri, httpMethod, entity, String.class);
@@ -251,8 +240,6 @@ public class DynamicRouteService {
         } catch (CamelExecutionException e) {
             throw e;
         }
-
-        // return response.getBody();
     }
 
     private RouteValidationResult checkRouteMandatoryFields(String yamlContent) {
@@ -267,7 +254,6 @@ public class DynamicRouteService {
             return new RouteValidationResult(false, "Missing route description in YAML.");
         } else
             return new RouteValidationResult(true, null);
-
     }
 
     private void loadRoute(String yamlContent, String routeId) {
@@ -310,9 +296,7 @@ public class DynamicRouteService {
                             Map<String, Object> from = (Map<String, Object>) fromObj;
                             String uri = (String) from.get("uri");
                             if ("rest:".equalsIgnoreCase(uri)) {
-                                // from.put("uri", "direct:testRoute");
                                 from.put("uri", from.get("uri") + "!" + UUID.randomUUID());
-                                // from.remove("parameters");
                             } else if ("rest".equalsIgnoreCase(uri)) {
                                 Object parmsObj = from.get("parameters");
                                 if (parmsObj instanceof Map) {
@@ -320,7 +304,6 @@ public class DynamicRouteService {
                                     String path = (String) params.get("path");
                                     params.put("path", path + "!" + UUID.randomUUID());
                                 }
-
                             }
                         }
                     }
@@ -346,8 +329,8 @@ public class DynamicRouteService {
             Model model = (Model) camelContext;
             List<RouteDefinition> routeDefinitions = model.getRouteDefinitions();
 
-            return routeDefinitions.stream().filter(r -> r.getInput() != null && r.getInput().getUri() != null)// &&
-                    // id.equals(r.getInput().getId())
+            return routeDefinitions.stream()
+                    .filter(r -> r.getInput() != null && r.getInput().getUri() != null)
                     .map(r -> r.getInput().getUri())
                     .filter(uri -> uri.startsWith("direct:") || uri.startsWith("seda:") || uri.startsWith("rest:"))
                     .findFirst();
@@ -373,18 +356,6 @@ public class DynamicRouteService {
         return Optional.empty();
     }
 
-    /*
-     * public String rewriteRouteIdForTesting(String yamlContent, String newRouteId)
-     * { StringBuilder result = new StringBuilder(); boolean insideRoute = false;
-     *
-     * for (String line : yamlContent.lines().toList()) { if
-     * (line.trim().startsWith("- route:")) { insideRoute = true; } else if
-     * (insideRoute && line.trim().startsWith("id:")) { // Replace the original
-     * route id with newRouteId int indent = line.indexOf("id:"); String newLine =
-     * " ".repeat(indent) + "id: " + newRouteId;
-     * result.append(newLine).append("\n"); continue; }
-     * result.append(line).append("\n"); } return result.toString(); }
-     */
     private void tryStopAndRemoveRoute(String routeId) {
         try {
             if (camelContext.getRouteController().getRouteStatus(routeId) != null) {
@@ -498,21 +469,17 @@ public class DynamicRouteService {
      */
     @Transactional
     public String startRoute(String routeId) {
-        // List<DynamicRouteEntity> versions =
-        // routeRepository.findByRouteIdOrderByVersionDesc(routeId);
         DynamicRouteEntity defaultVersion = routeRepository.findByRouteIdAndDefaultVersionTrue(routeId);
 
-        if ("null".equals(defaultVersion)) {
+        if (defaultVersion == null) {
             return "No default route found with ID: " + routeId;
         }
 
-        // DynamicRouteEntity latest = versions.get(0);
         try {
             loadRoute(defaultVersion.getYamlContent());
             camelContext.getRouteController().startRoute(routeId);
 
             defaultVersion.setActive(true);
-            // latest.setDefaultVersion(true);
             routeRepository.save(defaultVersion);
 
             log.info("Started route {}", routeId);
@@ -525,7 +492,7 @@ public class DynamicRouteService {
     }
 
     /**
-     * Lists all route
+     * Lists all routes
      */
     public Page<DynamicRouteEntity> getAllRoutes(Pageable pageable) {
         log.info("Fetching all routes with pagination: page={}, size={}", pageable.getPageNumber(),
@@ -556,61 +523,205 @@ public class DynamicRouteService {
     public List<DynamicRouteEntity> listVersions(String routeId) {
         return routeRepository.findByRouteIdOrderByVersionDesc(routeId);
     }
-
     public Page<DynamicRouteEntity> getLatestRoutesOptimized(Pageable pageable) {
         List<DynamicRouteEntity> allRoutes = routeRepository.findAllOrderByCreatedAtDesc();
 
         Map<String, DynamicRouteEntity> latestRoutes = allRoutes.stream().collect(Collectors
                 .groupingBy(DynamicRouteEntity::getRouteId, Collectors.reducing(null, this::selectLatestRoute)));
 
-        List<DynamicRouteEntity> routesList = latestRoutes.values().stream().filter(route -> route != null)
-                .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt())).collect(Collectors.toList());
+        List<DynamicRouteEntity> routesList = latestRoutes.values().stream()
+                .filter(route -> route != null)
+                .collect(Collectors.toList());
+
+        // Apply sorting manually since we're working with a list
+        if (pageable.getSort().isSorted()) {
+            Sort.Order order = pageable.getSort().iterator().next();
+            String property = order.getProperty();
+            boolean ascending = order.getDirection().isAscending();
+
+            Comparator<DynamicRouteEntity> comparator = getComparator(property, ascending);
+            routesList.sort(comparator);
+        } else {
+            // Default sort by createdAt descending
+            routesList.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
+        }
 
         return applyPagination(routesList, pageable);
+    }
+    private boolean applyAllFilters(DynamicRouteEntity route, String routeId, String description, String path,
+                                    String httpMethod, Boolean active, String comment, String yamlContains,
+                                    LocalDateTime createdAfter, LocalDateTime createdBefore) {
+
+        // Apply active filter - THIS IS THE KEY FIX
+        // If searching for inactive routes, only show routes where the LATEST version is inactive
+        if (active != null && route.isActive() != active) {
+            return false;
+        }
+
+        // Apply routeId filter
+        if (routeId != null && !routeId.trim().isEmpty()) {
+            if (!route.getRouteId().toLowerCase().contains(routeId.toLowerCase().trim())) {
+                return false;
+            }
+        }
+
+        // Apply description filter
+        if (description != null && !description.trim().isEmpty()) {
+            if (route.getDescription() == null ||
+                    !route.getDescription().toLowerCase().contains(description.toLowerCase().trim())) {
+                return false;
+            }
+        }
+
+        // Apply path filter
+        if (path != null && !path.trim().isEmpty()) {
+            if (route.getPath() == null ||
+                    !route.getPath().toLowerCase().contains(path.toLowerCase().trim())) {
+                return false;
+            }
+        }
+
+        // Apply httpMethod filter
+        if (httpMethod != null && !httpMethod.trim().isEmpty()) {
+            if (route.getHttpMethod() == null ||
+                    !route.getHttpMethod().toLowerCase().contains(httpMethod.toLowerCase().trim())) {
+                return false;
+            }
+        }
+
+        // Apply comment filter
+        if (comment != null && !comment.trim().isEmpty()) {
+            if (route.getComment() == null ||
+                    !route.getComment().toLowerCase().contains(comment.toLowerCase().trim())) {
+                return false;
+            }
+        }
+
+        // Apply yamlContains filter
+        if (yamlContains != null && !yamlContains.trim().isEmpty()) {
+            if (route.getYamlContent() == null ||
+                    !route.getYamlContent().toLowerCase().contains(yamlContains.toLowerCase().trim())) {
+                return false;
+            }
+        }
+
+        // Apply date filters
+        if (createdAfter != null && route.getCreatedAt().isBefore(createdAfter)) {
+            return false;
+        }
+
+        if (createdBefore != null && route.getCreatedAt().isAfter(createdBefore)) {
+            return false;
+        }
+
+        return true;
     }
 
     public Page<DynamicRouteEntity> getLatestRoutesWithFiltersOptimized(String routeId, String description, String path,
                                                                         String httpMethod, Boolean active, String comment, String yamlContains, LocalDateTime createdAfter,
                                                                         LocalDateTime createdBefore, Pageable pageable) {
 
-        Specification<DynamicRouteEntity> spec = buildSpecification(routeId, description, path, httpMethod, active,
-                comment, yamlContains, createdAfter, createdBefore);
-
-        List<DynamicRouteEntity> filteredRoutes = routeRepository.findAll(spec);
-
-        Map<String, DynamicRouteEntity> latestRoutes = filteredRoutes.stream().collect(Collectors
+        // Step 1: Get all routes and find the latest version of each routeId
+        List<DynamicRouteEntity> allRoutes = routeRepository.findAllOrderByCreatedAtDesc();
+        Map<String, DynamicRouteEntity> latestRoutesMap = allRoutes.stream().collect(Collectors
                 .groupingBy(DynamicRouteEntity::getRouteId, Collectors.reducing(null, this::selectLatestRoute)));
 
-        List<DynamicRouteEntity> routesList = latestRoutes.values().stream().filter(route -> route != null)
-                .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt())).collect(Collectors.toList());
+        // Step 2: Convert to list and apply all filters
+        List<DynamicRouteEntity> filteredRoutes = latestRoutesMap.values().stream()
+                .filter(route -> route != null)
+                .filter(route -> applyAllFilters(route, routeId, description, path, httpMethod, active,
+                        comment, yamlContains, createdAfter, createdBefore))
+                .collect(Collectors.toList());
 
-        return applyPagination(routesList, pageable);
+        // Step 3: Apply sorting
+        if (pageable.getSort().isSorted()) {
+            Sort.Order order = pageable.getSort().iterator().next();
+            String property = order.getProperty();
+            boolean ascending = order.getDirection().isAscending();
+
+            Comparator<DynamicRouteEntity> comparator = getComparator(property, ascending);
+            filteredRoutes.sort(comparator);
+        } else {
+            // Default sort by createdAt descending
+            filteredRoutes.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
+        }
+
+        return applyPagination(filteredRoutes, pageable);
     }
 
+    /**
+     * Selects the latest/most appropriate route from two routes with the same routeId
+     */
     private DynamicRouteEntity selectLatestRoute(DynamicRouteEntity a, DynamicRouteEntity b) {
-        if (a == null)
-            return b;
-        if (b == null)
-            return a;
+        if (a == null) return b;
+        if (b == null) return a;
 
-        if (b.isActive() && !a.isActive())
-            return b;
-        if (a.isActive() && !b.isActive())
-            return a;
+        // Priority 1: Default version has highest priority (this is the "current" version)
+        if (b.isDefaultVersion() && !a.isDefaultVersion()) return b;
+        if (a.isDefaultVersion() && !b.isDefaultVersion()) return a;
 
-        if (b.isDefaultVersion() && !a.isDefaultVersion())
-            return b;
-        if (a.isDefaultVersion() && !b.isDefaultVersion())
-            return a;
+        // Priority 2: Active routes have priority over inactive ones (among non-default versions)
+        if (b.isActive() && !a.isActive()) return b;
+        if (a.isActive() && !b.isActive()) return a;
 
-        if (b.getVersion() > a.getVersion())
-            return b;
-        if (a.getVersion() > b.getVersion())
-            return a;
+        // Priority 3: Higher version number
+        if (b.getVersion() > a.getVersion()) return b;
+        if (a.getVersion() > b.getVersion()) return a;
 
+        // Priority 4: More recent creation date
         return b.getCreatedAt().isAfter(a.getCreatedAt()) ? b : a;
     }
+    /**
+     * Creates a comparator for sorting routes by different properties
+     */
+    private Comparator<DynamicRouteEntity> getComparator(String property, boolean ascending) {
+        Comparator<DynamicRouteEntity> comparator;
 
+        switch (property) {
+            case "routeId":
+                comparator = Comparator.comparing(DynamicRouteEntity::getRouteId,
+                        Comparator.nullsLast(String::compareToIgnoreCase));
+                break;
+            case "version":
+                comparator = Comparator.comparing(DynamicRouteEntity::getVersion,
+                        Comparator.nullsLast(Integer::compareTo));
+                break;
+            case "active":
+                comparator = Comparator.comparing(DynamicRouteEntity::isActive,
+                        Comparator.nullsLast(Boolean::compareTo));
+                break;
+            case "comment":
+                comparator = Comparator.comparing(DynamicRouteEntity::getComment,
+                        Comparator.nullsLast(String::compareToIgnoreCase));
+                break;
+            case "createdAt":
+                comparator = Comparator.comparing(DynamicRouteEntity::getCreatedAt,
+                        Comparator.nullsLast(LocalDateTime::compareTo));
+                break;
+            case "description":
+                comparator = Comparator.comparing(DynamicRouteEntity::getDescription,
+                        Comparator.nullsLast(String::compareToIgnoreCase));
+                break;
+            case "path":
+                comparator = Comparator.comparing(DynamicRouteEntity::getPath,
+                        Comparator.nullsLast(String::compareToIgnoreCase));
+                break;
+            case "httpMethod":
+                comparator = Comparator.comparing(DynamicRouteEntity::getHttpMethod,
+                        Comparator.nullsLast(String::compareToIgnoreCase));
+                break;
+            default:
+                comparator = Comparator.comparing(DynamicRouteEntity::getCreatedAt,
+                        Comparator.nullsLast(LocalDateTime::compareTo));
+                break;
+        }
+
+        return ascending ? comparator : comparator.reversed();
+    }
+
+    /**
+     * Applies pagination to a list of routes
+     */
     private Page<DynamicRouteEntity> applyPagination(List<DynamicRouteEntity> routes, Pageable pageable) {
         int start = (int) pageable.getOffset();
         int end = Math.min(start + pageable.getPageSize(), routes.size());
@@ -621,6 +732,9 @@ public class DynamicRouteService {
         return new PageImpl<>(paginatedList, pageable, routes.size());
     }
 
+    /**
+     * Builds JPA Specification for filtering routes
+     */
     private Specification<DynamicRouteEntity> buildSpecification(String routeId, String description, String path,
                                                                  String httpMethod, Boolean active, String comment, String yamlContains, LocalDateTime createdAfter,
                                                                  LocalDateTime createdBefore) {
@@ -657,37 +771,38 @@ public class DynamicRouteService {
             }
 
             for (Object item : parsed) {
-                if (!(item instanceof Map)) {
-                    continue;
-                }
+                if (!(item instanceof Map)) continue;
 
                 Map<String, Object> routeWrapper = (Map<String, Object>) item;
                 Object routeObj = routeWrapper.get("route");
-
-                if (!(routeObj instanceof Map)) {
-                    continue;
-                }
+                if (!(routeObj instanceof Map)) continue;
 
                 Map<String, Object> route = (Map<String, Object>) routeObj;
 
-                // Route ID and description
+                // id & description
                 if (route.containsKey("id")) {
                     metadata.put("id", route.get("id").toString().trim());
                 } else {
                     log.error("Route 'id' is missing.");
                 }
-
                 if (route.containsKey("description")) {
                     metadata.put("description", route.get("description").toString().trim());
                 }
 
-                // Extract from `from` section
+                // from
                 Object fromObj = route.get("from");
                 if (fromObj instanceof Map) {
                     Map<String, Object> from = (Map<String, Object>) fromObj;
+                    String uri = from.get("uri") != null ? from.get("uri").toString().trim() : null;
 
-                    String uri = from.get("uri") != null ? from.get("uri").toString() : null;
+                    Map<String, Object> params = null;
+                    Object paramsObj = from.get("parameters");
+                    if (paramsObj instanceof Map) {
+                        params = (Map<String, Object>) paramsObj;
+                    }
+
                     if (uri != null) {
+                        // rest:METHOD:PATH
                         if (uri.startsWith("rest:")) {
                             String[] parts = uri.split(":", 3);
                             if (parts.length == 3) {
@@ -695,20 +810,42 @@ public class DynamicRouteService {
                                 metadata.put("path", parts[2].trim());
                                 metadata.put("uri", "rest");
                             } else {
-                                log.error("Invalid rest: URI format looking into parameters: " + uri);
+                                log.error("Invalid rest: URI format: " + uri);
                             }
-                        } else if (uri.equalsIgnoreCase("rest")) {
-                            // Handle Kaoto YAML style: method and path in parameters
-                            Object paramsObj = from.get("parameters");
-                            if (paramsObj instanceof Map) {
-                                Map<String, Object> params = (Map<String, Object>) paramsObj;
+                        }
+                        // Kaoto rest مع parameters
+                        else if (uri.equalsIgnoreCase("rest")) {
+                            if (params != null) {
                                 metadata.put("method", String.valueOf(params.getOrDefault("method", "")).trim());
                                 metadata.put("path", String.valueOf(params.getOrDefault("path", "")).trim());
                                 metadata.put("uri", "rest");
+                            } else {
+                                log.error("Missing parameters for rest uri.");
                             }
-                        } else if (uri.startsWith("direct:") || uri.startsWith("seda:")) {
-                            metadata.put("uri", uri.trim());
-                        } else {
+                        }
+                        // servlet:/path
+                        else if (uri.startsWith("servlet:/")) {
+                            String path = uri.substring("servlet:".length());
+                            metadata.put("path", path.trim());
+                            String method = params != null ? String.valueOf(params.getOrDefault("httpMethodRestrict", "")).trim() : "";
+                            if (method.contains(",")) method = method.split(",", 2)[0].trim();
+                            metadata.put("method", method.isEmpty() ? "POST" : method);
+                            metadata.put("uri", "servlet");
+                        }
+                        // platform-http:/path
+                        else if (uri.startsWith("platform-http:/")) {
+                            String path = uri.substring("platform-http:".length());
+                            metadata.put("path", path.trim());
+                            String method = params != null ? String.valueOf(params.getOrDefault("httpMethodRestrict", "")).trim() : "";
+                            if (method.contains(",")) method = method.split(",", 2)[0].trim();
+                            metadata.put("method", method.isEmpty() ? "POST" : method);
+                            metadata.put("uri", "platform-http");
+                        }
+                        // direct/seda: فقط خزّن الـ uri (لا يوجد path/method)
+                        else if (uri.startsWith("direct:") || uri.startsWith("seda:")) {
+                            metadata.put("uri", uri);
+                        }
+                        else {
                             log.error("Unrecognized 'uri' scheme: " + uri);
                         }
                     } else {
@@ -716,11 +853,9 @@ public class DynamicRouteService {
                     }
                 }
             }
-
         } catch (Exception e) {
             throw new RuntimeException("Failed to extract route metadata from YAML", e);
         }
-
         return metadata;
     }
 
@@ -761,12 +896,142 @@ public class DynamicRouteService {
     }
 
     public Page<?> getLatestRoutesLogs(Specification<DynamicRouteAudit> spec, Pageable pageable) {
-        return auditRepository.findAll(spec,pageable);
+        return auditRepository.findAll(spec, pageable);
     }
 
     public Page<DynamicRouteAudit> getLatestRoutesLogsWithFilters(Long id, String routeId, Integer version,
                                                                   String action, String details, LocalDateTime timestamp, Pageable pageable) {
-
         return auditRepository.findByFilters(id, routeId, version, action, details, timestamp, pageable);
+    }
+    public byte[] exportToExcel(List<DynamicRouteEntity> routes) throws IOException {
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Routes");
+
+            // Create header style
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerFont.setColor(IndexedColors.WHITE.getIndex());
+            headerStyle.setFont(headerFont);
+            headerStyle.setFillForegroundColor(IndexedColors.DARK_BLUE.getIndex());
+            headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            headerStyle.setBorderBottom(BorderStyle.THIN);
+            headerStyle.setBorderTop(BorderStyle.THIN);
+            headerStyle.setBorderRight(BorderStyle.THIN);
+            headerStyle.setBorderLeft(BorderStyle.THIN);
+
+            // Create data style
+            CellStyle dataStyle = workbook.createCellStyle();
+            dataStyle.setBorderBottom(BorderStyle.THIN);
+            dataStyle.setBorderTop(BorderStyle.THIN);
+            dataStyle.setBorderRight(BorderStyle.THIN);
+            dataStyle.setBorderLeft(BorderStyle.THIN);
+
+            // Create header row
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {"Route ID", "Version", "Status", "Description", "Path", "HTTP Method", "Comment", "Created At"};
+
+            for (int i = 0; i < headers.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+                cell.setCellStyle(headerStyle);
+            }
+
+            // Create data rows
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            int rowIndex = 1;
+
+            for (DynamicRouteEntity route : routes) {
+                Row row = sheet.createRow(rowIndex++);
+
+                Cell cell0 = row.createCell(0);
+                cell0.setCellValue(route.getRouteId() != null ? route.getRouteId() : "");
+                cell0.setCellStyle(dataStyle);
+
+                Cell cell1 = row.createCell(1);
+                cell1.setCellValue(route.getVersion());
+                cell1.setCellStyle(dataStyle);
+
+                Cell cell2 = row.createCell(2);
+                cell2.setCellValue(route.isActive() ? "ACTIVE" : "INACTIVE");
+                cell2.setCellStyle(dataStyle);
+
+                Cell cell3 = row.createCell(3);
+                cell3.setCellValue(route.getDescription() != null ? route.getDescription() : "");
+                cell3.setCellStyle(dataStyle);
+
+                Cell cell4 = row.createCell(4);
+                cell4.setCellValue(route.getPath() != null ? route.getPath() : "");
+                cell4.setCellStyle(dataStyle);
+
+                Cell cell5 = row.createCell(5);
+                cell5.setCellValue(route.getHttpMethod() != null ? route.getHttpMethod() : "");
+                cell5.setCellStyle(dataStyle);
+
+                Cell cell6 = row.createCell(6);
+                cell6.setCellValue(route.getComment() != null ? route.getComment() : "");
+                cell6.setCellStyle(dataStyle);
+
+                Cell cell7 = row.createCell(7);
+                cell7.setCellValue(route.getCreatedAt() != null ? route.getCreatedAt().format(formatter) : "");
+                cell7.setCellStyle(dataStyle);
+            }
+
+            // Auto-size columns
+            for (int i = 0; i < headers.length; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            // Write to byte array
+            try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+                workbook.write(outputStream);
+                return outputStream.toByteArray();
+            }
+        }
+    }
+
+    /**
+     * Export routes to CSV format
+     */
+    public byte[] exportToCSV(List<DynamicRouteEntity> routes) throws IOException {
+        StringBuilder csvBuilder = new StringBuilder();
+
+        // Add header
+        csvBuilder.append("Route ID,Version,Status,Description,Path,HTTP Method,Comment,Created At\n");
+
+        // Add data rows
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        for (DynamicRouteEntity route : routes) {
+            csvBuilder.append(escapeCsvValue(route.getRouteId())).append(",");
+            csvBuilder.append(route.getVersion()).append(",");
+            csvBuilder.append(route.isActive() ? "ACTIVE" : "INACTIVE").append(",");
+            csvBuilder.append(escapeCsvValue(route.getDescription())).append(",");
+            csvBuilder.append(escapeCsvValue(route.getPath())).append(",");
+            csvBuilder.append(escapeCsvValue(route.getHttpMethod())).append(",");
+            csvBuilder.append(escapeCsvValue(route.getComment())).append(",");
+            csvBuilder.append(route.getCreatedAt() != null ? route.getCreatedAt().format(formatter) : "");
+            csvBuilder.append("\n");
+        }
+
+        return csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Helper method to escape CSV values
+     */
+    private String escapeCsvValue(String value) {
+        if (value == null) {
+            return "";
+        }
+
+        // If the value contains comma, quote, or newline, wrap it in quotes
+        if (value.contains(",") || value.contains("\"") || value.contains("\n") || value.contains("\r")) {
+            // Escape quotes by doubling them
+            value = value.replace("\"", "\"\"");
+            return "\"" + value + "\"";
+        }
+
+        return value;
     }
 }

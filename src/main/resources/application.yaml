@@ -29,6 +29,7 @@ spring:
           spring.quartz.jdbc.initialize-schema: always
 #          spring.quartz.properties.org.quartz.jobStore.isClustered: false
 #          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
+
 # JWT SECRET
 jwt:
   secret: 1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p
@@ -49,6 +50,8 @@ logging:
     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
 
 camel:
+  main:
+    scripting: true
   rest:
     component: servlet     # or netty-http, undertow, http, etc. depending on your setup
     host: localhost
@@ -57,4 +60,12 @@ camel:
   servlet:
     mapping:
       context-path: /camel/*
+
+# DHIS2 Configuration
+dhis2:
+  base-url: https://play.im.dhis2.org/stable-2-41-5
+  username: admin
+  password: district
+  timeout: 30000
+  connect-timeout: 10000
 
