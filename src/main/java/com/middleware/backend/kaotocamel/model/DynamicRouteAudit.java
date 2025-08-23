@@ -24,4 +24,6 @@ public class DynamicRouteAudit {
     private String details; // Additional info (optional)
 
     private LocalDateTime timestamp;
+    private String userEmail;
+    String Status;
 }

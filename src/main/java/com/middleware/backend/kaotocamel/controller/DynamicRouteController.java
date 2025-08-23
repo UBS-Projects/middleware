@@ -454,4 +454,18 @@ public class DynamicRouteController {
     }
 
 
+
+    @GetMapping("/audits/{id}")
+    @PreAuthorize("hasAnyAuthority('dynamicRoutesLogs:view')")
+    public ResponseEntity<?> getRouteAudits(
+        @PathVariable Long id
+    ) {
+        try {
+            return ResponseEntity.ok().body(routeService.findById(id));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+
 }

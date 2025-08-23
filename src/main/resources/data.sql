@@ -1,16 +1,16 @@
 INSERT INTO public.permissions (id, name) VALUES
                                               (1, 'auditLogs:view'),
                                               (2, 'auditLogs:export'),
-                                              (3, 'apiEndpoints:view'),
-                                              (4, 'apiEndpoints:create'),
-                                              (5, 'apiEndpoints:edit'),
-                                              (6, 'apiEndpoints:delete'),
-                                              (7, 'apiEndpoints:export'),
-                                              (8, 'destinationApis:view'),
-                                              (9, 'destinationApis:create'),
-                                              (10, 'destinationApis:edit'),
-                                              (11, 'destinationApis:delete'),
-                                              (12, 'destinationApis:export'),
+                                              (3, 'apiEndpoints:view'), --to be deleted
+                                              (4, 'apiEndpoints:create'), --to be deleted
+                                              (5, 'apiEndpoints:edit'), --to be deleted
+                                              (6, 'apiEndpoints:delete'), --to be deleted
+                                              (7, 'apiEndpoints:export'), --to be deleted
+                                              (8, 'destinationApis:view'), --to be deleted
+                                              (9, 'destinationApis:create'), --to be deleted
+                                              (10, 'destinationApis:edit'), --to be deleted
+                                              (11, 'destinationApis:delete'), --to be deleted
+                                              (12, 'destinationApis:export'), --to be deleted
                                               (13, 'errorCategories:view'),
                                               (14, 'errorCategories:export'),
                                               (15, 'errorCategories:create'),
