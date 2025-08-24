@@ -94,7 +94,7 @@ public class ScheduledJobsController {
     }
 
     @GetMapping("/{id}")
-//    @PreAuthorize("hasAuthority('scheduledJobs:view')")
+    @PreAuthorize("hasAuthority('scheduledJobs:view')")
     public ResponseEntity<?> getById(@PathVariable long id){
         return service.getById(id);
     }
