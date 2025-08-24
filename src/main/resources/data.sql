@@ -61,9 +61,14 @@ INSERT INTO public.permissions (id, name) VALUES
                                               (60, 'user:generate-token'),
                                               (61, 'role:view'),
                                               (62, 'role:create'),
-                                              (63, 'dynamicRoutesLogs:view')
+                                              (63, 'dynamicRoutesLogs:view'),
+                                              (64, 'integrationMapping:view'),
+                                              (65, 'integrationMapping:create'),
+                                              (66, 'integrationMapping:edit'),
+                                              (67, 'integrationMapping:delete'),
+                                              (68, 'integrationMapping:export')
 
-ON CONFLICT DO NOTHING;
+    ON CONFLICT DO NOTHING;
 
 
 INSERT INTO public.users
@@ -95,16 +100,17 @@ VALUES (1, 1)
 
 
 ALTER TABLE public.role_permissions
-    DROP CONSTRAINT IF EXISTS uq_role_permission;
+DROP CONSTRAINT IF EXISTS uq_role_permission;
 ALTER TABLE public.role_permissions
     ADD CONSTRAINT uq_role_permission UNIQUE (role_id, permission_id);
+
 INSERT INTO public.role_permissions (role_id, permission_id)
 SELECT 1, id
 FROM public.permissions
-WHERE id BETWEEN 1 AND 63
+WHERE id BETWEEN 1 AND 68
     ON CONFLICT(role_id, permission_id) DO NOTHING;
 
 
 -- user
 -- email: admin@mail.com
---pass: S123@231
+-- pass: S123@231
