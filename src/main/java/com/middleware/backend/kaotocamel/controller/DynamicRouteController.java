@@ -468,4 +468,46 @@ public class DynamicRouteController {
     }
 
 
+
+    @PostMapping("/audits/{type}")
+    @PreAuthorize("hasAnyAuthority('dynamicRoutesLogs:view')")
+    public ResponseEntity<byte[]> export(
+            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) String action,
+            @RequestParam(required = false) String routeId,
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+            ,@RequestParam(required = false, defaultValue = "timestamp") String sortedBy,
+            @RequestParam(defaultValue = "desc") String sortDirection,
+            @PathVariable String type
+    ) {
+        try {
+            Specification<DynamicRouteAudit> spec = Specification
+                    .where(DynamicRouteLogsSpecification.hasField("userName", userName, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .and(DynamicRouteLogsSpecification.hasField("action", action, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .and(DynamicRouteLogsSpecification.hasField("routeId", routeId, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .and(DynamicRouteLogsSpecification.createdBetween(startDate, endDate));
+            Pageable pageable = PageRequest.of(0, 100000,
+                    sortDirection.equalsIgnoreCase("asc")
+                            ? Sort.by(sortedBy).ascending()
+                            : Sort.by(sortedBy).descending());
+
+            byte[] fileBytes = routeService.exportFile(spec, pageable, type);
+
+            String fileName = "dynamic_routes_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            String contentType = type.equalsIgnoreCase("CSV")
+                    ? "text/csv"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(fileBytes);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+
 }
