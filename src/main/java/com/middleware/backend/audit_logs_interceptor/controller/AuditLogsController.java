@@ -80,8 +80,6 @@ public class AuditLogsController {
             @RequestParam(required = false) String startTime,
             @RequestParam(required = false) String endTime,
             @RequestParam(required = false) Integer responseStatus,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "startTime") String sortedBy,
             @RequestParam(defaultValue = "desc") String sortDirection,
             @PathVariable("type") String type
@@ -93,7 +91,7 @@ public class AuditLogsController {
                     .and(AuditLogSpecification.hasField("apiPath", apiPath, AuditLogSpecification.MatchMode.CONTAINS))
                     .and(AuditLogSpecification.hasField("responseStatus", responseStatus, AuditLogSpecification.MatchMode.EXACT))
                     .and(AuditLogSpecification.hasDateBetween("startTime", startTime, endTime));
-            Pageable pageable = PageRequest.of(page, size,
+            Pageable pageable = PageRequest.of(0, 100000,
                     sortDirection.equalsIgnoreCase("asc")
                             ? Sort.by(sortedBy).ascending()
                             : Sort.by(sortedBy).descending());

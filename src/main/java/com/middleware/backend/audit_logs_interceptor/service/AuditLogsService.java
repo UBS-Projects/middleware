@@ -101,7 +101,7 @@ public class AuditLogsService {
             sb.append(log.getResponseStatus() != null ? log.getResponseStatus() : "").append(",");
             sb.append(log.getStartTime() != null ? log.getStartTime().toString() : "").append(",");
             sb.append(log.getEndTime() != null ? log.getEndTime().toString() : "").append(",");
-            sb.append(log.getDurationMs() != null ? log.getDurationMs() : "").append(",");
+            sb.append(log.getDurationMs() != null ? log.getDurationMs() : "").append("\n");
         }
 
         return sb.toString();

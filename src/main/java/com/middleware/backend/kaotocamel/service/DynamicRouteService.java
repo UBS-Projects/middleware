@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import org.apache.camel.CamelContext;
 import org.apache.camel.CamelExecutionException;
 import org.apache.camel.RoutesBuilder;
+import org.apache.camel.ServiceStatus;
 import org.apache.camel.model.Model;
 import org.apache.camel.model.RouteDefinition;
 import org.apache.camel.spi.Resource;
@@ -31,6 +32,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -51,10 +54,12 @@ import com.middleware.backend.kaotocamel.spec.DynamicRouteSpecification;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.annotation.EnableScheduling;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@EnableScheduling
 public class DynamicRouteService {
 
     private final CamelContext camelContext;
@@ -69,59 +74,80 @@ public class DynamicRouteService {
      */
     @Transactional
     public String updateRoute(String yamlContent, String comment, String operation) {
-
-        RouteValidationResult checkRouteMandatoryFields = checkRouteMandatoryFields(yamlContent);
-        if (!checkRouteMandatoryFields.isValid()) {
-            return checkRouteMandatoryFields.getErrorMessage();
+        String routeId = null;
+        Integer newVersion = null;
+        String userEmail = "anonymous"; // fallback
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() != null) {
+            userEmail = auth.getName(); // Usually the `sub` claim (email/username)
         }
+        try {
+            RouteValidationResult checkRouteMandatoryFields = checkRouteMandatoryFields(yamlContent);
+            if (!checkRouteMandatoryFields.isValid()) {
+                return checkRouteMandatoryFields.getErrorMessage();
+            }
 
-        Map<String, String> metaData = extractRouteMetadata(yamlContent);
-        String routeId = metaData.get("id");
-        String description = metaData.get("description");
-        String path = metaData.get("path");
-        String method = metaData.get("method");
+            Map<String, String> metaData = extractRouteMetadata(yamlContent);
+            routeId = metaData.get("id");
+            String description = metaData.get("description");
+            String path = metaData.get("path");
+            String method = metaData.get("method");
 
-        List<DynamicRouteEntity> versions = routeRepository.findByRouteIdOrderByVersionDesc(routeId);
-        log.info("found {} versions", versions.size());
-        int newVersion = 0;
-        if (versions.isEmpty() && "update".equals(operation)) {
-            throw new RuntimeException("No versions found for this route");
-        } else if (!versions.isEmpty() && "update".equals(operation)) {
-            newVersion = versions.get(0).getVersion() + 1;
-        } else if (!versions.isEmpty() && "create".equals(operation)) {
-            throw new RuntimeException("versions already found for this route");
-        } else if (versions.isEmpty() && "create".equals(operation)) {
-            newVersion = 1;
+            List<DynamicRouteEntity> versions = routeRepository.findByRouteIdOrderByVersionDesc(routeId);
+            log.info("found {} versions", versions.size());
+
+            if (versions.isEmpty() && "update".equalsIgnoreCase(operation)) {
+                throw new RuntimeException("No versions found for this route");
+            } else if (!versions.isEmpty() && "update".equalsIgnoreCase(operation)) {
+                newVersion = versions.get(0).getVersion() + 1;
+            } else if (!versions.isEmpty() && "create".equalsIgnoreCase(operation)) {
+                throw new RuntimeException("Versions already exist for this route");
+            } else if (versions.isEmpty() && "create".equalsIgnoreCase(operation)) {
+                newVersion = 1;
+            }
+
+            // Deactivate existing versions
+            versions.forEach(v -> {
+                v.setActive(false);
+                v.setDefaultVersion(false);
+            });
+            routeRepository.saveAll(versions);
+
+            // Load into Camel Context
+            loadRoute(yamlContent);
+
+            DynamicRouteEntity entity = new DynamicRouteEntity();
+            entity.setRouteId(routeId);
+            entity.setVersion(newVersion);
+            entity.setYamlContent(yamlContent);
+            entity.setActive(true);
+            entity.setDefaultVersion(true);
+            entity.setDescription(description);
+            entity.setPath(path);
+            entity.setHttpMethod(method);
+            entity.setCreatedAt(LocalDateTime.now());
+            entity.setComment(comment);
+
+            routeRepository.save(entity);
+
+
+
+            log.info("Uploaded route {} version {}", routeId, newVersion);
+            audit(routeId, newVersion, "upload", "Uploaded new version with comment: " + comment,userEmail
+            ,"SUCCESS");
+
+            return "Route " + routeId + " uploaded as version " + newVersion;
+
+        } catch (Exception ex) {
+            log.error("Failed to process route update for routeId={} version={} operation={} : {}",
+                    routeId, newVersion, operation, ex.getMessage(), ex);
+            audit(routeId, newVersion != null ? newVersion : -1, "error",
+                    "Failed to " + operation + " route. Reason: " + ex.getMessage(),userEmail,
+                    "FAILED");
+            throw ex; // rethrow to trigger transaction rollback
         }
-
-        // Deactivate existing
-        versions.forEach(v -> {
-            v.setActive(false);
-            v.setDefaultVersion(false);
-        });
-        routeRepository.saveAll(versions);
-
-        loadRoute(yamlContent);
-
-        DynamicRouteEntity entity = new DynamicRouteEntity();
-        entity.setRouteId(routeId);
-        entity.setVersion(newVersion);
-        entity.setYamlContent(yamlContent);
-        entity.setActive(true);
-        entity.setDefaultVersion(true);
-        entity.setDescription(description);
-        entity.setPath(path);
-        entity.setHttpMethod(method);
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setComment(comment);
-
-        routeRepository.save(entity);
-
-        log.info("Uploaded route {} version {}", routeId, newVersion);
-        audit(routeId, newVersion, "upload", "Uploaded new version with comment: " + comment);
-
-        return "Route " + routeId + " uploaded as version " + newVersion;
     }
+
 
     public RouteValidationResult validateRoute(String yamlContent) {
         String routeId = null;
@@ -373,96 +399,180 @@ public class DynamicRouteService {
      */
     @Transactional
     public String deactivateRoute(String routeId) {
-        List<DynamicRouteEntity> activeRoutes = routeRepository.findByRouteIdAndActiveTrue(routeId);
-        if (activeRoutes.isEmpty()) {
-            return "No active route found for: " + routeId;
+        Integer version = null;
+        String userEmail = "anonymous"; // fallback
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() != null) {
+            userEmail = auth.getName(); // Usually the `sub` claim (email/username)
         }
-
-        activeRoutes.forEach(r -> r.setActive(false));
-        routeRepository.saveAll(activeRoutes);
 
         try {
+            List<DynamicRouteEntity> activeRoutes = routeRepository.findByRouteIdAndActiveTrue(routeId);
+            if (activeRoutes.isEmpty()) {
+                audit(routeId, -1, "deactivate-failed",
+                        "No active route found to deactivate.",userEmail ,
+                        "FAILED");
+                return "No active route found for: " + routeId;
+            }
+
+            // Deactivate in DB
+            activeRoutes.forEach(r -> r.setActive(false));
+            routeRepository.saveAll(activeRoutes);
+
+            version = activeRoutes.get(0).getVersion();
+
+            // Stop & remove from Camel
             camelContext.getRouteController().stopRoute(routeId);
             camelContext.removeRoute(routeId);
-            log.info("Deactivated route {}", routeId);
-            audit(routeId, activeRoutes.get(0).getVersion(), "deactivate", "Deactivated current version");
+
+            log.info("Deactivated route {} version {}", routeId, version);
+            audit(routeId, version, "deactivate", "Deactivated current version",userEmail,"SUCCESS");
+
             return "Route " + routeId + " deactivated.";
+
         } catch (Exception e) {
-            log.error("Error deactivating route {}: {}", routeId, e.getMessage());
-            return "Error deactivating route: " + e.getMessage();
+            log.error("Error deactivating route {} version={}: {}",
+                    routeId, version, e.getMessage(), e);
+
+            audit(routeId, version != null ? version : -1, "error",
+                    "Failed to deactivate route. Reason: " + e.getMessage(),userEmail,
+                    "FAILED");
+
+            return ResponseEntity.badRequest().toString();
         }
     }
+
 
     /**
      * Reverts to a previous version of a route
      */
     @Transactional
     public String revertToVersion(String routeId, int version) {
-        Optional<DynamicRouteEntity> targetOpt = routeRepository.findByRouteIdAndVersion(routeId, version);
-        if (targetOpt.isEmpty()) {
-            return "Version not found";
+        String userEmail = "anonymous"; // fallback
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() != null) {
+            userEmail = auth.getName(); // Usually the `sub` claim (email/username)
         }
+        try {
+            Optional<DynamicRouteEntity> targetOpt = routeRepository.findByRouteIdAndVersion(routeId, version);
+            if (targetOpt.isEmpty()) {
+                audit(routeId, version, "revert-failed", "Target version not found",userEmail,
+                        "FAILED");
+                return "Version not found";
+            }
 
-        deactivateRoute(routeId);
-        loadRoute(targetOpt.get().getYamlContent());
+            // Deactivate current route
+            deactivateRoute(routeId);
 
-        List<DynamicRouteEntity> versions = routeRepository.findByRouteIdOrderByVersionDesc(routeId);
-        versions.forEach(v -> {
-            boolean isTargetVersion = v.getVersion() == version;
-            v.setActive(isTargetVersion);
-            v.setDefaultVersion(isTargetVersion);
-        });
-        routeRepository.saveAll(versions);
+            // Load the target YAML
+            loadRoute(targetOpt.get().getYamlContent());
 
-        log.info("Reverted {} to version {}", routeId, version);
-        audit(routeId, version, "revert", "Reverted to version " + version);
+            // Update DB flags
+            List<DynamicRouteEntity> versions = routeRepository.findByRouteIdOrderByVersionDesc(routeId);
+            versions.forEach(v -> {
+                boolean isTargetVersion = v.getVersion() == version;
+                v.setActive(isTargetVersion);
+                v.setDefaultVersion(isTargetVersion);
+            });
+            routeRepository.saveAll(versions);
 
-        return "Reverted to route " + routeId + " version " + version;
+            log.info("Reverted route {} to version {}", routeId, version);
+            audit(routeId, version, "revert", "Reverted to version " + version,userEmail,"SUCCESS");
+
+            return "Reverted to route " + routeId + " version " + version;
+
+        } catch (Exception e) {
+            log.error("Error reverting route {} to version {}: {}", routeId, version, e.getMessage(), e);
+            audit(routeId, version, "error",
+                    "Failed to revert to version. Reason: " + e.getMessage(),userEmail,
+                    "FAILED");
+            throw e; // ensure rollback
+        }
     }
+
 
     @Transactional
     public String setVersionAsDefault(String routeId, int version) {
-        Optional<DynamicRouteEntity> targetOpt = routeRepository.findByRouteIdAndVersion(routeId, version);
-        if (targetOpt.isEmpty()) {
-            return "Version not found";
+        String userEmail = "anonymous"; // fallback
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() != null) {
+            userEmail = auth.getName(); // Usually the `sub` claim (email/username)
         }
+        try {
+            Optional<DynamicRouteEntity> targetOpt = routeRepository.findByRouteIdAndVersion(routeId, version);
+            if (targetOpt.isEmpty()) {
+                audit(routeId, version, "set-default-failed", "Target version not found",userEmail,
+                        "FAILED");
+                return "Version not found";
+            }
 
-        deactivateRoute(routeId);
-        loadRoute(targetOpt.get().getYamlContent());
+            // Deactivate current route
+            deactivateRoute(routeId);
 
-        List<DynamicRouteEntity> versions = routeRepository.findByRouteIdOrderByVersionDesc(routeId);
-        versions.forEach(v -> {
-            boolean isTargetVersion = v.getVersion() == version;
-            v.setActive(isTargetVersion);
-            v.setDefaultVersion(isTargetVersion);
-        });
-        routeRepository.saveAll(versions);
+            // Load the selected version
+            loadRoute(targetOpt.get().getYamlContent());
 
-        log.info("Reverted {} to version {}", routeId, version);
-        audit(routeId, version, "revert", "Reverted to version " + version);
+            // Update DB flags
+            List<DynamicRouteEntity> versions = routeRepository.findByRouteIdOrderByVersionDesc(routeId);
+            versions.forEach(v -> {
+                boolean isTargetVersion = v.getVersion() == version;
+                v.setActive(isTargetVersion);
+                v.setDefaultVersion(isTargetVersion);
+            });
+            routeRepository.saveAll(versions);
 
-        return "Reverted to route " + routeId + " version " + version;
+            log.info("Set route {} version {} as default", routeId, version);
+            audit(routeId, version, "set-default", "Set version " + version + " as default",userEmail,"SUCCESS");
+
+            return "Route " + routeId + " version " + version + " set as default.";
+
+        } catch (Exception e) {
+            log.error("Error setting route {} version {} as default: {}", routeId, version, e.getMessage(), e);
+            audit(routeId, version, "error", "Failed to set version as default. Reason: " + e.getMessage(),userEmail,
+                    "FAILED");
+            throw e; // rollback if DB update fails
+        }
     }
+
 
     /**
      * Stops a route
      */
     @Transactional
     public String stopRoute(String routeId) {
-        try {
-            camelContext.getRouteController().stopRoute(routeId);
-            List<DynamicRouteEntity> activeRoutes = routeRepository.findByRouteIdAndActiveTrue(routeId);
-            activeRoutes.forEach(r -> r.setActive(false));
-            routeRepository.saveAll(activeRoutes);
+        Integer version = null;
+        String userEmail = "anonymous"; // fallback
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() != null) {
+            userEmail = auth.getName(); // Usually the `sub` claim (email/username)
+        }
 
-            log.info("Stopped route {}", routeId);
-            audit(routeId, activeRoutes.get(0).getVersion(), "stop", "Route stopped");
+        try {
+            // Stop Camel route
+            camelContext.getRouteController().stopRoute(routeId);
+
+            // Mark all active routes inactive in DB
+            List<DynamicRouteEntity> activeRoutes = routeRepository.findByRouteIdAndActiveTrue(routeId);
+            if (!activeRoutes.isEmpty()) {
+                version = activeRoutes.get(0).getVersion();
+                activeRoutes.forEach(r -> r.setActive(false));
+                routeRepository.saveAll(activeRoutes);
+            }
+
+            log.info("Stopped route {} version {}", routeId, version);
+            audit(routeId, version != null ? version : -1, "stop", "Route stopped",userEmail,"SUCCESS");
+
             return "Route stopped: " + routeId;
+
         } catch (Exception e) {
-            log.error("Error stopping route {}: {}", routeId, e.getMessage());
-            return "Error stopping route: " + e.getMessage();
+            log.error("Error stopping route {}: {}", routeId, e.getMessage(), e);
+            audit(routeId, version != null ? version : -1, "error",
+                    "Failed to stop route. Reason: " + e.getMessage(),userEmail,
+                    "FAILED");
+            return ResponseEntity.badRequest().toString();
         }
     }
+
 
     /**
      * Starts the latest version of a route
@@ -470,26 +580,40 @@ public class DynamicRouteService {
     @Transactional
     public String startRoute(String routeId) {
         DynamicRouteEntity defaultVersion = routeRepository.findByRouteIdAndDefaultVersionTrue(routeId);
-
+        String userEmail = "anonymous"; // fallback
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() != null) {
+            userEmail = auth.getName(); // Usually the `sub` claim (email/username)
+        }
         if (defaultVersion == null) {
+            audit(routeId, -1, "start-failed", "No default route found with this ID",userEmail,
+                    "FAILED");
             return "No default route found with ID: " + routeId;
         }
 
         try {
+            // Load and start the Camel route
             loadRoute(defaultVersion.getYamlContent());
             camelContext.getRouteController().startRoute(routeId);
 
+            // Mark version as active in DB
             defaultVersion.setActive(true);
             routeRepository.save(defaultVersion);
 
-            log.info("Started route {}", routeId);
-            audit(routeId, defaultVersion.getVersion(), "start", "Route started");
+            log.info("Started route {} version {}", routeId, defaultVersion.getVersion());
+            audit(routeId, defaultVersion.getVersion(), "start", "Route started",userEmail,"SUCCESS");
+
             return "Route started: " + routeId;
+
         } catch (Exception e) {
-            log.error("Error starting route {}: {}", routeId, e.getMessage());
-            return "Error starting route: " + e.getMessage();
+            log.error("Error starting route {} version={}: {}", routeId, defaultVersion.getVersion(), e.getMessage(), e);
+            audit(routeId, defaultVersion.getVersion(), "error",
+                    "Failed to start route. Reason: " + e.getMessage(),userEmail,
+                    "FAILED");
+            return ResponseEntity.badRequest().toString();
         }
     }
+
 
     /**
      * Lists all routes
@@ -523,6 +647,7 @@ public class DynamicRouteService {
     public List<DynamicRouteEntity> listVersions(String routeId) {
         return routeRepository.findByRouteIdOrderByVersionDesc(routeId);
     }
+
     public Page<DynamicRouteEntity> getLatestRoutesOptimized(Pageable pageable) {
         List<DynamicRouteEntity> allRoutes = routeRepository.findAllOrderByCreatedAtDesc();
 
@@ -548,6 +673,7 @@ public class DynamicRouteService {
 
         return applyPagination(routesList, pageable);
     }
+
     private boolean applyAllFilters(DynamicRouteEntity route, String routeId, String description, String path,
                                     String httpMethod, Boolean active, String comment, String yamlContains,
                                     LocalDateTime createdAfter, LocalDateTime createdBefore) {
@@ -671,6 +797,7 @@ public class DynamicRouteService {
         // Priority 4: More recent creation date
         return b.getCreatedAt().isAfter(a.getCreatedAt()) ? b : a;
     }
+
     /**
      * Creates a comparator for sorting routes by different properties
      */
@@ -844,8 +971,7 @@ public class DynamicRouteService {
                         // direct/seda: فقط خزّن الـ uri (لا يوجد path/method)
                         else if (uri.startsWith("direct:") || uri.startsWith("seda:")) {
                             metadata.put("uri", uri);
-                        }
-                        else {
+                        } else {
                             log.error("Unrecognized 'uri' scheme: " + uri);
                         }
                     } else {
@@ -862,15 +988,98 @@ public class DynamicRouteService {
     /**
      * Records an audit entry
      */
-    private void audit(String routeId, int version, String action, String details) {
+    private void audit(String routeId, int version, String action, String details, String userEmail,String status) {
         DynamicRouteAudit audit = new DynamicRouteAudit();
         audit.setRouteId(routeId);
         audit.setVersion(version);
         audit.setAction(action);
         audit.setDetails(details);
         audit.setTimestamp(LocalDateTime.now());
+        audit.setUserEmail(userEmail);
+        audit.setStatus(status);
 
         auditRepository.save(audit);
+    }
+
+    public ResponseEntity<?> findById(Long id) {
+        return ResponseEntity.ok(auditRepository.findById(id));
+    }
+
+    public byte[] exportFile(Specification<DynamicRouteAudit> spec, Pageable pageable, String type) {
+        Page<DynamicRouteAudit> audits = auditRepository.findAll(spec, pageable);
+        List<DynamicRouteAudit> data = audits.getContent();
+
+        try {
+            if ("CSV".equalsIgnoreCase(type)) {
+                return exportToCsv(data);
+            } else {
+                return exporLogstToExcel(data);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to export file: " + e.getMessage(), e);
+        }
+    }
+
+    private byte[] exportToCsv(List<DynamicRouteAudit> audits) {
+        StringBuilder sb = new StringBuilder();
+
+        // Header row
+        sb.append("ID,RouteId,Version,Action,Details,Timestamp,UserEmail,Status\n");
+
+        // Data rows
+        for (DynamicRouteAudit audit : audits) {
+            sb.append(audit.getId()).append(",");
+            sb.append(safe(audit.getRouteId())).append(",");
+            sb.append(audit.getVersion()).append(",");
+            sb.append(safe(audit.getAction())).append(",");
+            sb.append(safe(audit.getDetails())).append(",");
+            sb.append(audit.getTimestamp() != null ? audit.getTimestamp().toString() : "").append(",");
+            sb.append(safe(audit.getUserEmail())).append(",");
+            sb.append(safe(audit.getStatus())).append("\n");
+        }
+
+        return sb.toString().getBytes(StandardCharsets.UTF_8);
+    }
+
+    private byte[] exporLogstToExcel(List<DynamicRouteAudit> audits) throws Exception {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("DynamicRouteLogs");
+
+        // Header row
+        Row header = sheet.createRow(0);
+        String[] columns = {"ID", "RouteId", "Version", "Action", "Details", "Timestamp", "UserEmail", "Status"};
+        for (int i = 0; i < columns.length; i++) {
+            Cell cell = header.createCell(i);
+            cell.setCellValue(columns[i]);
+        }
+
+        // Data rows
+        int rowIdx = 1;
+        for (DynamicRouteAudit audit : audits) {
+            Row row = sheet.createRow(rowIdx++);
+            row.createCell(0).setCellValue(audit.getId());
+            row.createCell(1).setCellValue(safe(audit.getRouteId()));
+            row.createCell(2).setCellValue(audit.getVersion());
+            row.createCell(3).setCellValue(safe(audit.getAction()));
+            row.createCell(4).setCellValue(safe(audit.getDetails()));
+            row.createCell(5).setCellValue(audit.getTimestamp() != null ? audit.getTimestamp().toString() : "");
+            row.createCell(6).setCellValue(safe(audit.getUserEmail()));
+            row.createCell(7).setCellValue(safe(audit.getStatus()));
+        }
+
+        // Auto-size columns
+        for (int i = 0; i < columns.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        workbook.write(baos);
+        workbook.close();
+        return baos.toByteArray();
+    }
+
+    private String safe(String value) {
+        return value != null ? value.replace(",", " ") : "";
     }
 
     /**
@@ -903,6 +1112,7 @@ public class DynamicRouteService {
                                                                   String action, String details, LocalDateTime timestamp, Pageable pageable) {
         return auditRepository.findByFilters(id, routeId, version, action, details, timestamp, pageable);
     }
+
     public byte[] exportToExcel(List<DynamicRouteEntity> routes) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Routes");
@@ -1034,4 +1244,61 @@ public class DynamicRouteService {
 
         return value;
     }
+
+
+    @Scheduled(fixedRate = 30000)
+    @Transactional
+    public void syncRouteStatuses() {
+
+        String userEmail = "System"; // fallback
+
+        log.info("Starting route status sync with Camel context");
+
+        List<DynamicRouteEntity> defaultRoutes = routeRepository.findAll();
+
+        for (DynamicRouteEntity entity : defaultRoutes) {
+            String routeId = entity.getRouteId();
+            try {
+                ServiceStatus status = camelContext.getRouteController().getRouteStatus(routeId);
+
+                if (status == null) {
+                    // Route not present in Camel context
+                    if (entity.isActive()) {
+                        // DB says active → re-add and start it
+                        loadRoute(entity.getYamlContent()); // make sure this builds the route from entity
+                        camelContext.getRouteController().startRoute(routeId);
+
+                        audit(routeId, entity.getVersion(), "sync", "Re-added and started route in context",userEmail,"SUCCESS");
+                        log.info("Re-added route {} to context (DB says active)", routeId);
+                    } else {
+                        // DB says inactive → nothing to do
+                        log.info("Route {} not found in context and DB says inactive → skipping", routeId);
+                    }
+                    continue;
+                }
+
+                boolean isStarted = status.isStarted();
+
+                // DB says active → ensure context route is running
+                if (entity.isActive() && !isStarted) {
+                    camelContext.getRouteController().startRoute(routeId);
+                    audit(routeId, entity.getVersion(), "sync", "Started route in context (DB says active)",userEmail,"SUCCESS");
+                    log.info("Started route {} in context (DB says active)", routeId);
+                }
+
+                // DB says inactive → ensure context route is stopped
+                else if (!entity.isActive() && isStarted) {
+                    camelContext.getRouteController().stopRoute(routeId);
+                    audit(routeId, entity.getVersion(), "sync", "Stopped route in context (DB says inactive)",userEmail,"SUCCESS");
+                    log.info("Stopped route {} in context (DB says inactive)", routeId);
+                }
+
+            } catch (Exception e) {
+                log.error("Error syncing status for route {}: {}", routeId, e.getMessage(), e);
+            }
+        }
+
+        log.info("Completed route status sync");
+    }
+
 }

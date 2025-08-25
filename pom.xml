@@ -17,7 +17,13 @@
     <properties>
         <java.version>23</java.version>
         <lombok.version>1.18.38</lombok.version>
+<<<<<<< HEAD
         <camel.version>4.4.0</camel.version><!-- Add this line -->
+=======
+        <camel.version>4.4.0</camel.version> <!-- Add this line -->
+        <sonar.organization>mohkharma</sonar.organization>
+
+>>>>>>> c0cdd98e13bf0e5680fe06671e018db83d8426ac
     </properties>
     <dependencies><!-- Spring Boot Core Dependencies -->
          <dependency>
