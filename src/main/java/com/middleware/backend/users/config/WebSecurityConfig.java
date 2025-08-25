@@ -24,15 +24,24 @@ public class WebSecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll() // public endpoints
-                        .anyRequest().authenticated()           // everything else requires auth
+                        .requestMatchers("/auth/**").permitAll() // public endpoints
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((request, response, authException) -> {
-                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+                            // No token / invalid token
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\":\"Unauthorized\"}");
+                        })
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            // Token is valid, but lacks authority
+                            response.setStatus(HttpServletResponse.SC_FORBIDDEN); // 403
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\":\"Forbidden\"}");
                         })
                 );
 
@@ -41,7 +50,6 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-    // Needed if you're doing authentication manually
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

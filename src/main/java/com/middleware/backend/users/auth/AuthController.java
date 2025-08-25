@@ -39,7 +39,7 @@ public class AuthController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
-        Optional<User> user = userRepository.findByEmail(request.getEmail());
+        Optional<User> user = userRepository.findActiveByEmail(request.getEmail());
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         String jwt = jwtUtil.generateToken(
                 userDetails.getUsername(),
@@ -56,7 +56,7 @@ public class AuthController {
                         .distinct()                                // optional: remove duplicates
                         .toList(),
 
-                1000 * 60 * 60 * 24 // 1 day
+                1000 * 60 * 60 * 24
         );
         return new AuthResponse(jwt);
     }
@@ -67,7 +67,7 @@ public class AuthController {
                                       @RequestParam(required = false) Integer expirationDays,
                                       @RequestParam(required = false) String customExpirationDate) {
 
-        User user = userRepository.findById(id)
+        User user = userRepository.findActiveById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id " + id));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
@@ -106,20 +106,6 @@ public class AuthController {
         String jwt = jwtUtil.generateToken(userDetails.getUsername(), roles, pers, expirationMillis);
         return new AuthResponse(jwt);
     }
-
-//    @PostMapping("/register")
-//    public String register(@RequestBody RegisterRequest request) {
-//        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-//            return "User already exists.";
-//        }
-//
-//        User user = new User();
-//        user.setEmail(request.getEmail());
-//        user.setPassword(new BCryptPasswordEncoder().encode(request.getPassword()));
-//        // user.setRole("SYSTEMUSER"); // Optional, if roles are dynamic
-//        userRepository.save(user);
-//        return "User registered successfully.";
-//    }
 
     @Data
     static class AuthRequest {

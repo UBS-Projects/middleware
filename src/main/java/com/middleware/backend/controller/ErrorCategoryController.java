@@ -137,7 +137,7 @@ public class ErrorCategoryController {
     }
 
     @PostMapping("/{id}/toggle")
-    @PreAuthorize("hasAuthority('errorCategories:create')")
+    @PreAuthorize("hasAuthority('errorCategories:edit')")
     public ResponseEntity<?> toggleCategory(@PathVariable Long id) {
         try {
             ErrorCategoryDto updatedDto = categoryService.toggleCategory(id);
