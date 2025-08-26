@@ -55,17 +55,19 @@ public class IntegrationMappingController {
         }
     }
 
+    // UPDATED: Soft delete instead of hard delete
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('integrationMapping:delete')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<IntegrationMappingDto> delete(@PathVariable Long id) {
         try {
-            service.delete(id);
-            return ResponseEntity.ok().build();
+            IntegrationMappingDto result = service.softDelete(id);
+            log.info("Successfully soft deleted integration mapping with ID: {}", id);
+            return ResponseEntity.ok(result);
         } catch (RuntimeException e) {
-            log.error("Failed to delete integration mapping {}: {}", id, e.getMessage());
+            log.error("Failed to soft delete integration mapping {}: {}", id, e.getMessage());
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
-            log.error("Failed to delete integration mapping {}: {}", id, e.getMessage());
+            log.error("Failed to soft delete integration mapping {}: {}", id, e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
@@ -78,7 +80,26 @@ public class IntegrationMappingController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // UPDATED: Toggle status instead of setting specific value
     @PatchMapping("/{id}/status")
+    @PreAuthorize("hasAnyAuthority('integrationMapping:edit')")
+    public ResponseEntity<IntegrationMappingDto> toggleStatus(@PathVariable Long id) {
+        try {
+            IntegrationMappingDto result = service.toggleStatus(id);
+            log.info("Successfully toggled status for integration mapping with ID: {}, new status: {}",
+                    id, result.getIsActive());
+            return ResponseEntity.ok(result);
+        } catch (RuntimeException e) {
+            log.error("Failed to toggle status for integration mapping {}: {}", id, e.getMessage());
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            log.error("Failed to toggle status for integration mapping {}: {}", id, e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    // OPTIONAL: Keep the old method for backward compatibility if needed
+    @PatchMapping("/{id}/status/set")
     @PreAuthorize("hasAnyAuthority('integrationMapping:edit')")
     public ResponseEntity<IntegrationMappingDto> updateStatus(@PathVariable Long id, @RequestBody StatusUpdateRequest request) {
         try {
@@ -156,7 +177,7 @@ public class IntegrationMappingController {
         }
     }
 
-    // ===== EXPORT ENDPOINTS - FIXED =====
+    // ===== EXPORT ENDPOINTS =====
 
     @GetMapping("/export/excel")
     @PreAuthorize("hasAnyAuthority('integrationMapping:export')")

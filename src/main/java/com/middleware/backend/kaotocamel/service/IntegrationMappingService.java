@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,10 +38,21 @@ public class IntegrationMappingService {
         log.info("Creating new integration mapping for API: {}", dto.getApiName());
 
         IntegrationMapping entity = mapToEntity(dto);
-        IntegrationMapping saved = repository.save(entity);
 
-        log.info("Created integration mapping with ID: {}", saved.getId());
-        return mapToDto(saved);
+        // تأكد إن الـ ID فاضي لـ insert جديد
+        entity.setId(null);
+
+        try {
+            IntegrationMapping saved = repository.save(entity);
+            log.info("Created integration mapping with ID: {}", saved.getId());
+            return mapToDto(saved);
+        } catch (DataIntegrityViolationException e) {
+            log.error("Data integrity violation while creating mapping: {}", e.getMessage());
+            throw new RuntimeException("Mapping with same details already exists or duplicate constraint violation");
+        } catch (Exception e) {
+            log.error("Error creating integration mapping: {}", e.getMessage(), e);
+            throw new RuntimeException("Failed to create integration mapping: " + e.getMessage());
+        }
     }
 
     @Transactional
@@ -71,16 +83,52 @@ public class IntegrationMappingService {
         return mapToDto(saved);
     }
 
+    // NEW: Toggle status method
+    @Transactional
+    public IntegrationMappingDto toggleStatus(Long id) {
+        log.info("Toggling status for integration mapping with ID: {}", id);
+
+        IntegrationMapping entity = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Integration mapping not found with ID: " + id));
+
+        // Toggle the current status
+        boolean newStatus = !Boolean.TRUE.equals(entity.getIsActive());
+        entity.setIsActive(newStatus);
+
+        IntegrationMapping saved = repository.save(entity);
+
+        log.info("Toggled status for integration mapping with ID: {} from {} to {}",
+                saved.getId(), !newStatus, newStatus);
+        return mapToDto(saved);
+    }
+
+    // UPDATED: Soft delete instead of hard delete
+    @Transactional
+    public IntegrationMappingDto softDelete(Long id) {
+        log.info("Performing soft delete for integration mapping with ID: {}", id);
+
+        IntegrationMapping entity = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Integration mapping not found with ID: " + id));
+
+        // Set to inactive instead of deleting
+        entity.setIsActive(false);
+        IntegrationMapping saved = repository.save(entity);
+
+        log.info("Soft deleted (set to inactive) integration mapping with ID: {}", saved.getId());
+        return mapToDto(saved);
+    }
+
+    // LEGACY: Keep the hard delete method for admin purposes if needed
     @Transactional
     public void delete(Long id) {
-        log.info("Deleting integration mapping with ID: {}", id);
+        log.info("Hard deleting integration mapping with ID: {}", id);
 
         if (!repository.existsById(id)) {
             throw new RuntimeException("Integration mapping not found with ID: " + id);
         }
 
         repository.deleteById(id);
-        log.info("Deleted integration mapping with ID: {}", id);
+        log.info("Hard deleted integration mapping with ID: {}", id);
     }
 
     public Optional<IntegrationMappingDto> findById(Long id) {
@@ -122,7 +170,7 @@ public class IntegrationMappingService {
         return result.map(this::mapToDto);
     }
 
-    // ===== NEW EXPORT METHODS - FIXED =====
+    // ===== EXPORT METHODS =====
 
     /**
      * Get all data for export WITHOUT pagination - applies filters correctly
@@ -213,7 +261,7 @@ public class IntegrationMappingService {
                 externalKey, isActive, createdAfter, createdBefore, null, pageable);
     }
 
-    // ===== SIMPLIFIED EXPORT METHODS =====
+    // ===== EXPORT FILE GENERATION METHODS =====
 
     public void exportToExcel(List<IntegrationMappingDto> data, OutputStream outputStream) throws IOException {
         log.info("Generating CLEAN Excel export for {} integration mappings", data.size());

@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 public class IntegrationMapping {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -74,7 +75,6 @@ public class IntegrationMapping {
         if (this.isActive == null) {
             this.isActive = true;
         }
-
     }
 
     // Getters and Setters
