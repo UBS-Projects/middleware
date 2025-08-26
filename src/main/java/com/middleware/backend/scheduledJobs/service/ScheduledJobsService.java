@@ -155,6 +155,7 @@ public class ScheduledJobsService{
         if (job.getMethod() != null) existingJob.setMethod(job.getMethod());
         if (job.getHeaders() != null) existingJob.setHeaders(job.getHeaders());
         if (job.getPayload() != null) existingJob.setPayload(job.getPayload());
+        existingJob.setEnabled(job.isEnabled());
         Optional<User> user = userRepo.findByEmail(email);
         job.setUpdatedBy(user.get().getId());
         existingJob.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
@@ -162,7 +163,7 @@ public class ScheduledJobsService{
 
         ScheduledJobs updatedJob = repo.save(existingJob);
 
-        if (updatedJob.isEnabled()) {
+        if (updatedJob.isActive()) {
             scheduleJob(Mapper.mapToDTO(existingJob));
         }
 
