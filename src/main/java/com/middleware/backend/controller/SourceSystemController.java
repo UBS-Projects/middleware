@@ -151,7 +151,7 @@ public class SourceSystemController {
     }
 
     @PostMapping("/{id}/toggle")
-    @PreAuthorize("hasAuthority('sourceSystems:create')")
+    @PreAuthorize("hasAuthority('sourceSystems:edit')")
     public ResponseEntity<?> toggleSourceSystem(@PathVariable Long id) {
         try {
             SourceSystemDto updatedDto = sourceSystemService.toggleSourceSystem(id);

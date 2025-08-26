@@ -7,7 +7,10 @@ import com.middleware.backend.scheduledJobs.DTO.JobRequest;
 import com.middleware.backend.scheduledJobs.enums.Status;
 import com.middleware.backend.scheduledJobs.mapper.Mapper;
 import com.middleware.backend.scheduledJobs.model.ScheduledJobs;
+import com.middleware.backend.scheduledJobs.model.SingleJobDto;
 import com.middleware.backend.scheduledJobs.repository.ScheduledJobRepository;
+import com.middleware.backend.users.model.User;
+import com.middleware.backend.users.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -40,6 +43,7 @@ public class ScheduledJobsService{
     private final ScheduledJobRepository repo;
     private Scheduler scheduler;
     private final RestTemplate restTemplate;
+    private final UserRepository userRepo;
 
 
     public void scheduleAllActiveJobs() {
@@ -70,7 +74,7 @@ public class ScheduledJobsService{
         }
     }
 
-    public ScheduledJobs createNewJob(JobRequest job) {
+    public ScheduledJobs createNewJob(JobRequest job, String email) {
         Optional<ScheduledJobs> sc = repo.findByJobNameAndActiveTrue(job.getJobName());
         if(sc.isPresent()){
             throw new RuntimeException("Job with same Name already exists.");
@@ -88,6 +92,9 @@ public class ScheduledJobsService{
         job.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         job.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         job.setActive(true);
+        Optional<User> user = userRepo.findByEmail(email);
+        job.setCreatedBy(user.get().getId());
+        job.setUpdatedBy(user.get().getId());
 
         ScheduledJobs savedJob = repo.save(Mapper.mapToEntity(job));
         job.setId(savedJob.getId());
@@ -96,10 +103,12 @@ public class ScheduledJobsService{
         return savedJob;
     }
 
-    public ScheduledJobs pauseJob(Long id) throws SchedulerException {
+    public ScheduledJobs pauseJob(Long id, String email) throws SchedulerException {
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
         job.setEnabled(false);
+        Optional<User> user = userRepo.findByEmail(email);
+        job.setUpdatedBy(user.get().getId());
         job.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         repo.save(job);
         scheduler.pauseJob(JobKey.jobKey(job.getJobName(), "http-jobs"));
@@ -108,10 +117,12 @@ public class ScheduledJobsService{
 
 
 
-    public ScheduledJobs resumeJob(Long id) throws SchedulerException {
+    public ScheduledJobs resumeJob(Long id, String email) throws SchedulerException {
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
         job.setEnabled(true);
+        Optional<User> user = userRepo.findByEmail(email);
+        job.setUpdatedBy(user.get().getId());
         job.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         repo.save(job);
 
@@ -126,7 +137,7 @@ public class ScheduledJobsService{
 
 
 
-    public ScheduledJobs editJob(JobRequest job) throws SchedulerException {
+    public ScheduledJobs editJob(JobRequest job, String email) throws SchedulerException {
         ScheduledJobs existingJob = repo.findById(job.getId())
                 .orElseThrow(() -> new RuntimeException("Job not found"));
 
@@ -144,14 +155,15 @@ public class ScheduledJobsService{
         if (job.getMethod() != null) existingJob.setMethod(job.getMethod());
         if (job.getHeaders() != null) existingJob.setHeaders(job.getHeaders());
         if (job.getPayload() != null) existingJob.setPayload(job.getPayload());
-        if (job.getUpdatedBy() != null) existingJob.setUpdatedBy(job.getUpdatedBy());
-
+        existingJob.setEnabled(job.isEnabled());
+        Optional<User> user = userRepo.findByEmail(email);
+        job.setUpdatedBy(user.get().getId());
         existingJob.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         existingJob.setEnabled(true);
 
         ScheduledJobs updatedJob = repo.save(existingJob);
 
-        if (updatedJob.isEnabled()) {
+        if (updatedJob.isActive()) {
             scheduleJob(Mapper.mapToDTO(existingJob));
         }
 
@@ -165,12 +177,14 @@ public class ScheduledJobsService{
         return repo.findAll(spec.and(activeSpec), pageable);
     }
 
-    public ScheduledJobs deactivateJob(Long id) throws SchedulerException {
+    public ScheduledJobs deactivateJob(Long id, String email) throws SchedulerException {
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
         job.setActive(false);
+        Optional<User> user = userRepo.findByEmail(email);
+        job.setUpdatedBy(user.get().getId());
         repo.save(job);
-        pauseJob(id);
+        pauseJob(id,email);
         return job;
     }
 
@@ -272,5 +286,31 @@ public class ScheduledJobsService{
                 return bos.toByteArray();
             }
         }
+    }
+
+    public ResponseEntity<?> getById(long id) {
+        Optional<ScheduledJobs> job = repo.findById(id);
+        if(job.isEmpty())
+            return ResponseEntity.noContent().build();
+        Optional<User> creationUser = userRepo.findById(job.get().getCreatedBy());
+        Optional<User> updatingUser = userRepo.findById(job.get().getUpdatedBy());
+
+        return ResponseEntity.ok( SingleJobDto.builder()
+                .id(job.get().getId())
+                .jobName(job.get().getJobName())
+                .description(job.get().getDescription())
+                .scheduleExpression(job.get().getScheduleExpression())
+                .apiEndpoint(job.get().getApiEndpoint())
+                .method(job.get().getMethod())
+                .headers(job.get().getHeaders())
+                .payload(job.get().getPayload())
+                .enabled(job.get().isEnabled())
+                .lastExecutionTime(job.get().getLastExecutionTime())
+                .createdBy(creationUser.get().getEmail())
+                .createdAt(job.get().getCreatedAt())
+                .updatedBy(updatingUser.get().getEmail())
+                .updatedAt(job.get().getUpdatedAt())
+                .active(job.get().isActive()).build()
+        );
     }
 }

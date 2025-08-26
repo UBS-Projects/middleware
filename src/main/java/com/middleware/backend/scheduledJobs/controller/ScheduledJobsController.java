@@ -55,7 +55,7 @@ public class ScheduledJobsController {
         System.out.println("Authenticated user email: " + email);
 
         try {
-            ScheduledJobs job = status.equals("pause") ? service.pauseJob(id) : service.resumeJob(id);
+            ScheduledJobs job = status.equals("pause") ? service.pauseJob(id,email) : service.resumeJob(id, email);
             logJob(job.getJobName(), job.getMethod(), job.getApiEndpoint(), action, true, email, null);
             return ResponseEntity.ok(job);
         } catch (Exception e) {
@@ -69,7 +69,7 @@ public class ScheduledJobsController {
     public ResponseEntity<?> edit(@RequestBody JobRequest job) throws SchedulerException {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
-            ScheduledJobs updatedJob = service.editJob(job);
+            ScheduledJobs updatedJob = service.editJob(job, email);
             logJob(updatedJob.getJobName(), updatedJob.getMethod(), updatedJob.getApiEndpoint(), "edit", true, email, null);
             return ResponseEntity.ok(updatedJob);
         } catch (Exception e) {
@@ -84,13 +84,19 @@ public class ScheduledJobsController {
     public ResponseEntity<?> createJob(@RequestBody JobRequest job) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
-            ScheduledJobs savedJob = service.createNewJob(job);
+            ScheduledJobs savedJob = service.createNewJob(job,email);
             logJob(savedJob.getJobName(), savedJob.getMethod(), savedJob.getApiEndpoint(), "create", true, email, null);
             return ResponseEntity.ok(savedJob);
         } catch (Exception e) {
             logJob(job.getJobName(), job.getMethod(), job.getApiEndpoint(), "create", false, email, e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
         }
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('scheduledJobs:view')")
+    public ResponseEntity<?> getById(@PathVariable long id){
+        return service.getById(id);
     }
 
     @GetMapping("")
@@ -129,7 +135,7 @@ public class ScheduledJobsController {
     public ResponseEntity<?> deactivateJob(@PathVariable Long id) throws SchedulerException {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
-            ScheduledJobs job = service.deactivateJob(id);
+            ScheduledJobs job = service.deactivateJob(id, email);
             logJob(job.getJobName(), job.getMethod(), job.getApiEndpoint(), "deactivate", true, email, null);
             return ResponseEntity.ok(job);
         } catch (Exception e) {
@@ -151,6 +157,9 @@ public class ScheduledJobsController {
             return ResponseEntity.ok(Map.of("status", "fail"));
         }
     }
+
+
+
 
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('scheduledJobs:export')")

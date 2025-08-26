@@ -269,7 +269,7 @@ public class ErrorMappingController {
     }
 
     @PostMapping("/{id}/toggle")
-    @PreAuthorize("hasAuthority('errorMappings:create')")
+    @PreAuthorize("hasAuthority('errorMappings:edit')")
     public ResponseEntity<?> toggleErrorMapping(@PathVariable Long id) {
         try {
             errorMappingService.toggleErrorMapping(id);

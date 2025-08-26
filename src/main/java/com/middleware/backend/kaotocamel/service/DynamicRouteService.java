@@ -1005,6 +1005,83 @@ public class DynamicRouteService {
         return ResponseEntity.ok(auditRepository.findById(id));
     }
 
+    public byte[] exportFile(Specification<DynamicRouteAudit> spec, Pageable pageable, String type) {
+        Page<DynamicRouteAudit> audits = auditRepository.findAll(spec, pageable);
+        List<DynamicRouteAudit> data = audits.getContent();
+
+        try {
+            if ("CSV".equalsIgnoreCase(type)) {
+                return exportToCsv(data);
+            } else {
+                return exporLogstToExcel(data);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to export file: " + e.getMessage(), e);
+        }
+    }
+
+    private byte[] exportToCsv(List<DynamicRouteAudit> audits) {
+        StringBuilder sb = new StringBuilder();
+
+        // Header row
+        sb.append("ID,RouteId,Version,Action,Details,Timestamp,UserEmail,Status\n");
+
+        // Data rows
+        for (DynamicRouteAudit audit : audits) {
+            sb.append(audit.getId()).append(",");
+            sb.append(safe(audit.getRouteId())).append(",");
+            sb.append(audit.getVersion()).append(",");
+            sb.append(safe(audit.getAction())).append(",");
+            sb.append(safe(audit.getDetails())).append(",");
+            sb.append(audit.getTimestamp() != null ? audit.getTimestamp().toString() : "").append(",");
+            sb.append(safe(audit.getUserEmail())).append(",");
+            sb.append(safe(audit.getStatus())).append("\n");
+        }
+
+        return sb.toString().getBytes(StandardCharsets.UTF_8);
+    }
+
+    private byte[] exporLogstToExcel(List<DynamicRouteAudit> audits) throws Exception {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("DynamicRouteLogs");
+
+        // Header row
+        Row header = sheet.createRow(0);
+        String[] columns = {"ID", "RouteId", "Version", "Action", "Details", "Timestamp", "UserEmail", "Status"};
+        for (int i = 0; i < columns.length; i++) {
+            Cell cell = header.createCell(i);
+            cell.setCellValue(columns[i]);
+        }
+
+        // Data rows
+        int rowIdx = 1;
+        for (DynamicRouteAudit audit : audits) {
+            Row row = sheet.createRow(rowIdx++);
+            row.createCell(0).setCellValue(audit.getId());
+            row.createCell(1).setCellValue(safe(audit.getRouteId()));
+            row.createCell(2).setCellValue(audit.getVersion());
+            row.createCell(3).setCellValue(safe(audit.getAction()));
+            row.createCell(4).setCellValue(safe(audit.getDetails()));
+            row.createCell(5).setCellValue(audit.getTimestamp() != null ? audit.getTimestamp().toString() : "");
+            row.createCell(6).setCellValue(safe(audit.getUserEmail()));
+            row.createCell(7).setCellValue(safe(audit.getStatus()));
+        }
+
+        // Auto-size columns
+        for (int i = 0; i < columns.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        workbook.write(baos);
+        workbook.close();
+        return baos.toByteArray();
+    }
+
+    private String safe(String value) {
+        return value != null ? value.replace(",", " ") : "";
+    }
+
     /**
      * Helper class to wrap a String as a Camel Resource.
      */
