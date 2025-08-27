@@ -46,8 +46,10 @@ public class ScheduledJobs {
 
     private String method;
 
-    private String headers;
 
+    @Column(length = 1000)
+    private String headers;
+    @Column(length = 1000)
     private String payload;
 
     private boolean enabled;

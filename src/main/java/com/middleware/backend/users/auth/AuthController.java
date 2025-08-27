@@ -2,6 +2,7 @@ package com.middleware.backend.users.auth;
 
 import com.middleware.backend.users.Roles.model.Permission;
 import com.middleware.backend.users.Roles.model.Role;
+import com.middleware.backend.users.Roles.model.RoutesPermissions;
 import com.middleware.backend.users.config.JwtUtil;
 import com.middleware.backend.users.model.User;
 import com.middleware.backend.users.repository.UserRepository;
@@ -55,6 +56,11 @@ public class AuthController {
                         .map(Permission::getName)                  // use the `name` field
                         .distinct()                                // optional: remove duplicates
                         .toList(),
+                user.get().getRoles().stream()
+                        .flatMap(r -> r.getRoutesPermissions().stream()) // flatten List<List<Permission>>
+                        .map(RoutesPermissions::getRouteId)                  // use the `name` field
+                        .distinct()                                // optional: remove duplicates
+                        .toList(),
 
                 1000 * 60 * 60 * 24
         );
@@ -102,8 +108,14 @@ public class AuthController {
                         .map(p -> p.getName()))
                 .toList();
 
+        List<String> routes = user.getRoles().stream()
+                .flatMap(r -> r.getRoutesPermissions().stream()
+                        .map(p -> p.getRouteId()))
+                .toList();
 
-        String jwt = jwtUtil.generateToken(userDetails.getUsername(), roles, pers, expirationMillis);
+
+
+        String jwt = jwtUtil.generateToken(userDetails.getUsername(), roles, pers,routes, expirationMillis);
         return new AuthResponse(jwt);
     }
 

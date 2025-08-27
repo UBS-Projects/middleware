@@ -30,4 +30,14 @@ public class Role {
     )
     private List<Permission> permissions;
 
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @JoinTable(
+            name = "role_routes_permissions",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "route_id")
+    )
+    private List<RoutesPermissions> routesPermissions;
+
 }

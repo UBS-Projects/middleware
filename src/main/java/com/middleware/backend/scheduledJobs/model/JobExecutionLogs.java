@@ -44,6 +44,6 @@ public class JobExecutionLogs {
 
     @Enumerated(EnumType.STRING)
     private Status status; // SUCCESS / FAILURE
-
+    @Column(length = 1000)
     private String errorMessage;
 }
