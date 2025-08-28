@@ -24,12 +24,7 @@ public class WebSecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/auth/**").permitAll() // public endpoints
-//                        .requestMatchers(("/routespermissions/**")).permitAll()
-//                        .requestMatchers(("/permission/**")).permitAll()
-                                .requestMatchers("/camel/**").authenticated()
-                                .requestMatchers("auth/**").permitAll() // public endpoints
-
+                        .requestMatchers("/auth/**").permitAll() // public endpoints
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess

@@ -1,5 +1,6 @@
 package com.middleware.backend.users.service;
 
+import com.middleware.backend.scheduledJobs.model.ScheduledJobs;
 import com.middleware.backend.users.Roles.dto.RoleRequest;
 import com.middleware.backend.users.Roles.mapper.RoleMapper;
 import com.middleware.backend.users.Roles.model.Permission;
@@ -52,7 +53,7 @@ public class UserService {
 //        return null;
     }
 
-    public ResponseEntity<?> getAll(Specification<User> spec, Pageable pageable) {
+    public Page<?> getAll(Specification<User> spec, Pageable pageable) {
         Page<User> page = repo.findAll(spec, pageable);
         Page<UserResponse> res = page.map(user ->
                 UserResponse.builder()
@@ -62,12 +63,15 @@ public class UserService {
                         .status(user.getStatus())
                         .createdAt(user.getCreatedAt())
                         .password(user.getPassword())
+                        .roles(user.getRoles().stream().map(
+                                r-> RoleRequest.builder()
+                                        .roleName(r.getRoleName())
+                                        .build()
+                        ).toList())
                         .build()
         );
-        if (page.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(page);
+
+        return res;
     }
 
     public ResponseEntity<?> createNewUser(UserRequest user) {

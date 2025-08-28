@@ -6,6 +6,7 @@ import com.middleware.backend.users.model.User;
 import com.middleware.backend.users.service.UserService;
 import com.middleware.backend.users.specification.UserSpecification;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,7 +29,7 @@ public class UserController {
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('user:view')")
-    public ResponseEntity<?> getAllUsers(
+    public ResponseEntity<Page<?>> getAllUsers(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String userName,
             @RequestParam(required = false) String email,
@@ -50,7 +51,7 @@ public class UserController {
                 .and(UserSpecification.hasField("status", status, MatchMode.EXACT))
                 .and(UserSpecification.dateAfter("createdAt", createdAfter))
                 .and(UserSpecification.dateBefore("createdAt", createdBefore));
-        return service.getAll(spec,pageable);
+        return ResponseEntity.ok(service.getAll(spec,pageable));
     }
 
     @GetMapping("/{id}")

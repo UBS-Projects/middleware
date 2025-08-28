@@ -141,7 +141,8 @@ public class DynamicRouteService {
             perService.save(r);
 
             log.info("Uploaded route {} version {}", routeId, newVersion);
-            audit(routeId, newVersion, "upload", "Uploaded new version with comment: " + comment,userEmail
+            audit(routeId, newVersion, "upload", comment==null? ""
+                    :"Uploaded new version with comment: " + comment,userEmail
             ,"SUCCESS");
 
             return "Route " + routeId + " uploaded as version " + newVersion;
