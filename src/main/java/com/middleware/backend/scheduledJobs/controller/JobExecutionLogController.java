@@ -53,7 +53,7 @@ public class JobExecutionLogController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('jobExecutionLogs:viewById')")
+    @PreAuthorize("hasAuthority('jobExecutionLogs:view')")
     public ResponseEntity<?> getById(
             @PathVariable("id") Long id
     ){

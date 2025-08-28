@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('user:viewById')")
+    @PreAuthorize("hasAuthority('user:view')")
     public ResponseEntity<?> getUserById(@PathVariable Long id){
         return service.getUserById(id);
     }

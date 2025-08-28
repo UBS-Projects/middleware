@@ -253,20 +253,6 @@ public class ErrorMappingController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('errorMappings:delete')")
-    public ResponseEntity<?> deleteErrorMapping(@PathVariable Long id) {
-        try {
-            errorMappingService.deleteErrorMapping(id);
-            return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            log.error("Error deleting error mapping with ID: {}", id, e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(createErrorResponse("Failed to delete error mapping"));
-        }
-    }
 
     @PostMapping("/{id}/toggle")
     @PreAuthorize("hasAuthority('errorMappings:edit')")

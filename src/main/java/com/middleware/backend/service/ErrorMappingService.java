@@ -189,14 +189,6 @@ public class ErrorMappingService {
         );
     }
 
-    @Transactional
-    public void deleteErrorMapping(Long id) {
-        if (!errorMappingRepository.existsById(id)) {
-            throw new EntityNotFoundException("Error mapping not found with ID: " + id);
-        }
-        errorMappingRepository.deleteById(id);
-        log.info("Deleted error mapping with ID: {}", id);
-    }
 
     public List<RouteOptionDto> getAvailableRoutes() {
         return dynamicRouteRepository.findLatestActiveRoutes()

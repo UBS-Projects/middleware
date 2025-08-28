@@ -84,20 +84,6 @@ public class ErrorCategoryService {
         return categoryMapper.toDto(updatedCategory);
     }
 
-    @Transactional
-    public void deleteCategory(Long id) {
-        ErrorCategory category = categoryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
-
-        long usageCount = categoryRepository.countErrorMappingsByCategoryId(id);
-        if (usageCount > 0) {
-            throw new IllegalStateException("Cannot delete category with id " + id + " because it is used by " + usageCount + " error mapping(s).");
-        }
-
-        // Soft delete: set active to false instead of actual deletion
-        category.setActive(false);
-        categoryRepository.save(category);
-    }
 
     @Transactional
     public ErrorCategoryDto toggleCategory(Long id) {
