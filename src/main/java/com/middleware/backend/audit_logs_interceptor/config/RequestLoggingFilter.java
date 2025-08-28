@@ -41,7 +41,7 @@ public class RequestLoggingFilter implements Filter {
 
         String path = httpReq.getRequestURI();
 
-        if (path.startsWith("/auditlogs")) {
+        if (path.startsWith("/auditlogs") || path.startsWith("/swagger-ui") || path.startsWith("/v3/api-docs")) {
             chain.doFilter(request, response);
             return;
         }

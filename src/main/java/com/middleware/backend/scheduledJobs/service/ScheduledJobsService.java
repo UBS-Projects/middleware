@@ -159,11 +159,10 @@ public class ScheduledJobsService{
         Optional<User> user = userRepo.findByEmail(email);
         job.setUpdatedBy(user.get().getId());
         existingJob.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        existingJob.setEnabled(true);
 
         ScheduledJobs updatedJob = repo.save(existingJob);
 
-        if (updatedJob.isActive()) {
+        if (updatedJob.isActive() && updatedJob.isEnabled()) {
             scheduleJob(Mapper.mapToDTO(existingJob));
         }
 
@@ -181,6 +180,7 @@ public class ScheduledJobsService{
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
         job.setActive(false);
+        job.setEnabled(false);
         Optional<User> user = userRepo.findByEmail(email);
         job.setUpdatedBy(user.get().getId());
         repo.save(job);

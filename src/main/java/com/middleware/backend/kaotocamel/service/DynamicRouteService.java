@@ -10,6 +10,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.middleware.backend.users.Roles.dto.RoutesPermissionsRequest;
+import com.middleware.backend.users.Roles.service.RoutesPermissionsService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.CamelExecutionException;
 import org.apache.camel.RoutesBuilder;
@@ -21,7 +23,6 @@ import org.apache.camel.spi.RoutesBuilderLoader;
 import org.apache.camel.support.ResourceSupport;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -66,8 +67,8 @@ public class DynamicRouteService {
     private final DynamicRouteRepository routeRepository;
     private final DynamicRouteAuditRepository auditRepository;
     private final RoutesBuilderLoader yamlRoutesLoader;
-    @Autowired
     private final RestTemplateConfig restTemplateConfig;
+    private final RoutesPermissionsService perService;
 
     /**
      * Uploads a new route version (or first version if new routeId)
@@ -111,6 +112,8 @@ public class DynamicRouteService {
                 v.setActive(false);
                 v.setDefaultVersion(false);
             });
+
+
             routeRepository.saveAll(versions);
 
             // Load into Camel Context
@@ -131,9 +134,15 @@ public class DynamicRouteService {
             routeRepository.save(entity);
 
 
+//            Save RouteId Into Permissions ...
+            RoutesPermissionsRequest r = RoutesPermissionsRequest.builder()
+                    .routeId(entity.getRouteId())
+                    .build();
+            perService.save(r);
 
             log.info("Uploaded route {} version {}", routeId, newVersion);
-            audit(routeId, newVersion, "upload", "Uploaded new version with comment: " + comment,userEmail
+            audit(routeId, newVersion, "upload", comment==null? ""
+                    :"Uploaded new version with comment: " + comment,userEmail
             ,"SUCCESS");
 
             return "Route " + routeId + " uploaded as version " + newVersion;
@@ -1080,6 +1089,10 @@ public class DynamicRouteService {
 
     private String safe(String value) {
         return value != null ? value.replace(",", " ") : "";
+    }
+
+    public String getRouteIdByPath(String path) {
+        return routeRepository.findByPath(path).get().getRouteId();
     }
 
     /**

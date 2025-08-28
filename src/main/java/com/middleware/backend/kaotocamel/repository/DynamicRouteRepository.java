@@ -43,4 +43,7 @@ public interface DynamicRouteRepository
 
         @Query("SELECT COUNT(dr) > 0 FROM DynamicRouteEntity dr WHERE dr.routeId = :routeId AND dr.active = true")
         boolean existsByRouteIdAndActiveTrue(@Param("routeId") String routeId);
+
+
+        Optional<DynamicRouteEntity> findByPath(String path);
 }
