@@ -61,7 +61,6 @@ public class SourceSystemController {
                     .and(SourceSystemSpecification.hasBooleanField("active", activeValue))
                     .and(SourceSystemSpecification.createdBetween(createdAfter,createdBefore));
 
-
             Pageable pageable = PageRequest.of(page, size,
                     sortDirection.equalsIgnoreCase("asc")
                             ? Sort.by(sortedBy).ascending()
@@ -71,8 +70,6 @@ public class SourceSystemController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
-
-
     }
 
     @GetMapping("/active")
@@ -126,6 +123,9 @@ public class SourceSystemController {
         } catch (IllegalArgumentException e) {
             log.warn("Invalid source system data: {}", e.getMessage());
             return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
+        } catch (IllegalStateException e) {
+            log.warn("Cannot deactivate source system: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
         } catch (Exception e) {
             log.error("Error updating source system with ID: {}", id, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -142,6 +142,7 @@ public class SourceSystemController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (IllegalStateException e) {
+            log.warn("Cannot delete source system: {}", e.getMessage());
             return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
         } catch (Exception e) {
             log.error("Error deleting source system with ID: {}", id, e);
@@ -158,6 +159,9 @@ public class SourceSystemController {
             return ResponseEntity.ok(updatedDto);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
+        } catch (IllegalStateException e) {
+            log.warn("Cannot toggle source system: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
         } catch (Exception e) {
             log.error("Error toggling source system with ID: {}", id, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -170,8 +174,6 @@ public class SourceSystemController {
         error.put("error", message);
         return error;
     }
-
-
 
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('sourceSystems:export')")
@@ -201,7 +203,6 @@ public class SourceSystemController {
                     .and(SourceSystemSpecification.hasBooleanField("active", activeValue))
                     .and(SourceSystemSpecification.createdBetween(createdAfter,createdBefore));
 
-
             Pageable pageable = PageRequest.of(0, 100000,
                     sortDirection.equalsIgnoreCase("asc")
                             ? Sort.by(sortedBy).ascending()
@@ -221,7 +222,4 @@ public class SourceSystemController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
-
-
 }

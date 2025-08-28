@@ -68,6 +68,14 @@ public class ErrorCategoryService {
             throw new IllegalArgumentException("Category with name '" + dto.getName() + "' already exists.");
         }
 
+        // Check if trying to deactivate a category that is currently active and has error mappings
+        if (existingCategory.getActive() && !dto.getActive()) {
+            long usageCount = categoryRepository.countErrorMappingsByCategoryId(id);
+            if (usageCount > 0) {
+                throw new IllegalStateException("Cannot deactivate category with id " + id + " because it is used by " + usageCount + " error mapping(s).");
+            }
+        }
+
         existingCategory.setName(dto.getName());
         existingCategory.setDescription(dto.getDescription());
         existingCategory.setActive(dto.getActive());
@@ -78,21 +86,31 @@ public class ErrorCategoryService {
 
     @Transactional
     public void deleteCategory(Long id) {
-        if (!categoryRepository.existsById(id)) {
-            throw new EntityNotFoundException("Category not found with id: " + id);
-        }
+        ErrorCategory category = categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
 
         long usageCount = categoryRepository.countErrorMappingsByCategoryId(id);
         if (usageCount > 0) {
             throw new IllegalStateException("Cannot delete category with id " + id + " because it is used by " + usageCount + " error mapping(s).");
         }
-        categoryRepository.deleteById(id);
+
+        // Soft delete: set active to false instead of actual deletion
+        category.setActive(false);
+        categoryRepository.save(category);
     }
 
     @Transactional
     public ErrorCategoryDto toggleCategory(Long id) {
         ErrorCategory category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
+
+        // If trying to deactivate an active category, check for error mappings
+        if (category.getActive()) {
+            long usageCount = categoryRepository.countErrorMappingsByCategoryId(id);
+            if (usageCount > 0) {
+                throw new IllegalStateException("Cannot deactivate category with id " + id + " because it is used by " + usageCount + " error mapping(s).");
+            }
+        }
 
         category.setActive(!category.getActive());
         ErrorCategory savedCategory = categoryRepository.save(category);

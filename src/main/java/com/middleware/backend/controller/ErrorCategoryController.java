@@ -112,6 +112,9 @@ public class ErrorCategoryController {
         } catch (IllegalArgumentException e) {
             log.warn("Invalid error category data: {}", e.getMessage());
             return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
+        } catch (IllegalStateException e) {
+            log.warn("Cannot deactivate error category: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
         } catch (Exception e) {
             log.error("Error updating error category with ID: {}", id, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -128,6 +131,7 @@ public class ErrorCategoryController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (IllegalStateException e) {
+            log.warn("Cannot delete error category: {}", e.getMessage());
             return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
         } catch (Exception e) {
             log.error("Error deleting error category with ID: {}", id, e);
@@ -144,6 +148,9 @@ public class ErrorCategoryController {
             return ResponseEntity.ok(updatedDto);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
+        } catch (IllegalStateException e) {
+            log.warn("Cannot toggle error category: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
         } catch (Exception e) {
             log.error("Error toggling error category with ID: {}", id, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -31,8 +31,6 @@ public class SourceSystemService {
     private final SourceSystemRepository sourceSystemRepository;
     private final SourceSystemMapper sourceSystemMapper;
 
-
-
     public List<SourceSystemDto> getActiveSourceSystems() {
         return sourceSystemRepository.findByActiveTrue().stream()
                 .map(sourceSystemMapper::toDto)
@@ -47,9 +45,20 @@ public class SourceSystemService {
 
     @Transactional
     public SourceSystemDto createSourceSystem(SourceSystemDto dto) {
-        if (sourceSystemRepository.existsByNameIgnoreCase(dto.getName())) {
-            throw new IllegalArgumentException("Source system with name '" + dto.getName() + "' already exists.");
+        // Trim the name before processing
+        String trimmedName = dto.getName() != null ? dto.getName().trim() : null;
+
+        if (trimmedName == null || trimmedName.isEmpty()) {
+            throw new IllegalArgumentException("Source system name cannot be null or empty.");
         }
+
+        if (sourceSystemRepository.existsByNameIgnoreCase(trimmedName)) {
+            throw new IllegalArgumentException("Source system with name '" + trimmedName + "' already exists.");
+        }
+
+        // Set the trimmed name back to dto
+        dto.setName(trimmedName);
+
         SourceSystem sourceSystem = sourceSystemMapper.toEntity(dto);
         SourceSystem savedSourceSystem = sourceSystemRepository.save(sourceSystem);
         return sourceSystemMapper.toDto(savedSourceSystem);
@@ -60,13 +69,28 @@ public class SourceSystemService {
         SourceSystem existingSourceSystem = sourceSystemRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Source system not found with id: " + id));
 
-        // Check if name is changing and if new name already exists
-        if (!existingSourceSystem.getName().equalsIgnoreCase(dto.getName()) &&
-                sourceSystemRepository.existsByNameIgnoreCase(dto.getName())) {
-            throw new IllegalArgumentException("Source system with name '" + dto.getName() + "' already exists.");
+        // Trim the name before processing
+        String trimmedName = dto.getName() != null ? dto.getName().trim() : null;
+
+        if (trimmedName == null || trimmedName.isEmpty()) {
+            throw new IllegalArgumentException("Source system name cannot be null or empty.");
         }
 
-        existingSourceSystem.setName(dto.getName());
+        // Check if name is changing and if new name already exists
+        if (!existingSourceSystem.getName().equalsIgnoreCase(trimmedName) &&
+                sourceSystemRepository.existsByNameIgnoreCase(trimmedName)) {
+            throw new IllegalArgumentException("Source system with name '" + trimmedName + "' already exists.");
+        }
+
+        // Check if trying to deactivate a source system that is currently active and has error mappings
+        if (existingSourceSystem.getActive() && !dto.getActive()) {
+            long usageCount = sourceSystemRepository.countErrorMappingsBySourceSystemId(id);
+            if (usageCount > 0) {
+                throw new IllegalStateException("Cannot deactivate source system with id " + id + " because it is used by " + usageCount + " error mapping(s).");
+            }
+        }
+
+        existingSourceSystem.setName(trimmedName);
         existingSourceSystem.setDescription(dto.getDescription());
         existingSourceSystem.setActive(dto.getActive());
 
@@ -76,23 +100,31 @@ public class SourceSystemService {
 
     @Transactional
     public void deleteSourceSystem(Long id) {
-        if (!sourceSystemRepository.existsById(id)) {
-            throw new EntityNotFoundException("Source system not found with id: " + id);
-        }
+        SourceSystem sourceSystem = sourceSystemRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Source system not found with id: " + id));
 
-        // --==-- حماية مهمة جداً --==--
-        // لا تسمح بحذف source system مستخدم في أي ErrorMapping
         long usageCount = sourceSystemRepository.countErrorMappingsBySourceSystemId(id);
         if (usageCount > 0) {
             throw new IllegalStateException("Cannot delete source system with id " + id + " because it is used by " + usageCount + " error mapping(s).");
         }
-        sourceSystemRepository.deleteById(id);
+
+        // Soft delete: set active to false instead of actual deletion
+        sourceSystem.setActive(false);
+        sourceSystemRepository.save(sourceSystem);
     }
 
     @Transactional
     public SourceSystemDto toggleSourceSystem(Long id) {
         SourceSystem sourceSystem = sourceSystemRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Source system not found with id: " + id));
+
+        // If trying to deactivate an active source system, check for error mappings
+        if (sourceSystem.getActive()) {
+            long usageCount = sourceSystemRepository.countErrorMappingsBySourceSystemId(id);
+            if (usageCount > 0) {
+                throw new IllegalStateException("Cannot deactivate source system with id " + id + " because it is used by " + usageCount + " error mapping(s).");
+            }
+        }
 
         sourceSystem.setActive(!sourceSystem.getActive());
         SourceSystem savedSourceSystem = sourceSystemRepository.save(sourceSystem);

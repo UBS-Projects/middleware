@@ -49,7 +49,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 
                 // 🔑 Map request path → routeId
-                String path = request.getRequestURI();   // e.g. /camel/external-user/1
+                String path = request.getRequestURI();
                 AntPathMatcher matcher = new AntPathMatcher();
                 String normalizedPath = path.replaceFirst("^/camel", "");
                 Pageable page = PageRequest.of(0,100000);
@@ -58,25 +58,36 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 ).stream().toList();
 
 
-
+                System.out.println("Path: "+path);
+                System.out.println("NormPath: "+normalizedPath);
                 if(path.startsWith("/camel/")) {
+                    System.out.println("Path: "+path);
+                    System.out.println("NormPath: "+normalizedPath);
                     String matchedRouteId = null;
                     for (String dbRoute : dbRoutes) {
-                        String pattern = dbRoute.replaceAll("\\{[^/]+\\}", "*");
+                        System.out.println("dbroute#: "+dbRoute);
+
+                        String pattern = dbRoute.replaceAll("\\{[^/]+\\}", "*") + "/**";
+                        System.out.println("pattern: "+pattern);
+
                         if (matcher.match(pattern, normalizedPath)) {
+
+                            System.out.println("Yeahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh: ");
                             matchedRouteId = routeService.getRouteIdByPath(dbRoute);;
                             break;
                         }
                     }
-                List<String> allowedRoutes = jwtUtil.extractRoutes(jwt);
+                    System.out.println("matchedRouteId: "+matchedRouteId);
 
-                // 🔑 Authorization check
-                if (matchedRouteId == null || allowedRoutes == null || !allowedRoutes.contains(matchedRouteId)) {
-                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    response.setContentType("application/json");
-                    response.getWriter().write("{\"error\":\"Forbidden: not allowed on this route\"}");
-                    return;
-                }
+                    List<String> allowedRoutes = jwtUtil.extractRoutes(jwt);
+
+                    // 🔑 Authorization check
+                    if (matchedRouteId == null || allowedRoutes == null || !allowedRoutes.contains(matchedRouteId)) {
+                        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                        response.setContentType("application/json");
+                        response.getWriter().write("{\"error\":\"Forbidden: not allowed on this route\"}");
+                        return;
+                    }
                 }
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(
