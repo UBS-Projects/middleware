@@ -58,26 +58,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 ).stream().toList();
 
 
-                System.out.println("Path: "+path);
-                System.out.println("NormPath: "+normalizedPath);
                 if(path.startsWith("/camel/")) {
-                    System.out.println("Path: "+path);
-                    System.out.println("NormPath: "+normalizedPath);
+
                     String matchedRouteId = null;
                     for (String dbRoute : dbRoutes) {
-                        System.out.println("dbroute#: "+dbRoute);
 
                         String pattern = dbRoute.replaceAll("\\{[^/]+\\}", "*") + "/**";
-                        System.out.println("pattern: "+pattern);
 
                         if (matcher.match(pattern, normalizedPath)) {
 
-                            System.out.println("Yeahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh: ");
-                            matchedRouteId = routeService.getRouteIdByPath(dbRoute);;
+                             matchedRouteId = routeService.getRouteIdByPath(dbRoute);;
                             break;
                         }
                     }
-                    System.out.println("matchedRouteId: "+matchedRouteId);
 
                     List<String> allowedRoutes = jwtUtil.extractRoutes(jwt);
 
