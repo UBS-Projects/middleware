@@ -63,7 +63,7 @@ camel:
 
 # DHIS2 Configuration
 dhis2:
-  base-url: https://play.im.dhis2.org/stable-2-41-5
+  base-url: play.im.dhis2.org/stable-2-41-5
   username: admin
   password: district
   timeout: 30000
