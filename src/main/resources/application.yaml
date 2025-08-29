@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/middleware
     username: postgres
-    password: root
+    password: 12345
     driver-class-name: org.postgresql.Driver
 
   sql:
@@ -69,3 +69,14 @@ dhis2:
   timeout: 30000
   connect-timeout: 10000
 
+# SpringDoc OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tryItOutEnabled: true
+    operationsSorter: alpha
+    tagsSorter: alpha
+
+#http://localhost:8081/swagger-ui/index.html

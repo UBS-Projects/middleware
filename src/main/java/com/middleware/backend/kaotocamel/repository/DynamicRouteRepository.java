@@ -46,4 +46,7 @@ public interface DynamicRouteRepository
 
 
         Optional<DynamicRouteEntity> findByPath(String path);
+
+        // Method to check for duplicate route by path and httpMethod
+        Optional<DynamicRouteEntity> findByPathAndHttpMethod(String path, String httpMethod);
 }

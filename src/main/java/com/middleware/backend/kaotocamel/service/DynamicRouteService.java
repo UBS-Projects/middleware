@@ -94,6 +94,18 @@ public class DynamicRouteService {
             String path = metaData.get("path");
             String method = metaData.get("method");
 
+            // Check for duplicate route (path + method) when creating a new route
+            if ("create".equalsIgnoreCase(operation) && path != null && method != null) {
+                Optional<DynamicRouteEntity> existingRoute = routeRepository.findByPathAndHttpMethod(path, method);
+                if (existingRoute.isPresent()) {
+                    String duplicateRouteId = existingRoute.get().getRouteId();
+                    String errorMsg = String.format("Duplicate route not allowed: path '%s' with method '%s' already exists in route '%s'", 
+                                                    path, method, duplicateRouteId);
+                    audit(routeId, -1, "create-failed", errorMsg, userEmail, "FAILED");
+                    throw new RuntimeException(errorMsg);
+                }
+            }
+
             List<DynamicRouteEntity> versions = routeRepository.findByRouteIdOrderByVersionDesc(routeId);
             log.info("found {} versions", versions.size());
 
