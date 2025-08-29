@@ -9209,3 +9209,343 @@ Caused by: java.io.FileNotFoundException: class path resource [com/middleware/ba
 2025-08-28 16:28:58 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
 2025-08-28 16:28:58 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
 2025-08-28 16:28:58 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-08-28 17:46:57 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-08-28 17:46:57 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23-valhalla with PID 15520 (C:\Users\omard\Desktop\Work\jordan\back-end\target\classes started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-08-28 17:46:57 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-28 17:47:01 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-08-28 17:47:01 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-28 17:47:01 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-08-28 17:47:01 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-28 17:47:01 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-08-28 17:47:01 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-08-28 17:47:01 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-28 17:47:02 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-28 17:47:02 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@3664c596']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-08-28 17:47:03 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-28 17:47:05 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-08-28 17:47:07 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-08-28 17:47:07 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2025-08-28 17:47:07 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-08-28 17:47:08 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-08-28 17:47:08 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-08-28 17:47:08 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-08-28 17:47:08 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-08-28 17:47:08 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-08-28 17:47:08 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-08-28 17:47:08 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-08-28 17:47:08 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@2ab689b7
+2025-08-28 17:47:09 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 103 mappings in 'requestMappingHandlerMapping'
+2025-08-28 17:47:09 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-08-28 17:47:10 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-08-28 17:47:10 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-08-28 17:47:12 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-08-28 17:47:12 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-08-28 17:47:12 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-08-28 17:47:12 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-08-28 17:47:12 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-08-28 17:47:12 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 10ms (build:0ms init:0ms start:10ms)
+2025-08-28 17:47:12 [http-nio-8081-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-28 17:47:12 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-08-28 17:47:12 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-08-28 17:47:12 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-08-28 17:47:12 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-08-28 17:47:12 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@464a3662
+2025-08-28 17:47:12 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@61a74188
+2025-08-28 17:47:12 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-08-28 17:47:12 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-08-28 17:47:12 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 14.82 seconds (process running for 16.272)
+2025-08-28 17:47:12 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 17:47:12 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-08-28 17:47:12 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=100000
+2025-08-28 17:47:12 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-08-28 17:47:12 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=10", parameters={masked}
+2025-08-28 17:47:12 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-08-28 17:47:12 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq synced to 211. setval returned 211
+2025-08-28 17:47:12 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-08-28 17:47:13 [http-nio-8081-exec-3] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-08-28 17:47:13 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-28 17:47:13 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-08-28 17:47:13 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-28 17:47:13 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-08-28 17:47:13 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route dhis2-upload-csv-sync-raw-only to context (DB says active)
+2025-08-28 17:47:13 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-08-28 17:47:13 [scheduling-1] INFO  o.a.c.s.LifecycleStrategySupport - Autowired property: dataSource on component: sql as exactly one instance of type: javax.sql.DataSource (org.springframework.jdbc.datasource.DriverManagerDataSource) found in the registry
+2025-08-28 17:47:13 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route get-integration-api-dynamic-logic to context (DB says active)
+2025-08-28 17:47:13 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 17:47:15 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=100000
+2025-08-28 17:47:15 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-08-28 17:47:15 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-28 17:47:15 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-28 17:47:15 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json]
+2025-08-28 17:47:15 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
+2025-08-28 17:47:15 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-28 17:47:15 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-08-28 17:47:18 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=100000
+2025-08-28 17:47:18 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-08-28 17:47:18 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/logs?page=0&size=10&sort=receivedAt%2Cdesc", parameters={masked}
+2025-08-28 17:47:18 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.logging.controller.MiddlewareApiCallLogController#getAll(Map, int, int, String)
+2025-08-28 17:47:19 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-28 17:47:19 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 25 containing com.middleware.backend.logging.dto.MiddlewareApiCallLogDto instances]
+2025-08-28 17:47:19 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-28 17:47:19 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-08-28 17:47:21 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=100000
+2025-08-28 17:47:21 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-08-28 17:47:21 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-08-28 17:47:21 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-08-28 17:47:21 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json]
+2025-08-28 17:47:21 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
+2025-08-28 17:47:21 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-28 17:47:21 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-08-28 17:47:24 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=100000
+2025-08-28 17:47:24 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /source-systems?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-08-28 17:47:24 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/source-systems?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=", parameters={masked}
+2025-08-28 17:47:24 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.SourceSystemController#getAllSourceSystems(String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-08-28 17:47:24 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-28 17:47:24 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.model.SourceSystem instances]
+2025-08-28 17:47:24 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-28 17:47:24 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /source-systems?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-08-28 17:47:27 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching all routes with pagination: page=0, size=100000
+2025-08-28 17:47:27 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /source-systems?page=0&size=10&name=&description=&sortedBy=id&sortDirection=asc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-08-28 17:47:27 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/source-systems?page=0&size=10&name=&description=&sortedBy=id&sortDirection=asc&status=&startDate=&endDate=", parameters={masked}
+2025-08-28 17:47:27 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.SourceSystemController#getAllSourceSystems(String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-08-28 17:47:27 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-08-28 17:47:27 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.model.SourceSystem instances]
+2025-08-28 17:47:27 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-28 17:47:27 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /source-systems?page=0&size=10&name=&description=&sortedBy=id&sortDirection=asc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-08-28 17:47:42 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 17:47:42 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 17:48:12 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 17:48:12 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 17:48:42 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 17:48:42 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 17:49:12 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 17:49:12 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 17:49:42 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 17:49:42 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 17:49:56 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-08-28 17:49:56 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-08-28 17:49:56 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:4)
+2025-08-28 17:49:56 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped get-integration-api-dynamic-logic (direct://integration_api_logic)
+2025-08-28 17:49:56 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped http-entry-integration-api-dynamic (servlet:/integration/api)
+2025-08-28 17:49:56 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-08-28 17:49:56 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped dhis2-upload-csv-sync-raw-only (servlet:/external/integrate)
+2025-08-28 17:49:56 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 13ms (uptime:2m44s)
+2025-08-28 17:49:56 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-08-28 17:49:56 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-08-28 17:49:56 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-08-28 17:49:57 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-08-28 18:10:42 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-08-28 18:10:42 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23-valhalla with PID 4676 (C:\Users\omard\Desktop\Work\jordan\back-end\target\classes started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-08-28 18:10:42 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-28 18:10:44 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-08-28 18:10:44 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-28 18:10:44 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-08-28 18:10:44 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-28 18:10:44 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-08-28 18:10:44 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-08-28 18:10:44 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-08-28 18:10:45 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-28 18:10:45 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@2e1ad7de']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-08-28 18:10:46 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-28 18:10:47 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-08-28 18:10:48 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-08-28 18:10:48 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2025-08-28 18:10:48 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-08-28 18:10:49 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-08-28 18:10:49 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-08-28 18:10:49 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-08-28 18:10:49 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-08-28 18:10:49 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-08-28 18:10:49 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-08-28 18:10:49 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-08-28 18:10:49 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@3b82fcac
+2025-08-28 18:10:49 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 103 mappings in 'requestMappingHandlerMapping'
+2025-08-28 18:10:49 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-08-28 18:10:50 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-08-28 18:10:50 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-08-28 18:10:51 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-08-28 18:10:51 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-08-28 18:10:51 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-08-28 18:10:51 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-08-28 18:10:51 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-08-28 18:10:51 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 5ms (build:0ms init:0ms start:5ms)
+2025-08-28 18:10:51 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 9.51 seconds (process running for 10.394)
+2025-08-28 18:10:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:10:51 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-08-28 18:10:51 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq synced to 211. setval returned 211
+2025-08-28 18:10:51 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-08-28 18:10:51 [RMI TCP Connection(4)-192.168.88.4] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-28 18:10:51 [RMI TCP Connection(4)-192.168.88.4] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-08-28 18:10:51 [RMI TCP Connection(4)-192.168.88.4] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-08-28 18:10:51 [RMI TCP Connection(4)-192.168.88.4] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-08-28 18:10:51 [RMI TCP Connection(4)-192.168.88.4] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-08-28 18:10:51 [RMI TCP Connection(4)-192.168.88.4] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@34e8256b
+2025-08-28 18:10:51 [RMI TCP Connection(4)-192.168.88.4] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@77279ead
+2025-08-28 18:10:51 [RMI TCP Connection(4)-192.168.88.4] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-08-28 18:10:51 [RMI TCP Connection(4)-192.168.88.4] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2025-08-28 18:10:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route dhis2-upload-csv-sync-raw-only to context (DB says active)
+2025-08-28 18:10:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-08-28 18:10:51 [scheduling-1] INFO  o.a.c.s.LifecycleStrategySupport - Autowired property: dataSource on component: sql as exactly one instance of type: javax.sql.DataSource (org.springframework.jdbc.datasource.DriverManagerDataSource) found in the registry
+2025-08-28 18:10:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route get-integration-api-dynamic-logic to context (DB says active)
+2025-08-28 18:10:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:11:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:11:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:11:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:11:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:12:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:12:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:12:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:12:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:13:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:13:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:13:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:13:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:14:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:14:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:14:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:14:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:15:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:15:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:15:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:15:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:16:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:16:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:16:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:16:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:17:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:17:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:17:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:17:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:18:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:18:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:18:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:18:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:19:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:19:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:19:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:19:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:20:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:20:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:20:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:20:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:21:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:21:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:21:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:21:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:22:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:22:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:22:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:22:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:23:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:23:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:23:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:23:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:24:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:24:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:24:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:24:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:25:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:25:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:25:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:25:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:26:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:26:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:26:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:26:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:27:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:27:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:27:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:27:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:28:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:28:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:28:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:28:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:29:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:29:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:29:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:29:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:30:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:30:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:30:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:30:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:31:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:31:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:31:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:31:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:32:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:32:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:32:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:32:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:33:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:33:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:33:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:33:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:34:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:34:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:34:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:34:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:35:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:35:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:35:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:35:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:36:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:36:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:36:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:36:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:37:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:37:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:37:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:37:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:38:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:38:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:38:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:38:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:39:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:39:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:39:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:39:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:40:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-08-28 18:40:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-08-28 18:40:50 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-08-28 18:40:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-08-28 18:40:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:4)
+2025-08-28 18:40:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped get-integration-api-dynamic-logic (direct://integration_api_logic)
+2025-08-28 18:40:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped http-entry-integration-api-dynamic (servlet:/integration/api)
+2025-08-28 18:40:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-08-28 18:40:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped dhis2-upload-csv-sync-raw-only (servlet:/external/integrate)
+2025-08-28 18:40:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 23ms (uptime:29m59s)
+2025-08-28 18:40:51 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-08-28 18:40:51 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-08-28 18:40:51 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-08-28 18:40:51 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]

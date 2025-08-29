@@ -110,7 +110,6 @@ FROM public.permissions
 WHERE id BETWEEN 1 AND 68
     ON CONFLICT(role_id, permission_id) DO NOTHING;
 
-
 -- user
 -- email: admin@mail.com
 -- pass: S123@231
