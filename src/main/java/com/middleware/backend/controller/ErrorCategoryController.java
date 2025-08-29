@@ -122,23 +122,7 @@ public class ErrorCategoryController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('errorCategories:delete')")
-    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
-        try {
-            categoryService.deleteCategory(id);
-            return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (IllegalStateException e) {
-            log.warn("Cannot delete error category: {}", e.getMessage());
-            return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
-        } catch (Exception e) {
-            log.error("Error deleting error category with ID: {}", id, e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(createErrorResponse("Failed to delete error category"));
-        }
-    }
+
 
     @PostMapping("/{id}/toggle")
     @PreAuthorize("hasAuthority('errorCategories:edit')")

@@ -1,74 +1,79 @@
 INSERT INTO public.permissions (id, name) VALUES
                                               (1, 'auditLogs:view'),
                                               (2, 'auditLogs:export'),
-                                              (3, 'apiEndpoints:view'), --to be deleted
-                                              (4, 'apiEndpoints:create'), --to be deleted
-                                              (5, 'apiEndpoints:edit'), --to be deleted
-                                              (6, 'apiEndpoints:delete'), --to be deleted
-                                              (7, 'apiEndpoints:export'), --to be deleted
-                                              (8, 'destinationApis:view'), --to be deleted
-                                              (9, 'destinationApis:create'), --to be deleted
-                                              (10, 'destinationApis:edit'), --to be deleted
-                                              (11, 'destinationApis:delete'), --to be deleted
-                                              (12, 'destinationApis:export'), --to be deleted
-                                              (13, 'errorCategories:view'),
-                                              (14, 'errorCategories:export'),
-                                              (15, 'errorCategories:create'),
-                                              (16, 'errorCategories:edit'),
-                                              (17, 'errorCategories:delete'),
-                                              (18, 'errorMappings:view'),
-                                              (19, 'errorMappings:export'),
-                                              (20, 'errorMappings:create'),
-                                              (21, 'errorMappings:edit'),
-                                              (22, 'errorMappings:delete'),
-                                              (23, 'sourceSystems:view'),
-                                              (24, 'sourceSystems:export'),
-                                              (25, 'sourceSystems:create'),
-                                              (26, 'sourceSystems:edit'),
-                                              (27, 'sourceSystems:delete'),
-                                              (28, 'dynamicRoutes:view'),
-                                              (29, 'dynamicRoutes:create'),
-                                              (30, 'dynamicRoutes:edit'),
-                                              (31, 'dynamicRoutes:delete'),
-                                              (32, 'dynamicRoutes:revert'),
-                                              (33, 'dynamicRoutes:stop'),
-                                              (34, 'dynamicRoutes:start'),
-                                              (35, 'dynamicRoutes:validate'),
-                                              (36, 'dynamicRoutes:test'),
-                                              (37, 'dynamicRoutes:export'),
-                                              (38, 'middlewareLogs:view'),
-                                              (39, 'middlewareLogs:export'),
-                                              (40, 'jobExecutionLogs:view'),
-                                              (41, 'jobExecutionLogs:viewById'),
-                                              (42, 'jobExecutionLogs:export'),
-                                              (43, 'scheduledJobsLogs:view'),
-                                              (44, 'scheduledJobsLogs:export'),
-                                              (45, 'scheduledJobs:create'),
-                                              (46, 'scheduledJobs:pause'),
-                                              (47, 'scheduledJobs:resume'),
-                                              (48, 'scheduledJobs:edit'),
-                                              (49, 'scheduledJobs:view'),
-                                              (50, 'scheduledJobs:delete'),
-                                              (51, 'scheduledJobs:test'),
-                                              (52, 'scheduledJobs:export'),
-                                              (53, 'user:view'),
-                                              (54, 'user:viewById'),
-                                              (55, 'user:create'),
-                                              (56, 'user:delete'),
-                                              (57, 'user:activate'),
-                                              (58, 'user:edit'),
-                                              (59, 'user:viewByRole'),
-                                              (60, 'user:generate-token'),
-                                              (61, 'role:view'),
-                                              (62, 'role:create'),
-                                              (63, 'dynamicRoutesLogs:view'),
-                                              (64, 'integrationMapping:view'),
-                                              (65, 'integrationMapping:create'),
-                                              (66, 'integrationMapping:edit'),
-                                              (67, 'integrationMapping:delete'),
-                                              (68, 'integrationMapping:export')
 
-    ON CONFLICT DO NOTHING;
+                                              (3, 'errorCategories:view'),
+                                              (4, 'errorCategories:export'),
+                                              (5, 'errorCategories:create'),
+                                              (6, 'errorCategories:edit'),
+
+                                              (7, 'errorMappings:view'),
+                                              (8, 'errorMappings:export'),
+                                              (9, 'errorMappings:create'),
+                                              (10, 'errorMappings:edit'),
+
+                                              (11, 'sourceSystems:view'),
+                                              (12, 'sourceSystems:export'),
+                                              (13, 'sourceSystems:create'),
+                                              (14, 'sourceSystems:edit'),
+
+                                              (15, 'dynamicRoutes:view'),
+                                              (16, 'dynamicRoutes:create'),
+                                              (17, 'dynamicRoutes:edit'),
+                                              (18, 'dynamicRoutes:delete'),
+                                              (19, 'dynamicRoutes:revert'),
+                                              (20, 'dynamicRoutes:stop'),
+                                              (21, 'dynamicRoutes:start'),
+                                              (22, 'dynamicRoutes:validate'),
+                                              (23, 'dynamicRoutes:test'),
+                                              (24, 'dynamicRoutes:export'),
+
+                                              (25, 'dynamicRoutesLogs:view'),
+                                              (26, 'dynamicRoutesLogs:export'),
+
+                                              (27, 'middlewareLogs:view'),
+                                              (28, 'middlewareLogs:export'),
+
+                                              (29, 'scheduledJobs:create'),
+                                              (30, 'scheduledJobs:pause'),
+                                              (31, 'scheduledJobs:resume'),
+                                              (32, 'scheduledJobs:edit'),
+                                              (33, 'scheduledJobs:view'),
+                                              (34, 'scheduledJobs:delete'),
+                                              (35, 'scheduledJobs:test'),
+                                              (36, 'scheduledJobs:export'),
+
+                                              (37, 'jobExecutionLogs:view'),
+                                              (38, 'jobExecutionLogs:export'),
+
+                                              (39, 'scheduledJobsLogs:view'),
+                                              (40, 'scheduledJobsLogs:export'),
+
+                                              (41, 'user:view'),
+                                              (42, 'user:create'),
+                                              (43, 'user:delete'),
+                                              (44, 'user:activate'),
+                                              (45, 'user:edit'),
+                                              (46, 'user:viewByRole'),
+                                              (47, 'user:generate-token'),
+
+                                              (48, 'role:view'),
+                                              (49, 'role:create'),
+
+                                              (50, 'userPermissions:view'),
+                                              (51, 'userPermissions:edit'),
+
+                                              (52, 'routePermissions:view'),
+                                              (53, 'routePermissions:edit'),
+
+                                              (54, 'integrationMapping:view'),
+                                              (55, 'integrationMapping:create'),
+                                              (56, 'integrationMapping:edit'),
+                                              (57, 'integrationMapping:delete'),
+                                              (58, 'integrationMapping:export')
+
+
+ON CONFLICT DO NOTHING;
 
 
 INSERT INTO public.users
@@ -107,7 +112,7 @@ ALTER TABLE public.role_permissions
 INSERT INTO public.role_permissions (role_id, permission_id)
 SELECT 1, id
 FROM public.permissions
-WHERE id BETWEEN 1 AND 68
+WHERE id BETWEEN 1 AND 58
     ON CONFLICT(role_id, permission_id) DO NOTHING;
 
 -- user

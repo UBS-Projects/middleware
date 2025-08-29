@@ -9,6 +9,7 @@ import com.middleware.backend.users.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -68,6 +69,7 @@ public class AuthController {
     }
 
     @PostMapping("/token")
+    @PreAuthorize("hasAuthority('user:generate-token')")
     @Transactional  // optional but recommended to keep session open
     public AuthResponse generateToken(@RequestParam Long id,
                                       @RequestParam(required = false) Integer expirationDays,

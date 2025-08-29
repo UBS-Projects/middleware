@@ -98,20 +98,6 @@ public class SourceSystemService {
         return sourceSystemMapper.toDto(updatedSourceSystem);
     }
 
-    @Transactional
-    public void deleteSourceSystem(Long id) {
-        SourceSystem sourceSystem = sourceSystemRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Source system not found with id: " + id));
-
-        long usageCount = sourceSystemRepository.countErrorMappingsBySourceSystemId(id);
-        if (usageCount > 0) {
-            throw new IllegalStateException("Cannot delete source system with id " + id + " because it is used by " + usageCount + " error mapping(s).");
-        }
-
-        // Soft delete: set active to false instead of actual deletion
-        sourceSystem.setActive(false);
-        sourceSystemRepository.save(sourceSystem);
-    }
 
     @Transactional
     public SourceSystemDto toggleSourceSystem(Long id) {

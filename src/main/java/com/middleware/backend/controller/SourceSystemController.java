@@ -133,23 +133,7 @@ public class SourceSystemController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('sourceSystems:delete')")
-    public ResponseEntity<?> deleteSourceSystem(@PathVariable Long id) {
-        try {
-            sourceSystemService.deleteSourceSystem(id);
-            return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (IllegalStateException e) {
-            log.warn("Cannot delete source system: {}", e.getMessage());
-            return ResponseEntity.badRequest().body(createErrorResponse(e.getMessage()));
-        } catch (Exception e) {
-            log.error("Error deleting source system with ID: {}", id, e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(createErrorResponse("Failed to delete source system"));
-        }
-    }
+
 
     @PostMapping("/{id}/toggle")
     @PreAuthorize("hasAuthority('sourceSystems:edit')")
