@@ -25,6 +25,7 @@ public interface DynamicRouteRepository
         DynamicRouteEntity findByRouteIdAndDefaultVersionTrue(String routeId);
 
         Page<DynamicRouteEntity> findByActiveTrue(Pageable pageable);
+        List<DynamicRouteEntity> findByActiveTrue();
 
         Page<DynamicRouteEntity> findByRouteId(String routeId, Pageable pageable);
 
@@ -45,5 +46,12 @@ public interface DynamicRouteRepository
         boolean existsByRouteIdAndActiveTrue(@Param("routeId") String routeId);
 
 
-        Optional<DynamicRouteEntity> findByPath(String path);
+        Optional<DynamicRouteEntity> findByPathAndActive(String path,boolean active);
+
+        Optional<DynamicRouteEntity> findFirstByRouteIdAndActiveTrue(String routeId);
+
+        // Get all distinct routeIds
+        @Query("SELECT DISTINCT r.routeId FROM DynamicRouteEntity r")
+        List<String> findAllDistinctRouteIds();
+
 }

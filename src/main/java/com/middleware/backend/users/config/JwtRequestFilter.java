@@ -53,9 +53,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 AntPathMatcher matcher = new AntPathMatcher();
                 String normalizedPath = path.replaceFirst("^/camel", "");
                 Pageable page = PageRequest.of(0,100000);
-                List<String> dbRoutes = routeService.getAllRoutes(page).map(
+                List<String> dbRoutes = routeService.getActiveRoutes().stream().map(
                         r -> r.getPath()
-                ).stream().toList();
+                ).toList();
 
 
                 if(path.startsWith("/camel/")) {
@@ -67,7 +67,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                         if (matcher.match(pattern, normalizedPath)) {
 
-                             matchedRouteId = routeService.getRouteIdByPath(dbRoute);;
+                             matchedRouteId = routeService.getRouteIdByPath(dbRoute);
                             break;
                         }
                     }

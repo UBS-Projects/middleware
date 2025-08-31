@@ -30,6 +30,10 @@ public class RoutesPermissionsService {
 
 
     public void save(RoutesPermissionsRequest body){
+        Optional<RoutesPermissions> exists = repo.findByRouteId(body.getRouteId());
+        if(exists.isPresent()){
+            return;
+        }
         RoutesPermissions entity = RoutesPermissions.builder()
                 .routeId(body.getRouteId())
                 .build();

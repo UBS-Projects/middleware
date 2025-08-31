@@ -639,9 +639,9 @@ public class DynamicRouteService {
         return routeRepository.findAll(spec, pageable);
     }
 
-    public Page<DynamicRouteEntity> getActiveRoutes(Pageable pageable) {
+    public List<DynamicRouteEntity> getActiveRoutes() {
         log.info("Fetching active routes with pagination");
-        return routeRepository.findByActiveTrue(pageable);
+        return routeRepository.findByActiveTrue();
     }
 
     public Page<DynamicRouteEntity> getRoutesByRouteId(String routeId, Pageable pageable) {
@@ -1092,7 +1092,7 @@ public class DynamicRouteService {
     }
 
     public String getRouteIdByPath(String path) {
-        return routeRepository.findByPath(path).get().getRouteId();
+        return routeRepository.findByPathAndActive(path,true).get().getRouteId();
     }
 
     /**
@@ -1263,30 +1263,34 @@ public class DynamicRouteService {
     @Transactional
     public void syncRouteStatuses() {
 
-        String userEmail = "System"; // fallback
+        String userEmail = "System";
 
         log.info("Starting route status sync with Camel context");
 
-        List<DynamicRouteEntity> defaultRoutes = routeRepository.findAll();
+        // Step 1: Get distinct routeIds
+        List<String> routeIds = routeRepository.findAllDistinctRouteIds();
 
-        for (DynamicRouteEntity entity : defaultRoutes) {
-            String routeId = entity.getRouteId();
+        for (String routeId : routeIds) {
             try {
+                // Step 2: Get only the active version for this routeId
+                Optional<DynamicRouteEntity> activeEntityOpt = routeRepository.findFirstByRouteIdAndActiveTrue(routeId);
+
+                if (activeEntityOpt.isEmpty()) {
+                    log.warn("No active version found for route {}", routeId);
+                    continue;
+                }
+
+                DynamicRouteEntity entity = activeEntityOpt.get();
+
                 ServiceStatus status = camelContext.getRouteController().getRouteStatus(routeId);
 
                 if (status == null) {
                     // Route not present in Camel context
-                    if (entity.isActive()) {
-                        // DB says active → re-add and start it
-                        loadRoute(entity.getYamlContent()); // make sure this builds the route from entity
-                        camelContext.getRouteController().startRoute(routeId);
+                    loadRoute(entity.getYamlContent()); // make sure this builds the route from entity
+                    camelContext.getRouteController().startRoute(routeId);
 
-                        audit(routeId, entity.getVersion(), "sync", "Re-added and started route in context",userEmail,"SUCCESS");
-                        log.info("Re-added route {} to context (DB says active)", routeId);
-                    } else {
-                        // DB says inactive → nothing to do
-                        log.info("Route {} not found in context and DB says inactive → skipping", routeId);
-                    }
+                    audit(routeId, entity.getVersion(), "sync", "Re-added and started route in context", userEmail, "SUCCESS");
+                    log.info("Re-added route {} to context (DB says active)", routeId);
                     continue;
                 }
 
@@ -1295,14 +1299,14 @@ public class DynamicRouteService {
                 // DB says active → ensure context route is running
                 if (entity.isActive() && !isStarted) {
                     camelContext.getRouteController().startRoute(routeId);
-                    audit(routeId, entity.getVersion(), "sync", "Started route in context (DB says active)",userEmail,"SUCCESS");
+                    audit(routeId, entity.getVersion(), "sync", "Started route in context (DB says active)", userEmail, "SUCCESS");
                     log.info("Started route {} in context (DB says active)", routeId);
                 }
 
-                // DB says inactive → ensure context route is stopped
+                // This should never trigger now because we only loop active versions
                 else if (!entity.isActive() && isStarted) {
                     camelContext.getRouteController().stopRoute(routeId);
-                    audit(routeId, entity.getVersion(), "sync", "Stopped route in context (DB says inactive)",userEmail,"SUCCESS");
+                    audit(routeId, entity.getVersion(), "sync", "Stopped route in context (DB says inactive)", userEmail, "SUCCESS");
                     log.info("Stopped route {} in context (DB says inactive)", routeId);
                 }
 
@@ -1313,5 +1317,6 @@ public class DynamicRouteService {
 
         log.info("Completed route status sync");
     }
+
 
 }
