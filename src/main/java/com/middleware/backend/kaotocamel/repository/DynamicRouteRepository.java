@@ -46,6 +46,10 @@ public interface DynamicRouteRepository
         boolean existsByRouteIdAndActiveTrue(@Param("routeId") String routeId);
 
 
+        Optional<DynamicRouteEntity> findByPath(String path);
+
+        // Method to check for duplicate route by path and httpMethod
+        Optional<DynamicRouteEntity> findByPathAndHttpMethod(String path, String httpMethod);
         Optional<DynamicRouteEntity> findByPathAndActive(String path,boolean active);
 
         Optional<DynamicRouteEntity> findFirstByRouteIdAndActiveTrue(String routeId);
