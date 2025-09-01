@@ -28,9 +28,17 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // Get authorities from roles + permissions
         List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName())) // add roles
+                .collect(Collectors.toList());
+
+// Add permissions (from roles or directly assigned)
+        List<GrantedAuthority> permissions = user.getRoles().stream()
                 .flatMap(role -> role.getPermissions().stream())
                 .map(permission -> new SimpleGrantedAuthority(permission.getName()))
                 .collect(Collectors.toList());
+
+// Merge roles + permissions
+        authorities.addAll(permissions);
 
 
         return org.springframework.security.core.userdetails.User

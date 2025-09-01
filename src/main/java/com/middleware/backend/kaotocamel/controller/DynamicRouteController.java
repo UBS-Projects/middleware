@@ -128,7 +128,7 @@ public class DynamicRouteController {
     }
 
     @PostMapping(value = "/test", consumes = "application/json", produces = "application/json")
-    @PreAuthorize("hasAnyAuthority('dynamicRoutes:test')")
+    @PreAuthorize("hasAnyAuthority('dynamicRoutes:test') or hasRole('ADMIN')" )
     public ResponseEntity<RouteTestResult> testRoute(@RequestBody RouteTestRequest request) {
         RouteTestResult result = routeService.testRoute(request.getYamlContent(), request.getTestMessage());
         return result.isSuccess() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
