@@ -1033,9 +1033,8 @@ public class DynamicRouteService {
     }
 
     public byte[] exportFile(Specification<DynamicRouteAudit> spec, Pageable pageable, String type) {
-        Page<DynamicRouteAudit> audits = auditRepository.findAll(spec, pageable);
-        List<DynamicRouteAudit> data = audits.getContent();
-
+        Page<?> audits = getLatestRoutesLogs(spec, pageable);
+        List<DynamicRouteAudit> data = (List<DynamicRouteAudit>) audits.getContent();
         try {
             if ("CSV".equalsIgnoreCase(type)) {
                 return exportToCsv(data);

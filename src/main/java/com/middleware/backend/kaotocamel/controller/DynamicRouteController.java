@@ -423,7 +423,7 @@ public class DynamicRouteController {
     public ResponseEntity<Page<?>> getRouteAudits(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) String userEmail,
             @RequestParam(required = false) String action,
             @RequestParam(required = false) Integer version,
             @RequestParam(required = false) String routeId,
@@ -434,7 +434,7 @@ public class DynamicRouteController {
             ) {
         try {
             Specification<DynamicRouteAudit> spec = Specification
-                    .where(DynamicRouteLogsSpecification.hasField("userName", userName, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .where(DynamicRouteLogsSpecification.hasField("userEmail", userEmail, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
                     .and(DynamicRouteLogsSpecification.hasField("action", action, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
                     .and(DynamicRouteLogsSpecification.hasField("routeId", routeId, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
                     .and(DynamicRouteLogsSpecification.createdBetween(startDate, endDate));
@@ -472,8 +472,9 @@ public class DynamicRouteController {
     @PostMapping("/audits/{type}")
     @PreAuthorize("hasAnyAuthority('dynamicRoutesLogs:view')")
     public ResponseEntity<byte[]> export(
-            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) String userEmail,
             @RequestParam(required = false) String action,
+            @RequestParam(required = false) Integer version,
             @RequestParam(required = false) String routeId,
             @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
@@ -482,12 +483,14 @@ public class DynamicRouteController {
             @PathVariable String type
     ) {
         try {
+
+
             Specification<DynamicRouteAudit> spec = Specification
-                    .where(DynamicRouteLogsSpecification.hasField("userName", userName, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
-                    .and(DynamicRouteLogsSpecification.hasField("action", action, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .where(DynamicRouteLogsSpecification.hasField("userEmail", userEmail, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .and(DynamicRouteLogsSpecification.hasField("action", action, DynamicRouteLogsSpecification.MatchMode.EXACT))
                     .and(DynamicRouteLogsSpecification.hasField("routeId", routeId, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
                     .and(DynamicRouteLogsSpecification.createdBetween(startDate, endDate));
-            Pageable pageable = PageRequest.of(0, 100000,
+            Pageable pageable = PageRequest.of(0, 1000000,
                     sortDirection.equalsIgnoreCase("asc")
                             ? Sort.by(sortedBy).ascending()
                             : Sort.by(sortedBy).descending());
