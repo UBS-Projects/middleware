@@ -38,6 +38,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -274,7 +276,11 @@ public class DynamicRouteService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-
+        String authHeader = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .getRequest().getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            headers.set("Authorization", authHeader);
+        }
         // Add any additional headers if needed
         if (additionalHeaders != null) {
             additionalHeaders.forEach(headers::set);
@@ -285,7 +291,7 @@ public class DynamicRouteService {
             ResponseEntity<String> response = restTemplate.exchange(uri, httpMethod, entity, String.class);
             return response.getBody();
         } catch (CamelExecutionException e) {
-            throw e;
+            throw new CamelExecutionException(e.getMessage(), null, e);
         }
     }
 
@@ -1027,9 +1033,8 @@ public class DynamicRouteService {
     }
 
     public byte[] exportFile(Specification<DynamicRouteAudit> spec, Pageable pageable, String type) {
-        Page<DynamicRouteAudit> audits = auditRepository.findAll(spec, pageable);
-        List<DynamicRouteAudit> data = audits.getContent();
-
+        Page<?> audits = getLatestRoutesLogs(spec, pageable);
+        List<DynamicRouteAudit> data = (List<DynamicRouteAudit>) audits.getContent();
         try {
             if ("CSV".equalsIgnoreCase(type)) {
                 return exportToCsv(data);

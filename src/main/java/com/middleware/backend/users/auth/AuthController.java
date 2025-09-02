@@ -6,9 +6,13 @@ import com.middleware.backend.users.Roles.model.RoutesPermissions;
 import com.middleware.backend.users.config.JwtUtil;
 import com.middleware.backend.users.model.User;
 import com.middleware.backend.users.repository.UserRepository;
+import com.middleware.backend.users.tokens.dto.TokenDto;
+import com.middleware.backend.users.tokens.model.Token;
+import com.middleware.backend.users.tokens.service.TokenService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -35,12 +40,15 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
+    private final TokenService tokenService;
+
 
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
+        long expirationMillis = 1000 * 60 * 60 * 8;
         Optional<User> user = userRepository.findActiveByEmail(request.getEmail());
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         String jwt = jwtUtil.generateToken(
@@ -63,11 +71,22 @@ public class AuthController {
                         .distinct()                                // optional: remove duplicates
                         .toList(),
 
-                1000 * 60 * 60 * 24
+                expirationMillis
+        );
+        tokenService.save(Token.builder()
+                .user(user.get())
+                .token(jwt)
+                .isValid(true)
+                .createdAt(new Timestamp(System.currentTimeMillis()))
+                .expiresAt(new Timestamp(System.currentTimeMillis() + expirationMillis))
+                .build()
         );
         return new AuthResponse(jwt);
     }
-
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestBody AuthResponse req) {
+        return tokenService.logout(jwtUtil.extractEmail(req.getToken()));
+    }
     @PostMapping("/token")
     @PreAuthorize("hasAuthority('user:generate-token')")
     @Transactional  // optional but recommended to keep session open
@@ -118,6 +137,14 @@ public class AuthController {
 
 
         String jwt = jwtUtil.generateToken(userDetails.getUsername(), roles, pers,routes, expirationMillis);
+        tokenService.save(Token.builder()
+                .user(user)
+                .token(jwt)
+                .isValid(true)
+                .createdAt(new Timestamp(System.currentTimeMillis()))
+                .expiresAt(new Timestamp(System.currentTimeMillis() + expirationMillis))
+                .build()
+        );
         return new AuthResponse(jwt);
     }
 

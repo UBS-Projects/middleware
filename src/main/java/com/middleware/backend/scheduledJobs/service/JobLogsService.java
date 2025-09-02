@@ -33,9 +33,6 @@ public class JobLogsService {
 
     public ResponseEntity<?> getAll(Specification<ExecutionHistory> spec, Pageable pageable) {
         Page<ExecutionHistory> page = repo.findAll(spec, pageable);
-        if (page.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
         return ResponseEntity.ok(page);
     }
 

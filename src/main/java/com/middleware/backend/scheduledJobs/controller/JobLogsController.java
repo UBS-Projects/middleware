@@ -28,6 +28,7 @@ public class JobLogsController {
     @PreAuthorize("hasAuthority('scheduledJobsLogs:view')")
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String jobName,
+            @RequestParam(required = false) String userEmail,
             @RequestParam(required = false) String apiEndpoint,
             @RequestParam(required = false) Status status,
             @RequestParam(required = false, defaultValue = "createdAt") String sortedBy,
@@ -42,6 +43,7 @@ public class JobLogsController {
                 : Sort.by(sortedBy).descending());
         Specification<ExecutionHistory> spec = Specification
                 .where(JobLogsSpecification.hasField("scheduledJobName", jobName, JobLogsSpecification.MatchMode.CONTAINS))
+                .and(JobLogsSpecification.hasField("userEmail", userEmail, JobLogsSpecification.MatchMode.CONTAINS))
                 .and(JobLogsSpecification.hasField("scheduledJobPath", apiEndpoint, JobLogsSpecification.MatchMode.CONTAINS))
                 .and(JobLogsSpecification.hasField("status", status, JobLogsSpecification.MatchMode.EXACT))
                 .and(JobLogsSpecification.createdBetween(createdBefore, createdAfter));
