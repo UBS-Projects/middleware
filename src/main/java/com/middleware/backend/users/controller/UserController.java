@@ -5,6 +5,7 @@ import com.middleware.backend.users.model.MatchMode;
 import com.middleware.backend.users.model.User;
 import com.middleware.backend.users.service.UserService;
 import com.middleware.backend.users.specification.UserSpecification;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +30,11 @@ public class UserController {
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('user:view')")
+    @Operation(
+            summary = "List users",
+            description = "Retrieves a paginated list of users with optional filters by ID, username, email, status, " +
+                    "and creation date range. Supports sorting by any field."
+    )
     public ResponseEntity<Page<?>> getAllUsers(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String userName,
@@ -56,6 +62,10 @@ public class UserController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('user:view')")
+    @Operation(
+            summary = "Get user by ID",
+            description = "Retrieves detailed information of a specific user by their ID."
+    )
     public ResponseEntity<?> getUserById(@PathVariable Long id){
         return service.getUserById(id);
     }
@@ -63,12 +73,22 @@ public class UserController {
 
     @PostMapping("")
     @PreAuthorize("hasAuthority('user:create')")
+    @Operation(
+            summary = "Create new user",
+            description = "Creates a new user in the system using the provided user details. Requires 'user:create' authority."
+    )
     public ResponseEntity<?> createNewUser(@RequestBody UserRequest user){
         return service.createNewUser(user);
     }
 
     @PutMapping("/{id}/{status}")
     @PreAuthorize("hasAnyAuthority('user:edit','user:activate','user:delete')")
+    @Operation(
+            summary = "Update user status",
+            description = "Updates a user's status to either ACTIVATE or INACTIVATE based on the provided status path variable. "+
+                          "Requires appropriate authority depending on action ('user:edit', 'user:activate', 'user:delete')."
+
+    )
     public ResponseEntity<?> deleteUser(@PathVariable Long id,
                                         @PathVariable String status){
         if(status.equals("DELETE"))
@@ -78,6 +98,10 @@ public class UserController {
 
     @PatchMapping("/{id}")
     @PreAuthorize("hasAuthority('user:edit')")
+    @Operation(
+            summary = "Edit user details",
+            description = "Updates the details of an existing user by their ID. Requires 'user:edit' authority."
+    )
     public ResponseEntity<?> EditUser(@PathVariable("id") Long id, @RequestBody UserRequest user){
         return service.editUser(id, user);
     }
@@ -86,6 +110,10 @@ public class UserController {
 
     @GetMapping("/role/{role}")
     @PreAuthorize("hasAuthority('user:viewByRole')")
+    @Operation(
+            summary = "Get users by role",
+            description = "Retrieves a paginated list of users who are assigned a specific role. Requires 'user:viewByRole' authority."
+    )
     public ResponseEntity<?> getUsersByRole(@PathVariable String role,
     @RequestParam(defaultValue = "0") int page
 

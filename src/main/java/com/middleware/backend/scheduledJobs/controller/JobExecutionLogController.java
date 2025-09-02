@@ -6,6 +6,7 @@ import com.middleware.backend.scheduledJobs.model.JobExecutionLogs;
 import com.middleware.backend.scheduledJobs.service.JobExecutionlogsService;
 import com.middleware.backend.scheduledJobs.specification.JobExecutionLogsSpecification;
 import com.middleware.backend.scheduledJobs.specification.JobLogsSpecification;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,10 @@ public class JobExecutionLogController {
     private final JobExecutionlogsService service;
     @GetMapping
     @PreAuthorize("hasAuthority('jobExecutionLogs:view')")
+    @Operation(
+            summary = "List job execution logs",
+            description = "Retrieves a paginated list of job execution logs with optional filters for job name, API endpoint, status, and execution start time range. Requires 'jobExecutionLogs:view' authority."
+    )
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String jobName,
             @RequestParam(required = false) String apiEndpoint,
@@ -54,6 +59,10 @@ public class JobExecutionLogController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('jobExecutionLogs:view')")
+    @Operation(
+            summary = "Get job execution log by ID",
+            description = "Fetches the details of a specific job execution log entry by its unique identifier. Requires 'jobExecutionLogs:view' authority."
+    )
     public ResponseEntity<?> getById(
             @PathVariable("id") Long id
     ){
@@ -65,6 +74,10 @@ public class JobExecutionLogController {
 
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('jobExecutionLogs:export')")
+    @Operation(
+            summary = "Export job execution logs",
+            description = "Exports job execution logs to CSV or Excel format. Supports filtering by job name, API endpoint, status, and execution start time range. Requires 'jobExecutionLogs:export' authority."
+    )
     public ResponseEntity<byte[]> exportFile(
             @RequestParam(required = false) String jobName,
             @RequestParam(required = false) String apiEndpoint,

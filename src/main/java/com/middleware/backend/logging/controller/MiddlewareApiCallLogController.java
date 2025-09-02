@@ -10,6 +10,7 @@ import com.middleware.backend.logging.model.MiddlewareApiCallLog;
 import com.middleware.backend.logging.mapper.MiddlewareApiCallLogMapper;
 import com.middleware.backend.logging.repository.MiddlewareApiCallLogRepository;
 import com.middleware.backend.spec.MiddlewareApiCallLogSpecification;
+import io.swagger.v3.oas.annotations.Operation;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -33,6 +34,10 @@ public class MiddlewareApiCallLogController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('middlewareLogs:view')")
+    @Operation(
+            summary = "List middleware API call logs",
+            description = "Retrieves a paginated list of middleware API call logs with optional filters and sorting. Requires 'middlewareLogs:view' authority."
+    )
     public ResponseEntity<?> getAll(
             @RequestParam Map<String, String> filters,
             @RequestParam(defaultValue = "0") int page,
@@ -60,6 +65,10 @@ public class MiddlewareApiCallLogController {
 
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('middlewareLogs:export')")
+    @Operation(
+            summary = "Export middleware API call logs",
+            description = "Exports middleware API call logs in CSV or Excel (XLSX) format. Supports filtering. Requires 'middlewareLogs:export' authority."
+    )
     public ResponseEntity<byte[]> exportFile(
             @RequestParam Map<String, String> filters,
             @PathVariable("type") String type) {

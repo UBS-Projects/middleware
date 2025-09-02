@@ -3,6 +3,7 @@ package com.middleware.backend.users.Roles.controller;
 
 import com.middleware.backend.users.Roles.dto.RoleRequest;
 import com.middleware.backend.users.Roles.service.RoleService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,12 +17,20 @@ public class RoleController {
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('role:view')")
+    @Operation(
+            summary = "List roles",
+            description = "Retrieves a list of all roles available in the system. Requires 'role:view' authority."
+    )
     public ResponseEntity<?> getAllRoles(){
         return service.getAll();
     }
 
     @PostMapping("")
     @PreAuthorize("hasAuthority('role:create')")
+    @Operation(
+            summary = "Create new role",
+            description = "Creates a new role with the provided details. Requires 'role:create' authority."
+    )
     public ResponseEntity<?> addNewRole(@RequestBody RoleRequest role){
         return  service.addNewRole(role);
     }

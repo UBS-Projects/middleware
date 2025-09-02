@@ -8,6 +8,7 @@ import com.middleware.backend.scheduledJobs.model.ScheduledJobs;
 import com.middleware.backend.scheduledJobs.service.JobLogsService;
 import com.middleware.backend.scheduledJobs.service.ScheduledJobsService;
 import com.middleware.backend.scheduledJobs.specification.ScheduledJobsSpecification;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.quartz.SchedulerException;
 import org.springframework.data.domain.Page;
@@ -48,6 +49,10 @@ public class ScheduledJobsController {
 
     @PatchMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('scheduledJobs:pause','scheduledJobs:resume')")
+    @Operation(
+            summary = "Pause or resume a scheduled job",
+            description = "Allows pausing or resuming a scheduled job by its ID. Requires appropriate permissions. Requires either 'scheduledJobs:pause' or 'scheduledJobs:resume' authority."
+    )
     public ResponseEntity<?> changeStatus(@PathVariable Long id,
                                           @RequestParam("status") String status) throws SchedulerException {
         String action = status.equals("pause") ? "pause" : "resume";
@@ -66,6 +71,10 @@ public class ScheduledJobsController {
 
     @PatchMapping("")
     @PreAuthorize("hasAuthority('scheduledJobs:edit')")
+    @Operation(
+            summary = "Edit a scheduled job",
+            description = "Updates an existing scheduled job definition with new details. Requires 'scheduledJobs:edit' authority."
+    )
     public ResponseEntity<?> edit(@RequestBody JobRequest job) throws SchedulerException {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
@@ -81,6 +90,10 @@ public class ScheduledJobsController {
 
     @PostMapping()
     @PreAuthorize("hasAuthority('scheduledJobs:create')")
+    @Operation(
+            summary = "Create a new scheduled job",
+            description = "Creates and schedules a new job based on the provided job request. Requires 'scheduledJobs:create' authority."
+    )
     public ResponseEntity<?> createJob(@RequestBody JobRequest job) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
@@ -95,12 +108,20 @@ public class ScheduledJobsController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('scheduledJobs:view')")
+    @Operation(
+            summary = "Get scheduled job by ID",
+            description = "Fetches details of a scheduled job by its unique identifier. Requires 'scheduledJobs:view' authority."
+    )
     public ResponseEntity<?> getById(@PathVariable long id){
         return service.getById(id);
     }
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('scheduledJobs:view')")
+    @Operation(
+            summary = "List scheduled jobs",
+            description = "Retrieves a paginated list of scheduled jobs with optional filters for job name, API endpoint, HTTP method, and enabled status. Requires 'scheduledJobs:view' authority."
+    )
     public ResponseEntity<Page<?>> getAll(
             @RequestParam(required = false) String jobName,
             @RequestParam(required = false) String apiEndpoint,
@@ -132,6 +153,10 @@ public class ScheduledJobsController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('scheduledJobs:delete')")
+    @Operation(
+            summary = "Deactivate a scheduled job",
+            description = "Deactivates (soft deletes) a scheduled job by its ID. Requires 'scheduledJobs:delete' authority."
+    )
     public ResponseEntity<?> deactivateJob(@PathVariable Long id) throws SchedulerException {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
@@ -146,6 +171,10 @@ public class ScheduledJobsController {
 
     @PostMapping("/test")
     @PreAuthorize("hasAuthority('scheduledJobs:test')")
+    @Operation(
+            summary = "Test a scheduled job",
+            description = "Tests a scheduled job configuration without deploying it, returning pass or fail status. Requires 'scheduledJobs:test' authority."
+    )
     public ResponseEntity<?> test(@RequestBody JobRequest jobRequest) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
@@ -163,6 +192,10 @@ public class ScheduledJobsController {
 
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('scheduledJobs:export')")
+    @Operation(
+            summary = "Export scheduled jobs",
+            description = "Exports scheduled jobs to CSV or Excel format with optional filters for job name, API endpoint, method, and enabled status. Requires 'scheduledJobs:export' authority."
+    )
     public ResponseEntity<byte[]> exportFile(
             @RequestParam(required = false) String jobName,
             @RequestParam(required = false) String apiEndpoint,

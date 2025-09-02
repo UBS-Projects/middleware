@@ -7,6 +7,7 @@ import com.middleware.backend.dto.SourceSystemOptionDto;
 import com.middleware.backend.service.ErrorMappingService;
 import com.middleware.backend.service.SourceSystemService;
 import com.middleware.backend.service.ErrorCategoryService; // إضافة هذا
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -38,6 +39,10 @@ public class ErrorMappingController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('errorMappings:view')")
+    @Operation(
+            summary = "Get all error mappings",
+            description = "Fetches a paginated list of error mappings with optional filters. Supports sorting and pagination. Requires 'errorMappings:view' authority."
+    )
     public ResponseEntity<Page<ErrorMappingDto>> getAllErrorMappings(
             @RequestParam Map<String, String> filters,
             @RequestParam(defaultValue = "0") int page,
@@ -62,6 +67,10 @@ public class ErrorMappingController {
 
     @GetMapping("/routes")
     @PreAuthorize("hasAuthority('errorMappings:view')")
+    @Operation(
+            summary = "Get available routes",
+            description = "Retrieves a list of all available routes that can be used for error mappings. Requires 'errorMappings:view' authority."
+    )
     public ResponseEntity<List<RouteOptionDto>> getAvailableRoutes() {
         try {
             List<RouteOptionDto> routes = errorMappingService.getAvailableRoutes();
@@ -74,6 +83,10 @@ public class ErrorMappingController {
 
     @GetMapping("/source-systems")
     @PreAuthorize("hasAuthority('sourceSystems:view')")
+    @Operation(
+            summary = "Get available source systems",
+            description = "Retrieves a list of all active source systems. Requires 'errorMappings:view' authority."
+    )
     public ResponseEntity<List<SourceSystemOptionDto>> getAvailableSourceSystems() {
         try {
             List<SourceSystemOptionDto> sourceSystems = sourceSystemService.getActiveSourceSystems()
@@ -90,6 +103,10 @@ public class ErrorMappingController {
     // إضافة endpoint جديد للحصول على Error Categories النشطة فقط
     @GetMapping("/error-categories")
     @PreAuthorize("hasAuthority('errorCategories:view')")
+    @Operation(
+            summary = "Get active error categories",
+            description = "Returns a list of active error categories with basic details (id, name, description, status). Requires 'errorMappings:view' authority."
+    )
     public ResponseEntity<List<Map<String, Object>>> getActiveErrorCategories() {
         try {
             List<Map<String, Object>> categories = errorCategoryService.getActiveCategories()
@@ -113,6 +130,10 @@ public class ErrorMappingController {
     // باقي methods تبقى كما هي...
     @GetMapping("/match")
     @PreAuthorize("hasAuthority('errorMappings:view')")
+    @Operation(
+            summary = "Find matching error mapping",
+            description = "Tries to match an error message to an error mapping for a given route and optional source system. Requires 'errorMappings:view' authority."
+    )
     public ResponseEntity<?> findMatchingErrorMapping(
             @RequestParam String routeId,
             @RequestParam(required = false) Long sourceSystemId,
@@ -145,6 +166,10 @@ public class ErrorMappingController {
 
     @GetMapping("/match/debug")
     @PreAuthorize("hasAuthority('errorMappings:view')")
+    @Operation(
+            summary = "Debug error mapping match",
+            description = "Returns detailed debug information when attempting to match an error mapping. Requires 'errorMappings:view' authority."
+    )
     public ResponseEntity<?> debugErrorMatching(
             @RequestParam String routeId,
             @RequestParam(required = false) Long sourceSystemId,
@@ -174,6 +199,10 @@ public class ErrorMappingController {
 
     @GetMapping("/count/{routeId}")
     @PreAuthorize("hasAuthority('errorMappings:view')")
+    @Operation(
+            summary = "Get error mapping count",
+            description = "Retrieves the number of error mappings associated with a given route ID. Requires 'errorMappings:view' authority."
+    )
     public ResponseEntity<Map<String, Long>> getErrorMappingCount(@PathVariable String routeId) {
         try {
             long count = errorMappingService.getCountByRouteId(routeId);
@@ -186,28 +215,12 @@ public class ErrorMappingController {
         }
     }
 
-    @GetMapping("/export")
-    @PreAuthorize("hasAuthority('errorMappings:export')")
-    public ResponseEntity<List<ErrorMappingDto>> exportErrorMappings(
-            @RequestParam(required = false) String routeId) {
-        try {
-            Map<String, String> filters = new HashMap<>();
-            if (routeId != null) {
-                filters.put("routeId", routeId);
-            }
-
-            Pageable pageable = PageRequest.of(0, Integer.MAX_VALUE);
-            Page<ErrorMappingDto> result = errorMappingService.getAllErrorMappings(filters, pageable);
-
-            return ResponseEntity.ok(result.getContent());
-        } catch (Exception e) {
-            log.error("Error exporting error mappings", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('errorMappings:view')")
+    @Operation(
+            summary = "Get error mapping by ID",
+            description = "Retrieves the details of a specific error mapping by its ID. Requires 'errorMappings:view' authority."
+    )
     public ResponseEntity<ErrorMappingDto> getErrorMappingById(@PathVariable Long id) {
         try {
             return errorMappingService.getErrorMappingById(id)
@@ -221,6 +234,10 @@ public class ErrorMappingController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('errorMappings:create')")
+    @Operation(
+            summary = "Create error mapping",
+            description = "Creates a new error mapping with the provided details. Requires 'errorMappings:create' authority."
+    )
     public ResponseEntity<?> createErrorMapping(@RequestBody ErrorMappingDto dto) {
         try {
             ErrorMappingDto created = errorMappingService.createErrorMapping(dto);
@@ -237,6 +254,10 @@ public class ErrorMappingController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('errorMappings:edit')")
+    @Operation(
+            summary = "Update error mapping",
+            description = "Updates an existing error mapping by its ID. Requires 'errorMappings:edit' authority."
+    )
     public ResponseEntity<?> updateErrorMapping(@PathVariable Long id, @RequestBody ErrorMappingDto dto) {
         try {
             ErrorMappingDto updated = errorMappingService.updateErrorMapping(id, dto);
@@ -256,6 +277,10 @@ public class ErrorMappingController {
 
     @PostMapping("/{id}/toggle")
     @PreAuthorize("hasAuthority('errorMappings:edit')")
+    @Operation(
+            summary = "Toggle error mapping status",
+            description = "Activates or deactivates an error mapping by flipping its status. Requires 'errorMappings:edit' authority."
+    )
     public ResponseEntity<?> toggleErrorMapping(@PathVariable Long id) {
         try {
             errorMappingService.toggleErrorMapping(id);
@@ -279,6 +304,10 @@ public class ErrorMappingController {
 
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('errorMappings:export')")
+    @Operation(
+            summary = "Export error mappings (CSV/Excel)",
+            description = "Exports error mappings into CSV or Excel format with optional filters, pagination, and sorting. Requires 'errorMappings:export' authority."
+    )
     public ResponseEntity<byte[]> export(
             @RequestParam Map<String, String> filters,
             @RequestParam(defaultValue = "0") int page,

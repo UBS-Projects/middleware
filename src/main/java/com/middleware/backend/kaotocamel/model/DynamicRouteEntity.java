@@ -22,7 +22,7 @@ public class DynamicRouteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "routeId", nullable = false)
+    @Column(name = "routeId", nullable = false,unique = true)
     private String routeId; // The unique route identifier (from YAML)
     @Column(name = "description", nullable = false)
     private String description;

@@ -4,6 +4,7 @@ import com.middleware.backend.dto.ErrorCategoryDto;
 import com.middleware.backend.model.ErrorCategory;
 import com.middleware.backend.service.ErrorCategoryService;
 import com.middleware.backend.spec.ErrorCategorySpecification;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -34,6 +35,10 @@ public class ErrorCategoryController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('errorCategories:view')")
+    @Operation(
+            summary = "Get all error categories",
+            description = "Fetches a paginated list of error categories with optional filters (name, description, status, and created date range). Supports sorting and pagination. Requires 'errorCategories:view' authority."
+    )
     public ResponseEntity<Page<?>> getAll(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description,
@@ -74,6 +79,10 @@ public class ErrorCategoryController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('errorCategories:view')")
+    @Operation(
+            summary = "Get error category by ID",
+            description = "Retrieves a specific error category using its unique ID. Requires 'errorCategories:view' authority."
+    )
     public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(categoryService.getCategoryById(id));
@@ -88,6 +97,10 @@ public class ErrorCategoryController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('errorCategories:create')")
+    @Operation(
+            summary = "Create error category",
+            description = "Creates a new error category with the provided details. Requires 'errorCategories:create' authority."
+    )
     public ResponseEntity<?> createCategory(@RequestBody ErrorCategoryDto dto) {
         try {
             ErrorCategoryDto createdDto = categoryService.createCategory(dto);
@@ -104,6 +117,10 @@ public class ErrorCategoryController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('errorCategories:edit')")
+    @Operation(
+            summary = "Update error category",
+            description = "Updates an existing error category by ID with the provided details. Requires 'errorCategories:edit' authority."
+    )
     public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody ErrorCategoryDto dto) {
         try {
             return ResponseEntity.ok(categoryService.updateCategory(id, dto));
@@ -126,6 +143,10 @@ public class ErrorCategoryController {
 
     @PostMapping("/{id}/toggle")
     @PreAuthorize("hasAuthority('errorCategories:edit')")
+    @Operation(
+            summary = "Toggle error category status",
+            description = "Activates or deactivates an error category by flipping its current status. Requires 'errorCategories:edit' authority."
+    )
     public ResponseEntity<?> toggleCategory(@PathVariable Long id) {
         try {
             ErrorCategoryDto updatedDto = categoryService.toggleCategory(id);
@@ -151,6 +172,10 @@ public class ErrorCategoryController {
 
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('errorCategories:export')")
+    @Operation(
+            summary = "Export error categories",
+            description = "Exports error categories in CSV or Excel format with optional filters (name, description, status, and created date range). Requires 'errorCategories:export' authority."
+    )
     public ResponseEntity<byte[]> export(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description,
