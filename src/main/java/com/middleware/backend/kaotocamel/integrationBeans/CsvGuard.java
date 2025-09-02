@@ -1,124 +1,129 @@
- package com.middleware.backend.kaotocamel.integrationBeans;
+package com.middleware.backend.kaotocamel.integrationBeans;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Pattern;
 
 @Component("csvGuard")
 public class CsvGuard implements Processor {
+
+    private static final Logger log = LoggerFactory.getLogger(CsvGuard.class);
+    private static final Pattern UUID_PATTERN = Pattern.compile(
+            "(?i)^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    );
 
     @Override
     public void process(Exchange exchange) {
         Message in = exchange.getIn();
 
-        // 0) ارفض multipart
-        String contentTypeHdr = headerString(in, Exchange.CONTENT_TYPE);
+        log.info("=== CSV Guard Processing ===");
+
+        // transactionUUID (required - query/header)
+        String transactionUUID = str(in.getHeader("transactionUUID", String.class));
+        if (transactionUUID == null) {
+            transactionUUID = str(in.getHeader("X-Transaction-UUID", String.class));
+        }
+        exchange.setProperty("transactionUUID", transactionUUID);
+
+        if (isBlank(transactionUUID)) {
+            reject(exchange, 400, "ERROR", "Missing required query parameter: transactionUUID");
+            return;
+        }
+        if (!UUID_PATTERN.matcher(transactionUUID.trim()).matches()) {
+            reject(exchange, 400, "ERROR", "Invalid transactionUUID format. Expect RFC4122 (e.g., 550e8400-e29b-41d4-a716-446655440000)");
+            return;
+        }
+        in.setHeader("X-Transaction-UUID", transactionUUID.trim());
+
+        String contentTypeHdr = str(in.getHeader(Exchange.CONTENT_TYPE, String.class));
         if (contentTypeHdr != null && contentTypeHdr.toLowerCase().contains("multipart/form-data")) {
-            reject(exchange, 415, "Only RAW/Binary CSV is supported (multipart/form-data not allowed)");
+            reject(exchange, 415, "ERROR", "Only RAW/Binary CSV is supported (multipart/form-data not allowed)");
             return;
         }
 
-        // 1) اقرأ الجسم كـ byte[] أو String
-        byte[] bodyBytes = in.getBody(byte[].class);
-        String bodyStr = null;
-
-        if (bodyBytes != null) {
-            bodyStr = new String(bodyBytes, StandardCharsets.UTF_8);
-        } else {
-            bodyStr = in.getBody(String.class);
-            if (bodyStr != null) bodyBytes = bodyStr.getBytes(StandardCharsets.UTF_8);
+        byte[] csvBytes = in.getBody(byte[].class);
+        if (csvBytes == null) {
+            String asText = in.getBody(String.class);
+            if (isBlank(asText)) {
+                reject(exchange, 400, "ERROR", "Empty CSV body");
+                return;
+            }
+            csvBytes = asText.getBytes(StandardCharsets.UTF_8);
         }
-
-        // 2) فحص الفراغ
-        boolean contentLengthZero = false;
-        Object cl = in.getHeader("Content-Length");
-        if (cl != null) {
-            try { contentLengthZero = Long.parseLong(String.valueOf(cl)) == 0L; } catch (NumberFormatException ignore) {}
-        }
-        boolean isEmpty =
-                (bodyBytes == null || bodyBytes.length == 0) ||
-                        (bodyStr == null || bodyStr.trim().isEmpty()) ||
-                        contentLengthZero;
-
-        if (isEmpty) {
-            reject(exchange, 400, "Empty CSV body");
+        if (csvBytes.length == 0) {
+            reject(exchange, 400, "ERROR", "Empty CSV body");
             return;
         }
+        in.setBody(csvBytes);
+        exchange.setProperty("_csvBytes", csvBytes);
 
-        // 3) ثبّت البودي كـ byte[] وخزّنه للـ Commit
-        in.setBody(bodyBytes);
-        exchange.setProperty("_csvBytes", bodyBytes);
+        String scheme = "CODE";
+        String schemeHdr = str(in.getHeader("scheme", String.class));
+        if (schemeHdr != null && schemeHdr.trim().matches("(?i)^uid$")) scheme = "UID";
+        if (schemeHdr != null && schemeHdr.trim().matches("(?i)^code$")) scheme = "CODE";
+        exchange.setProperty("scheme", scheme);
 
-        // 4) CamelFileName افتراضي
-        String fileName = headerString(in, "CamelFileName");
-        if (fileName == null || fileName.isBlank()) {
-            in.setHeader("CamelFileName", "uploaded.csv");
+        String strategy = "NEW_AND_UPDATES";
+        String strategyHdr = str(in.getHeader("strategy", String.class));
+        if (strategyHdr != null) {
+            String s = strategyHdr.trim();
+            if (s.matches("(?i)^append$")) strategy = "NEW";
+            else if (s.matches("(?i)^update$")) strategy = "UPDATES";
+            else if (s.matches("(?i)^delete$")) strategy = "DELETE";
+            else if (s.matches("(?i)^(new_and_updates|new|updates|delete)$")) strategy = s;
         }
+        exchange.setProperty("strategy", strategy);
 
-        // 5) scheme/strategy
-        String scheme   = normalizeScheme(headerString(in, "scheme"));   // UID|CODE|NAME
-        String strategy = normalizeStrategy(headerString(in, "strategy"));// MERGE|APPEND|UPDATE|DELETE|...
-
-        // 6) Query base — بدون dryRun، ومع format=csv
-        String queryBase =
+        final String qBase =
                 "async=false" +
-                        "&format=csv" +
-                        "&strategy=" + url(strategy) +
                         "&preheatCache=false" +
                         "&skipAudit=false" +
                         "&skipExistingCheck=false" +
                         "&firstRowIsHeader=true" +
-                        "&dataElementIdScheme=" + url(scheme) +
-                        "&orgUnitIdScheme=" + url(scheme) +
-                        "&categoryOptionComboIdScheme=" + url(scheme) +
-                        "&attributeOptionComboIdScheme=" + url(scheme) +
-                        "&idScheme=" + url(scheme);
+                        "&strategy=" + strategy +
+                        "&dataElementIdScheme=" + scheme +
+                        "&orgUnitIdScheme=" + scheme +
+                        "&categoryOptionComboIdScheme=" + scheme +
+                        "&attributeOptionComboIdScheme=" + scheme +
+                        "&idScheme=" + scheme;
+        exchange.setProperty("_queryBase", qBase);
 
-        exchange.setProperty("_queryBase", queryBase);
+        String dryRaw = "true";
+        String dryHdr1 = str(in.getHeader("dry-run", String.class));
+        String dryHdr2 = str(in.getHeader("dryRun", String.class));
+        if (!isBlank(dryHdr1)) dryRaw = dryHdr1;
+        else if (!isBlank(dryHdr2)) dryRaw = dryHdr2;
 
-        // 7) هيدرز افتراضية (سيعاد تثبيتها في YAML قبل الاستدعاء)
-        in.setHeader(Exchange.HTTP_METHOD, "POST");
-        in.setHeader(Exchange.CONTENT_TYPE, "application/csv"); // ✅ مهم
-        in.setHeader("Accept", "application/json");
+        String dryRun = toBoolString(dryRaw); // "true"/"false" normalized
+        exchange.setProperty("dryRun", dryRun);
+
+        log.info("CSV Guard OK — bytes={}, scheme={}, strategy={}, dryRun={}, qBase={}",
+                csvBytes.length, scheme, strategy, dryRun, qBase);
     }
 
-    private static String headerString(Message in, String name) {
-        Object v = in.getHeader(name);
-        return v == null ? null : String.valueOf(v);
+    private static String str(String s) { return s; }
+    private static boolean isBlank(String s) { return s == null || s.isBlank(); }
+
+    private static String toBoolString(String raw) {
+        if (raw == null) return "true";
+        String v = raw.trim().toLowerCase();
+        return (v.matches("^(true|1|yes)$")) ? "true" : "false";
     }
 
-    private static void reject(Exchange exchange, int httpCode, String msg) {
-        Message in = exchange.getIn();
-        in.setHeader(Exchange.HTTP_RESPONSE_CODE, httpCode);
+    private static void reject(Exchange ex, int code, String status, String message) {
+        Message in = ex.getIn();
+        in.setHeader(Exchange.HTTP_RESPONSE_CODE, code);
         in.setHeader(Exchange.CONTENT_TYPE, "application/json");
-        in.setBody("{\"success\":false,\"error\":\"" + escapeJson(msg) + "\"}");
-        exchange.setProperty(Exchange.ROUTE_STOP, Boolean.TRUE);
-        in.setHeader("CamelRouteStop", "true");
-        exchange.setRouteStop(true);
+        in.setBody("{\"status\":\"" + status + "\",\"message\":\"" + escape(message) +
+                "\",\"errorCode\":\"\",\"errorMessage\":\"\",\"details\":{}}");
+        ex.setRouteStop(true);
     }
 
-    private static String escapeJson(String s) {
-        return s == null ? "" : s.replace("\"", "\\\"");
-    }
-
-    private static String normalizeScheme(String schemeHeader) {
-        String s = (schemeHeader == null || schemeHeader.isBlank()) ? "CODE" : schemeHeader.trim().toUpperCase();
-        return s.matches("UID|CODE|NAME") ? s : "CODE";
-    }
-
-    private static String normalizeStrategy(String strategyHeader) {
-        String s = (strategyHeader == null || strategyHeader.isBlank()) ? "NEW_AND_UPDATES" : strategyHeader.trim().toUpperCase();
-        switch (s) {
-            case "MERGE":  return "NEW_AND_UPDATES";
-            case "APPEND": return "NEW";
-            case "UPDATE": return "UPDATES";
-            case "DELETE": return "DELETE";
-            default: return s.matches("NEW_AND_UPDATES|NEW|UPDATES|DELETE") ? s : "NEW_AND_UPDATES";
-        }
-    }
-
-    private static String url(String v) { return v == null ? "" : v; }
+    private static String escape(String s) { return s == null ? "" : s.replace("\\", "\\\\").replace("\"", "\\\""); }
 }

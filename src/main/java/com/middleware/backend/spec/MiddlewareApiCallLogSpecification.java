@@ -44,7 +44,7 @@ public class MiddlewareApiCallLogSpecification {
                         case "completedAtTo" ->
                                 predicates.add(cb.lessThanOrEqualTo(root.get("completedAt"), LocalDateTime.parse(value)));
 
-                        case "id", "apiEndpointId", "workflowId", "apiKeyId", "userId" ->
+                        case "id", "apiEndpointId", "workflowId", "apiKeyId" ->
                                 predicates.add(cb.equal(root.get(key), Long.parseLong(value)));
 
                         case "responseCodeGt" -> predicates.add(cb.gt(root.get("responseCode"), Integer.parseInt(value)));
@@ -52,9 +52,16 @@ public class MiddlewareApiCallLogSpecification {
                         case "responseCodeMin" -> predicates.add(cb.ge(root.get("responseCode"), Integer.parseInt(value)));
                         case "responseCodeMax" -> predicates.add(cb.le(root.get("responseCode"), Integer.parseInt(value)));
 
+                        case "sourceTransactionUUID" -> predicates.add(cb.equal(root.get("sourceTransactionUUID"), value));
+
+                        // Special handling for userId field (now contains user email)
+                        case "userId", "userEmail", "user_email" ->
+                                predicates.add(cb.like(cb.lower(root.get("userId")), "%" + value.toLowerCase() + "%"));
+
                         default -> predicates.add(cb.like(cb.lower(root.get(key)), "%" + value.toLowerCase() + "%"));
                     }
                 } catch (Exception ignored) {
+                    // If parsing fails, ignore the filter
                 }
             });
 
@@ -62,4 +69,3 @@ public class MiddlewareApiCallLogSpecification {
         };
     }
 }
-

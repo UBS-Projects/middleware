@@ -1,27 +1,29 @@
 package com.middleware.backend.kaotocamel.integrationBeans;
-// package com.middleware.backend.kaotocamel.config;
+
 import org.apache.camel.spi.HeaderFilterStrategy;
 import org.apache.camel.support.DefaultHeaderFilterStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Configuration
 public class Dhis2HeaderFilterConfig {
+
+    private static final Logger log = LoggerFactory.getLogger(Dhis2HeaderFilterConfig.class);
+
     @Bean("dhis2HeaderFilter")
     public HeaderFilterStrategy dhis2HeaderFilter() {
-        DefaultHeaderFilterStrategy f = new DefaultHeaderFilterStrategy();
-        f.setCaseInsensitive(true);
+        log.info("=== Configuring DHIS2 Header Filter (Static Test) ===");
 
-         f.getOutFilter().add("authorization");
-        f.getOutFilter().add("proxy-authorization");
-        f.getOutFilter().add("cookie");
-        f.getOutFilter().add("x-*");
+        DefaultHeaderFilterStrategy filter = new DefaultHeaderFilterStrategy();
+        filter.setCaseInsensitive(true);
 
-         f.getOutFilter().add("content-length");
-        f.getOutFilter().add("transfer-encoding");
-        f.getOutFilter().add("host");
-        f.getOutFilter().add("accept-encoding");
+        filter.getOutFilter().add("cookie");
+        filter.getOutFilter().add("set-cookie");
 
-        return f;
+        log.info("DHIS2 Header Filter configured - allowing most headers for testing");
+
+        return filter;
     }
 }

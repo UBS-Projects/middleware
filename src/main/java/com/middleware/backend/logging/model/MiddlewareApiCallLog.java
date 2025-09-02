@@ -74,12 +74,15 @@ public class MiddlewareApiCallLog {
     @Column(name = "api_key_id")
     private Long apiKeyId;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "user_id", length = 255)
+    private String userId;
 
     @Column(name = "error_message", columnDefinition = "TEXT")
     private String errorMessage;
 
     @Column(name = "retry_count")
     private Integer retryCount;
+
+    @Column(name = "source_transaction_uuid", length = 36, unique = true)
+    private String sourceTransactionUUID;
 }

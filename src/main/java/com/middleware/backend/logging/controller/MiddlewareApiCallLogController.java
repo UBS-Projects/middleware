@@ -94,9 +94,18 @@ public class MiddlewareApiCallLogController {
         }
     }
 
+    private String safeCsv(String value) {
+        if (value == null) return "";
+        String escaped = value.replace("\"", "\"\"");
+        if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
+            return "\"" + escaped + "\"";
+        }
+        return escaped;
+    }
+
     private String convertToCSV(List<MiddlewareApiCallLog> logs) {
         StringBuilder sb = new StringBuilder();
-        sb.append("ID,TransactionID,RouteID,ApiEndpoint,RequestMethod,Status,ResponseCode,ReceivedAt,CompletedAt,DurationMs,ClientIP,ApiKeyID,UserID,ErrorMessage,RetryCount\n");
+        sb.append("ID,TransactionID,RouteID,ApiEndpoint,RequestMethod,Status,ResponseCode,ReceivedAt,CompletedAt,DurationMs,ClientIP,ApiKeyID,UserEmail,ErrorMessage,RetryCount,SourceTransactionUUID\n");
 
         for (MiddlewareApiCallLog log : logs) {
             sb.append(log.getId()).append(",");
@@ -111,21 +120,13 @@ public class MiddlewareApiCallLogController {
             sb.append(log.getDurationMs() != null ? log.getDurationMs() : "").append(",");
             sb.append(safeCsv(log.getClientIp())).append(",");
             sb.append(log.getApiKeyId() != null ? log.getApiKeyId() : "").append(",");
-            sb.append(log.getUserId() != null ? log.getUserId() : "").append(",");
+            sb.append(safeCsv(log.getUserId())).append(","); // This now contains user email
             sb.append(safeCsv(log.getErrorMessage())).append(",");
-            sb.append(log.getRetryCount() != null ? log.getRetryCount() : "").append("\n");
+            sb.append(log.getRetryCount() != null ? log.getRetryCount() : "").append(",");
+            sb.append(safeCsv(log.getSourceTransactionUUID())).append("\n");
         }
 
         return sb.toString();
-    }
-
-    private String safeCsv(String value) {
-        if (value == null) return "";
-        String escaped = value.replace("\"", "\"\"");
-        if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
-            return "\"" + escaped + "\"";
-        }
-        return escaped;
     }
 
     private byte[] convertToExcel(List<MiddlewareApiCallLog> logs) throws IOException {
@@ -134,7 +135,7 @@ public class MiddlewareApiCallLogController {
 
             String[] headers = {
                     "ID","TransactionID","RouteID","ApiEndpoint","RequestMethod","Status","ResponseCode",
-                    "ReceivedAt","CompletedAt","DurationMs","ClientIP","ApiKeyID","UserID","ErrorMessage","RetryCount"
+                    "ReceivedAt","CompletedAt","DurationMs","ClientIP","ApiKeyID","UserEmail","ErrorMessage","RetryCount","SourceTransactionUUID"
             };
             Row headerRow = sheet.createRow(0);
             for (int i = 0; i < headers.length; i++) {
@@ -156,9 +157,10 @@ public class MiddlewareApiCallLogController {
                 row.createCell(9).setCellValue(log.getDurationMs() != null ? log.getDurationMs() : 0);
                 row.createCell(10).setCellValue(log.getClientIp() != null ? log.getClientIp() : "");
                 row.createCell(11).setCellValue(log.getApiKeyId() != null ? log.getApiKeyId() : 0);
-                row.createCell(12).setCellValue(log.getUserId() != null ? log.getUserId() : 0);
+                row.createCell(12).setCellValue(log.getUserId() != null ? log.getUserId() : ""); // User email
                 row.createCell(13).setCellValue(log.getErrorMessage() != null ? log.getErrorMessage() : "");
                 row.createCell(14).setCellValue(log.getRetryCount() != null ? log.getRetryCount() : 0);
+                row.createCell(15).setCellValue(log.getSourceTransactionUUID() != null ? log.getSourceTransactionUUID() : "");
             }
 
             for (int i = 0; i < headers.length; i++) sheet.autoSizeColumn(i);
@@ -169,4 +171,6 @@ public class MiddlewareApiCallLogController {
             }
         }
     }
+
+
 }

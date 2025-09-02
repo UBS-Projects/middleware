@@ -17,27 +17,32 @@ public class LoggingRoutePolicy extends RoutePolicySupport {
     public LoggingRoutePolicy(String routeId, MiddlewareApiCallLogService logService) {
         this.routeId = routeId;
         this.logService = logService;
-
     }
 
     @Override
     public void onExchangeBegin(Route route, Exchange exchange) {
-
-        log.info("LoggingRoutePolicy.onExchangeBegin: Route [{}] - Incoming exchange: {}", routeId,
-                exchange.getExchangeId());
-
-        long id = logService.createTransactionSync(routeId, exchange);
-        exchange.setProperty("apiLogId", id); // store ID for later use
-        log.info("LoggingRoutePolicy.onExchangeBegin: Route [{}] - call log created with for excahnage content {}",
-                routeId, exchange);
-
+        log.info("LoggingRoutePolicy.onExchangeBegin: Route [{}] - Incoming exchange: {}", routeId, exchange.getExchangeId());
+        try {
+            Long apiLogId = logService.createTransactionSync(routeId, exchange);
+            if (apiLogId != null && apiLogId > 0) {
+                exchange.setProperty("apiLogId", apiLogId);
+                log.info("LoggingRoutePolicy.onExchangeBegin: Route [{}] - call log created with ID {}", routeId, apiLogId);
+            } else {
+                log.info("LoggingRoutePolicy.onExchangeBegin: Route [{}] - Skipping log creation (dry-run or disabled)", routeId);
+            }
+        } catch (IllegalArgumentException e) {
+            log.error("LoggingRoutePolicy.onExchangeBegin: Route [{}] - Validation failed: {}", routeId, e.getMessage());
+            exchange.setRouteStop(true);
+        }
     }
 
     @Override
     public void onExchangeDone(Route route, Exchange exchange) {
-
-        logService.updateTransaction(exchange);
-
+        Long apiLogId = exchange.getProperty("apiLogId", Long.class);
+        if (apiLogId != null && apiLogId > 0) {
+            logService.updateTransaction(exchange);
+        } else {
+            log.debug("LoggingRoutePolicy.onExchangeDone: Route [{}] - No apiLogId found, skipping update", routeId);
+        }
     }
-
 }

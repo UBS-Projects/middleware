@@ -2,6 +2,7 @@ package com.middleware.backend.logging.dto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,8 +33,11 @@ public class MiddlewareApiCallLogDto {
     private Long durationMs;
     private String clientIp;
     private Long apiKeyId;
-    private Long userId;
-    // private Boolean throttlingApplied;
+
+    @JsonProperty("user_email")
+    private String userId;
+
     private String errorMessage;
     private Integer retryCount;
+    private String sourceTransactionUUID;
 }

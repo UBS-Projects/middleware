@@ -60,15 +60,26 @@ camel:
   servlet:
     mapping:
       context-path: /camel/*
-
-# DHIS2 Configuration
+  component:
+    http:
+      follow-redirects: true
+    https:
+      follow-redirects: true
+  ssl:
+    config:
+      trust-all: true
+#dhis2:
+#  base-url: play.im.dhis2.org/stable-2-41-5
+#  username: admin
+#  password: district
+#  timeout: 30000
+#  connect-timeout: 10000
 dhis2:
-  base-url: play.im.dhis2.org/stable-2-41-5
-  username: admin
-  password: district
+  base-url: hmis-dev.moh.gov.jo/dwh
+  username: supp_user
+  password: "F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z"
   timeout: 30000
   connect-timeout: 10000
-
 # SpringDoc OpenAPI Configuration
 springdoc:
   api-docs:
@@ -80,3 +91,4 @@ springdoc:
     tagsSorter: alpha
 
 #http://localhost:8081/swagger-ui/index.html
+#https://generate-uuid.com/?utm_source=chatgpt.com#
