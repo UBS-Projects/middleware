@@ -202,9 +202,6 @@ public class ErrorMappingService {
                 .collect(Collectors.toList());
     }
 
-    public long getCountByRouteId(String routeId) {
-        return errorMappingRepository.countActiveByRouteId(routeId);
-    }
 
     @Transactional
     public void toggleErrorMapping(Long id) {
@@ -224,34 +221,6 @@ public class ErrorMappingService {
     }
 
 
-    public Optional<ErrorMappingDto> findMatchingErrorMapping(String routeId, Long sourceSystemId, String errorMessage) {
-        log.info("Database-level error matching - routeId: '{}', sourceSystemId: {}, errorMessage: '{}'",
-                routeId, sourceSystemId, errorMessage);
-
-        // Step 1: Find matching error mapping using native SQL with fallback logic
-        Optional<ErrorMapping> basicResult = errorMappingRepository.findMatchingErrorWithFallback(routeId, sourceSystemId, errorMessage);
-
-        if (basicResult.isPresent()) {
-            // Step 2: Load the same entity with relations (SourceSystem, ErrorCategory)
-            Optional<ErrorMapping> fullResult = errorMappingRepository.findByIdWithRelations(basicResult.get().getId());
-
-            if (fullResult.isPresent()) {
-                ErrorMapping mapping = fullResult.get();
-                String sourceName = mapping.getSourceSystem() != null ? mapping.getSourceSystem().getName() : "GENERAL";
-                String routeType = "*".equals(mapping.getRouteId()) ? "WILDCARD" : "SPECIFIC";
-
-                log.info("MATCH FOUND - ErrorMapping ID: {}, Route: '{}' ({}), SourceSystem: '{}', MatchType: {}, Pattern: '{}'",
-                        mapping.getId(), mapping.getRouteId(), routeType, sourceName,
-                        mapping.getMatchType(), mapping.getRawErrorSubstring());
-
-                return Optional.of(errorMappingMapper.toDto(mapping));
-            }
-        }
-
-        log.info("NO MATCH FOUND for routeId: '{}', sourceSystemId: {}, errorMessage: '{}'",
-                routeId, sourceSystemId, errorMessage);
-        return Optional.empty();
-    }
 
     public byte[] exportFile(Map<String, String> filters, Pageable pageable, String type) {
         // Build dynamic specification from filters

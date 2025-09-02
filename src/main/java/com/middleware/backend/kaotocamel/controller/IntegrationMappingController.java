@@ -2,6 +2,7 @@ package com.middleware.backend.kaotocamel.controller;
 
 import com.middleware.backend.kaotocamel.dto.IntegrationMappingDto;
 import com.middleware.backend.kaotocamel.service.IntegrationMappingService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,10 @@ public class IntegrationMappingController {
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('integrationMapping:create')")
+    @Operation(
+            summary = "Create Integration Mapping",
+            description = "Creates a new integration mapping. Requires 'integrationMapping:create' authority."
+    )
     public ResponseEntity<IntegrationMappingDto> create(@RequestBody IntegrationMappingDto dto) {
         try {
             IntegrationMappingDto result = service.create(dto);
@@ -42,6 +47,10 @@ public class IntegrationMappingController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('integrationMapping:edit')")
+    @Operation(
+            summary = "Update Integration Mapping",
+            description = "Updates an existing integration mapping by ID. Requires 'integrationMapping:edit' authority."
+    )
     public ResponseEntity<IntegrationMappingDto> update(@PathVariable Long id, @RequestBody IntegrationMappingDto dto) {
         try {
             IntegrationMappingDto result = service.update(id, dto);
@@ -58,6 +67,10 @@ public class IntegrationMappingController {
     // UPDATED: Soft delete instead of hard delete
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('integrationMapping:delete')")
+    @Operation(
+            summary = "Soft Delete Integration Mapping",
+            description = "Soft deletes an integration mapping by ID. Requires 'integrationMapping:delete' authority."
+    )
     public ResponseEntity<IntegrationMappingDto> delete(@PathVariable Long id) {
         try {
             IntegrationMappingDto result = service.softDelete(id);
@@ -74,6 +87,10 @@ public class IntegrationMappingController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('integrationMapping:view')")
+    @Operation(
+            summary = "Get Integration Mapping by ID",
+            description = "Retrieves an integration mapping by its ID. Requires 'integrationMapping:view' authority."
+    )
     public ResponseEntity<IntegrationMappingDto> findById(@PathVariable Long id) {
         return service.findById(id)
                 .map(ResponseEntity::ok)
@@ -83,6 +100,10 @@ public class IntegrationMappingController {
     // UPDATED: Toggle status instead of setting specific value
     @PatchMapping("/{id}/status")
     @PreAuthorize("hasAnyAuthority('integrationMapping:edit')")
+    @Operation(
+            summary = "Toggle Integration Mapping Status",
+            description = "Toggles the active/inactive status of an integration mapping. Requires 'integrationMapping:edit' authority."
+    )
     public ResponseEntity<IntegrationMappingDto> toggleStatus(@PathVariable Long id) {
         try {
             IntegrationMappingDto result = service.toggleStatus(id);
@@ -101,6 +122,10 @@ public class IntegrationMappingController {
     // OPTIONAL: Keep the old method for backward compatibility if needed
     @PatchMapping("/{id}/status/set")
     @PreAuthorize("hasAnyAuthority('integrationMapping:edit')")
+    @Operation(
+            summary = "Update Integration Mapping Status",
+            description = "Sets the active/inactive status of an integration mapping. Requires 'integrationMapping:edit' authority."
+    )
     public ResponseEntity<IntegrationMappingDto> updateStatus(@PathVariable Long id, @RequestBody StatusUpdateRequest request) {
         try {
             IntegrationMappingDto result = service.updateStatus(id, request.isActive());
@@ -116,6 +141,10 @@ public class IntegrationMappingController {
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('integrationMapping:view')")
+    @Operation(
+            summary = "Get All Integration Mappings",
+            description = "Retrieves a paginated list of integration mappings with optional filters and sorting. Requires 'integrationMapping:view' authority."
+    )
     public ResponseEntity<Page<IntegrationMappingDto>> findAll(
             @RequestParam(required = false) String apiName,
             @RequestParam(required = false) String externalSystem,
@@ -181,6 +210,10 @@ public class IntegrationMappingController {
 
     @GetMapping("/export/excel")
     @PreAuthorize("hasAnyAuthority('integrationMapping:export')")
+    @Operation(
+            summary = "Export Integration Mappings to Excel",
+            description = "Exports integration mappings to an Excel file, optionally applying filters. Requires 'integrationMapping:export' authority."
+    )
     public void exportToExcel(
             @RequestParam(required = false) String apiName,
             @RequestParam(required = false) String externalSystem,
@@ -242,6 +275,10 @@ public class IntegrationMappingController {
 
     @GetMapping("/export/csv")
     @PreAuthorize("hasAnyAuthority('integrationMapping:export')")
+    @Operation(
+            summary = "Export Integration Mappings to CSV",
+            description = "Exports integration mappings to a CSV file, optionally applying filters. Requires 'integrationMapping:export' authority."
+    )
     public void exportToCSV(
             @RequestParam(required = false) String apiName,
             @RequestParam(required = false) String externalSystem,
