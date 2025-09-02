@@ -2,6 +2,7 @@ package com.middleware.backend.users.Roles.controller;
 
 import com.middleware.backend.users.Roles.dto.PermissionEditDto;
 import com.middleware.backend.users.Roles.service.RoutesPermissionsService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,12 +16,20 @@ public class RoutesPermissionsController {
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('routePermissions:view')")
+    @Operation(
+            summary = "List all route permissions",
+            description = "Retrieves a list of all route permissions assigned to roles. Requires 'routePermissions:view' authority."
+    )
     public ResponseEntity<?> getAll(){
         return service.getAll();
     }
 
     @PatchMapping("/{roleName}")
     @PreAuthorize("hasAuthority('routePermissions:edit')")
+    @Operation(
+            summary = "Edit route permissions for a role",
+            description = "Updates the route permissions assigned to a specific role. Requires 'routePermissions:edit' authority."
+    )
     public ResponseEntity<?> editPermissions(@PathVariable String roleName,
                                              @RequestBody PermissionEditDto body){
         return service.editPermissions(roleName,body);

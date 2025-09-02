@@ -36,6 +36,7 @@ public class DynamicRouteEntity {
     // @Column(name = "http_method", nullable = false)
     private String httpMethod;
 
+    // @Lob
     // private String yamlContent; // YAML source of the route
      @Column(name = "yaml_content", columnDefinition = "TEXT")
     private String yamlContent;

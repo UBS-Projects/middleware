@@ -4,6 +4,7 @@ import com.middleware.backend.audit_logs_interceptor.model.AuditResponse;
 import com.middleware.backend.audit_logs_interceptor.service.AuditLogsService;
 import com.middleware.backend.audit_logs_interceptor.specification.AuditLogSpecification;
 import com.middleware.backend.audit_logs_interceptor.model.AuditLog;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,10 @@ public class AuditLogsController {
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('auditLogs:view')")
+    @Operation(
+            summary = "Get all audit logs",
+            description = "Fetches a paginated list of audit logs with optional filters for user, method, API path, response status, and date range. Supports sorting and pagination. Requires 'auditLogs:view' authority."
+    )
     public ResponseEntity<Page<AuditResponse>> getAll(
             @RequestParam(required = false) String user,
             @RequestParam(required = false) String method,
@@ -62,6 +67,10 @@ public class AuditLogsController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('auditLogs:view')")
+    @Operation(
+            summary = "Get audit log by ID",
+            description = "Fetches a specific audit log entry using its unique ID. Requires 'auditLogs:view' authority."
+    )
     public ResponseEntity<?> getAll(
             @PathVariable("id") Long id) {
         return service.findById(id);
@@ -73,6 +82,10 @@ public class AuditLogsController {
 
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('auditLogs:export')")
+    @Operation(
+            summary = "Export audit logs",
+            description = "Exports audit logs in the requested format (CSV or Excel). Supports filters for user, method, API path, response status, and date range. Requires 'auditLogs:export' authority."
+    )
     public ResponseEntity<byte[]> export(
             @RequestParam(required = false) String user,
             @RequestParam(required = false) String method,

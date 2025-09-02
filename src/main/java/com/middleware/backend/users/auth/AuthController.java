@@ -9,6 +9,7 @@ import com.middleware.backend.users.repository.UserRepository;
 import com.middleware.backend.users.tokens.dto.TokenDto;
 import com.middleware.backend.users.tokens.model.Token;
 import com.middleware.backend.users.tokens.service.TokenService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,6 +45,11 @@ public class AuthController {
 
 
     @PostMapping("/login")
+    @Operation(
+            summary = "User login",
+            description = "Authenticates a user using email and password and returns a JWT token. " +
+                    "The token includes user roles, permissions, and route access information."
+    )
     public AuthResponse login(@RequestBody AuthRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
@@ -84,11 +90,21 @@ public class AuthController {
         return new AuthResponse(jwt);
     }
     @PostMapping("/logout")
+    @Operation(
+            summary = "User logout",
+            description = "Invalidates the JWT token of the authenticated user, effectively logging them out."
+    )
     public ResponseEntity<?> logout(@RequestBody AuthResponse req) {
         return tokenService.logout(jwtUtil.extractEmail(req.getToken()));
     }
     @PostMapping("/token")
     @PreAuthorize("hasAuthority('user:generate-token')")
+    @Operation(
+            summary = "Generate JWT token for a user",
+            description = "Generates a JWT token for the specified user ID. " +
+                    "Supports custom expiration via 'expirationDays' or 'customExpirationDate'. " +
+                    "Requires 'user:generate-token' authority."
+    )
     @Transactional  // optional but recommended to keep session open
     public AuthResponse generateToken(@RequestParam Long id,
                                       @RequestParam(required = false) Integer expirationDays,

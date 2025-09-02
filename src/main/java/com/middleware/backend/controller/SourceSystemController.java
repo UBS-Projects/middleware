@@ -4,6 +4,7 @@ import com.middleware.backend.dto.SourceSystemDto;
 import com.middleware.backend.model.SourceSystem;
 import com.middleware.backend.service.SourceSystemService;
 import com.middleware.backend.users.specification.SourceSystemSpecification;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,10 @@ public class SourceSystemController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('sourceSystems:view')")
+    @Operation(
+            summary = "Get all source systems",
+            description = "Fetches a paginated list of source systems with optional filters (name, description, status, date range). Supports sorting and pagination. Requires 'sourceSystems:view' authority."
+    )
     public ResponseEntity<Page<?>> getAllSourceSystems(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description,
@@ -74,6 +79,10 @@ public class SourceSystemController {
 
     @GetMapping("/active")
     @PreAuthorize("hasAuthority('sourceSystems:view')")
+    @Operation(
+            summary = "Get active source systems",
+            description = "Retrieves a list of source systems that are currently active. Requires 'sourceSystems:view' authority."
+    )
     public ResponseEntity<List<SourceSystemDto>> getActiveSourceSystems() {
         try {
             return ResponseEntity.ok(sourceSystemService.getActiveSourceSystems());
@@ -85,6 +94,10 @@ public class SourceSystemController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('sourceSystems:view')")
+    @Operation(
+            summary = "Get source system by ID",
+            description = "Retrieves details of a specific source system by its ID. Requires 'sourceSystems:view' authority."
+    )
     public ResponseEntity<?> getSourceSystemById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(sourceSystemService.getSourceSystemById(id));
@@ -99,6 +112,10 @@ public class SourceSystemController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('sourceSystems:create')")
+    @Operation(
+            summary = "Create source system",
+            description = "Creates a new source system with the provided details. Requires 'sourceSystems:create' authority."
+    )
     public ResponseEntity<?> createSourceSystem(@RequestBody SourceSystemDto dto) {
         try {
             SourceSystemDto createdDto = sourceSystemService.createSourceSystem(dto);
@@ -115,6 +132,10 @@ public class SourceSystemController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('sourceSystems:edit')")
+    @Operation(
+            summary = "Update source system",
+            description = "Updates an existing source system by its ID. Requires 'sourceSystems:edit' authority."
+    )
     public ResponseEntity<?> updateSourceSystem(@PathVariable Long id, @RequestBody SourceSystemDto dto) {
         try {
             return ResponseEntity.ok(sourceSystemService.updateSourceSystem(id, dto));
@@ -137,6 +158,10 @@ public class SourceSystemController {
 
     @PostMapping("/{id}/toggle")
     @PreAuthorize("hasAuthority('sourceSystems:edit')")
+    @Operation(
+            summary = "Toggle source system status",
+            description = "Activates or deactivates a source system by flipping its status. Requires 'sourceSystems:edit' authority."
+    )
     public ResponseEntity<?> toggleSourceSystem(@PathVariable Long id) {
         try {
             SourceSystemDto updatedDto = sourceSystemService.toggleSourceSystem(id);
@@ -161,6 +186,10 @@ public class SourceSystemController {
 
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('sourceSystems:export')")
+    @Operation(
+            summary = "Export source systems (CSV/Excel)",
+            description = "Exports source systems into CSV or Excel format with optional filters (name, description, status, date range) and sorting. Requires 'sourceSystems:export' authority."
+    )
     public ResponseEntity<byte[]> export(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description,
