@@ -22,8 +22,8 @@ public class DynamicRouteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "routeId", nullable = false)
-    private String routeId; // The unique route identifier (from YAML)
+    @Column(name = "routeId", nullable = false , unique = true)
+    private String routeId;
     @Column(name = "description", nullable = false)
     private String description;
 
@@ -36,7 +36,6 @@ public class DynamicRouteEntity {
     // @Column(name = "http_method", nullable = false)
     private String httpMethod;
 
-    // @Lob
     // private String yamlContent; // YAML source of the route
      @Column(name = "yaml_content", columnDefinition = "TEXT")
     private String yamlContent;

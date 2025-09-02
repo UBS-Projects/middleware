@@ -70,10 +70,8 @@ public class MiddlewareApiCallLogService {
 
         exchange.getIn().setHeader("X-Transaction-UUID", sourceTransactionUUID);
 
-        // Extract client IP
         String clientIp = extractClientIp(exchange);
 
-        // Extract user email from JWT token
         String userEmail = extractUserFromToken(exchange);
 
         MiddlewareApiCallLog logEntity = MiddlewareApiCallLog.builder()
@@ -87,7 +85,7 @@ public class MiddlewareApiCallLogService {
                 .sourceTransactionUUID(sourceTransactionUUID)
                 .status("IN_PROGRESS")
                 .clientIp(clientIp)
-                .userId(userEmail) // Store user email in userId field
+                .userId(userEmail)
                 .build();
 
         MiddlewareApiCallLog saved = callLogRepository.save(logEntity);
@@ -269,11 +267,9 @@ public class MiddlewareApiCallLogService {
                     }
                 }
 
-                // Get response code - try multiple sources
                 Integer responseCode = extractResponseCode(exchange);
                 existing.setResponseCode(responseCode);
 
-                // Set response headers and body even for failures
                 existing.setResponseHeaders(safeHeadersString(exchange));
                 existing.setResponseBody(safeResponseBodyString(exchange));
 
@@ -286,7 +282,6 @@ public class MiddlewareApiCallLogService {
 
                 existing.setStatus("COMPLETED");
 
-                // Get response code
                 Integer responseCode = extractResponseCode(exchange);
                 existing.setResponseCode(responseCode);
 
@@ -312,7 +307,6 @@ public class MiddlewareApiCallLogService {
      * Extract response code from various possible sources in the exchange
      */
     private Integer extractResponseCode(Exchange exchange) {
-        // Try different header names and sources
         Integer responseCode = exchange.getIn().getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
         if (responseCode != null) {
             return responseCode;
@@ -323,18 +317,15 @@ public class MiddlewareApiCallLogService {
             return responseCode;
         }
 
-        // Try message headers
         responseCode = exchange.getMessage().getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
         if (responseCode != null) {
             return responseCode;
         }
 
-        // If exchange failed but no response code set, default to 500
         if (exchange.isFailed()) {
             return 500;
         }
 
-        // Default to 200 if no specific code found and no failure
         return 200;
     }
 
