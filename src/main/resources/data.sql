@@ -91,7 +91,7 @@ SELECT 1, id
 FROM public.permissions
 WHERE id BETWEEN 1 AND 58
     ON CONFLICT(role_id, permission_id) DO NOTHING;
---
+
 -- INSERT INTO public.dynamic_routes
 -- (route_id, description, version, path, http_method, yaml_content, active, default_version, created_at, comment)
 -- VALUES
@@ -108,7 +108,7 @@ WHERE id BETWEEN 1 AND 58
 --         ''
 --     )
 --     ON CONFLICT (route_id) DO NOTHING;
-
+--
 
 -- email: admin@mail.com
 -- pass: S123@231
