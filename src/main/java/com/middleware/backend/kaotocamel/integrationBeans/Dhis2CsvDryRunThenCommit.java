@@ -1,6 +1,8 @@
 package com.middleware.backend.kaotocamel.integrationBeans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.middleware.backend.system_settings.config.Dhis2Config;
+import com.middleware.backend.system_settings.model.Dhis2;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
@@ -21,19 +23,15 @@ import java.security.cert.X509Certificate;
 import java.util.Base64;
 
 @Component("dhis2CsvDryRunThenCommit")
+
 public class Dhis2CsvDryRunThenCommit implements Processor {
 
     private static final Logger log = LoggerFactory.getLogger(Dhis2CsvDryRunThenCommit.class);
     private static final ObjectMapper MAPPER = new ObjectMapper();
-
-    @Value("${dhis2.base-url}")
-    private String baseUrl;
-
-    @Value("${dhis2.username}")
-    private String username;
-
-    @Value("${dhis2.password}")
-    private String password;
+    private final Dhis2Config dhis2Config;
+    public Dhis2CsvDryRunThenCommit(Dhis2Config dhis2Config) {
+        this.dhis2Config = dhis2Config;
+    }
 
     private volatile int lastResponseCode = 0;
 
@@ -127,7 +125,9 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
     private String callDhis2(byte[] csv, String qBase, boolean dryRun) {
         HttpURLConnection conn = null;
         try {
-            String fullUrl = "https://" + baseUrl + "/api/dataValueSets?dryRun=" + (dryRun ? "true" : "false") + "&" + qBase;
+            dhis2Config.refreshSettings();
+            Dhis2 current = dhis2Config.getCurrentSettings();
+            String fullUrl = "https://" + current.getBaseUrl() + "/api/dataValueSets?dryRun=" + (dryRun ? "true" : "false") + "&" + qBase;
             log.info("Calling DHIS2 {}", fullUrl);
 
             disableSSLVerification();
@@ -138,7 +138,7 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
             conn.setDoOutput(true);
 
             String auth = "Basic " + Base64.getEncoder().encodeToString(
-                    (username + ":" + password).getBytes(StandardCharsets.UTF_8)
+                    (current.getUserName() + ":" + current.getPassword()).getBytes(StandardCharsets.UTF_8)
             );
             conn.setRequestProperty("Authorization", auth);
             conn.setRequestProperty("Content-Type", "application/csv");

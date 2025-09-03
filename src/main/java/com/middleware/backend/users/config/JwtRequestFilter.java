@@ -67,10 +67,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 ).toList();
                 boolean isAdmin = userDetails.getAuthorities().stream()
                         .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-                System.out.println("&&&&&&&&&&&&&&&&&*********************8");
-                System.out.println(isAdmin);
-                System.out.println(userDetails.getAuthorities());
-
                 if(path.startsWith("/camel/") && !isAdmin) {
 
                     String matchedRouteId = null;

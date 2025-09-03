@@ -70,8 +70,14 @@ INSERT INTO public.permissions (id, name) VALUES
                                               (55, 'integrationMapping:create'),
                                               (56, 'integrationMapping:edit'),
                                               (57, 'integrationMapping:delete'),
-                                              (58, 'integrationMapping:export')
+                                              (58, 'integrationMapping:export'),
 
+                                              (59, 'dhis2:view'),
+                                              (60, 'dhis2:edit'),
+
+
+                                              (61, 'throttling:view'),
+                                              (62, 'throttling:edit')
 
 ON CONFLICT DO NOTHING;
 
@@ -100,7 +106,7 @@ ALTER TABLE public.users_roles
     ADD CONSTRAINT uq_users_roles UNIQUE (user_id, roles_id);
 
 INSERT INTO public.users_roles (user_id, roles_id)
-VALUES (1, 1)
+VALUES (30, 6)
     ON CONFLICT(user_id,roles_id) DO NOTHING;
 
 
@@ -110,10 +116,42 @@ ALTER TABLE public.role_permissions
     ADD CONSTRAINT uq_role_permission UNIQUE (role_id, permission_id);
 
 INSERT INTO public.role_permissions (role_id, permission_id)
-SELECT 1, id
+SELECT 6, id
 FROM public.permissions
-WHERE id BETWEEN 1 AND 58
+WHERE id BETWEEN 1 AND 62
     ON CONFLICT(role_id, permission_id) DO NOTHING;
+
+
+
+INSERT INTO public.dhis2_settings (
+    id,
+    base_url,
+    connect_timeout,
+    password,
+    timeout,
+    user_name
+)
+VALUES (
+           1,
+           'play.im.dhis2.org/stable-2-41-5',
+           10000,
+           'district',
+           30000,
+           'admin'
+       )
+    ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.rate_limit_config (
+    id,
+    limit_requests,
+    window_seconds
+)
+VALUES (
+           1,
+           100,
+           60
+       )
+    ON CONFLICT (id) DO NOTHING;
 
 -- user
 -- email: admin@mail.com
