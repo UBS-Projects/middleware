@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin/rate-limit")
+@RequestMapping("/api/admin/rate-limit")
 @RequiredArgsConstructor
 public class RateLimitAdminController {
 

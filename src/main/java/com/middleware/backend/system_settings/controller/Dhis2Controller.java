@@ -10,7 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/dhis2")
+@RequestMapping("/api/dhis2")
 @AllArgsConstructor
 public class Dhis2Controller {
 
