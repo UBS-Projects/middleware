@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import com.middleware.backend.kaotocamel.spec.DynamicRouteLogsSpecification;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -50,6 +51,10 @@ public class DynamicRouteController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:create')")
+    @Operation(
+            summary = "Create a new dynamic route",
+            description = "Deploys a new dynamic route using YAML content. Optional comment can be added. Requires 'dynamicRoutes:create' authority."
+    )
     public ResponseEntity<String> create(@RequestBody String yaml, @RequestParam(required = false) String comment) {
         try {
             String result = routeService.updateRoute(yaml, comment, "create");
@@ -62,6 +67,10 @@ public class DynamicRouteController {
 
     @PostMapping("/update")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:edit')")
+    @Operation(
+            summary = "Update an existing dynamic route",
+            description = "Updates an existing dynamic route with provided YAML content. Optional comment can be added. Requires 'dynamicRoutes:edit' authority."
+    )
     public ResponseEntity<String> update(@RequestBody String yaml, @RequestParam(required = false) String comment) {
         try {
             String result = routeService.updateRoute(yaml, comment, "update");
@@ -74,6 +83,10 @@ public class DynamicRouteController {
 
     @DeleteMapping("/{routeId}")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:delete')")
+    @Operation(
+            summary = "Deactivate a route",
+            description = "Deactivates the route by its ID. Requires 'dynamicRoutes:delete' authority."
+    )
     public ResponseEntity<String> deactivate(@PathVariable String routeId) {
         try {
             String result = routeService.deactivateRoute(routeId);
@@ -86,6 +99,10 @@ public class DynamicRouteController {
 
     @PostMapping("/{routeId}/revert/{version}")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:revert')")
+    @Operation(
+            summary = "Revert a route to a previous version",
+            description = "Reverts a specific route to a specified version. Requires 'dynamicRoutes:revert' authority."
+    )
     public ResponseEntity<String> revert(@PathVariable String routeId, @PathVariable int version) {
         try {
             String result = routeService.revertToVersion(routeId, version);
@@ -98,6 +115,10 @@ public class DynamicRouteController {
 
     @PostMapping("/{routeId}/stop")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:stop')")
+    @Operation(
+            summary = "Stop a route",
+            description = "Stops a running route. Requires 'dynamicRoutes:stop' authority."
+    )
     public ResponseEntity<String> stop(@PathVariable String routeId) {
         try {
             String result = routeService.stopRoute(routeId);
@@ -110,6 +131,10 @@ public class DynamicRouteController {
 
     @PostMapping("/{routeId}/start")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:start')")
+    @Operation(
+            summary = "Start a route",
+            description = "Starts a stopped route. Requires 'dynamicRoutes:start' authority."
+    )
     public ResponseEntity<String> start(@PathVariable String routeId) {
         try {
             String result = routeService.startRoute(routeId);
@@ -122,6 +147,10 @@ public class DynamicRouteController {
 
     @PostMapping(value = "/validate", consumes = "application/json", produces = "application/json")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:validate')")
+    @Operation(
+            summary = "Validate route YAML",
+            description = "Validates route YAML content for syntax and structure. Requires 'dynamicRoutes:validate' authority."
+    )
     public ResponseEntity<RouteValidationResult> validateRoute(@RequestBody RouteTestRequest request) {
         RouteValidationResult result = routeService.validateRoute(request.getYamlContent());
         return result.isValid() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
@@ -129,6 +158,10 @@ public class DynamicRouteController {
 
     @PostMapping(value = "/test", consumes = "application/json", produces = "application/json")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:test') or hasRole('ADMIN')" )
+    @Operation(
+            summary = "Test a route",
+            description = "Tests a route with provided YAML and test message. Requires 'dynamicRoutes:test' authority or ADMIN role."
+    )
     public ResponseEntity<RouteTestResult> testRoute(@RequestBody RouteTestRequest request) {
         RouteTestResult result = routeService.testRoute(request.getYamlContent(), request.getTestMessage());
         return result.isSuccess() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
@@ -136,6 +169,10 @@ public class DynamicRouteController {
 
     @GetMapping("/latest")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:view')")
+    @Operation(
+            summary = "List latest routes",
+            description = "Returns paginated list of latest dynamic routes with optional filters and sorting. Requires 'dynamicRoutes:view' authority."
+    )
     public ResponseEntity<Page<DynamicRouteEntity>> getRoutes(
             @RequestParam(required = false) String routeId,
             @RequestParam(required = false) String description,
@@ -254,6 +291,10 @@ public class DynamicRouteController {
 
     @GetMapping("/{routeId}/versions")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:view')")
+    @Operation(
+            summary = "Get route versions",
+            description = "Returns paginated list of all versions of a specific route. Requires 'dynamicRoutes:view' authority."
+    )
     public ResponseEntity<Page<DynamicRouteEntity>> getRouteVersions(@PathVariable String routeId,
             @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
 
@@ -275,6 +316,10 @@ public class DynamicRouteController {
 
     @GetMapping("/{routeId}/versions/{version}")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:view')")
+    @Operation(
+            summary = "Get a specific route version",
+            description = "Retrieves a specific version of a route by route ID and version number. Requires 'dynamicRoutes:view' authority."
+    )
     public ResponseEntity<DynamicRouteEntity> getSpecificVersion(@PathVariable String routeId,
             @PathVariable int version) {
 
@@ -299,6 +344,10 @@ public class DynamicRouteController {
 
     @GetMapping("/export/excel")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:export')")
+    @Operation(
+            summary = "Export routes to Excel",
+            description = "Exports dynamic routes to an Excel file. Supports filters and sorting. Requires 'dynamicRoutes:export' authority."
+    )
     public ResponseEntity<byte[]> exportToExcel(
             @RequestParam(required = false) String routeId,
             @RequestParam(required = false) String description,
@@ -360,6 +409,10 @@ public class DynamicRouteController {
 
     @GetMapping("/export/csv")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:export')")
+    @Operation(
+            summary = "Export routes to CSV",
+            description = "Exports dynamic routes to a CSV file. Supports filters and sorting. Requires 'dynamicRoutes:export' authority."
+    )
     public ResponseEntity<byte[]> exportToCSV(
             @RequestParam(required = false) String routeId,
             @RequestParam(required = false) String description,
@@ -420,6 +473,10 @@ public class DynamicRouteController {
     }
     @GetMapping("/audits")
     @PreAuthorize("hasAnyAuthority('dynamicRoutesLogs:view')")
+    @Operation(
+            summary = "Get route audit logs",
+            description = "Retrieves paginated list of route audit logs with filters. Requires 'dynamicRoutesLogs:view' authority."
+    )
     public ResponseEntity<Page<?>> getRouteAudits(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -457,6 +514,10 @@ public class DynamicRouteController {
 
     @GetMapping("/audits/{id}")
     @PreAuthorize("hasAnyAuthority('dynamicRoutesLogs:view')")
+    @Operation(
+            summary = "Get a specific route audit log",
+            description = "Retrieves a specific audit log by ID. Requires 'dynamicRoutesLogs:view' authority."
+    )
     public ResponseEntity<?> getRouteAudits(
         @PathVariable Long id
     ) {
@@ -471,6 +532,10 @@ public class DynamicRouteController {
 
     @PostMapping("/audits/{type}")
     @PreAuthorize("hasAnyAuthority('dynamicRoutesLogs:view')")
+    @Operation(
+            summary = "Export route audit logs",
+            description = "Exports route audit logs to CSV or Excel. Requires 'dynamicRoutesLogs:view' authority."
+    )
     public ResponseEntity<byte[]> export(
             @RequestParam(required = false) String userEmail,
             @RequestParam(required = false) String action,
