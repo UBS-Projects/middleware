@@ -3,7 +3,8 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/middleware
+#    url: jdbc:postgresql://localhost:5432/middleware
+    url: jdbc:postgresql://localhost:5432/middleware3
     username: postgres
     password: 12345
     driver-class-name: org.postgresql.Driver
@@ -68,18 +69,18 @@ camel:
   ssl:
     config:
       trust-all: true
-#dhis2:
-#  base-url: play.im.dhis2.org/stable-2-41-5
-#  username: admin
-#  password: district
-#  timeout: 30000
-#  connect-timeout: 10000
 dhis2:
-  base-url: hmis-dev.moh.gov.jo/dwh
-  username: supp_user
-  password: "F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z"
+  base-url: play.im.dhis2.org/stable-2-41-5
+  username: admin
+  password: district
   timeout: 30000
   connect-timeout: 10000
+#dhis2:
+#  base-url: hmis-dev.moh.gov.jo/dwh
+#  username: supp_user
+#  password: "F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z"
+#  timeout: 30000
+#  connect-timeout: 10000
 # SpringDoc OpenAPI Configuration
 springdoc:
   api-docs:

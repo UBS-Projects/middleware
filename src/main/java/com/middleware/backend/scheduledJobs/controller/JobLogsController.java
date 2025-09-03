@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/scheduledjobslogs")
+@RequestMapping("/api/scheduledjobslogs")
 @AllArgsConstructor
 public class JobLogsController {
     private final JobLogsService service;

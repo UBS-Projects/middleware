@@ -22,8 +22,9 @@ public class DynamicRouteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "routeId", nullable = false , unique = true)
+    @Column(name = "route_id", nullable = false ,unique = false)
     private String routeId;
+
     @Column(name = "description", nullable = false)
     private String description;
 

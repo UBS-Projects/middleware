@@ -22,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
-@RequestMapping("/integration-mappings")
+@RequestMapping("/api/integration-mappings")
 @RequiredArgsConstructor
 @Slf4j
 public class IntegrationMappingController {

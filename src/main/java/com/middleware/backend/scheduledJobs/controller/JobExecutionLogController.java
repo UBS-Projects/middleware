@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/executionlogs")
+@RequestMapping("/api/executionlogs")
 @AllArgsConstructor
 public class JobExecutionLogController {
     private final JobExecutionlogsService service;

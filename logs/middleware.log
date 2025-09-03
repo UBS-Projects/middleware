@@ -1,32 +1,85 @@
-2025-09-03 01:53:19 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-09-03 01:53:19 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23-valhalla with PID 11960 (C:\Users\omard\Desktop\Work\jordan\back-end\target\classes started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
-2025-09-03 01:53:19 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
-2025-09-03 01:53:27 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
-2025-09-03 01:53:27 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-09-03 01:53:27 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
-2025-09-03 01:53:28 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-09-03 01:53:29 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-09-03 01:53:29 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
-2025-09-03 01:53:29 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-09-03 01:53:31 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-09-03 01:53:31 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@1906f982']
+2025-09-04 00:00:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:00:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:00:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:00:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:01:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:01:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:01:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:01:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:02:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:02:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:02:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:02:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:03:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:03:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:03:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:03:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:04:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:04:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:04:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:04:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:05:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:05:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:05:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:05:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:06:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:06:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:06:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:06:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:07:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:07:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:07:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:07:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:08:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:08:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:08:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:08:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:09:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:09:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:09:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:09:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:10:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:10:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:10:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:10:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:11:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:11:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:11:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:11:52 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:12:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:12:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:12:26 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 00:12:26 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-04 00:12:26 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:1)
+2025-09-04 00:12:26 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-04 00:12:26 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 34ms (uptime:22m34s)
+2025-09-04 00:12:26 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-04 00:12:26 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 00:12:26 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-04 00:12:26 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-09-04 00:25:32 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-04 00:25:32 [main] INFO  c.m.MiddlewareApplicationTests - Starting MiddlewareApplicationTests using Java 23-valhalla with PID 36896 (started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-09-04 00:25:32 [main] INFO  c.m.MiddlewareApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-09-04 00:25:32 [main] DEBUG o.s.w.c.s.GenericWebApplicationContext - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52
+2025-09-04 00:25:39 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-04 00:25:39 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-04 00:25:39 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-04 00:25:40 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-04 00:25:40 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@64887fbc']
 	Database driver: undefined/unknown
 	Database version: 17.4
 	Autocommit mode: undefined/unknown
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-09-03 01:53:38 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-09-03 01:53:43 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
-2025-09-03 01:53:48 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
-2025-09-03 01:53:48 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
-2025-09-03 01:53:48 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
-2025-09-03 01:53:49 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
-2025-09-03 01:53:49 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
-2025-09-03 01:53:49 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
-2025-09-03 01:53:49 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
-2025-09-03 01:53:49 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+2025-09-04 00:25:44 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-04 00:25:46 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-04 00:25:49 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-04 00:25:49 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-04 00:25:49 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-04 00:25:49 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-04 00:25:49 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
   Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
   NOT STARTED.
   Currently in standby mode.
@@ -34,203 +87,422 @@
   Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
   Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
 
-2025-09-03 01:53:49 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
-2025-09-03 01:53:49 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
-2025-09-03 01:53:49 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@391bce40
-2025-09-03 01:53:50 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
-2025-09-03 01:53:50 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
-2025-09-03 01:53:52 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 104 mappings in 'requestMappingHandlerMapping'
-2025-09-03 01:53:53 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
-2025-09-03 01:53:55 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-09-03 01:53:55 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
-2025-09-03 01:53:59 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
-2025-09-03 01:53:59 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
-2025-09-03 01:53:59 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
-2025-09-03 01:53:59 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
-2025-09-03 01:53:59 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
-2025-09-03 01:53:59 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 34ms (build:0ms init:0ms start:34ms)
-2025-09-03 01:54:00 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 41.325 seconds (process running for 45.328)
-2025-09-03 01:54:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 01:54:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 01:54:00 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
-2025-09-03 01:54:01 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq synced to 211. setval returned 211
-2025-09-03 01:54:01 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
-2025-09-03 01:54:01 [RMI TCP Connection(1)-192.168.88.13] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-09-03 01:54:01 [RMI TCP Connection(1)-192.168.88.13] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2025-09-03 01:54:01 [RMI TCP Connection(1)-192.168.88.13] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
-2025-09-03 01:54:01 [RMI TCP Connection(1)-192.168.88.13] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
-2025-09-03 01:54:01 [RMI TCP Connection(1)-192.168.88.13] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
-2025-09-03 01:54:01 [RMI TCP Connection(1)-192.168.88.13] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@71e21f48
-2025-09-03 01:54:01 [RMI TCP Connection(1)-192.168.88.13] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@2a3cdf2b
-2025-09-03 01:54:01 [RMI TCP Connection(1)-192.168.88.13] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2025-09-03 01:54:01 [RMI TCP Connection(1)-192.168.88.13] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 25 ms
-2025-09-03 01:54:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 01:54:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 01:55:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 01:55:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 01:55:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 01:55:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 01:56:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 01:56:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 01:56:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 01:56:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 01:56:58 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /auth/login, client=0:0:0:0:0:0:0:1]
-2025-09-03 01:56:58 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/auth/login", parameters={}
-2025-09-03 01:56:58 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.auth.AuthController#login(AuthRequest)
-2025-09-03 01:56:59 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AuthController.AuthRequest(email=admin@mail.com, password=S123@231)]
-2025-09-03 01:57:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 01:57:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 01:57:01 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 01:57:01 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [AuthController.AuthResponse(token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTc1N (truncated)...]
-2025-09-03 01:57:01 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-09-03 01:57:01 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /auth/login, client=0:0:0:0:0:0:0:1, payload={"email":"admin@mail.com","password":"S123@231"}]
-2025-09-03 01:57:04 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
-2025-09-03 01:57:05 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /scheduledjobslogs?page=0&size=10&sortedBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 01:57:05 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/scheduledjobslogs?page=0&size=10&sortedBy=createdAt&sortDirection=desc", parameters={masked}
-2025-09-03 01:57:05 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.JobLogsController#getAll(String, String, String, Status, String, String, LocalDate, LocalDate, int, int)
-2025-09-03 01:57:05 [http-nio-8081-exec-4] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+2025-09-04 00:25:49 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-04 00:25:49 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-04 00:25:49 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@57d9db79
+2025-09-04 00:25:50 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-04 00:25:50 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-04 00:25:50 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 101 mappings in 'requestMappingHandlerMapping'
+2025-09-04 00:25:51 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-04 00:25:51 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-04 00:25:52 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-04 00:25:53 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-04 00:25:53 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:25:53 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-04 00:25:53 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-04 00:25:53 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 22ms (build:0ms init:0ms start:22ms)
+2025-09-04 00:25:53 [main] INFO  c.m.MiddlewareApplicationTests - Started MiddlewareApplicationTests in 22.533 seconds (process running for 25.281)
+2025-09-04 00:25:54 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-04 00:25:54 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq synced to 211. setval returned 211
+2025-09-04 00:25:54 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-04 00:25:54 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-09-04 00:25:54 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:25:55 [SpringApplicationShutdownHook] DEBUG o.s.w.c.s.GenericWebApplicationContext - Closing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52, started on Thu Sep 04 00:25:32 EEST 2025
+2025-09-04 00:25:55 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 00:25:55 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-04 00:25:55 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:1)
+2025-09-04 00:25:55 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-04 00:25:55 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 16ms (uptime:1s)
+2025-09-04 00:25:55 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-04 00:25:55 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 00:25:55 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-04 00:36:49 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-04 00:36:50 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23-valhalla with PID 27432 (C:\Users\omard\Desktop\Work\jordan\back-end\target\classes started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-09-04 00:36:50 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-04 00:36:57 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-09-04 00:36:57 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-04 00:36:57 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-09-04 00:36:57 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-09-04 00:36:58 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-04 00:36:58 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-04 00:36:58 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-04 00:36:59 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-04 00:36:59 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@1870b9b8']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-04 00:37:04 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "ukshsrqfv8ss6egkcuiqa0khsac" of relation "error_categories" does not exist, skipping
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uk_api_external_key_active" of relation "integration_mapping" does not exist, skipping
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uk_api_dhis2_source_active" of relation "integration_mapping" does not exist, skipping
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "ukmmw5sd4qnt62i9pjv4d549te" of relation "middleware_api_call_log" does not exist, skipping
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "ukehaitasca1ku9dxidr2jkvplv" of relation "middleware_api_call_log" does not exist, skipping
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "ukpnvtwliis6p05pn6i3ndjrqt2" of relation "permissions" does not exist, skipping
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "ukiubw515ff0ugtm28p8g3myt0h" of relation "role" does not exist, skipping
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uk1irnkpbh80c3umgcck2nrd1ia" of relation "source_systems" does not exist, skipping
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uk4m8vh1mgi41y5qjwol923biwd" of relation "user_tokens" does not exist, skipping
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2025-09-04 00:37:04 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uk6dotkott2kjsp8vw4d0m25fb7" of relation "users" does not exist, skipping
+2025-09-04 00:37:07 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-04 00:37:10 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-09-04 00:37:10 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2025-09-04 00:37:10 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-09-04 00:37:12 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-04 00:37:12 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-04 00:37:12 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-04 00:37:12 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-04 00:37:12 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-09-04 00:37:12 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-04 00:37:12 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-04 00:37:12 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@6445647
+2025-09-04 00:37:13 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-04 00:37:13 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-04 00:37:15 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 101 mappings in 'requestMappingHandlerMapping'
+2025-09-04 00:37:16 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-04 00:37:18 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-04 00:37:18 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-04 00:37:20 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-09-04 00:37:20 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-09-04 00:37:20 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-04 00:37:20 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-04 00:37:20 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-04 00:37:20 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 22ms (build:0ms init:0ms start:22ms)
+2025-09-04 00:37:20 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 32.022 seconds (process running for 34.313)
+2025-09-04 00:37:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:37:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:37:21 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-04 00:37:21 [RMI TCP Connection(2)-192.168.88.5] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-04 00:37:21 [RMI TCP Connection(2)-192.168.88.5] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-04 00:37:21 [RMI TCP Connection(2)-192.168.88.5] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-09-04 00:37:21 [RMI TCP Connection(2)-192.168.88.5] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-09-04 00:37:21 [RMI TCP Connection(2)-192.168.88.5] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-09-04 00:37:21 [RMI TCP Connection(2)-192.168.88.5] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@694396a
+2025-09-04 00:37:21 [RMI TCP Connection(2)-192.168.88.5] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@2aee082d
+2025-09-04 00:37:21 [RMI TCP Connection(2)-192.168.88.5] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-09-04 00:37:21 [RMI TCP Connection(2)-192.168.88.5] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+2025-09-04 00:37:21 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq initialized. setval returned 1
+2025-09-04 00:37:21 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-04 00:37:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:37:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:37:56 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/auth/login, client=0:0:0:0:0:0:0:1]
+2025-09-04 00:37:56 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/auth/login", parameters={}
+2025-09-04 00:37:56 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.auth.AuthController#login(AuthRequest)
+2025-09-04 00:37:56 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AuthController.AuthRequest(email=admin@mail.com, password=S123@231)]
+2025-09-04 00:37:59 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-04 00:37:59 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [AuthController.AuthResponse(token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTc1N (truncated)...]
+2025-09-04 00:37:59 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 00:37:59 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/auth/login, client=0:0:0:0:0:0:0:1, payload={"email":"admin@mail.com","password":"S123@231"}]
+2025-09-04 00:38:02 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-04 00:38:02 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-04 00:38:02 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-04 00:38:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-04 00:38:02 [http-nio-8081-exec-5] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
 	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
 	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
 
-2025-09-03 01:57:05 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 01:57:05 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
-2025-09-03 01:57:05 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-09-03 01:57:05 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /scheduledjobslogs?page=0&size=10&sortedBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 01:57:08 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
-2025-09-03 01:57:08 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 01:57:08 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=10", parameters={masked}
-2025-09-03 01:57:08 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
-2025-09-03 01:57:08 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 01:57:08 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
-2025-09-03 01:57:08 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-09-03 01:57:08 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 01:57:12 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
-2025-09-03 01:57:12 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 01:57:12 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/logs?page=0&size=10&sort=receivedAt%2Cdesc", parameters={masked}
-2025-09-03 01:57:12 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.logging.controller.MiddlewareApiCallLogController#getAll(Map, int, int, String)
-2025-09-03 01:57:12 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 01:57:12 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.logging.dto.MiddlewareApiCallLogDto instances]
-2025-09-03 01:57:12 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-09-03 01:57:12 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 01:57:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 01:57:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 01:58:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 01:58:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 01:58:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 01:58:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 01:59:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 01:59:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 01:59:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 01:59:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:00:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:00:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:00:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:00:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:01:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:01:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:01:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:01:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:02:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:02:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:02:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:02:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:03:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:03:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:03:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:03:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:04:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:04:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:04:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:04:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:05:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:05:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:05:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:05:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:06:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:06:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:06:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:06:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:07:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:07:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:07:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:07:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:08:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:08:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:08:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:08:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:09:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:09:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:09:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:09:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:10:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:10:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:10:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:10:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:11:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:11:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:11:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:11:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:12:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:12:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:12:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:12:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:13:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:13:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:13:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:13:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:14:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:14:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:14:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:14:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:15:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:15:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:15:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:15:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:16:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:16:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:16:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:16:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:17:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:17:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:17:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:17:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:18:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:18:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:18:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:18:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:19:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:19:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:19:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:19:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:20:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:20:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:20:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:20:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:21:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:21:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:21:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:21:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:22:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:22:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:22:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:22:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:22:50 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
-2025-09-03 02:22:50 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
-2025-09-03 02:22:50 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:0)
-2025-09-03 02:22:50 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 9ms (uptime:28m50s)
-2025-09-03 02:22:50 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
-2025-09-03 02:22:50 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
-2025-09-03 02:22:50 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
-2025-09-03 02:22:50 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
-2025-09-03 02:56:49 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-09-03 02:56:49 [main] INFO  c.m.MiddlewareApplicationTests - Starting MiddlewareApplicationTests using Java 23-valhalla with PID 14040 (started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
-2025-09-03 02:56:49 [main] INFO  c.m.MiddlewareApplicationTests - No active profile set, falling back to 1 default profile: "default"
-2025-09-03 02:56:49 [main] DEBUG o.s.w.c.s.GenericWebApplicationContext - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52
-2025-09-03 02:56:53 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-09-03 02:56:53 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
-2025-09-03 02:56:53 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-09-03 02:56:53 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-09-03 02:56:53 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-09-04 00:38:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-04 00:38:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
+2025-09-04 00:38:02 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 00:38:02 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-04 00:38:04 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-04 00:38:05 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/create, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-04 00:38:05 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/create", parameters={}
+2025-09-04 00:38:05 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#create(String, String)
+2025-09-04 00:38:05 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: "my-new-route"<EOL>    description: "New route description"<EOL>    from:<EOL>      uri: rest:p (truncated)..."]
+2025-09-04 00:38:05 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - found 0 versions
+2025-09-04 00:38:07 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Uploaded route my-new-route version 1
+2025-09-04 00:38:07 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json, application/yaml]
+2025-09-04 00:38:07 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Route my-new-route uploaded as version 1"]
+2025-09-04 00:38:07 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 00:38:07 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/routes/create, client=0:0:0:0:0:0:0:1, user=admin@mail.com, payload=- route:
+    id: "my-new-route"
+    description: "New route description"
+    from:
+      uri: rest:post:/api/hello
+      steps:
+        - log:
+            message: 'Received: ${body}'
+        - setBody:
+            constant: 'Hello from new route!'
+        - to: 'log:output']
+2025-09-04 00:38:07 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-04 00:38:07 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-04 00:38:07 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-04 00:38:07 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-04 00:38:08 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-04 00:38:08 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-04 00:38:08 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 00:38:08 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-04 00:38:09 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-04 00:38:10 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?routeId=my-new-route&size=1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-04 00:38:10 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?routeId=my-new-route&size=1", parameters={masked}
+2025-09-04 00:38:10 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-04 00:38:10 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-04 00:38:10 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-04 00:38:10 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 00:38:10 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?routeId=my-new-route&size=1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-04 00:38:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:38:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:38:32 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-04 00:38:32 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-04 00:38:32 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-04 00:38:32 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-04 00:38:32 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-04 00:38:33 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-04 00:38:33 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/update", parameters={}
+2025-09-04 00:38:33 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#update(String, String)
+2025-09-04 00:38:33 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: "my-new-route"<EOL>    description: "New route description"<EOL>    from:<EOL>      uri: rest:p (truncated)..."]
+2025-09-04 00:38:33 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-04 00:38:33 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-04 00:38:33 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 00:38:33 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-04 00:38:33 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - found 1 versions
+2025-09-04 00:38:33 [http-nio-8081-exec-4] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped my-new-route (rest://post:/api/hello)
+2025-09-04 00:38:33 [http-nio-8081-exec-4] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown my-new-route (rest://post:/api/hello)
+2025-09-04 00:38:33 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Uploaded route my-new-route version 2
+2025-09-04 00:38:33 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json, application/yaml]
+2025-09-04 00:38:33 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Route my-new-route uploaded as version 2"]
+2025-09-04 00:38:33 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 00:38:33 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com, payload=- route:
+    id: "my-new-route"
+    description: "New route description"
+    from:
+      uri: rest:post:/api/hello
+      steps:
+        - log:
+            message: 'Received: ${body}'
+        - setBody:
+            constant: 'Hello from new route!'
+        - to: 'log:output']
+2025-09-04 00:38:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:38:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:39:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:39:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:39:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:39:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:40:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:40:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:40:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:40:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:41:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:41:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:41:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:41:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:41:56 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 00:41:56 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-04 00:41:56 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:1)
+2025-09-04 00:41:56 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-04 00:41:56 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 8ms (uptime:4m35s)
+2025-09-04 00:41:56 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-04 00:41:56 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 00:41:56 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-04 00:41:56 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-09-04 00:42:52 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-04 00:42:53 [main] INFO  c.m.MiddlewareApplicationTests - Starting MiddlewareApplicationTests using Java 23-valhalla with PID 31160 (started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-09-04 00:42:53 [main] INFO  c.m.MiddlewareApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-09-04 00:42:53 [main] DEBUG o.s.w.c.s.GenericWebApplicationContext - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52
+2025-09-04 00:42:58 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-04 00:42:59 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-04 00:42:59 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-04 00:43:00 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-04 00:43:00 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@24d0c6a4']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-04 00:43:07 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-04 00:43:11 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-04 00:43:18 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-04 00:43:18 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-04 00:43:18 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-04 00:43:18 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-04 00:43:18 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-09-04 00:43:18 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-04 00:43:18 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-04 00:43:18 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@25e1ca37
+2025-09-04 00:43:19 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-04 00:43:19 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-04 00:43:21 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 101 mappings in 'requestMappingHandlerMapping'
+2025-09-04 00:43:22 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-04 00:43:24 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-04 00:43:24 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-04 00:43:27 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-04 00:43:28 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:43:28 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-04 00:43:28 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-04 00:43:28 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 57ms (build:0ms init:0ms start:57ms)
+2025-09-04 00:43:28 [main] INFO  c.m.MiddlewareApplicationTests - Started MiddlewareApplicationTests in 35.695 seconds (process running for 38.286)
+2025-09-04 00:43:28 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-04 00:43:29 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq initialized. setval returned 1
+2025-09-04 00:43:29 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-04 00:43:29 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-09-04 00:43:29 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:43:30 [SpringApplicationShutdownHook] DEBUG o.s.w.c.s.GenericWebApplicationContext - Closing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52, started on Thu Sep 04 00:42:53 EEST 2025
+2025-09-04 00:43:30 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 00:43:30 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-04 00:43:30 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:1)
+2025-09-04 00:43:30 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-04 00:43:30 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 22ms (uptime:2s)
+2025-09-04 00:43:30 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-04 00:43:30 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 00:43:30 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-04 00:49:45 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-04 00:49:45 [main] INFO  c.m.MiddlewareApplicationTests - Starting MiddlewareApplicationTests using Java 23-valhalla with PID 36092 (started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-09-04 00:49:45 [main] INFO  c.m.MiddlewareApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-09-04 00:49:45 [main] DEBUG o.s.w.c.s.GenericWebApplicationContext - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52
+2025-09-04 00:49:52 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-04 00:49:52 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-04 00:49:53 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-04 00:49:54 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-04 00:49:54 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@24d0c6a4']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-04 00:50:01 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-04 00:50:05 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-04 00:50:13 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-04 00:50:13 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-04 00:50:13 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-04 00:50:13 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-04 00:50:13 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-09-04 00:50:13 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-04 00:50:13 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-04 00:50:13 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@567349f5
+2025-09-04 00:50:14 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-04 00:50:14 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-04 00:50:16 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 101 mappings in 'requestMappingHandlerMapping'
+2025-09-04 00:50:16 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-04 00:50:18 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-04 00:50:19 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-04 00:50:22 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-04 00:50:23 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 00:50:23 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-04 00:50:23 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-04 00:50:23 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 40ms (build:0ms init:0ms start:40ms)
+2025-09-04 00:50:23 [main] INFO  c.m.MiddlewareApplicationTests - Started MiddlewareApplicationTests in 38.936 seconds (process running for 41.89)
+2025-09-04 00:50:24 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-04 00:50:24 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq initialized. setval returned 1
+2025-09-04 00:50:24 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-04 00:50:25 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-09-04 00:50:25 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 00:50:25 [SpringApplicationShutdownHook] DEBUG o.s.w.c.s.GenericWebApplicationContext - Closing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52, started on Thu Sep 04 00:49:45 EEST 2025
+2025-09-04 00:50:25 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 00:50:25 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-04 00:50:25 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:1)
+2025-09-04 00:50:25 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-04 00:50:25 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 34ms (uptime:2s)
+2025-09-04 00:50:25 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-04 00:50:25 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 00:50:25 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-04 01:00:11 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-04 01:00:12 [main] INFO  c.m.MiddlewareApplicationTests - Starting MiddlewareApplicationTests using Java 23-valhalla with PID 3872 (started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-09-04 01:00:12 [main] INFO  c.m.MiddlewareApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-09-04 01:00:12 [main] DEBUG o.s.w.c.s.GenericWebApplicationContext - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52
+2025-09-04 01:00:16 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-04 01:00:16 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-04 01:00:16 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-04 01:00:17 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-04 01:00:17 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@f4d391c']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-04 01:00:25 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-04 01:00:29 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-04 01:00:37 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-04 01:00:37 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-04 01:00:37 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-04 01:00:37 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-04 01:00:37 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-09-04 01:00:37 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-04 01:00:37 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-04 01:00:37 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@2793d982
+2025-09-04 01:00:39 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-04 01:00:39 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-04 01:00:41 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 101 mappings in 'requestMappingHandlerMapping'
+2025-09-04 01:00:42 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-04 01:00:44 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-04 01:00:44 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-04 01:00:47 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-04 01:00:48 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 01:00:48 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-04 01:00:48 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-04 01:00:48 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 42ms (build:0ms init:0ms start:42ms)
+2025-09-04 01:00:48 [main] INFO  c.m.MiddlewareApplicationTests - Started MiddlewareApplicationTests in 37.088 seconds (process running for 39.363)
+2025-09-04 01:00:49 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-04 01:00:49 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq initialized. setval returned 1
+2025-09-04 01:00:49 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-04 01:00:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-09-04 01:00:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 01:00:50 [SpringApplicationShutdownHook] DEBUG o.s.w.c.s.GenericWebApplicationContext - Closing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52, started on Thu Sep 04 01:00:12 EEST 2025
+2025-09-04 01:00:50 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 01:00:50 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-04 01:00:50 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:1)
+2025-09-04 01:00:50 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-04 01:00:50 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 33ms (uptime:2s)
+2025-09-04 01:00:50 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-04 01:00:50 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 01:00:50 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-04 01:11:25 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-04 01:11:25 [main] INFO  c.m.MiddlewareApplicationTests - Starting MiddlewareApplicationTests using Java 23-valhalla with PID 2900 (started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-09-04 01:11:25 [main] INFO  c.m.MiddlewareApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-09-04 01:11:26 [main] DEBUG o.s.w.c.s.GenericWebApplicationContext - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52
+2025-09-04 01:11:30 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-04 01:11:30 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-04 01:11:30 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-04 01:11:31 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-04 01:11:31 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@152035eb']
 	Database driver: undefined/unknown
 	Database version: 17.4
@@ -238,13 +510,13 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-09-03 02:56:55 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-09-03 02:56:57 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
-2025-09-03 02:56:58 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
-2025-09-03 02:56:58 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
-2025-09-03 02:56:58 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
-2025-09-03 02:56:58 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
-2025-09-03 02:56:58 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+2025-09-04 01:11:37 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-04 01:11:41 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-04 01:11:48 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-04 01:11:48 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-04 01:11:48 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-04 01:11:48 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-04 01:11:48 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
   Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
   NOT STARTED.
   Currently in standby mode.
@@ -252,62 +524,58 @@
   Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
   Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
 
-2025-09-03 02:56:58 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
-2025-09-03 02:56:58 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
-2025-09-03 02:56:58 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@904df8a
-2025-09-03 02:56:59 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
-2025-09-03 02:56:59 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
-2025-09-03 02:56:59 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 104 mappings in 'requestMappingHandlerMapping'
-2025-09-03 02:57:00 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
-2025-09-03 02:57:00 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-09-03 02:57:00 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
-2025-09-03 02:57:01 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
-2025-09-03 02:57:01 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 02:57:01 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
-2025-09-03 02:57:01 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
-2025-09-03 02:57:01 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 22ms (build:0ms init:0ms start:22ms)
-2025-09-03 02:57:01 [main] INFO  c.m.MiddlewareApplicationTests - Started MiddlewareApplicationTests in 12.719 seconds (process running for 14.229)
-2025-09-03 02:57:02 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 02:57:02 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
-2025-09-03 02:57:02 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq synced to 211. setval returned 211
-2025-09-03 02:57:02 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
-2025-09-03 02:57:03 [SpringApplicationShutdownHook] DEBUG o.s.w.c.s.GenericWebApplicationContext - Closing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52, started on Wed Sep 03 02:56:49 EEST 2025
-2025-09-03 02:57:03 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
-2025-09-03 02:57:03 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
-2025-09-03 02:57:03 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:0)
-2025-09-03 02:57:03 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 10ms (uptime:1s)
-2025-09-03 02:57:03 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
-2025-09-03 02:57:03 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
-2025-09-03 02:57:03 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
-2025-09-03 03:02:44 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-09-03 03:02:44 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23-valhalla with PID 15172 (C:\Users\omard\Desktop\Work\jordan\back-end\target\classes started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
-2025-09-03 03:02:44 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
-2025-09-03 03:02:47 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
-2025-09-03 03:02:47 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-09-03 03:02:47 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
-2025-09-03 03:02:47 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-09-03 03:02:47 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-09-03 03:02:47 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
-2025-09-03 03:02:47 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-09-03 03:02:47 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-09-03 03:02:48 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@27682fa9']
+2025-09-04 01:11:48 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-04 01:11:48 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-04 01:11:48 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@2d3c799e
+2025-09-04 01:11:50 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-04 01:11:50 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-04 01:11:51 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 101 mappings in 'requestMappingHandlerMapping'
+2025-09-04 01:11:52 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-04 01:11:54 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-04 01:11:54 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-04 01:11:58 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-04 01:11:58 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 01:11:58 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-04 01:11:58 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-04 01:11:58 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 31ms (build:0ms init:0ms start:31ms)
+2025-09-04 01:11:58 [main] INFO  c.m.MiddlewareApplicationTests - Started MiddlewareApplicationTests in 33.203 seconds (process running for 35.173)
+2025-09-04 01:11:59 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-04 01:11:59 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq initialized. setval returned 1
+2025-09-04 01:11:59 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-04 01:12:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-09-04 01:12:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 01:12:00 [SpringApplicationShutdownHook] DEBUG o.s.w.c.s.GenericWebApplicationContext - Closing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52, started on Thu Sep 04 01:11:26 EEST 2025
+2025-09-04 01:12:00 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 01:12:00 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-04 01:12:00 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:1)
+2025-09-04 01:12:00 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-04 01:12:00 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 32ms (uptime:2s)
+2025-09-04 01:12:00 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-04 01:12:00 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 01:12:00 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-04 01:21:56 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-04 01:21:56 [main] INFO  c.m.MiddlewareApplicationTests - Starting MiddlewareApplicationTests using Java 23-valhalla with PID 5424 (started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-09-04 01:21:56 [main] INFO  c.m.MiddlewareApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-09-04 01:21:56 [main] DEBUG o.s.w.c.s.GenericWebApplicationContext - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52
+2025-09-04 01:22:00 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-04 01:22:00 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-04 01:22:01 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-04 01:22:01 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-04 01:22:01 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@3f2ef402']
 	Database driver: undefined/unknown
 	Database version: 17.4
 	Autocommit mode: undefined/unknown
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-09-03 03:02:49 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-09-03 03:02:51 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
-2025-09-03 03:02:52 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
-2025-09-03 03:02:52 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
-2025-09-03 03:02:52 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
-2025-09-03 03:02:53 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
-2025-09-03 03:02:53 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
-2025-09-03 03:02:53 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
-2025-09-03 03:02:53 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
-2025-09-03 03:02:53 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+2025-09-04 01:22:04 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-04 01:22:06 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-04 01:22:09 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-04 01:22:09 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-04 01:22:09 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-04 01:22:09 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-04 01:22:09 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
   Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
   NOT STARTED.
   Currently in standby mode.
@@ -315,137 +583,32 @@
   Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
   Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
 
-2025-09-03 03:02:53 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
-2025-09-03 03:02:53 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
-2025-09-03 03:02:53 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@3050363d
-2025-09-03 03:02:53 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
-2025-09-03 03:02:53 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
-2025-09-03 03:02:54 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 104 mappings in 'requestMappingHandlerMapping'
-2025-09-03 03:02:54 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
-2025-09-03 03:02:55 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-09-03 03:02:55 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
-2025-09-03 03:02:56 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
-2025-09-03 03:02:56 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
-2025-09-03 03:02:56 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
-2025-09-03 03:02:57 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
-2025-09-03 03:02:57 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
-2025-09-03 03:02:57 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 15ms (build:0ms init:0ms start:15ms)
-2025-09-03 03:02:57 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 13.076 seconds (process running for 14.033)
-2025-09-03 03:02:57 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 03:02:57 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 03:02:57 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
-2025-09-03 03:02:57 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq synced to 211. setval returned 211
-2025-09-03 03:02:57 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
-2025-09-03 03:02:57 [RMI TCP Connection(4)-192.168.88.13] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-09-03 03:02:57 [RMI TCP Connection(4)-192.168.88.13] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2025-09-03 03:02:57 [RMI TCP Connection(4)-192.168.88.13] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
-2025-09-03 03:02:57 [RMI TCP Connection(4)-192.168.88.13] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
-2025-09-03 03:02:57 [RMI TCP Connection(4)-192.168.88.13] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
-2025-09-03 03:02:57 [RMI TCP Connection(4)-192.168.88.13] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@7dd8713e
-2025-09-03 03:02:57 [RMI TCP Connection(4)-192.168.88.13] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@793ac211
-2025-09-03 03:02:57 [RMI TCP Connection(4)-192.168.88.13] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2025-09-03 03:02:57 [RMI TCP Connection(4)-192.168.88.13] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 9 ms
-2025-09-03 03:03:27 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 03:03:27 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 03:03:29 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
-2025-09-03 03:03:29 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
-2025-09-03 03:03:29 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
-2025-09-03 03:03:29 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
-2025-09-03 03:03:29 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /error-mappings/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:29 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /error-mappings/source-systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:29 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/source-systems", parameters={}
-2025-09-03 03:03:29 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/routes", parameters={}
-2025-09-03 03:03:29 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableSourceSystems()
-2025-09-03 03:03:29 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableRoutes()
-2025-09-03 03:03:29 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:29 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc", parameters={masked}
-2025-09-03 03:03:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAllErrorMappings(Map, int, int, String, String)
-2025-09-03 03:03:29 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /error-mappings/error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:29 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-mappings/error-categories", parameters={}
-2025-09-03 03:03:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getActiveErrorCategories()
-2025-09-03 03:03:29 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 03:03:29 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 03:03:29 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[SourceSystemOptionDto(id=1, name=CHILD HEALTH, description=CHILD HEALTH, active=true), SourceSystem (truncated)...]
-2025-09-03 03:03:29 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[]]
-2025-09-03 03:03:29 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-09-03 03:03:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 03:03:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[{name=test, description=test, active=true, id=3}]]
-2025-09-03 03:03:29 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /error-mappings/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:29 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-09-03 03:03:29 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /error-mappings/error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:29 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-09-03 03:03:29 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /error-mappings/source-systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:29 [http-nio-8081-exec-7] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
-	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
-	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
-
-2025-09-03 03:03:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 03:03:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.dto.ErrorMappingDto instances]
-2025-09-03 03:03:29 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-09-03 03:03:29 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:36 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
-2025-09-03 03:03:36 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:36 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=", parameters={masked}
-2025-09-03 03:03:36 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorCategoryController#getAll(String, String, String, LocalDate, LocalDate, String, String, int, int)
-2025-09-03 03:03:36 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 03:03:36 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.model.ErrorCategory instances]
-2025-09-03 03:03:36 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-09-03 03:03:36 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:40 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
-2025-09-03 03:03:40 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:40 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - POST "/error-categories", parameters={}
-2025-09-03 03:03:40 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorCategoryController#createCategory(ErrorCategoryDto)
-2025-09-03 03:03:40 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [ErrorCategoryDto(id=null, name=ي, description=ي, active=true, createdAt=null, updatedAt=null)]
-2025-09-03 03:03:40 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 03:03:40 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [ErrorCategoryDto(id=4, name=ي, description=ي, active=true, createdAt=2025-09-03T03:03:40.433278100,  (truncated)...]
-2025-09-03 03:03:40 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 201 CREATED
-2025-09-03 03:03:40 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com, payload={"name":"ي","description":"ي","active":true}]
-2025-09-03 03:03:40 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
-2025-09-03 03:03:40 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:40 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=", parameters={masked}
-2025-09-03 03:03:40 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorCategoryController#getAll(String, String, String, LocalDate, LocalDate, String, String, int, int)
-2025-09-03 03:03:40 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 03:03:40 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.model.ErrorCategory instances]
-2025-09-03 03:03:40 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-09-03 03:03:40 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:49 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
-2025-09-03 03:03:49 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:49 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/error-categories", parameters={}
-2025-09-03 03:03:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorCategoryController#createCategory(ErrorCategoryDto)
-2025-09-03 03:03:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [ErrorCategoryDto(id=null, name=يبسيبسي, description=سيبسي, active=true, createdAt=null, updatedAt=nu (truncated)...]
-2025-09-03 03:03:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 03:03:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [ErrorCategoryDto(id=5, name=يبسيبسي, description=سيبسي, active=true, createdAt=2025-09-03T03:03:49.1 (truncated)...]
-2025-09-03 03:03:49 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 201 CREATED
-2025-09-03 03:03:49 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com, payload={"name":"يبسيبسي","description":"سيبسي","active":true}]
-2025-09-03 03:03:49 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
-2025-09-03 03:03:49 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:49 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=", parameters={masked}
-2025-09-03 03:03:49 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorCategoryController#getAll(String, String, String, LocalDate, LocalDate, String, String, int, int)
-2025-09-03 03:03:49 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-03 03:03:49 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.model.ErrorCategory instances]
-2025-09-03 03:03:49 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-09-03 03:03:49 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
-2025-09-03 03:03:57 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 03:03:57 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 03:04:27 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 03:04:27 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 03:04:57 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 03:04:57 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 03:05:27 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 03:05:27 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 03:05:57 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 03:05:57 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 03:06:27 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 03:06:27 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 03:06:57 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 03:06:57 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 03:07:27 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-03 03:07:27 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-03 03:07:34 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
-2025-09-03 03:07:34 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
-2025-09-03 03:07:34 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:0)
-2025-09-03 03:07:34 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 7ms (uptime:4m37s)
-2025-09-03 03:07:34 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
-2025-09-03 03:07:34 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
-2025-09-03 03:07:34 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
-2025-09-03 03:07:34 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-09-04 01:22:09 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-04 01:22:09 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-04 01:22:09 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@75a5fe82
+2025-09-04 01:22:10 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-04 01:22:10 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-04 01:22:10 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 101 mappings in 'requestMappingHandlerMapping'
+2025-09-04 01:22:10 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-04 01:22:12 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-04 01:22:13 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-04 01:22:16 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-04 01:22:16 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-04 01:22:16 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-04 01:22:16 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-04 01:22:16 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 29ms (build:0ms init:0ms start:29ms)
+2025-09-04 01:22:16 [main] INFO  c.m.MiddlewareApplicationTests - Started MiddlewareApplicationTests in 20.859 seconds (process running for 22.714)
+2025-09-04 01:22:16 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-04 01:22:17 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq initialized. setval returned 1
+2025-09-04 01:22:17 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-04 01:22:17 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-09-04 01:22:17 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-04 01:22:18 [SpringApplicationShutdownHook] DEBUG o.s.w.c.s.GenericWebApplicationContext - Closing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52, started on Thu Sep 04 01:21:56 EEST 2025
+2025-09-04 01:22:18 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 01:22:18 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-04 01:22:18 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:1)
+2025-09-04 01:22:18 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-04 01:22:18 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 21ms (uptime:2s)
+2025-09-04 01:22:18 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-04 01:22:18 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-04 01:22:18 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.

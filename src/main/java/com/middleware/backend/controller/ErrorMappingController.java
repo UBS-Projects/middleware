@@ -28,7 +28,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/error-mappings")
+@RequestMapping("/api/error-mappings")
 @RequiredArgsConstructor
 @Slf4j
 public class ErrorMappingController {
