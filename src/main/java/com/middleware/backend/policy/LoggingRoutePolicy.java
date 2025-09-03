@@ -19,6 +19,7 @@ public class LoggingRoutePolicy extends RoutePolicySupport {
         this.logService = logService;
     }
 
+
     @Override
     public void onExchangeBegin(Route route, Exchange exchange) {
         log.info("LoggingRoutePolicy.onExchangeBegin: Route [{}] - Incoming exchange: {}", routeId, exchange.getExchangeId());

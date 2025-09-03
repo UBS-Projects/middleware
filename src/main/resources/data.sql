@@ -154,5 +154,23 @@ VALUES (
     ON CONFLICT (id) DO NOTHING;
 
 -- user
+-- INSERT INTO public.dynamic_routes
+-- (route_id, description, version, path, http_method, yaml_content, active, default_version, created_at, comment)
+-- VALUES
+--     (
+--         'dhis2-upload-csv',
+--         'POST /external/integrate',
+--         1,
+--         '/external/integrate',
+--         'POST',
+--         '{ id: "dhis2-upload-csv-sync-raw-only", description: "POST /external/integrate — CSV DryRun→Commit (Beans only)", from: { uri: "servlet:/external/integrate", parameters: { httpMethodRestrict: POST } }, steps: [ { process: { ref: csvGuard } }, { process: { ref: dhis2CsvDryRunThenCommit } }, { process: { ref: dhis2ImportSummarizer } } ] }',
+--         TRUE,
+--         TRUE,
+--         NOW(),
+--         ''
+--     )
+--     ON CONFLICT (route_id) DO NOTHING;
+--
+
 -- email: admin@mail.com
 -- pass: S123@231

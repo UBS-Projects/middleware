@@ -23,7 +23,7 @@ import java.time.LocalDate;
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @AllArgsConstructor
 public class UserController {
     private final UserService service;

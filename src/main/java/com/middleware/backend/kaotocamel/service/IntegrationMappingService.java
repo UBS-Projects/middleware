@@ -39,8 +39,7 @@ public class IntegrationMappingService {
 
         IntegrationMapping entity = mapToEntity(dto);
 
-        // تأكد إن الـ ID فاضي لـ insert جديد
-        entity.setId(null);
+         entity.setId(null);
 
         try {
             IntegrationMapping saved = repository.save(entity);

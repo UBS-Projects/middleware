@@ -1,13 +1,13 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   datasource:
-#    url: jdbc:postgresql://localhost:5432/middleware
     url: jdbc:postgresql://localhost:5432/middleware3
-    username: postgres
-    password: 12345
+    username: sso
+    password: sso@admin1
     driver-class-name: org.postgresql.Driver
+
 
   sql:
     init:
@@ -23,7 +23,6 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
-        # Quartz properties
       quartz:
         properties:
           spring.quartz.job-store-type: jdbc
@@ -54,10 +53,10 @@ camel:
   main:
     scripting: true
   rest:
-    component: servlet     # or netty-http, undertow, http, etc. depending on your setup
-    host: localhost
-    port: 8081
-    context-path: /camel    # optional, base context path for your REST endpoints
+    component: servlet
+    host: 10.160.29.97
+    port: 80
+    context-path: /camel
   servlet:
     mapping:
       context-path: /camel/*
@@ -69,18 +68,18 @@ camel:
   ssl:
     config:
       trust-all: true
-dhis2:
-  base-url: play.im.dhis2.org/stable-2-41-5
-  username: admin
-  password: district
-  timeout: 30000
-  connect-timeout: 10000
 #dhis2:
-#  base-url: hmis-dev.moh.gov.jo/dwh
-#  username: supp_user
-#  password: "F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z"
+#  base-url: play.im.dhis2.org/stable-2-41-5
+#  username: admin
+#  password: district
 #  timeout: 30000
 #  connect-timeout: 10000
+dhis2:
+  base-url: hmis-dev.moh.gov.jo/dwh
+  username: supp_user
+  password: "F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z"
+  timeout: 30000
+  connect-timeout: 10000
 # SpringDoc OpenAPI Configuration
 springdoc:
   api-docs:

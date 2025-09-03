@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/error-categories")
+@RequestMapping("/api/error-categories")
 @RequiredArgsConstructor
 @Slf4j
 public class ErrorCategoryController {

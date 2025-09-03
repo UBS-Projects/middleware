@@ -59,7 +59,6 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
                 int dryCode = getLastResponseCode();
                 log.info("Dry-run httpCode={}, bodyPreview={}", dryCode, preview(dryResp));
 
-                // لو فشل الاتصال وما في كود ⇒ unreachable
                 if (dryResp == null || dryCode == 0) {
                     setJson(exchange, 500,
                             "{\"summary\":{\"status\":\"ERROR\",\"hasConflicts\":false,\"conflictsCount\":0," +

@@ -10,7 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/permission")
+@RequestMapping("/api/permission")
 @AllArgsConstructor
 public class PermissionController {
     private final PermissionService service;

@@ -27,7 +27,7 @@ import java.sql.Timestamp;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/scheduledjobs")
+@RequestMapping("/api/scheduledjobs")
 @AllArgsConstructor
 public class ScheduledJobsController {
     private final ScheduledJobsService service;
