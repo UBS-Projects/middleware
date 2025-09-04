@@ -7,14 +7,16 @@ public class RoleMapper {
     public static Role mapToEntity(RoleRequest role){
         return Role.builder()
                 .roleName(role.getRoleName())
-                .id(role.getId()).
-                build();
+                .id(role.getId())
+                .roleType(role.getRoleType().equals("USER")?Role.RoleType.USER:Role.RoleType.SYSTEM_USER)
+                .build();
     }
 
     public static RoleRequest mapToDto(Role role){
         return RoleRequest.builder()
                 .roleName(role.getRoleName())
-                .id(role.getId()).
-                build();
+                .id(role.getId())
+                .roleType(String.valueOf(role.getRoleType()))
+                .build();
     }
 }

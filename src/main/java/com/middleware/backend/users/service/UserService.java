@@ -66,6 +66,7 @@ public class UserService {
                         .roles(user.getRoles().stream().map(
                                 r-> RoleRequest.builder()
                                         .roleName(r.getRoleName())
+                                        .roleType(String.valueOf(r.getRoleType()))
                                         .build()
                         ).toList())
                         .build()

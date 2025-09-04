@@ -9,10 +9,12 @@ import com.middleware.backend.users.repository.UserRepository;
 import com.middleware.backend.users.tokens.dto.TokenDto;
 import com.middleware.backend.users.tokens.model.Token;
 import com.middleware.backend.users.tokens.service.TokenService;
+import com.rabbitmq.client.Return;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -50,35 +52,30 @@ public class AuthController {
             description = "Authenticates a user using email and password and returns a JWT token. " +
                     "The token includes user roles, permissions, and route access information."
     )
-    public AuthResponse login(@RequestBody AuthRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
         long expirationMillis = 1000 * 60 * 60 * 8;
         Optional<User> user = userRepository.findActiveByEmail(request.getEmail());
+        List<Role> roles = user.get().getRoles();
+
+        if (!roles.isEmpty() && roles.get(0).getRoleType() == Role.RoleType.SYSTEM_USER) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new AuthResponse("Not a User"));
+        }
+
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         String jwt = jwtUtil.generateToken(
                 userDetails.getUsername(),
-
-                // Roles → List<String>
-                user.get().getRoles().stream()
-                        .map(Role::getRoleName)
-                        .toList(),
-
-                // Permissions → List<String>
-                user.get().getRoles().stream()
-                        .flatMap(r -> r.getPermissions().stream()) // flatten List<List<Permission>>
-                        .map(Permission::getName)                  // use the `name` field
-                        .distinct()                                // optional: remove duplicates
-                        .toList(),
-                user.get().getRoles().stream()
-                        .flatMap(r -> r.getRoutesPermissions().stream()) // flatten List<List<Permission>>
-                        .map(RoutesPermissions::getRouteId)                  // use the `name` field
-                        .distinct()                                // optional: remove duplicates
-                        .toList(),
-
+                user.get().getRoles().stream().map(Role::getRoleName).toList(),
+                user.get().getRoles().stream().flatMap(r -> r.getPermissions().stream())
+                        .map(Permission::getName).distinct().toList(),
+                user.get().getRoles().stream().flatMap(r -> r.getRoutesPermissions().stream())
+                        .map(RoutesPermissions::getRouteId).distinct().toList(),
                 expirationMillis
         );
+
         tokenService.save(Token.builder()
                 .user(user.get())
                 .token(jwt)
@@ -87,7 +84,8 @@ public class AuthController {
                 .expiresAt(new Timestamp(System.currentTimeMillis() + expirationMillis))
                 .build()
         );
-        return new AuthResponse(jwt);
+
+        return ResponseEntity.ok(new AuthResponse(jwt));
     }
     @PostMapping("/logout")
     @Operation(
@@ -105,54 +103,64 @@ public class AuthController {
                     "Supports custom expiration via 'expirationDays' or 'customExpirationDate'. " +
                     "Requires 'user:generate-token' authority."
     )
-    @Transactional  // optional but recommended to keep session open
-    public AuthResponse generateToken(@RequestParam Long id,
-                                      @RequestParam(required = false) Integer expirationDays,
-                                      @RequestParam(required = false) String customExpirationDate) {
+    @Transactional
+    public ResponseEntity<AuthResponse> generateToken(
+            @RequestParam Long id,
+            @RequestParam(required = false) Integer expirationDays,
+            @RequestParam(required = false) String customExpirationDate) {
 
+        // Fetch user
         User user = userRepository.findActiveById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id " + id));
 
+        List<Role> roles = user.getRoles();
+
+        // Check user type
+        if (!roles.isEmpty() && roles.get(0).getRoleType() == Role.RoleType.USER) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new AuthResponse("Not a Service User"));
+        }
+
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
 
-    long expirationMillis;
+        // Calculate expiration in millis
+        long expirationMillis;
         if (customExpirationDate != null && !customExpirationDate.isEmpty()) {
-            // Parse customExpirationDate and calculate millis from now
-            LocalDate customDate = LocalDate.parse(customExpirationDate); // yyyy-MM-dd format expected
-            LocalDateTime customDateTime = customDate.atStartOfDay();
-            ZonedDateTime zonedCustomDateTime = customDateTime.atZone(ZoneId.systemDefault());
-            long customExpirationEpochMillis = zonedCustomDateTime.toInstant().toEpochMilli();
-
-            long nowMillis = System.currentTimeMillis();
-            expirationMillis = customExpirationEpochMillis - nowMillis;
+            LocalDate customDate = LocalDate.parse(customExpirationDate); // yyyy-MM-dd
+            ZonedDateTime zonedCustomDateTime = customDate.atStartOfDay(ZoneId.systemDefault());
+            expirationMillis = zonedCustomDateTime.toInstant().toEpochMilli() - System.currentTimeMillis();
 
             if (expirationMillis <= 0) {
-                throw new IllegalArgumentException("Custom expiration date must be in the future");
+                return ResponseEntity.badRequest()
+                        .body(new AuthResponse("Custom expiration date must be in the future"));
             }
         } else if (expirationDays != null) {
             expirationMillis = expirationDays * 24L * 60 * 60 * 1000;
         } else {
-            // Default expiration 1 day
-            expirationMillis = 24L * 60 * 60 * 1000;
+            expirationMillis = 24L * 60 * 60 * 1000; // Default 1 day
         }
 
-        List<String> roles = user.getRoles().stream().map(
-                r -> r.getRoleName()
-        ).toList();
-
-        List<String> pers = user.getRoles().stream()
-                .flatMap(r -> r.getPermissions().stream()
-                        .map(p -> p.getName()))
+        // Roles, permissions, routes
+        List<String> roleNames = roles.stream()
+                .map(Role::getRoleName)
                 .toList();
 
-        List<String> routes = user.getRoles().stream()
-                .flatMap(r -> r.getRoutesPermissions().stream()
-                        .map(p -> p.getRouteId()))
+        List<String> permissions = roles.stream()
+                .flatMap(r -> r.getPermissions().stream())
+                .map(Permission::getName)
+                .distinct()
                 .toList();
 
+        List<String> routes = roles.stream()
+                .flatMap(r -> r.getRoutesPermissions().stream())
+                .map(RoutesPermissions::getRouteId)
+                .distinct()
+                .toList();
 
+        // Generate token
+        String jwt = jwtUtil.generateToken(userDetails.getUsername(), roleNames, permissions, routes, expirationMillis);
 
-        String jwt = jwtUtil.generateToken(userDetails.getUsername(), roles, pers,routes, expirationMillis);
+        // Save token
         tokenService.save(Token.builder()
                 .user(user)
                 .token(jwt)
@@ -161,8 +169,10 @@ public class AuthController {
                 .expiresAt(new Timestamp(System.currentTimeMillis() + expirationMillis))
                 .build()
         );
-        return new AuthResponse(jwt);
+
+        return ResponseEntity.ok(new AuthResponse(jwt));
     }
+
 
     @Data
     static class AuthRequest {
