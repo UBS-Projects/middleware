@@ -24,8 +24,7 @@ public class CsvGuard implements Processor {
 
         log.info("=== CSV Guard Processing ===");
 
-        // transactionUUID (required - query/header)
-        String transactionUUID = str(in.getHeader("transactionUUID", String.class));
+         String transactionUUID = str(in.getHeader("transactionUUID", String.class));
         if (transactionUUID == null) {
             transactionUUID = str(in.getHeader("X-Transaction-UUID", String.class));
         }
@@ -116,12 +115,11 @@ public class CsvGuard implements Processor {
         return (v.matches("^(true|1|yes)$")) ? "true" : "false";
     }
 
-    private static void reject(Exchange ex, int code, String status, String message) {
+     private static void reject(Exchange ex, int code, String status, String message) {
         Message in = ex.getIn();
         in.setHeader(Exchange.HTTP_RESPONSE_CODE, code);
         in.setHeader(Exchange.CONTENT_TYPE, "application/json");
-        in.setBody("{\"status\":\"" + status + "\",\"message\":\"" + escape(message) +
-                "\",\"errorCode\":\"\",\"errorMessage\":\"\",\"details\":{}}");
+        in.setBody("{\"status\":\"" + status + "\",\"message\":\"" + escape(message) + "\"}");
         ex.setRouteStop(true);
     }
 
