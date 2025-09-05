@@ -50,7 +50,7 @@ public class UserMapper {
                 .updatedAt(user.getUpdatedAt())
                 .password(user.getPassword())
                 .roles(user.getRoles().stream()
-                        .map(r -> new RoleRequest(r.getId(), r.getRoleName()))
+                        .map(r -> new RoleRequest(r.getId(), r.getRoleName(),String.valueOf(r.getRoleType())))
                         .collect(Collectors.toList()))
                 .build();
     }
@@ -82,7 +82,7 @@ public class UserMapper {
                 .updatedAt(user.getUpdatedAt())
                 .password(user.getPassword())
                 .roles(user.getRoles().stream()
-                        .map(r -> new RoleRequest(r.getId(), r.getRoleName()))
+                        .map(r -> new RoleRequest(r.getId(), r.getRoleName(),String.valueOf(r.getRoleType())))
                         .collect(Collectors.toList()))
                 .build();
     }

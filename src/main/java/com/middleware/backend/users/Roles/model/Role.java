@@ -21,6 +21,8 @@ public class Role {
     private Long id;
     @Column(unique = true,nullable = false, name = "role_name")
     private String roleName;
+    @Column(name = "role_type")
+    private RoleType roleType;
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(
@@ -39,5 +41,11 @@ public class Role {
             inverseJoinColumns = @JoinColumn(name = "route_id")
     )
     private List<RoutesPermissions> routesPermissions;
+
+
+    public enum RoleType{
+        USER,
+        SYSTEM_USER
+    }
 
 }
