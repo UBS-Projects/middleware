@@ -6,7 +6,6 @@ import com.middleware.backend.system_settings.model.Dhis2;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +22,12 @@ import java.security.cert.X509Certificate;
 import java.util.Base64;
 
 @Component("dhis2CsvDryRunThenCommit")
-
 public class Dhis2CsvDryRunThenCommit implements Processor {
 
     private static final Logger log = LoggerFactory.getLogger(Dhis2CsvDryRunThenCommit.class);
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private final Dhis2Config dhis2Config;
+
     public Dhis2CsvDryRunThenCommit(Dhis2Config dhis2Config) {
         this.dhis2Config = dhis2Config;
     }
@@ -60,11 +59,12 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
                 log.info("Dry-run httpCode={}, bodyPreview={}", dryCode, preview(dryResp));
 
                 if (dryResp == null || dryCode == 0) {
+                    // ← استجابة كاملة موحّدة (بدل الـ summary القديمة)
                     setJson(exchange, 500,
-                            "{\"summary\":{\"status\":\"ERROR\",\"hasConflicts\":false,\"conflictsCount\":0," +
-                                    "\"description\":\"Import process completed.\"}," +
-                                    "\"details\":{\"status\":\"ERROR\",\"message\":\"DHIS2 unreachable (no HTTP status in dry-run)\"," +
-                                    "\"errorCode\":\"\",\"errorMessage\":\"\",\"details\":{\"raw\":" + rawAsJson(exchange) + "}}}");
+                            "{ \"status\":\"ERROR\",\"message\":\"DHIS2 unreachable (no HTTP status in dry-run)\"," +
+                                    "\"errorCode\":\"\",\"errorMessage\":\"\"," +
+                                    "\"details\":{ \"raw\":" + rawAsJson(exchange) + " } }"
+                    );
                     exchange.setRouteStop(true);
                     return;
                 }

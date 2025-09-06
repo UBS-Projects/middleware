@@ -9,9 +9,6 @@ import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 @Component("dhis2ImportSummarizer")
 public class Dhis2ImportSummarizer implements Processor {
 
@@ -19,54 +16,111 @@ public class Dhis2ImportSummarizer implements Processor {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Override
-    public void process(Exchange exchange) throws Exception {
+    public void process(Exchange exchange) {
         Message in = exchange.getMessage();
         String body = in.getBody(String.class);
 
+        // 1) لو الرد فاضي → GLOBAL_ERROR مختصر
         if (body == null || body.isBlank()) {
-            fail(exchange, 502, "Empty response from DHIS2");
+            writeShort(exchange, 502, "GLOBAL_ERROR", "Empty response from DHIS2");
             return;
         }
 
-        if (body.trim().startsWith("{") && body.contains("\"status\"")) {
+        String t = body.trim();
+
+        // 2) لو فيه "status" و "message": نمرّره كما هو (سواء مختصر أو كامل)
+        if (t.startsWith("{") && t.contains("\"status\"") && t.contains("\"message\"")) {
             in.setHeader(Exchange.CONTENT_TYPE, "application/json");
             return;
         }
 
+        // 3) غير ذلك: نحاول نفهم JSON DHIS2 ونحوّله إلى "الشكل الكامل"
         try {
-            JsonNode root = MAPPER.readTree(body);
-            Map<String, Object> wrapper = new LinkedHashMap<>();
-            Map<String, Object> summary = new LinkedHashMap<>();
-            summary.put("status", root.path("status").asText("UNKNOWN"));
-            summary.put("hasConflicts", root.path("response").path("conflicts").isArray()
-                    && root.path("response").path("conflicts").size() > 0);
-            summary.put("errorCode", "");
-            summary.put("errorMessage", "");
-            wrapper.put("summary", summary);
-            wrapper.put("details", root);
-            in.setBody(MAPPER.writeValueAsString(wrapper));
+            JsonNode root = MAPPER.readTree(t);
+
+            String status = inferStatus(root); // SUCCESS / CONFLICT / ERROR / GLOBAL_ERROR
+            String message = inferMessage(root, status);
+
+            String unified = "{"
+                    + "\"status\":\"" + esc(status) + "\","
+                    + "\"message\":\"" + esc(message) + "\","
+                    + "\"errorCode\":\"\","
+                    + "\"errorMessage\":\"\","
+                    + "\"details\":" + t
+                    + "}";
+
             in.setHeader(Exchange.CONTENT_TYPE, "application/json");
+            in.setHeader(Exchange.HTTP_RESPONSE_CODE, pickHttpCode(status));
+            in.setBody(unified);
         } catch (Exception e) {
-            fail(exchange, 502, "Invalid JSON from DHIS2: " + e.getMessage());
+            // 4) JSON غير صالح → GLOBAL_ERROR مختصر
+            log.warn("Invalid DHIS2 JSON at summarizer: {}", e.getMessage());
+            writeShort(exchange, 502, "GLOBAL_ERROR", "Invalid JSON from DHIS2");
         }
     }
 
-    private static void fail(Exchange ex, int code, String msg) {
+    // === Helpers ===
+
+    private static void writeShort(Exchange ex, int http, String status, String message) {
         Message in = ex.getMessage();
-        Map<String, Object> summary = new LinkedHashMap<>();
-        summary.put("status", "ERROR");
-        summary.put("hasConflicts", false);
-        summary.put("errorCode", "");
-        summary.put("errorMessage", msg);
-        Map<String, Object> wrapper = new LinkedHashMap<>();
-        wrapper.put("summary", summary);
-        wrapper.put("details", Map.of("message", msg));
-        try {
-            in.setBody(MAPPER.writeValueAsString(wrapper));
-        } catch (Exception ignored) {
-            in.setBody("{\"summary\":{\"status\":\"ERROR\",\"errorMessage\":\"" + msg.replace("\"", "\\\"") + "\"}}");
-        }
-        in.setHeader(Exchange.HTTP_RESPONSE_CODE, code);
+        in.setHeader(Exchange.HTTP_RESPONSE_CODE, http);
         in.setHeader(Exchange.CONTENT_TYPE, "application/json");
+        in.setBody("{\"status\":\"" + esc(status) + "\",\"message\":\"" + esc(message) + "\"}");
+    }
+
+    private static int pickHttpCode(String status) {
+        return switch (status) {
+            case "SUCCESS" -> 200;
+            case "CONFLICT" -> 409;
+            case "ERROR" -> 400;
+            default -> 500; // GLOBAL_ERROR
+        };
+    }
+
+    private static String inferStatus(JsonNode root) {
+        String s = root.path("status").asText("").toUpperCase();
+        if ("OK".equals(s) || "SUCCESS".equals(s)) return "SUCCESS";
+        if ("ERROR".equals(s) || "FAILED".equals(s) || "FAIL".equals(s)) return "ERROR";
+        int http = root.path("httpStatusCode").asInt(0);
+        if (http == 409) return "CONFLICT";
+        if (http >= 200 && http <= 202) return "SUCCESS";
+        if (http >= 400 && http < 500) return "ERROR";
+        if (http >= 500) return "GLOBAL_ERROR";
+        if ("Conflict".equalsIgnoreCase(root.path("httpStatus").asText())) return "CONFLICT";
+        if (root.path("response").path("conflicts").isArray() && root.path("response").path("conflicts").size() > 0)
+            return "CONFLICT";
+        return "GLOBAL_ERROR";
+    }
+
+    private static String inferMessage(JsonNode root, String status) {
+        if ("CONFLICT".equals(status)) return "Resolve the conflicts then re-upload";
+        if ("SUCCESS".equals(status)) return "completed successfully";
+        String msg = firstNonBlank(
+                root.path("message").asText(""),
+                root.path("error").asText(""),
+                root.path("response").path("message").asText(""),
+                root.path("importStatus").asText(""),
+                root.path("description").asText("")
+        );
+        if (msg.isBlank()) {
+            if ("ERROR".equals(status)) return "Operation failed";
+            return "Unknown DHIS2 response";
+        }
+        return msg;
+    }
+
+    private static String firstNonBlank(String... vals) {
+        for (String v : vals) {
+            if (v != null && !v.isBlank()) return v;
+        }
+        return "";
+    }
+
+    private static String esc(String s) {
+        if (s == null) return "";
+        return s.replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\r", "\\r")
+                .replace("\n", "\\n");
     }
 }
