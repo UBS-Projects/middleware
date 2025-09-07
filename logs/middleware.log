@@ -3966,3 +3966,1342 @@ org.springframework.security.core.userdetails.UsernameNotFoundException: User no
 2025-09-07 11:21:33 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
 2025-09-07 11:21:33 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
 2025-09-07 11:21:33 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-09-07 15:05:05 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-07 15:05:05 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 24.0.1 with PID 4568 (C:\Users\1\OneDrive\Desktop\middleware\target\classes started by 1 in C:\Users\1\OneDrive\Desktop\middleware)
+2025-09-07 15:05:05 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-07 15:05:08 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-09-07 15:05:08 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-07 15:05:08 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-09-07 15:05:09 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-09-07 15:05:09 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-07 15:05:09 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-07 15:05:09 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-07 15:05:09 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-07 15:05:09 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@24f5e9e8']
+	Database driver: undefined/unknown
+	Database version: 17.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-07 15:05:11 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-07 15:05:14 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-07 15:05:16 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-09-07 15:05:16 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2025-09-07 15:05:16 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-09-07 15:05:17 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-07 15:05:17 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-07 15:05:17 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-07 15:05:17 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-07 15:05:17 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-09-07 15:05:17 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-07 15:05:17 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-07 15:05:17 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@57084740
+2025-09-07 15:05:17 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-07 15:05:17 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-07 15:05:18 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 106 mappings in 'requestMappingHandlerMapping'
+2025-09-07 15:05:18 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-07 15:05:19 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-07 15:05:19 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-07 15:05:20 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-09-07 15:05:20 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-09-07 15:05:20 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-07 15:05:20 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-07 15:05:20 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-07 15:05:20 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 8ms (build:0ms init:0ms start:8ms)
+2025-09-07 15:05:20 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 15.694 seconds (process running for 26.259)
+2025-09-07 15:05:20 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-07 15:05:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:05:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:05:20 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq initialized. setval returned 1
+2025-09-07 15:05:20 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-07 15:05:21 [RMI TCP Connection(1)-192.168.2.46] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-07 15:05:21 [RMI TCP Connection(1)-192.168.2.46] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-07 15:05:21 [RMI TCP Connection(1)-192.168.2.46] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-09-07 15:05:21 [RMI TCP Connection(1)-192.168.2.46] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-09-07 15:05:21 [RMI TCP Connection(1)-192.168.2.46] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-09-07 15:05:21 [RMI TCP Connection(1)-192.168.2.46] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@78573856
+2025-09-07 15:05:21 [RMI TCP Connection(1)-192.168.2.46] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@aa2df13
+2025-09-07 15:05:21 [RMI TCP Connection(1)-192.168.2.46] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-09-07 15:05:21 [RMI TCP Connection(1)-192.168.2.46] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-09-07 15:05:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-routdee to context (DB says active)
+2025-09-07 15:05:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-09-07 15:05:21 [scheduling-1] INFO  o.a.c.s.LifecycleStrategySupport - Autowired property: dataSource on component: sql as exactly one instance of type: javax.sql.DataSource (org.springframework.jdbc.datasource.DriverManagerDataSource) found in the registry
+2025-09-07 15:05:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route get-integration-api-dynamic-logic to context (DB says active)
+2025-09-07 15:05:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route dhis2-upload-csv-sync-raw-only to context (DB says active)
+2025-09-07 15:05:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-roudeeete to context (DB says active)
+2025-09-07 15:05:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-routeg to context (DB says active)
+2025-09-07 15:05:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-rourfte to context (DB says active)
+2025-09-07 15:05:21 [scheduling-1] WARN  o.a.c.d.y.d.CustomResolver - The kebab-case 'set-header' is deprecated and it will be removed in the next version. Use the camelCase 'setHeader' instead.
+2025-09-07 15:05:21 [scheduling-1] WARN  o.a.c.d.y.d.CustomResolver - The kebab-case 'convert-body-to' is deprecated and it will be removed in the next version. Use the camelCase 'convertBodyTo' instead.
+2025-09-07 15:05:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route get-user-from-ap21ewi to context (DB says active)
+2025-09-07 15:05:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:05:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:05:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:05:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:06:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:06:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:06:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:06:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:06:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:06:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:07:19 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/auth/login, client=0:0:0:0:0:0:0:1]
+2025-09-07 15:07:19 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/auth/login", parameters={}
+2025-09-07 15:07:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.auth.AuthController#login(AuthRequest)
+2025-09-07 15:07:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AuthController.AuthRequest(email=admin@mail.com, password=silver3nova3)]
+2025-09-07 15:07:20 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:07:20 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthController.AuthResponse(token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTc1N (truncated)...]
+2025-09-07 15:07:20 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:07:20 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/auth/login, client=0:0:0:0:0:0:0:1, payload={"email":"admin@mail.com","password":"silver3nova3"}]
+2025-09-07 15:07:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:07:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:07:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:07:24 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:07:24 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/audits?page=0&size=10&sortedBy=timestamp&sortDirection=asc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:07:24 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/audits?page=0&size=10&sortedBy=timestamp&sortDirection=asc", parameters={masked}
+2025-09-07 15:07:24 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRouteAudits(int, int, String, String, Integer, String, LocalDate, LocalDate, String, String)
+2025-09-07 15:07:24 [http-nio-8081-exec-2] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-09-07 15:07:24 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:07:24 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 185 containing com.middleware.backend.kaotocamel.model.DynamicRouteAudit instances]
+2025-09-07 15:07:24 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:07:24 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/audits?page=0&size=10&sortedBy=timestamp&sortDirection=asc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:07:28 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:07:28 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/auditlogs?page=0&size=10&sortedBy=startTime&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:07:28 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/auditlogs?page=0&size=10&sortedBy=startTime&sortDirection=desc", parameters={masked}
+2025-09-07 15:07:28 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.audit_logs_interceptor.controller.AuditLogsController#getAll(String, String, String, String, String, Integer, String, String, int, int)
+2025-09-07 15:07:28 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:07:28 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1557 containing com.middleware.backend.audit_logs_interceptor.model.AuditResponse instance (truncated)...]
+2025-09-07 15:07:28 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:07:28 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/auditlogs?page=0&size=10&sortedBy=startTime&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:07:30 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:07:30 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:07:30 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/logs?page=0&size=10&sort=receivedAt%2Cdesc", parameters={masked}
+2025-09-07 15:07:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.logging.controller.MiddlewareApiCallLogController#getAll(Map, int, int, String)
+2025-09-07 15:07:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:07:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.logging.dto.MiddlewareApiCallLogDto instances]
+2025-09-07 15:07:30 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:07:30 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:07:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:07:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:07:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:07:56 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:07:56 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:07:56 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/logs?page=0&size=10&sort=receivedAt%2Cdesc", parameters={masked}
+2025-09-07 15:07:56 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.logging.controller.MiddlewareApiCallLogController#getAll(Map, int, int, String)
+2025-09-07 15:07:56 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:07:56 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.logging.dto.MiddlewareApiCallLogDto instances]
+2025-09-07 15:07:56 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:07:56 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:07:59 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:07:59 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/role?roleName=&roleType=&page=0&size=10&sortedBy=roleName&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:07:59 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/role?roleName=&roleType=&page=0&size=10&sortedBy=roleName&sortDirection=desc", parameters={masked}
+2025-09-07 15:07:59 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.RoleController#getAllRoles(String, String, String, String, int, int)
+2025-09-07 15:07:59 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:07:59 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.users.Roles.model.Role instances]
+2025-09-07 15:07:59 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:07:59 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/role?roleName=&roleType=&page=0&size=10&sortedBy=roleName&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:08:06 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:08:06 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/role?roleName=&roleType=&page=0&size=50&sortedBy=roleName&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:08:06 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/role?roleName=&roleType=&page=0&size=50&sortedBy=roleName&sortDirection=desc", parameters={masked}
+2025-09-07 15:08:06 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.RoleController#getAllRoles(String, String, String, String, int, int)
+2025-09-07 15:08:06 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:08:06 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.users.Roles.model.Role instances]
+2025-09-07 15:08:06 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:08:06 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/role?roleName=&roleType=&page=0&size=50&sortedBy=roleName&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:08:08 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:08:08 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/permission, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:08:08 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/permission", parameters={}
+2025-09-07 15:08:08 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.PermissionController#getAll()
+2025-09-07 15:08:08 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:08:08 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [java.util.stream.ReferencePipeline$3@7061db4e]
+2025-09-07 15:08:09 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:08:09 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/permission, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:08:15 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:08:15 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /api/permission/ADMIN, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:08:15 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/api/permission/ADMIN", parameters={}
+2025-09-07 15:08:15 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.PermissionController#editPermissions(String, PermissionEditDto)
+2025-09-07 15:08:15 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [PermissionEditDto(roleName=ADMIN, permissions=[auditLogs:view, auditLogs:export, errorCategories:vie (truncated)...]
+2025-09-07 15:08:15 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json, application/yaml]
+2025-09-07 15:08:15 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Permissions updated successfully"]
+2025-09-07 15:08:15 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:08:15 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [PATCH /api/permission/ADMIN, client=0:0:0:0:0:0:0:1, user=admin@mail.com, payload={"roleName":"ADMIN","permissions":["auditLogs:view","auditLogs:export","errorCategories:view","errorCategories:export","errorCategories:create","errorCategories:edit","errorMappings:view","errorMappings:export","errorMappings:create","errorMappings:edit","sourceSystems:view","sourceSystems:export","sourceSystems:create","sourceSystems:edit","dynamicRoutes:view","dynamicRoutes:create","dynamicRoutes:edit","dynamicRoutes:delete","dynamicRoutes:revert","dynamicRoutes:stop","dynamicRoutes:start","dynamicRoutes:validate","dynamicRoutes:test","dynamicRoutes:export","dynamicRoutesLogs:view","dynamicRoutesLogs:export","middlewareLogs:view","middlewareLogs:export","scheduledJobs:create","scheduledJobs:pause","scheduledJobs:resume","scheduledJobs:edit","scheduledJobs:view","scheduledJobs:delete","scheduledJobs:test","scheduledJobs:export","jobExecutionLogs:view","jobExecutionLogs:export","scheduledJobsLogs:view","scheduledJobsLogs:export","user:view","user:create","user:delete","user:activate","]
+2025-09-07 15:08:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:08:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:08:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:08:28 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:08:28 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/scheduledjobslogs?page=0&size=10&sortedBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:08:28 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/scheduledjobslogs?page=0&size=10&sortedBy=createdAt&sortDirection=desc", parameters={masked}
+2025-09-07 15:08:28 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.JobLogsController#getAll(String, String, String, Status, String, String, LocalDate, LocalDate, int, int)
+2025-09-07 15:08:28 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:08:28 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 9 containing com.middleware.backend.scheduledJobs.model.ExecutionHistory instances]
+2025-09-07 15:08:29 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:08:29 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/scheduledjobslogs?page=0&size=10&sortedBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:08:31 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:08:31 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/executionlogs?sortedBy=startTime&sortDirection=desc&page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:08:31 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/executionlogs?sortedBy=startTime&sortDirection=desc&page=0&size=10", parameters={masked}
+2025-09-07 15:08:31 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.JobExecutionLogController#getAll(String, String, Status, String, String, LocalDate, LocalDate, int, int)
+2025-09-07 15:08:31 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:08:31 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 61 containing com.middleware.backend.scheduledJobs.DTO.JobExecutionLogDTO instances]
+2025-09-07 15:08:31 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:08:31 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/executionlogs?sortedBy=startTime&sortDirection=desc&page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:08:36 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:08:36 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:08:36 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-07 15:08:36 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-07 15:08:36 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:08:36 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-07 15:08:36 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:08:36 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:08:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:08:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:08:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:09:06 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:09:06 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:09:06 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-07 15:09:06 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-07 15:09:06 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:09:06 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-07 15:09:06 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:09:06 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:09:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:09:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:09:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:09:36 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:09:37 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:09:37 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-07 15:09:37 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-07 15:09:37 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:09:37 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-07 15:09:37 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:09:37 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:09:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:09:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:09:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:10:06 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:10:06 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:10:06 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-07 15:10:06 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-07 15:10:06 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:10:06 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-07 15:10:06 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:10:06 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:10:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:10:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:10:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:10:23 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:10:23 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?routeId=get-user-from-ap21ewi&size=1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:10:23 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?routeId=get-user-from-ap21ewi&size=1", parameters={masked}
+2025-09-07 15:10:23 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-07 15:10:23 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:10:23 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-07 15:10:23 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:10:23 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?routeId=get-user-from-ap21ewi&size=1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:10:34 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/test, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/test", parameters={}
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#testRoute(RouteTestRequest)
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [RouteTestRequest(yamlContent=- route:<EOL>    id: get-user-from-ap21ewi<EOL>    description: Fetch user from (truncated)...]
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG c.m.b.k.service.DynamicRouteService - 
+
+ Extracted metadata after modification: {path=/external-user/1, method=get, description=Fetch user from external API, id=get-user-from-ap21ewi_test-route, uri=rest}
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG c.m.b.k.service.DynamicRouteService - 
+
+ Modified YAML: - route:
+    id: get-user-from-ap21ewi_test-route
+    description: Fetch user from external API
+    from:
+      uri: rest:get:/external-user/1
+      steps:
+      - set-header:
+          name: CamelHttpMethod
+          constant: GET
+      - set-header:
+          name: Accept-Encoding
+          constant: identity
+      - toD: https://jsonplaceholder.typicode.com/users/${header.id}?bridgeEndpoint=true
+      - convert-body-to:
+          type: String
+
+2025-09-07 15:10:34 [http-nio-8081-exec-1] WARN  o.a.c.d.y.d.CustomResolver - The kebab-case 'set-header' is deprecated and it will be removed in the next version. Use the camelCase 'setHeader' instead.
+2025-09-07 15:10:34 [http-nio-8081-exec-1] WARN  o.a.c.d.y.d.CustomResolver - The kebab-case 'convert-body-to' is deprecated and it will be removed in the next version. Use the camelCase 'convertBodyTo' instead.
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG o.s.web.client.RestTemplate - HTTP GET http://localhost:8081/camel/external-user/1
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG o.s.web.client.RestTemplate - Accept=[text/plain, application/json, application/yaml, application/*+json, */*]
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG o.s.web.client.RestTemplate - Writing [Test message from UI] as "application/json"
+2025-09-07 15:10:34 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:10:34 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /camel/external-user/1, client=127.0.0.1, user=admin@mail.com]
+2025-09-07 15:10:34 [http-nio-8081-exec-5] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-user-from-ap21ewi_test-route] - Incoming exchange: 6A06AC626B7470B-0000000000000000
+2025-09-07 15:10:34 [http-nio-8081-exec-5] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - createTransactionSync... creating log for Route [get-user-from-ap21ewi_test-route] - Exchange content: {CamelCharsetName=UTF-8}
+2025-09-07 15:10:34 [http-nio-8081-exec-5] ERROR c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-user-from-ap21ewi_test-route] - Validation failed: Missing required query parameter: transactionUUID
+2025-09-07 15:10:34 [http-nio-8081-exec-5] DEBUG c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeDone: Route [get-user-from-ap21ewi_test-route] - No apiLogId found, skipping update
+2025-09-07 15:10:34 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /camel/external-user/1, client=127.0.0.1, user=admin@mail.com]
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG o.s.web.client.RestTemplate - Response 400 BAD_REQUEST
+2025-09-07 15:10:34 [http-nio-8081-exec-1] ERROR c.m.b.k.service.DynamicRouteService - Failed to start test route: 400  on GET request for "http://localhost:8081/camel/external-user/1": "{"status":"ERROR","message":"Missing required query parameter: transactionUUID"}"
+org.springframework.web.client.HttpClientErrorException$BadRequest: 400  on GET request for "http://localhost:8081/camel/external-user/1": "{"status":"ERROR","message":"Missing required query parameter: transactionUUID"}"
+	at org.springframework.web.client.HttpClientErrorException.create(HttpClientErrorException.java:103)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:186)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:147)
+	at org.springframework.web.client.RestTemplate.handleResponse(RestTemplate.java:953)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:902)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:801)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:683)
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService.testRestRoute(DynamicRouteService.java:291)
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService.testRoute(DynamicRouteService.java:230)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:723)
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService$$SpringCGLIB$$0.testRoute(<generated>)
+	at com.middleware.backend.kaotocamel.controller.DynamicRouteController.testRoute(DynamicRouteController.java:166)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.proceed(AuthorizationManagerBeforeMethodInterceptor.java:268)
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.attemptAuthorization(AuthorizationManagerBeforeMethodInterceptor.java:263)
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.invoke(AuthorizationManagerBeforeMethodInterceptor.java:196)
+	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
+	at com.middleware.backend.kaotocamel.controller.DynamicRouteController$$SpringCGLIB$$0.testRoute(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.AbstractRequestLoggingFilter.doFilterInternal(AbstractRequestLoggingFilter.java:289)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at com.middleware.backend.throttling.config.GlobalRateLimitFilter.doFilter(GlobalRateLimitFilter.java:44)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at com.middleware.backend.audit_logs_interceptor.config.RequestLoggingFilter.doFilter(RequestLoggingFilter.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at com.middleware.backend.users.config.JwtRequestFilter.doFilterInternal(JwtRequestFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:243)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:114)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1447)
+2025-09-07 15:10:34 [http-nio-8081-exec-1] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped get-user-from-ap21ewi_test-route (rest://get:/external-user/1)
+2025-09-07 15:10:34 [http-nio-8081-exec-1] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown get-user-from-ap21ewi_test-route (rest://get:/external-user/1)
+2025-09-07 15:10:34 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Stopped and removed temporary route: get-user-from-ap21ewi_test-route
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json]
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [RouteTestResult(success=false, output=null, errorMessage=400  on GET request for "http://localhost:8 (truncated)...]
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2025-09-07 15:10:34 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/routes/test, client=0:0:0:0:0:0:0:1, user=admin@mail.com, payload={"yamlContent":"- route:\n    id: get-user-from-ap21ewi\n    description: Fetch user from external API\n    from:\n      uri: rest:get:/external-user/1\n      steps:\n        - set-header:\n            name: CamelHttpMethod\n            constant: GET\n        - set-header:\n            name: Accept-Encoding\n            constant: identity\n        - toD: \"https://jsonplaceholder.typicode.com/users/${header.id}?bridgeEndpoint=true\"\n        - convert-body-to:\n            type: String","testMessage":"Test message from UI"}]
+2025-09-07 15:10:39 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:10:39 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/test, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:10:39 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/test", parameters={}
+2025-09-07 15:10:39 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#testRoute(RouteTestRequest)
+2025-09-07 15:10:39 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [RouteTestRequest(yamlContent=- route:<EOL>    id: get-user-from-ap21ewi<EOL>    description: Fetch user from (truncated)...]
+2025-09-07 15:10:39 [http-nio-8081-exec-8] DEBUG c.m.b.k.service.DynamicRouteService - 
+
+ Extracted metadata after modification: {path=/external-user/1, method=get, description=Fetch user from external API, id=get-user-from-ap21ewi_test-route, uri=rest}
+2025-09-07 15:10:39 [http-nio-8081-exec-8] DEBUG c.m.b.k.service.DynamicRouteService - 
+
+ Modified YAML: - route:
+    id: get-user-from-ap21ewi_test-route
+    description: Fetch user from external API
+    from:
+      uri: rest:get:/external-user/1
+      steps:
+      - set-header:
+          name: CamelHttpMethod
+          constant: GET
+      - set-header:
+          name: Accept-Encoding
+          constant: identity
+      - toD: https://jsonplaceholder.typicode.com/users/${header.id}?bridgeEndpoint=true
+      - convert-body-to:
+          type: String
+
+2025-09-07 15:10:39 [http-nio-8081-exec-8] WARN  o.a.c.d.y.d.CustomResolver - The kebab-case 'set-header' is deprecated and it will be removed in the next version. Use the camelCase 'setHeader' instead.
+2025-09-07 15:10:39 [http-nio-8081-exec-8] WARN  o.a.c.d.y.d.CustomResolver - The kebab-case 'convert-body-to' is deprecated and it will be removed in the next version. Use the camelCase 'convertBodyTo' instead.
+2025-09-07 15:10:39 [http-nio-8081-exec-8] DEBUG o.s.web.client.RestTemplate - HTTP GET http://localhost:8081/camel/external-user/1
+2025-09-07 15:10:39 [http-nio-8081-exec-8] DEBUG o.s.web.client.RestTemplate - Accept=[text/plain, application/json, application/yaml, application/*+json, */*]
+2025-09-07 15:10:39 [http-nio-8081-exec-8] DEBUG o.s.web.client.RestTemplate - Writing [Test message from UI] as "application/json"
+2025-09-07 15:10:40 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:10:40 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /camel/external-user/1, client=127.0.0.1, user=admin@mail.com]
+2025-09-07 15:10:40 [http-nio-8081-exec-2] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-user-from-ap21ewi_test-route] - Incoming exchange: 6A06AC626B7470B-0000000000000001
+2025-09-07 15:10:40 [http-nio-8081-exec-2] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - createTransactionSync... creating log for Route [get-user-from-ap21ewi_test-route] - Exchange content: {CamelCharsetName=UTF-8}
+2025-09-07 15:10:40 [http-nio-8081-exec-2] ERROR c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-user-from-ap21ewi_test-route] - Validation failed: Missing required query parameter: transactionUUID
+2025-09-07 15:10:40 [http-nio-8081-exec-2] DEBUG c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeDone: Route [get-user-from-ap21ewi_test-route] - No apiLogId found, skipping update
+2025-09-07 15:10:40 [http-nio-8081-exec-8] DEBUG o.s.web.client.RestTemplate - Response 400 BAD_REQUEST
+2025-09-07 15:10:40 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /camel/external-user/1, client=127.0.0.1, user=admin@mail.com]
+2025-09-07 15:10:40 [http-nio-8081-exec-8] ERROR c.m.b.k.service.DynamicRouteService - Failed to start test route: 400  on GET request for "http://localhost:8081/camel/external-user/1": "{"status":"ERROR","message":"Missing required query parameter: transactionUUID"}"
+org.springframework.web.client.HttpClientErrorException$BadRequest: 400  on GET request for "http://localhost:8081/camel/external-user/1": "{"status":"ERROR","message":"Missing required query parameter: transactionUUID"}"
+	at org.springframework.web.client.HttpClientErrorException.create(HttpClientErrorException.java:103)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:186)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:147)
+	at org.springframework.web.client.RestTemplate.handleResponse(RestTemplate.java:953)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:902)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:801)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:683)
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService.testRestRoute(DynamicRouteService.java:291)
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService.testRoute(DynamicRouteService.java:230)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:723)
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService$$SpringCGLIB$$0.testRoute(<generated>)
+	at com.middleware.backend.kaotocamel.controller.DynamicRouteController.testRoute(DynamicRouteController.java:166)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.proceed(AuthorizationManagerBeforeMethodInterceptor.java:268)
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.attemptAuthorization(AuthorizationManagerBeforeMethodInterceptor.java:263)
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.invoke(AuthorizationManagerBeforeMethodInterceptor.java:196)
+	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
+	at com.middleware.backend.kaotocamel.controller.DynamicRouteController$$SpringCGLIB$$0.testRoute(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.AbstractRequestLoggingFilter.doFilterInternal(AbstractRequestLoggingFilter.java:289)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at com.middleware.backend.throttling.config.GlobalRateLimitFilter.doFilter(GlobalRateLimitFilter.java:44)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at com.middleware.backend.audit_logs_interceptor.config.RequestLoggingFilter.doFilter(RequestLoggingFilter.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at com.middleware.backend.users.config.JwtRequestFilter.doFilterInternal(JwtRequestFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:243)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:114)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1447)
+2025-09-07 15:10:40 [http-nio-8081-exec-8] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped get-user-from-ap21ewi_test-route (rest://get:/external-user/1)
+2025-09-07 15:10:40 [http-nio-8081-exec-8] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown get-user-from-ap21ewi_test-route (rest://get:/external-user/1)
+2025-09-07 15:10:40 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Stopped and removed temporary route: get-user-from-ap21ewi_test-route
+2025-09-07 15:10:40 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json]
+2025-09-07 15:10:40 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [RouteTestResult(success=false, output=null, errorMessage=400  on GET request for "http://localhost:8 (truncated)...]
+2025-09-07 15:10:40 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2025-09-07 15:10:40 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/routes/test, client=0:0:0:0:0:0:0:1, user=admin@mail.com, payload={"yamlContent":"- route:\n    id: get-user-from-ap21ewi\n    description: Fetch user from external API\n    from:\n      uri: rest:get:/external-user/1\n      steps:\n        - set-header:\n            name: CamelHttpMethod\n            constant: GET\n        - set-header:\n            name: Accept-Encoding\n            constant: identity\n        - toD: \"https://jsonplaceholder.typicode.com/users/${header.id}?bridgeEndpoint=true\"\n        - convert-body-to:\n            type: String","testMessage":"Test message from UI"}]
+2025-09-07 15:10:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:10:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:10:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:10:50 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/test, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/test", parameters={}
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#testRoute(RouteTestRequest)
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [RouteTestRequest(yamlContent=- route:<EOL>    id: get-user-from-ap22321ewi<EOL>    description: Fetch user f (truncated)...]
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG c.m.b.k.service.DynamicRouteService - 
+
+ Extracted metadata after modification: {path=/external-user/1, method=get, description=Fetch user from external API, id=get-user-from-ap22321ewi_test-route, uri=rest}
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG c.m.b.k.service.DynamicRouteService - 
+
+ Modified YAML: - route:
+    id: get-user-from-ap22321ewi_test-route
+    description: Fetch user from external API
+    from:
+      uri: rest:get:/external-user/1
+      steps:
+      - set-header:
+          name: CamelHttpMethod
+          constant: GET
+      - set-header:
+          name: Accept-Encoding
+          constant: identity
+      - toD: https://jsonplaceholder.typicode.com/users/${header.id}?bridgeEndpoint=true
+      - convert-body-to:
+          type: String
+
+2025-09-07 15:10:51 [http-nio-8081-exec-4] WARN  o.a.c.d.y.d.CustomResolver - The kebab-case 'set-header' is deprecated and it will be removed in the next version. Use the camelCase 'setHeader' instead.
+2025-09-07 15:10:51 [http-nio-8081-exec-4] WARN  o.a.c.d.y.d.CustomResolver - The kebab-case 'convert-body-to' is deprecated and it will be removed in the next version. Use the camelCase 'convertBodyTo' instead.
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG o.s.web.client.RestTemplate - HTTP GET http://localhost:8081/camel/external-user/1
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG o.s.web.client.RestTemplate - Accept=[text/plain, application/json, application/yaml, application/*+json, */*]
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG o.s.web.client.RestTemplate - Writing [Test message from UI] as "application/json"
+2025-09-07 15:10:51 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:10:51 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /camel/external-user/1, client=127.0.0.1, user=admin@mail.com]
+2025-09-07 15:10:51 [http-nio-8081-exec-6] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-user-from-ap22321ewi_test-route] - Incoming exchange: 6A06AC626B7470B-0000000000000002
+2025-09-07 15:10:51 [http-nio-8081-exec-6] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - createTransactionSync... creating log for Route [get-user-from-ap22321ewi_test-route] - Exchange content: {CamelCharsetName=UTF-8}
+2025-09-07 15:10:51 [http-nio-8081-exec-6] ERROR c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-user-from-ap22321ewi_test-route] - Validation failed: Missing required query parameter: transactionUUID
+2025-09-07 15:10:51 [http-nio-8081-exec-6] DEBUG c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeDone: Route [get-user-from-ap22321ewi_test-route] - No apiLogId found, skipping update
+2025-09-07 15:10:51 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /camel/external-user/1, client=127.0.0.1, user=admin@mail.com]
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG o.s.web.client.RestTemplate - Response 400 BAD_REQUEST
+2025-09-07 15:10:51 [http-nio-8081-exec-4] ERROR c.m.b.k.service.DynamicRouteService - Failed to start test route: 400  on GET request for "http://localhost:8081/camel/external-user/1": "{"status":"ERROR","message":"Missing required query parameter: transactionUUID"}"
+org.springframework.web.client.HttpClientErrorException$BadRequest: 400  on GET request for "http://localhost:8081/camel/external-user/1": "{"status":"ERROR","message":"Missing required query parameter: transactionUUID"}"
+	at org.springframework.web.client.HttpClientErrorException.create(HttpClientErrorException.java:103)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:186)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:147)
+	at org.springframework.web.client.RestTemplate.handleResponse(RestTemplate.java:953)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:902)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:801)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:683)
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService.testRestRoute(DynamicRouteService.java:291)
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService.testRoute(DynamicRouteService.java:230)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:723)
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService$$SpringCGLIB$$0.testRoute(<generated>)
+	at com.middleware.backend.kaotocamel.controller.DynamicRouteController.testRoute(DynamicRouteController.java:166)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.proceed(AuthorizationManagerBeforeMethodInterceptor.java:268)
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.attemptAuthorization(AuthorizationManagerBeforeMethodInterceptor.java:263)
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.invoke(AuthorizationManagerBeforeMethodInterceptor.java:196)
+	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
+	at com.middleware.backend.kaotocamel.controller.DynamicRouteController$$SpringCGLIB$$0.testRoute(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.AbstractRequestLoggingFilter.doFilterInternal(AbstractRequestLoggingFilter.java:289)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at com.middleware.backend.throttling.config.GlobalRateLimitFilter.doFilter(GlobalRateLimitFilter.java:44)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at com.middleware.backend.audit_logs_interceptor.config.RequestLoggingFilter.doFilter(RequestLoggingFilter.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at com.middleware.backend.users.config.JwtRequestFilter.doFilterInternal(JwtRequestFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:243)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:114)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1447)
+2025-09-07 15:10:51 [http-nio-8081-exec-4] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped get-user-from-ap22321ewi_test-route (rest://get:/external-user/1)
+2025-09-07 15:10:51 [http-nio-8081-exec-4] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown get-user-from-ap22321ewi_test-route (rest://get:/external-user/1)
+2025-09-07 15:10:51 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Stopped and removed temporary route: get-user-from-ap22321ewi_test-route
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json]
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [RouteTestResult(success=false, output=null, errorMessage=400  on GET request for "http://localhost:8 (truncated)...]
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2025-09-07 15:10:51 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/routes/test, client=0:0:0:0:0:0:0:1, user=admin@mail.com, payload={"yamlContent":"- route:\n    id: get-user-from-ap22321ewi\n    description: Fetch user from external API\n    from:\n      uri: rest:get:/external-user/1\n      steps:\n        - set-header:\n            name: CamelHttpMethod\n            constant: GET\n        - set-header:\n            name: Accept-Encoding\n            constant: identity\n        - toD: \"https://jsonplaceholder.typicode.com/users/${header.id}?bridgeEndpoint=true\"\n        - convert-body-to:\n            type: String","testMessage":"Test message from UI"}]
+2025-09-07 15:11:00 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:11:00 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:00 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-09-07 15:11:00 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-09-07 15:11:00 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:11:00 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-09-07 15:11:00 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:11:00 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:04 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:11:04 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:04 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-07 15:11:04 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-07 15:11:04 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:11:04 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-07 15:11:04 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:11:04 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:05 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:11:05 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:05 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-09-07 15:11:05 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-09-07 15:11:05 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:11:05 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-09-07 15:11:05 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:11:05 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:11:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:11:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:11:30 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/auth/login, client=0:0:0:0:0:0:0:1]
+2025-09-07 15:11:30 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/auth/login", parameters={}
+2025-09-07 15:11:30 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.auth.AuthController#login(AuthRequest)
+2025-09-07 15:11:30 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AuthController.AuthRequest(email=admin@mail.com, password=silver3nova3)]
+2025-09-07 15:11:31 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:11:31 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthController.AuthResponse(token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTc1N (truncated)...]
+2025-09-07 15:11:31 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:11:31 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/auth/login, client=0:0:0:0:0:0:0:1, payload={"email":"admin@mail.com","password":"silver3nova3"}]
+2025-09-07 15:11:36 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:11:36 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:36 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-09-07 15:11:36 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.ScheduledJobsController#getAll(String, String, String, Boolean, String, String, int, int)
+2025-09-07 15:11:36 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:11:36 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.scheduledJobs.model.ScheduledJobs instances]
+2025-09-07 15:11:36 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:11:36 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/scheduledjobs?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:11:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:11:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:11:57 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:11:57 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:11:57 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:11:57 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:11:57 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings/error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:57 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings/error-categories", parameters={}
+2025-09-07 15:11:57 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getActiveErrorCategories()
+2025-09-07 15:11:57 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:57 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings/routes", parameters={}
+2025-09-07 15:11:57 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableRoutes()
+2025-09-07 15:11:57 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings/source-systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:57 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings/source-systems", parameters={}
+2025-09-07 15:11:57 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableSourceSystems()
+2025-09-07 15:11:57 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:11:57 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[{name=grb, description=bgr, active=true, id=6}, {name=de, description=de, active=true, id=9}, {name (truncated)...]
+2025-09-07 15:11:57 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:11:57 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings/error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:57 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:11:57 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RouteOptionDto(routeId=dhis2-upload-csv-sync-raw-only, path=/external/integrate, httpMethod=POST, d (truncated)...]
+2025-09-07 15:11:57 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:11:57 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:11:57 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[SourceSystemOptionDto(id=5, name=fer, description=fer, active=true), SourceSystemOptionDto(id=2, na (truncated)...]
+2025-09-07 15:11:57 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:57 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:11:57 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings/source-systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:57 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:57 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc", parameters={masked}
+2025-09-07 15:11:57 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAllErrorMappings(Map, int, int, String, String)
+2025-09-07 15:11:57 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:11:57 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.dto.ErrorMappingDto instances]
+2025-09-07 15:11:57 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:11:57 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:58 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:11:59 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:11:59 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=", parameters={masked}
+2025-09-07 15:11:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorCategoryController#getAll(String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-07 15:11:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:11:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.model.ErrorCategory instances]
+2025-09-07 15:11:59 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:11:59 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:00 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:12:01 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/source-systems?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:01 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/source-systems?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=", parameters={masked}
+2025-09-07 15:12:01 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.SourceSystemController#getAllSourceSystems(String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-07 15:12:01 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:12:01 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.model.SourceSystem instances]
+2025-09-07 15:12:01 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:12:01 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/source-systems?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:03 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:12:03 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/admin/rate-limit, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:03 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/rate-limit", parameters={}
+2025-09-07 15:12:03 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.throttling.controller.RateLimitAdminController#getConfig()
+2025-09-07 15:12:03 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:12:03 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [RateLimitConfig(id=1, limitRequests=101, windowSeconds=61)]
+2025-09-07 15:12:03 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:12:03 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/admin/rate-limit, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:10 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:12:10 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:10 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dhis2", parameters={}
+2025-09-07 15:12:10 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-07 15:12:10 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:12:10 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
+2025-09-07 15:12:10 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:12:10 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:13 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:12:13 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:12:13 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:13 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-09-07 15:12:13 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getAllUsers(Long, String, String, String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-07 15:12:14 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:12:14 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 4 containing com.middleware.backend.users.dto.UserResponse instances]
+2025-09-07 15:12:14 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:12:14 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:14 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/role/user, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:14 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/role/user", parameters={}
+2025-09-07 15:12:14 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.RoleController#getAllRolesForUsers()
+2025-09-07 15:12:14 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:12:14 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RoleRequest(id=393, roleName=dedefff, roleType=USER), RoleRequest(id=394, roleName=rtest1, roleType (truncated)...]
+2025-09-07 15:12:14 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:12:14 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/role/user, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:19 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:12:19 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc&roleType=SYSTEM_USER, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:19 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc&roleType=SYSTEM_USER", parameters={masked}
+2025-09-07 15:12:19 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getAllUsers(Long, String, String, String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-07 15:12:19 [http-nio-8081-exec-4] WARN  org.hibernate.orm.query - HHH90003004: firstResult/maxResults specified with collection fetch; applying in memory
+2025-09-07 15:12:19 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:12:19 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.users.dto.UserResponse instances]
+2025-09-07 15:12:19 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:12:19 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc&roleType=SYSTEM_USER, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:12:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:12:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:12:30 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:12:30 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc&roleType=USER, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:30 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc&roleType=USER", parameters={masked}
+2025-09-07 15:12:30 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getAllUsers(Long, String, String, String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-07 15:12:30 [http-nio-8081-exec-10] WARN  org.hibernate.orm.query - HHH90003004: firstResult/maxResults specified with collection fetch; applying in memory
+2025-09-07 15:12:30 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:12:30 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.users.dto.UserResponse instances]
+2025-09-07 15:12:30 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:12:30 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc&roleType=USER, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:33 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:12:33 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:33 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-09-07 15:12:33 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getAllUsers(Long, String, String, String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-07 15:12:33 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:12:33 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 4 containing com.middleware.backend.users.dto.UserResponse instances]
+2025-09-07 15:12:33 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:12:33 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:45 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:12:45 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PUT /api/user/29/ACTIVE, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:45 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/user/29/ACTIVE", parameters={}
+2025-09-07 15:12:45 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#deleteUser(Long, String)
+2025-09-07 15:12:45 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+2025-09-07 15:12:45 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:12:45 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [PUT /api/user/29/ACTIVE, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:46 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:12:46 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:46 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-09-07 15:12:46 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getAllUsers(Long, String, String, String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-07 15:12:46 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:12:46 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 4 containing com.middleware.backend.users.dto.UserResponse instances]
+2025-09-07 15:12:46 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:12:46 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:12:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:12:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:12:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:13:05 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/auth/login, client=0:0:0:0:0:0:0:1]
+2025-09-07 15:13:05 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/auth/login", parameters={}
+2025-09-07 15:13:05 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.auth.AuthController#login(AuthRequest)
+2025-09-07 15:13:05 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AuthController.AuthRequest(email=Abd@mail.com, password=12)]
+2025-09-07 15:13:05 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:13:05 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthController.AuthResponse(token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBYmRAbWFpbC5jb20iLCJpYXQiOjE3NTcyN (truncated)...]
+2025-09-07 15:13:05 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:13:05 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/auth/login, client=0:0:0:0:0:0:0:1, payload={"email":"Abd@mail.com","password":"12"}]
+2025-09-07 15:13:16 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:13:16 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PUT /api/user/29/DELETE, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:13:16 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/user/29/DELETE", parameters={}
+2025-09-07 15:13:16 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#deleteUser(Long, String)
+2025-09-07 15:13:17 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+2025-09-07 15:13:17 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:13:17 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [PUT /api/user/29/DELETE, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:13:17 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:13:17 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:13:17 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-09-07 15:13:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getAllUsers(Long, String, String, String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-07 15:13:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:13:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 4 containing com.middleware.backend.users.dto.UserResponse instances]
+2025-09-07 15:13:17 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:13:17 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:13:19 [http-nio-8081-exec-2] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+org.springframework.security.core.userdetails.UsernameNotFoundException: User not found with email: Abd@mail.com
+	at com.middleware.backend.users.config.CustomUserDetailsService.lambda$loadUserByUsername$0(CustomUserDetailsService.java:27)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at com.middleware.backend.users.config.CustomUserDetailsService.loadUserByUsername(CustomUserDetailsService.java:27)
+	at com.middleware.backend.users.config.JwtRequestFilter.doFilterInternal(JwtRequestFilter.java:48)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:243)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:114)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1447)
+2025-09-07 15:13:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:13:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:13:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:13:29 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:13:29 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/role?roleName=&roleType=&page=0&size=10&sortedBy=roleName&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:13:29 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/role?roleName=&roleType=&page=0&size=10&sortedBy=roleName&sortDirection=desc", parameters={masked}
+2025-09-07 15:13:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.RoleController#getAllRoles(String, String, String, String, int, int)
+2025-09-07 15:13:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:13:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.users.Roles.model.Role instances]
+2025-09-07 15:13:29 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:13:29 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/role?roleName=&roleType=&page=0&size=10&sortedBy=roleName&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:13:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:13:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:13:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:14:14 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:14:15 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:14:15 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-09-07 15:14:15 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getAllUsers(Long, String, String, String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-07 15:14:15 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:14:15 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:14:15 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 4 containing com.middleware.backend.users.dto.UserResponse instances]
+2025-09-07 15:14:15 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:14:15 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:14:15 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/role/user, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:14:15 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/role/user", parameters={}
+2025-09-07 15:14:15 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.RoleController#getAllRolesForUsers()
+2025-09-07 15:14:15 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:14:15 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RoleRequest(id=393, roleName=dedefff, roleType=USER), RoleRequest(id=394, roleName=rtest1, roleType (truncated)...]
+2025-09-07 15:14:15 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:14:15 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/role/user, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:14:17 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:14:17 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user/29, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:14:17 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user/29", parameters={}
+2025-09-07 15:14:17 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getUserById(Long)
+2025-09-07 15:14:17 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:14:17 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [UserResponse(id=29, userName=Abood, email=Abd@mail.com, status=INACTIVE, createdAt=2025-08-10 17:28: (truncated)...]
+2025-09-07 15:14:17 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:14:17 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user/29, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:14:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:14:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:14:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:14:29 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:14:29 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user?page=1&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:14:29 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user?page=1&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-09-07 15:14:29 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getAllUsers(Long, String, String, String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-07 15:14:29 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:14:29 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 2 of 4 containing com.middleware.backend.users.dto.UserResponse instances]
+2025-09-07 15:14:29 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:14:29 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user?page=1&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:14:32 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:14:32 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user/30, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:14:32 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user/30", parameters={}
+2025-09-07 15:14:32 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getUserById(Long)
+2025-09-07 15:14:32 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:14:32 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [UserResponse(id=30, userName=admin, email=admin@mail.com, status=ACTIVE, createdAt=2025-08-19 13:34: (truncated)...]
+2025-09-07 15:14:32 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:14:32 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user/30, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:14:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:14:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:14:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:14:57 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:14:57 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user/role/TEST?page=0, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:14:57 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user/role/TEST?page=0", parameters={masked}
+2025-09-07 15:14:57 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getUsersByRole(String, int)
+2025-09-07 15:14:58 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:14:58 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.users.dto.UserResponseRoles instances]
+2025-09-07 15:14:58 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:14:58 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user/role/TEST?page=0, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:15:07 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:15:07 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user/role/rtest1?page=0, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:15:07 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user/role/rtest1?page=0", parameters={masked}
+2025-09-07 15:15:07 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getUsersByRole(String, int)
+2025-09-07 15:15:07 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:15:07 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
+2025-09-07 15:15:07 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:15:07 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user/role/rtest1?page=0, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:15:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:15:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:15:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:15:31 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:15:31 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/role?roleName=&roleType=USER&page=0&size=10&sortedBy=roleName&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:15:31 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/role?roleName=&roleType=USER&page=0&size=10&sortedBy=roleName&sortDirection=desc", parameters={masked}
+2025-09-07 15:15:31 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.RoleController#getAllRoles(String, String, String, String, int, int)
+2025-09-07 15:15:31 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:15:31 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.users.Roles.model.Role instances]
+2025-09-07 15:15:31 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:15:31 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/role?roleName=&roleType=USER&page=0&size=10&sortedBy=roleName&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:15:34 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:15:34 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/role?roleName=&roleType=SYSTEM_USER&page=0&size=10&sortedBy=roleName&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:15:34 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/role?roleName=&roleType=SYSTEM_USER&page=0&size=10&sortedBy=roleName&sortDirection=desc", parameters={masked}
+2025-09-07 15:15:34 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.RoleController#getAllRoles(String, String, String, String, int, int)
+2025-09-07 15:15:34 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:15:34 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.users.Roles.model.Role instances]
+2025-09-07 15:15:34 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:15:34 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/role?roleName=&roleType=SYSTEM_USER&page=0&size=10&sortedBy=roleName&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:15:35 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:15:35 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routespermissions, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:15:35 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routespermissions", parameters={}
+2025-09-07 15:15:35 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.RoutesPermissionsController#getAll()
+2025-09-07 15:15:35 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:15:35 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [java.util.stream.ReferencePipeline$3@2d139978]
+2025-09-07 15:15:35 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:15:35 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routespermissions, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:15:44 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:15:44 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/role?roleName=&roleType=&page=0&size=10&sortedBy=roleName&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:15:44 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/role?roleName=&roleType=&page=0&size=10&sortedBy=roleName&sortDirection=desc", parameters={masked}
+2025-09-07 15:15:44 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.Roles.controller.RoleController#getAllRoles(String, String, String, String, int, int)
+2025-09-07 15:15:44 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:15:44 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 2 containing com.middleware.backend.users.Roles.model.Role instances]
+2025-09-07 15:15:44 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:15:44 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/role?roleName=&roleType=&page=0&size=10&sortedBy=roleName&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:15:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:15:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:15:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:16:07 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-07 15:16:07 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/user/role/NEW%20SCREEN?page=0, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:16:07 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/user/role/NEW%20SCREEN?page=0", parameters={masked}
+2025-09-07 15:16:07 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.controller.UserController#getUsersByRole(String, int)
+2025-09-07 15:16:07 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-07 15:16:07 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.users.dto.UserResponseRoles instances]
+2025-09-07 15:16:07 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-07 15:16:07 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/user/role/NEW%20SCREEN?page=0, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-07 15:16:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:16:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:16:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:16:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:16:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:16:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:17:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:17:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:17:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:17:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:17:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:17:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:18:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-07 15:18:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
+2025-09-07 15:18:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:9)
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped get-user-from-ap21ewi (rest://get:/external-user/%7Bid%7D)
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-rourfte (rest://post:/api/heldelrfo)
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-routeg (rest://post:/apggi/hello)
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-roudeeete (rest://post:/apdeei/hello)
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped dhis2-upload-csv-sync-raw-only (servlet:/external/integrate)
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped get-integration-api-dynamic-logic (direct://integration_api_logic)
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped http-entry-integration-api-dynamic (servlet:/integration/api)
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-routdee (rest://post:/api/hdeello)
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 6ms (uptime:13m2s)
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-07 15:18:23 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
