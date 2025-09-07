@@ -59,8 +59,7 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
                 log.info("Dry-run httpCode={}, bodyPreview={}", dryCode, preview(dryResp));
 
                 if (dryResp == null || dryCode == 0) {
-                    // ← استجابة كاملة موحّدة (بدل الـ summary القديمة)
-                    setJson(exchange, 500,
+                     setJson(exchange, 500,
                             "{ \"status\":\"ERROR\",\"message\":\"DHIS2 unreachable (no HTTP status in dry-run)\"," +
                                     "\"errorCode\":\"\",\"errorMessage\":\"\"," +
                                     "\"details\":{ \"raw\":" + rawAsJson(exchange) + " } }"

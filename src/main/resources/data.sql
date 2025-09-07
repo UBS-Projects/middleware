@@ -106,7 +106,7 @@ ALTER TABLE public.users_roles
     ADD CONSTRAINT uq_users_roles UNIQUE (user_id, roles_id);
 
 INSERT INTO public.users_roles (user_id, roles_id)
-VALUES (30, 6)
+VALUES (1, 1)
     ON CONFLICT(user_id,roles_id) DO NOTHING;
 
 
@@ -116,7 +116,7 @@ ALTER TABLE public.role_permissions
     ADD CONSTRAINT uq_role_permission UNIQUE (role_id, permission_id);
 
 INSERT INTO public.role_permissions (role_id, permission_id)
-SELECT 6, id
+SELECT 1, id
 FROM public.permissions
 WHERE id BETWEEN 1 AND 62
     ON CONFLICT(role_id, permission_id) DO NOTHING;
@@ -133,11 +133,11 @@ INSERT INTO public.dhis2_settings (
 )
 VALUES (
            1,
-           'play.im.dhis2.org/stable-2-41-5',
+           'hmis-dev.moh.gov.jo/dwh',
            10000,
-           'district',
+           'F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z',
            30000,
-           'admin'
+           'supp_user'
        )
     ON CONFLICT (id) DO NOTHING;
 
