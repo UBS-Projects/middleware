@@ -91,9 +91,12 @@ VALUES
     ON CONFLICT (email) DO NOTHING;
 
 
+-- ALTER TABLE public.role
+--     ADD CONSTRAINT uq_role_name UNIQUE (role_name);
 INSERT INTO public.role (role_name, role_type)
 VALUES ('ADMIN',0)
     ON CONFLICT (role_name) DO NOTHING;
+
 
 
 ALTER TABLE public.users_roles
