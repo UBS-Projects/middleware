@@ -18,7 +18,7 @@ public class JwtUtil {
     private String secret;
 
 
-    public String generateToken(String email, List<String> roles, List<String> permissions,List<String> routes, long customExpirationMs) {
+    public String generateToken(String email, List<String> roles, List<String> permissions,List<String> routes, boolean active, long customExpirationMs) {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
@@ -27,6 +27,7 @@ public class JwtUtil {
                 .claim("roles", roles)
                 .claim("permissions",permissions)
                 .claim("routes",routes)
+                .claim("active",active)
                 .compact();
     }
     public String extractEmail(String token) {

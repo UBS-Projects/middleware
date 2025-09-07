@@ -1,5 +1,6 @@
 package com.middleware.backend.users.specification;
 
+import com.middleware.backend.users.Roles.model.Role;
 import com.middleware.backend.users.model.MatchMode;
 import com.middleware.backend.users.model.User;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,6 +26,19 @@ public class UserSpecification {
         };
     }
 
+    public static Specification<User> hasRole(String roleName) {
+        return (root, query, cb) -> {
+            if (roleName == null || roleName.isEmpty()) {
+                return cb.conjunction();
+            }
+            Join<User, Role> roleJoin = root.join("roles", JoinType.INNER);
+            return cb.equal(roleJoin.get("roleName"), roleName);
+        };
+    }
+
+
+
+
     public static Specification<User> dateAfter(String fieldName, LocalDate date) {
         return (root, query, cb) ->
                 (date == null) ? null : cb.greaterThanOrEqualTo(root.get(fieldName), java.sql.Timestamp.valueOf(date.atStartOfDay()));
@@ -34,6 +48,19 @@ public class UserSpecification {
         return (root, query, cb) ->
                 (date == null) ? null : cb.lessThanOrEqualTo(root.get(fieldName), java.sql.Timestamp.valueOf(date.plusDays(1).atStartOfDay()));
     }
+
+    public static Specification<User> hasRoleType(Role.RoleType roleType) {
+        return (root, query, cb) -> {
+            if (roleType == null) {
+                return cb.conjunction();
+            }
+            root.fetch("roles", JoinType.LEFT); // optional fetch optimization
+            query.distinct(true);               // <--- important!
+            Join<User, Role> roleJoin = root.join("roles", JoinType.INNER);
+            return cb.equal(roleJoin.get("roleType"), roleType);
+        };
+    }
+
 }
 
 

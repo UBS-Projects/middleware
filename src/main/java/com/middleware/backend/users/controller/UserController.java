@@ -1,5 +1,6 @@
 package com.middleware.backend.users.controller;
 
+import com.middleware.backend.users.Roles.model.Role;
 import com.middleware.backend.users.dto.UserRequest;
 import com.middleware.backend.users.model.MatchMode;
 import com.middleware.backend.users.model.User;
@@ -40,6 +41,8 @@ public class UserController {
             @RequestParam(required = false) String userName,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String status,
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) String roleType,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdAfter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdBefore,
             @RequestParam(required = false, defaultValue = "updatedAt") String sortedBy,
@@ -54,6 +57,8 @@ public class UserController {
                 .where(UserSpecification.hasField("id", id, MatchMode.EXACT))
                 .and(UserSpecification.hasField("userName", userName, MatchMode.CONTAINS))
                 .and(UserSpecification.hasField("email", email, MatchMode.CONTAINS))
+                .and(UserSpecification.hasRole(role))
+                .and(UserSpecification.hasRoleType(roleType!=null ? Role.RoleType.valueOf(roleType) : null))
                 .and(UserSpecification.hasField("status", status, MatchMode.EXACT))
                 .and(UserSpecification.dateAfter("createdAt", createdAfter))
                 .and(UserSpecification.dateBefore("createdAt", createdBefore));

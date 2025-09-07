@@ -4,6 +4,7 @@ import com.middleware.backend.users.Roles.model.Permission;
 import com.middleware.backend.users.Roles.model.Role;
 import com.middleware.backend.users.Roles.model.RoutesPermissions;
 import com.middleware.backend.users.config.JwtUtil;
+import com.middleware.backend.users.model.Status;
 import com.middleware.backend.users.model.User;
 import com.middleware.backend.users.repository.UserRepository;
 import com.middleware.backend.users.tokens.dto.TokenDto;
@@ -73,6 +74,7 @@ public class AuthController {
                         .map(Permission::getName).distinct().toList(),
                 user.get().getRoles().stream().flatMap(r -> r.getRoutesPermissions().stream())
                         .map(RoutesPermissions::getRouteId).distinct().toList(),
+                user.get().getStatus().equals(Status.ACTIVE),
                 expirationMillis
         );
 
@@ -158,7 +160,8 @@ public class AuthController {
                 .toList();
 
         // Generate token
-        String jwt = jwtUtil.generateToken(userDetails.getUsername(), roleNames, permissions, routes, expirationMillis);
+
+        String jwt = jwtUtil.generateToken(userDetails.getUsername(), roleNames, permissions, routes, user.getStatus().equals(Status.ACTIVE), expirationMillis);
 
         // Save token
         tokenService.save(Token.builder()
