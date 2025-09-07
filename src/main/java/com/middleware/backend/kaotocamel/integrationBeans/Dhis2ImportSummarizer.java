@@ -20,7 +20,6 @@ public class Dhis2ImportSummarizer implements Processor {
         Message in = exchange.getMessage();
         String body = in.getBody(String.class);
 
-        // 1) لو الرد فاضي → GLOBAL_ERROR مختصر
         if (body == null || body.isBlank()) {
             writeShort(exchange, 502, "GLOBAL_ERROR", "Empty response from DHIS2");
             return;
@@ -28,13 +27,11 @@ public class Dhis2ImportSummarizer implements Processor {
 
         String t = body.trim();
 
-        // 2) لو فيه "status" و "message": نمرّره كما هو (سواء مختصر أو كامل)
         if (t.startsWith("{") && t.contains("\"status\"") && t.contains("\"message\"")) {
             in.setHeader(Exchange.CONTENT_TYPE, "application/json");
             return;
         }
 
-        // 3) غير ذلك: نحاول نفهم JSON DHIS2 ونحوّله إلى "الشكل الكامل"
         try {
             JsonNode root = MAPPER.readTree(t);
 
@@ -53,7 +50,6 @@ public class Dhis2ImportSummarizer implements Processor {
             in.setHeader(Exchange.HTTP_RESPONSE_CODE, pickHttpCode(status));
             in.setBody(unified);
         } catch (Exception e) {
-            // 4) JSON غير صالح → GLOBAL_ERROR مختصر
             log.warn("Invalid DHIS2 JSON at summarizer: {}", e.getMessage());
             writeShort(exchange, 502, "GLOBAL_ERROR", "Invalid JSON from DHIS2");
         }

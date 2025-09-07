@@ -91,12 +91,9 @@ VALUES
     ON CONFLICT (email) DO NOTHING;
 
 
--- ALTER TABLE public.role
---     ADD CONSTRAINT uq_role_name UNIQUE (role_name);
-INSERT INTO public.role (role_name)
-VALUES ('ADMIN')
+INSERT INTO public.role (role_name, role_type)
+VALUES ('ADMIN',0)
     ON CONFLICT (role_name) DO NOTHING;
-
 
 
 ALTER TABLE public.users_roles
@@ -133,11 +130,11 @@ INSERT INTO public.dhis2_settings (
 )
 VALUES (
            1,
-           'play.im.dhis2.org/stable-2-41-5',
+           'hmis-dev.moh.gov.jo/dwh',
            10000,
-           'district',
+           'F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z',
            30000,
-           'admin'
+           'supp_user'
        )
     ON CONFLICT (id) DO NOTHING;
 
