@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -77,7 +78,9 @@ public class UserService {
 
     public ResponseEntity<?> createNewUser(UserRequest user) {
         Optional<User> exists = repo.findByEmail(user.getEmail());
-        if(exists.isPresent())return ResponseEntity.badRequest().body("User Already Exists");
+        if(exists.isPresent())return ResponseEntity
+                .badRequest()
+                .body(Collections.singletonMap("message", "User Already Exists"));
         User req = userMapper.mapToEntity(user);
         req.setPassword(passwordEncoder.encode(req.getPassword()));
         req.setCreatedAt(new Timestamp(System.currentTimeMillis()));
