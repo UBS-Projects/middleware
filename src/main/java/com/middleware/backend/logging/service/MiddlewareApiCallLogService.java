@@ -195,16 +195,16 @@ public class MiddlewareApiCallLogService {
         String url = log.getRequestUrl();
         String path = log.getRequestPath();
 
-        if (url != null && url.contains("/camel/external/integrate")) {
+        if (url != null && url.contains("/camel/v1/datasets")) {
             return true;
         }
 
-        if (path != null && path.contains("/camel/external/integrate")) {
+        if (path != null && path.contains("/camel/v1/datasets")) {
             return true;
         }
 
         String apiEndpoint = log.getApiEndpoint();
-        if (apiEndpoint != null && apiEndpoint.contains("/camel/external/integrate")) {
+        if (apiEndpoint != null && apiEndpoint.contains("/camel/v1/datasets")) {
             return true;
         }
 
