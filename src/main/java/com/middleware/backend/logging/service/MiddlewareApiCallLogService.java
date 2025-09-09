@@ -1,12 +1,15 @@
 package com.middleware.backend.logging.service;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Pattern;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.Message;
 import org.apache.camel.http.common.HttpMessage;
-import org.springframework.http.HttpStatus;
+import org.apache.camel.util.ObjectHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -46,43 +49,54 @@ public class MiddlewareApiCallLogService {
         }
 
         if (sourceTransactionUUID == null || sourceTransactionUUID.trim().isEmpty()) {
-            exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 400);
-            exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "application/json");
-            exchange.getIn().setBody("{\"status\":\"ERROR\",\"message\":\"Missing required query parameter: transactionUUID\"}");
+            setError(exchange, 400, "{\"status\":\"ERROR\",\"message\":\"Missing required query parameter: transactionUUID\"}");
             throw new IllegalArgumentException("Missing required query parameter: transactionUUID");
         }
-
         sourceTransactionUUID = sourceTransactionUUID.trim().toLowerCase();
         if (!UUID_PATTERN.matcher(sourceTransactionUUID).matches()) {
-            exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 400);
-            exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "application/json");
-            exchange.getIn().setBody("{\"status\":\"ERROR\",\"message\":\"Invalid transactionUUID format. Expect RFC4122 (e.g., 550e8400-e29b-41d4-a716-446655440000)\"}");
+            setError(exchange, 400, "{\"status\":\"ERROR\",\"message\":\"Invalid transactionUUID format. Expect RFC4122 (e.g., 550e8400-e29b-41d4-a716-446655440000)\"}");
             throw new IllegalArgumentException("Invalid transactionUUID format");
         }
 
-        if (callLogRepository.existsBySourceTransactionUUID(sourceTransactionUUID)) {
-            log.error("Duplicate transactionUUID: {}", sourceTransactionUUID);
-            exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 409);
-            exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "application/json");
-            exchange.getIn().setBody("{\"status\":\"CONFLICT\",\"message\":\"Duplicate transactionUUID. This request was already processed.\"}");
-            throw new IllegalArgumentException("Duplicate transactionUUID. This UUID has already been used.");
+        boolean isRetry = "true".equalsIgnoreCase(exchange.getIn().getHeader("X-Retry-Attempt", String.class));
+        int attemptNo;
+        int retryCount;
+        if (isRetry) {
+            MiddlewareApiCallLog last = callLogRepository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(sourceTransactionUUID);
+            attemptNo = (last == null) ? 1 : last.getAttemptNo() + 1;
+            retryCount = Math.max(0, attemptNo - 1);
+        } else {
+            if (callLogRepository.existsBySourceTransactionUUID(sourceTransactionUUID)) {
+                setError(exchange, 409, "{\"status\":\"CONFLICT\",\"message\":\"Duplicate transactionUUID. This request was already processed.\"}");
+                throw new IllegalArgumentException("Duplicate transactionUUID. This UUID has already been used.");
+            }
+            attemptNo = 1;
+            retryCount = 0;
         }
 
         exchange.getIn().setHeader("X-Transaction-UUID", sourceTransactionUUID);
 
         String clientIp = extractClientIp(exchange);
-
         String userEmail = extractUserFromToken(exchange);
+        String requestBody = readBodyAsString(exchange.getIn());
+        String requestUrl = header(exchange, "CamelHttpUrl", String.class);
+        String requestPath = header(exchange, "CamelHttpPath", String.class);
+        String requestQuery = header(exchange, "CamelHttpQuery", String.class);
 
         MiddlewareApiCallLog logEntity = MiddlewareApiCallLog.builder()
                 .routeId(routeId)
                 .apiEndpoint(exchange.getFromEndpoint() != null ? exchange.getFromEndpoint().getEndpointUri() : null)
                 .requestMethod(exchange.getIn().getHeader(Exchange.HTTP_METHOD, String.class))
+                .requestUrl(requestUrl)
+                .requestPath(requestPath)
+                .requestQuery(requestQuery)
                 .requestHeaders(exchange.getIn().getHeaders() != null ? exchange.getIn().getHeaders().toString() : null)
-                .requestBody(safeBodyString(exchange))
+                .requestBody(requestBody)
                 .receivedAt(java.time.LocalDateTime.now())
                 .transactionId(UUID.randomUUID().toString())
                 .sourceTransactionUUID(sourceTransactionUUID)
+                .attemptNo(attemptNo)
+                .retryCount(retryCount)
                 .status("IN_PROGRESS")
                 .clientIp(clientIp)
                 .userId(userEmail)
@@ -92,137 +106,6 @@ public class MiddlewareApiCallLogService {
         exchange.setProperty("apiLogId", saved.getId());
         exchange.setProperty("transactionUUID", sourceTransactionUUID);
         return saved.getId();
-    }
-
-    /**
-     * Extract client IP from various possible headers and sources
-     */
-    private String extractClientIp(Exchange exchange) {
-        try {
-            // Try to get HTTP request from exchange
-            HttpServletRequest request = exchange.getIn().getHeader(Exchange.HTTP_SERVLET_REQUEST, HttpServletRequest.class);
-            if (request != null) {
-                return getClientIpFromRequest(request);
-            }
-
-            // Fallback to headers if no servlet request
-            String ip = exchange.getIn().getHeader("X-Forwarded-For", String.class);
-            if (ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown")) {
-                // X-Forwarded-For can contain multiple IPs, take the first one
-                return ip.split(",")[0].trim();
-            }
-
-            ip = exchange.getIn().getHeader("X-Real-IP", String.class);
-            if (ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown")) {
-                return ip;
-            }
-
-            ip = exchange.getIn().getHeader("CF-Connecting-IP", String.class); // Cloudflare
-            if (ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown")) {
-                return ip;
-            }
-
-            ip = exchange.getIn().getHeader("X-Cluster-Client-IP", String.class);
-            if (ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown")) {
-                return ip;
-            }
-
-            // Try to get from Camel HTTP component
-            if (exchange.getIn() instanceof HttpMessage) {
-                HttpServletRequest httpRequest = ((HttpMessage) exchange.getIn()).getRequest();
-                if (httpRequest != null) {
-                    return getClientIpFromRequest(httpRequest);
-                }
-            }
-
-            log.debug("Could not extract client IP from exchange headers");
-            return "Unknown";
-
-        } catch (Exception e) {
-            log.error("Error extracting client IP: {}", e.getMessage());
-            return "Unknown";
-        }
-    }
-
-    /**
-     * Extract client IP from HttpServletRequest with various fallbacks
-     */
-    private String getClientIpFromRequest(HttpServletRequest request) {
-        String ip = request.getHeader("X-Forwarded-For");
-        if (ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown")) {
-            // X-Forwarded-For can contain multiple IPs, take the first one
-            return ip.split(",")[0].trim();
-        }
-
-        ip = request.getHeader("X-Real-IP");
-        if (ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown")) {
-            return ip;
-        }
-
-        ip = request.getHeader("CF-Connecting-IP"); // Cloudflare
-        if (ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown")) {
-            return ip;
-        }
-
-        ip = request.getHeader("X-Cluster-Client-IP");
-        if (ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown")) {
-            return ip;
-        }
-
-        ip = request.getHeader("Proxy-Client-IP");
-        if (ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown")) {
-            return ip;
-        }
-
-        ip = request.getHeader("WL-Proxy-Client-IP");
-        if (ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown")) {
-            return ip;
-        }
-
-        ip = request.getHeader("HTTP_CLIENT_IP");
-        if (ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown")) {
-            return ip;
-        }
-
-        ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-        if (ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown")) {
-            return ip;
-        }
-
-        // Fallback to remote address
-        return request.getRemoteAddr();
-    }
-
-    /**
-     * Extract user email from JWT token in Authorization header
-     */
-    private String extractUserFromToken(Exchange exchange) {
-        try {
-            String authHeader = exchange.getIn().getHeader("Authorization", String.class);
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                String token = authHeader.substring(7);
-                return jwtUtil.extractEmail(token);
-            }
-
-            log.debug("No Authorization header or invalid format found");
-            return "Anonymous";
-
-        } catch (Exception e) {
-            log.error("Error extracting user from token: {}", e.getMessage());
-            return "Anonymous";
-        }
-    }
-
-    private String safeBodyString(Exchange exchange) {
-        try {
-            Object body = exchange.getIn().getBody();
-            if (body == null) return null;
-            if (body instanceof byte[]) return new String((byte[]) body, java.nio.charset.StandardCharsets.UTF_8);
-            return body.toString();
-        } catch (Exception e) {
-            log.warn("Error converting body to string: {}", e.getMessage());
-            return null;
-        }
     }
 
     @Async
@@ -241,119 +124,269 @@ public class MiddlewareApiCallLogService {
             MiddlewareApiCallLog existing = callLogRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("Log not found to update with ID: " + id));
 
-            log.debug("Updating transaction log with ID: {} routeId {} and transactionId {}",
-                    id, existing.getRouteId(), existing.getTransactionId());
-
-            // Set completion time first
             existing.setCompletedAt(java.time.LocalDateTime.now());
             existing.setDurationMs(
                     java.time.Duration.between(existing.getReceivedAt(), existing.getCompletedAt()).toMillis());
 
-            if (exchange.isFailed()) {
-                Exception ex = exchange.getException();
-                log.error("updateTransaction() Route [{}] - Failed exchange: {} - Exception: {}",
-                        existing.getRouteId(), existing.getTransactionId(), ex != null ? ex.getMessage() : "Unknown");
+            Integer responseCode = extractResponseCode(exchange);
+            existing.setResponseCode(responseCode);
+            existing.setResponseHeaders(safeHeadersString(exchange));
+            existing.setResponseBody(readResponseBodyAsString(exchange));
 
-                existing.setStatus("FAILED");
+            boolean isSpecialApi = isSpecialIntegrateApi(existing);
+            boolean isDryRunFalse = isDryRunFalse(existing);
 
-                // Enhanced error handling
-                if (ex != null) {
-                    existing.setErrorMessage(ex.getMessage());
-
-                    // Try to extract more specific error details
-                    String fullErrorMessage = extractFullErrorMessage(ex);
-                    if (fullErrorMessage.length() > ex.getMessage().length()) {
-                        existing.setErrorMessage(fullErrorMessage);
-                    }
-                }
-
-                Integer responseCode = extractResponseCode(exchange);
-                existing.setResponseCode(responseCode);
-
-                existing.setResponseHeaders(safeHeadersString(exchange));
-                existing.setResponseBody(safeResponseBodyString(exchange));
-
-                log.error("Transaction {} failed with response code: {}, error: {}",
-                        existing.getTransactionId(), responseCode, existing.getErrorMessage());
-
+            if (isSpecialApi && isDryRunFalse && responseCode != null && responseCode == 409) {
+                log.info("Special case: API {} with dry-run=false and 409 response - treating as 200 OK",
+                        existing.getRequestUrl());
+                existing.setResponseCode(200);
+                existing.setErrorMessage(null);
+                responseCode = 200;
             } else {
-                log.info("updateTransaction() Route [{}] - Completed exchange: {}",
-                        existing.getRouteId(), exchange.getExchangeId());
-
-                existing.setStatus("COMPLETED");
-
-                Integer responseCode = extractResponseCode(exchange);
-                existing.setResponseCode(responseCode);
-
-                existing.setResponseHeaders(safeHeadersString(exchange));
-                existing.setResponseBody(safeResponseBodyString(exchange));
-
-                log.info("Transaction {} completed successfully with response code: {}",
-                        existing.getTransactionId(), responseCode);
+                Exception ex = exchange.getException();
+                if (ex != null) {
+                    String fullErrorMessage = extractFullErrorMessage(ex);
+                    existing.setErrorMessage(ObjectHelper.isEmpty(fullErrorMessage) ? ex.getMessage() : fullErrorMessage);
+                } else if (responseCode != null && responseCode >= 400) {
+                    existing.setErrorMessage("HTTP " + responseCode + " - " +
+                            (existing.getResponseBody() != null ? existing.getResponseBody() : "No error details"));
+                } else {
+                    existing.setErrorMessage(null);
+                }
             }
 
+            existing.setStatus("COMPLETED");
+
             callLogRepository.save(existing);
-            log.info("Transaction {} for routeId: {} updated successfully in database",
-                    existing.getTransactionId(), existing.getRouteId());
+            log.info("Transaction {} for routeId: {} updated successfully: status=COMPLETED, responseCode={}",
+                    existing.getTransactionId(), existing.getRouteId(), existing.getResponseCode());
 
         } catch (Exception e) {
-            log.error("Error updating transaction with ID {}: {}", id, e.getMessage(), e);
+            log.error("Failed to update transaction with ID {}: {}", id, e.getMessage(), e);
+
+            try {
+                MiddlewareApiCallLog existing = callLogRepository.findById(id).orElse(null);
+                if (existing != null) {
+                    existing.setStatus("FAILED");
+                    existing.setErrorMessage("Failed to update log: " + e.getMessage());
+                    existing.setCompletedAt(java.time.LocalDateTime.now());
+                    if (existing.getReceivedAt() != null) {
+                        existing.setDurationMs(
+                                java.time.Duration.between(existing.getReceivedAt(), existing.getCompletedAt()).toMillis());
+                    }
+                    callLogRepository.save(existing);
+                }
+            } catch (Exception saveEx) {
+                log.error("Failed to update transaction status to FAILED for ID {}: {}", id, saveEx.getMessage());
+            }
         }
 
         return CompletableFuture.completedFuture(null);
     }
 
-    /**
-     * Extract response code from various possible sources in the exchange
-     */
-    private Integer extractResponseCode(Exchange exchange) {
-        Integer responseCode = exchange.getIn().getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
-        if (responseCode != null) {
-            return responseCode;
+    private <T> T header(Exchange exchange, String name, Class<T> type) {
+        try {
+            return exchange.getIn().getHeader(name, type);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    private boolean isSpecialIntegrateApi(MiddlewareApiCallLog log) {
+        String url = log.getRequestUrl();
+        String path = log.getRequestPath();
+
+        if (url != null && url.contains("/camel/external/integrate")) {
+            return true;
         }
 
-        responseCode = exchange.getOut().getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
-        if (responseCode != null) {
-            return responseCode;
+        if (path != null && path.contains("/camel/external/integrate")) {
+            return true;
+        }
+
+        String apiEndpoint = log.getApiEndpoint();
+        if (apiEndpoint != null && apiEndpoint.contains("/camel/external/integrate")) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    private boolean isDryRunFalse(MiddlewareApiCallLog log) {
+        String query = log.getRequestQuery();
+        String url = log.getRequestUrl();
+        String path = log.getRequestPath();
+
+        if (query != null && query.contains("dry-run=false")) {
+            return true;
+        }
+
+        if (url != null && url.contains("dry-run=false")) {
+            return true;
+        }
+
+        if (path != null && path.contains("dry-run=false")) {
+            return true;
+        }
+
+        return false;
+    }
+    private void setError(Exchange exchange, int status, String json) {
+        exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, status);
+        exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "application/json");
+        exchange.getIn().setBody(json);
+    }
+
+    private String extractClientIp(Exchange exchange) {
+        try {
+            HttpServletRequest request = exchange.getIn()
+                    .getHeader(Exchange.HTTP_SERVLET_REQUEST, HttpServletRequest.class);
+            if (request != null) {
+                return getClientIpFromRequest(request);
+            }
+
+            String ip = exchange.getIn().getHeader("X-Forwarded-For", String.class);
+            if (!isUnknown(ip)) return ip.split(",")[0].trim();
+
+            ip = exchange.getIn().getHeader("X-Real-IP", String.class);
+            if (!isUnknown(ip)) return ip;
+
+            ip = exchange.getIn().getHeader("CF-Connecting-IP", String.class);
+            if (!isUnknown(ip)) return ip;
+
+            ip = exchange.getIn().getHeader("X-Cluster-Client-IP", String.class);
+            if (!isUnknown(ip)) return ip;
+
+            if (exchange.getIn() instanceof HttpMessage) {
+                HttpServletRequest httpRequest = ((HttpMessage) exchange.getIn()).getRequest();
+                if (httpRequest != null) {
+                    return getClientIpFromRequest(httpRequest);
+                }
+            }
+
+            log.debug("Could not extract client IP from exchange headers");
+            return "Unknown";
+
+        } catch (Exception e) {
+            log.error("Error extracting client IP: {}", e.getMessage());
+            return "Unknown";
+        }
+    }
+
+    private boolean isUnknown(String ip) {
+        return ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip);
+    }
+
+    private String getClientIpFromRequest(HttpServletRequest request) {
+        String ip = request.getHeader("X-Forwarded-For");
+        if (!isUnknown(ip)) return ip.split(",")[0].trim();
+
+        ip = request.getHeader("X-Real-IP");
+        if (!isUnknown(ip)) return ip;
+
+        ip = request.getHeader("CF-Connecting-IP");
+        if (!isUnknown(ip)) return ip;
+
+        ip = request.getHeader("X-Cluster-Client-IP");
+        if (!isUnknown(ip)) return ip;
+
+        ip = request.getHeader("Proxy-Client-IP");
+        if (!isUnknown(ip)) return ip;
+
+        ip = request.getHeader("WL-Proxy-Client-IP");
+        if (!isUnknown(ip)) return ip;
+
+        ip = request.getHeader("HTTP_CLIENT_IP");
+        if (!isUnknown(ip)) return ip;
+
+        ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        if (!isUnknown(ip)) return ip;
+
+        return request.getRemoteAddr();
+    }
+
+    private String extractUserFromToken(Exchange exchange) {
+        try {
+            String authHeader = exchange.getIn().getHeader("Authorization", String.class);
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                String token = authHeader.substring(7);
+                return jwtUtil.extractEmail(token);
+            }
+            log.debug("No Authorization header or invalid format found");
+            return "Anonymous";
+        } catch (Exception e) {
+            log.error("Error extracting user from token: {}", e.getMessage());
+            return "Anonymous";
+        }
+    }
+
+    private String readBodyAsString(Message msg) {
+        try {
+            String contentType = msg.getHeader(Exchange.CONTENT_TYPE, String.class);
+            Charset cs = StandardCharsets.UTF_8;
+            if (contentType != null) {
+                String lower = contentType.toLowerCase();
+                int i = lower.indexOf("charset=");
+                if (i >= 0) {
+                    String enc = lower.substring(i + "charset=".length()).trim();
+                    int semi = enc.indexOf(';');
+                    if (semi > 0) enc = enc.substring(0, semi).trim();
+                    try {
+                        cs = Charset.forName(enc);
+                    } catch (Exception ignore) {}
+                }
+            }
+
+            String body = msg.getBody(String.class);
+            if (body == null) return null;
+
+            byte[] bytes = body.getBytes(StandardCharsets.UTF_8);
+            return new String(bytes, cs);
+        } catch (Exception e) {
+            log.warn("Error reading request body as string: {}", e.getMessage());
+            Object body = msg.getBody();
+            if (body == null) return null;
+            if (body instanceof byte[]) return new String((byte[]) body, StandardCharsets.UTF_8);
+            return String.valueOf(body);
+        }
+    }
+
+    private Integer extractResponseCode(Exchange exchange) {
+        Integer responseCode = exchange.getIn().getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
+        if (responseCode != null) return responseCode;
+
+        if (exchange.getOut() != null) {
+            responseCode = exchange.getOut().getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
+            if (responseCode != null) return responseCode;
         }
 
         responseCode = exchange.getMessage().getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
-        if (responseCode != null) {
-            return responseCode;
-        }
+        if (responseCode != null) return responseCode;
 
-        if (exchange.isFailed()) {
-            return 500;
-        }
-
-        return 200;
+        return exchange.isFailed() ? 500 : 200;
     }
 
-    /**
-     * Extract complete error message including cause chain
-     */
     private String extractFullErrorMessage(Exception ex) {
         if (ex == null) return "Unknown error";
-
-        StringBuilder errorMsg = new StringBuilder(ex.getMessage() != null ? ex.getMessage() : ex.getClass().getSimpleName());
-
+        StringBuilder errorMsg = new StringBuilder(
+                ex.getMessage() != null ? ex.getMessage() : ex.getClass().getSimpleName());
         Throwable cause = ex.getCause();
         int depth = 0;
-        while (cause != null && depth < 3) { // Limit depth to avoid very long messages
-            errorMsg.append(" -> ").append(cause.getMessage() != null ? cause.getMessage() : cause.getClass().getSimpleName());
+        while (cause != null && depth < 3) {
+            errorMsg.append(" -> ").append(
+                    cause.getMessage() != null ? cause.getMessage() : cause.getClass().getSimpleName());
             cause = cause.getCause();
             depth++;
         }
-
         return errorMsg.toString();
     }
 
-    /**
-     * Safely convert headers to string
-     */
     private String safeHeadersString(Exchange exchange) {
         try {
-            if (exchange.getIn().getHeaders() != null) {
+            if (exchange.getMessage() != null && exchange.getMessage().getHeaders() != null) {
+                return exchange.getMessage().getHeaders().toString();
+            }
+            if (exchange.getIn() != null && exchange.getIn().getHeaders() != null) {
                 return exchange.getIn().getHeaders().toString();
             }
             return null;
@@ -363,25 +396,30 @@ public class MiddlewareApiCallLogService {
         }
     }
 
-    /**
-     * Safely convert response body to string
-     */
-    private String safeResponseBodyString(Exchange exchange) {
+    private String readResponseBodyAsString(Exchange exchange) {
         try {
-            Object body = exchange.getIn().getBody();
-            if (body == null) {
-                body = exchange.getOut().getBody();
+            Message m = exchange.getMessage();
+            if (m != null) {
+                String b = m.getBody(String.class);
+                if (b != null) return b;
             }
-            if (body == null) {
-                body = exchange.getMessage().getBody();
+            if (exchange.getOut() != null) {
+                String b = exchange.getOut().getBody(String.class);
+                if (b != null) return b;
             }
-
-            if (body == null) return null;
-            if (body instanceof byte[]) return new String((byte[]) body, java.nio.charset.StandardCharsets.UTF_8);
-            return body.toString();
+            if (exchange.getIn() != null) {
+                String b = exchange.getIn().getBody(String.class);
+                if (b != null) return b;
+            }
+            return null;
         } catch (Exception e) {
-            log.warn("Error converting response body to string: {}", e.getMessage());
-            return "Error reading response body";
+            log.warn("Error reading response body as string: {}", e.getMessage());
+            Object body = exchange.getMessage() != null ? exchange.getMessage().getBody() : null;
+            if (body == null && exchange.getOut() != null) body = exchange.getOut().getBody();
+            if (body == null && exchange.getIn() != null) body = exchange.getIn().getBody();
+            if (body == null) return null;
+            if (body instanceof byte[]) return new String((byte[]) body, StandardCharsets.UTF_8);
+            return String.valueOf(body);
         }
     }
 }

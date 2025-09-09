@@ -10,9 +10,7 @@ import com.middleware.backend.logging.model.MiddlewareApiCallLog;
 @Mapper(componentModel = "spring")
 @Primary
 public interface MiddlewareApiCallLogMapper {
-
     MiddlewareApiCallLog toEntity(MiddlewareApiCallLogDto dto);
-
     @Mapping(target = "userId", source = "userId")
     MiddlewareApiCallLogDto toDto(MiddlewareApiCallLog entity);
 }

@@ -22,6 +22,9 @@ public class MiddlewareApiCallLogDto {
     private String apiEndpoint;
     private String routeId;
     private String requestMethod;
+    private String requestUrl;
+    private String requestPath;
+    private String requestQuery;
     private String requestHeaders;
     private String requestBody;
     private String status;
@@ -39,5 +42,6 @@ public class MiddlewareApiCallLogDto {
 
     private String errorMessage;
     private Integer retryCount;
+    private Integer attemptNo;
     private String sourceTransactionUUID;
 }

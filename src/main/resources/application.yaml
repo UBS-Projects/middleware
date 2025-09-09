@@ -48,11 +48,16 @@ logging:
   level:
     org.springframework.web: DEBUG
     com.middleware.backend: DEBUG
+    rg.apache.camel: DEBUG
     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
 
 camel:
   main:
     scripting: true
+    stream-caching-enabled: true
+    stream-caching-spool-enabled: true
+    stream-caching-any-spool-rules: true
+    stream-caching-spool-used-heap-memory-threshold: 70
   rest:
     component: servlet     # or netty-http, undertow, http, etc. depending on your setup
     host: localhost
