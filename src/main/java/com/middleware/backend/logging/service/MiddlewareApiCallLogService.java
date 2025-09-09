@@ -35,23 +35,96 @@ public class MiddlewareApiCallLogService {
             "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
     );
 
+//    @Transactional
+//    public Long createTransactionSync(String routeId, Exchange exchange) {
+//        log.debug("createTransactionSync... creating log for Route [{}] - Exchange content: {}", routeId,
+//                exchange.getAllProperties());
+//
+//        String sourceTransactionUUID = exchange.getIn().getHeader("transactionUUID", String.class);
+//        if (sourceTransactionUUID == null) {
+//            sourceTransactionUUID = exchange.getIn().getHeader("X-Transaction-UUID", String.class);
+//        }
+//        if (sourceTransactionUUID == null) {
+//            sourceTransactionUUID = exchange.getProperty("transactionUUID", String.class);
+//        }
+//
+//        if (sourceTransactionUUID == null || sourceTransactionUUID.trim().isEmpty()) {
+//            setError(exchange, 400, "{\"status\":\"ERROR\",\"message\":\"Missing required query parameter: transactionUUID\"}");
+//            throw new IllegalArgumentException("Missing required query parameter: transactionUUID");
+//        }
+//        sourceTransactionUUID = sourceTransactionUUID.trim().toLowerCase();
+//        if (!UUID_PATTERN.matcher(sourceTransactionUUID).matches()) {
+//            setError(exchange, 400, "{\"status\":\"ERROR\",\"message\":\"Invalid transactionUUID format. Expect RFC4122 (e.g., 550e8400-e29b-41d4-a716-446655440000)\"}");
+//            throw new IllegalArgumentException("Invalid transactionUUID format");
+//        }
+//
+//        boolean isRetry = "true".equalsIgnoreCase(exchange.getIn().getHeader("X-Retry-Attempt", String.class));
+//        int attemptNo;
+//        int retryCount;
+//        if (isRetry) {
+//            MiddlewareApiCallLog last = callLogRepository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(sourceTransactionUUID);
+//            attemptNo = (last == null) ? 1 : last.getAttemptNo() + 1;
+//            retryCount = Math.max(0, attemptNo - 1);
+//        } else {
+//            if (callLogRepository.existsBySourceTransactionUUID(sourceTransactionUUID)) {
+//                setError(exchange, 409, "{\"status\":\"CONFLICT\",\"message\":\"Duplicate transactionUUID. This request was already processed.\"}");
+//                throw new IllegalArgumentException("Duplicate transactionUUID. This UUID has already been used.");
+//            }
+//            attemptNo = 1;
+//            retryCount = 0;
+//        }
+//
+//        exchange.getIn().setHeader("X-Transaction-UUID", sourceTransactionUUID);
+//
+//        String clientIp = extractClientIp(exchange);
+//        String userEmail = extractUserFromToken(exchange);
+//        String requestBody = readBodyAsString(exchange.getIn());
+//        String requestUrl = header(exchange, "CamelHttpUrl", String.class);
+//        String requestPath = header(exchange, "CamelHttpPath", String.class);
+//        String requestQuery = header(exchange, "CamelHttpQuery", String.class);
+//
+//        MiddlewareApiCallLog logEntity = MiddlewareApiCallLog.builder()
+//                .routeId(routeId)
+//                .apiEndpoint(sanitizeForPostgres(exchange.getFromEndpoint() != null ? exchange.getFromEndpoint().getEndpointUri() : null))
+//                .requestMethod(exchange.getIn().getHeader(Exchange.HTTP_METHOD, String.class))
+//                .requestUrl(sanitizeForPostgres(requestUrl))
+//                .requestPath(sanitizeForPostgres(requestPath))
+//                .requestQuery(sanitizeForPostgres(requestQuery))
+//                .requestHeaders(sanitizeForPostgres(exchange.getIn().getHeaders() != null ? exchange.getIn().getHeaders().toString() : null))
+//                .requestBody(sanitizeForPostgres(requestBody))
+//                .receivedAt(java.time.LocalDateTime.now())
+//                .transactionId(UUID.randomUUID().toString())
+//                .sourceTransactionUUID(sourceTransactionUUID)
+//                .attemptNo(attemptNo)
+//                .retryCount(retryCount)
+//                .status("IN_PROGRESS")
+//                .clientIp(sanitizeForPostgres(clientIp))
+//                .userId(sanitizeForPostgres(userEmail))
+//                .build();
+//
+//
+//        MiddlewareApiCallLog saved = callLogRepository.save(logEntity);
+//        exchange.setProperty("apiLogId", saved.getId());
+//        exchange.setProperty("transactionUUID", sourceTransactionUUID);
+//        return saved.getId();
+//    }
+// Add these imports if not already present:
+// import java.net.URLDecoder;
+// import java.util.regex.Pattern;
+// import java.util.regex.Matcher;
+
     @Transactional
     public Long createTransactionSync(String routeId, Exchange exchange) {
         log.debug("createTransactionSync... creating log for Route [{}] - Exchange content: {}", routeId,
                 exchange.getAllProperties());
 
-        String sourceTransactionUUID = exchange.getIn().getHeader("transactionUUID", String.class);
-        if (sourceTransactionUUID == null) {
-            sourceTransactionUUID = exchange.getIn().getHeader("X-Transaction-UUID", String.class);
-        }
-        if (sourceTransactionUUID == null) {
-            sourceTransactionUUID = exchange.getProperty("transactionUUID", String.class);
-        }
+        String sourceTransactionUUID = extractTransactionUUID(exchange);
 
         if (sourceTransactionUUID == null || sourceTransactionUUID.trim().isEmpty()) {
-            setError(exchange, 400, "{\"status\":\"ERROR\",\"message\":\"Missing required query parameter: transactionUUID\"}");
-            throw new IllegalArgumentException("Missing required query parameter: transactionUUID");
+            setError(exchange, 400, "{\"status\":\"ERROR\",\"message\":\"Missing required parameter: transactionUUID (in URL query parameter or JSON body)\"}");
+            throw new IllegalArgumentException("Missing required parameter: transactionUUID (in URL or JSON body)");
         }
+
         sourceTransactionUUID = sourceTransactionUUID.trim().toLowerCase();
         if (!UUID_PATTERN.matcher(sourceTransactionUUID).matches()) {
             setError(exchange, 400, "{\"status\":\"ERROR\",\"message\":\"Invalid transactionUUID format. Expect RFC4122 (e.g., 550e8400-e29b-41d4-a716-446655440000)\"}");
@@ -85,21 +158,21 @@ public class MiddlewareApiCallLogService {
 
         MiddlewareApiCallLog logEntity = MiddlewareApiCallLog.builder()
                 .routeId(routeId)
-                .apiEndpoint(exchange.getFromEndpoint() != null ? exchange.getFromEndpoint().getEndpointUri() : null)
+                .apiEndpoint(sanitizeForPostgres(exchange.getFromEndpoint() != null ? exchange.getFromEndpoint().getEndpointUri() : null))
                 .requestMethod(exchange.getIn().getHeader(Exchange.HTTP_METHOD, String.class))
-                .requestUrl(requestUrl)
-                .requestPath(requestPath)
-                .requestQuery(requestQuery)
-                .requestHeaders(exchange.getIn().getHeaders() != null ? exchange.getIn().getHeaders().toString() : null)
-                .requestBody(requestBody)
+                .requestUrl(sanitizeForPostgres(requestUrl))
+                .requestPath(sanitizeForPostgres(requestPath))
+                .requestQuery(sanitizeForPostgres(requestQuery))
+                .requestHeaders(sanitizeForPostgres(exchange.getIn().getHeaders() != null ? exchange.getIn().getHeaders().toString() : null))
+                .requestBody(sanitizeForPostgres(requestBody))
                 .receivedAt(java.time.LocalDateTime.now())
                 .transactionId(UUID.randomUUID().toString())
                 .sourceTransactionUUID(sourceTransactionUUID)
                 .attemptNo(attemptNo)
                 .retryCount(retryCount)
                 .status("IN_PROGRESS")
-                .clientIp(clientIp)
-                .userId(userEmail)
+                .clientIp(sanitizeForPostgres(clientIp))
+                .userId(sanitizeForPostgres(userEmail))
                 .build();
 
         MiddlewareApiCallLog saved = callLogRepository.save(logEntity);
@@ -108,6 +181,101 @@ public class MiddlewareApiCallLogService {
         return saved.getId();
     }
 
+    /**
+     * Extract transactionUUID from URL query parameters or JSON body only
+     */
+    private String extractTransactionUUID(Exchange exchange) {
+        // 1. Check in query parameters (from URL)
+        String requestQuery = header(exchange, "CamelHttpQuery", String.class);
+        String transactionUUID = extractFromQueryString(requestQuery);
+        if (transactionUUID != null && !transactionUUID.trim().isEmpty()) {
+            log.debug("Found transactionUUID in query parameters: {}", transactionUUID);
+            return transactionUUID;
+        }
+
+        // 2. Check in JSON body only
+        transactionUUID = extractFromJsonBody(exchange);
+        if (transactionUUID != null && !transactionUUID.trim().isEmpty()) {
+            log.debug("Found transactionUUID in JSON body: {}", transactionUUID);
+            return transactionUUID;
+        }
+
+        log.warn("transactionUUID not found in URL query parameters or JSON body");
+        return null;
+    }
+
+    /**
+     * Extract transactionUUID from query string
+     */
+    private String extractFromQueryString(String queryString) {
+        if (queryString == null || queryString.trim().isEmpty()) {
+            return null;
+        }
+
+        try {
+            String[] params = queryString.split("&");
+            for (String param : params) {
+                String[] keyValue = param.split("=", 2);
+                if (keyValue.length == 2 && "transactionUUID".equals(keyValue[0])) {
+                    return java.net.URLDecoder.decode(keyValue[1], "UTF-8");
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Error parsing query string for transactionUUID: {}", e.getMessage());
+        }
+
+        return null;
+    }
+
+    /**
+     * Extract transactionUUID from JSON body only
+     */
+    private String extractFromJsonBody(Exchange exchange) {
+        try {
+            String body = readBodyAsString(exchange.getIn());
+            if (body == null || body.trim().isEmpty()) {
+                return null;
+            }
+
+            String contentType = exchange.getIn().getHeader(Exchange.CONTENT_TYPE, String.class);
+
+            // Only process if it's JSON content type or try to parse as JSON
+            if (contentType != null && !contentType.toLowerCase().contains("application/json")) {
+                // If it's not JSON content type, still try to parse as JSON
+                // but don't process other content types
+            }
+
+            // Simple JSON parsing without external libraries
+            // Look for "transactionUUID" key
+            if (body.contains("\"transactionUUID\"")) {
+                java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(
+                        "\"transactionUUID\"\\s*:\\s*\"([^\"]+)\"",
+                        java.util.regex.Pattern.CASE_INSENSITIVE
+                );
+                java.util.regex.Matcher matcher = pattern.matcher(body);
+                if (matcher.find()) {
+                    return matcher.group(1);
+                }
+            }
+
+            // Also check for transactionUuid (camelCase)
+            if (body.contains("\"transactionUuid\"")) {
+                java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(
+                        "\"transactionUuid\"\\s*:\\s*\"([^\"]+)\"",
+                        java.util.regex.Pattern.CASE_INSENSITIVE
+                );
+                java.util.regex.Matcher matcher = pattern.matcher(body);
+                if (matcher.find()) {
+                    return matcher.group(1);
+                }
+            }
+
+        } catch (Exception e) {
+            log.warn("Error extracting transactionUUID from JSON body: {}", e.getMessage());
+        }
+
+        return null;
+    }
     @Async
     @Transactional
     public CompletableFuture<Void> updateTransaction(Exchange exchange) {
@@ -130,8 +298,9 @@ public class MiddlewareApiCallLogService {
 
             Integer responseCode = extractResponseCode(exchange);
             existing.setResponseCode(responseCode);
-            existing.setResponseHeaders(safeHeadersString(exchange));
-            existing.setResponseBody(readResponseBodyAsString(exchange));
+            existing.setResponseHeaders(sanitizeForPostgres(safeHeadersString(exchange)));
+            existing.setResponseBody(sanitizeForPostgres(readResponseBodyAsString(exchange)));
+
 
             boolean isSpecialApi = isSpecialIntegrateApi(existing);
             boolean isDryRunFalse = isDryRunFalse(existing);
@@ -191,6 +360,14 @@ public class MiddlewareApiCallLogService {
             return null;
         }
     }
+    private String sanitizeForPostgres(String input) {
+        if (input == null) return null;
+        // إزالة null bytes
+        String cleaned = input.replace("\u0000", "");
+        // إزالة أي محارف غير صالحة ل UTF-8 (اختياري)
+        return cleaned;
+    }
+
     private boolean isSpecialIntegrateApi(MiddlewareApiCallLog log) {
         String url = log.getRequestUrl();
         String path = log.getRequestPath();
