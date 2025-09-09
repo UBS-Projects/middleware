@@ -55,7 +55,7 @@ public class AuthController {
     )
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(request.getEmail().toLowerCase(), request.getPassword())
         );
         long expirationMillis = 1000 * 60 * 60 * 8;
         Optional<User> user = userRepository.findActiveByEmail(request.getEmail().toLowerCase());
@@ -66,7 +66,7 @@ public class AuthController {
                     .body(new AuthResponse("Not a User"));
         }
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail().toLowerCase());
         String jwt = jwtUtil.generateToken(
                 userDetails.getUsername(),
                 user.get().getRoles().stream().map(Role::getRoleName).toList(),
@@ -95,7 +95,7 @@ public class AuthController {
             description = "Invalidates the JWT token of the authenticated user, effectively logging them out."
     )
     public ResponseEntity<?> logout(@RequestBody AuthResponse req) {
-        return tokenService.logout(jwtUtil.extractEmail(req.getToken()));
+        return tokenService.logout(jwtUtil.extractEmail(req.getToken().toLowerCase()));
     }
     @PostMapping("/token")
     @PreAuthorize("hasAuthority('user:generate-token')")
@@ -123,7 +123,7 @@ public class AuthController {
                     .body(new AuthResponse("Not a Service User"));
         }
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail().toLowerCase());
 
         // Calculate expiration in millis
         long expirationMillis;
