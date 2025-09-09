@@ -60,6 +60,13 @@ public class UserSpecification {
             return cb.equal(roleJoin.get("roleType"), roleType);
         };
     }
+    public static Specification<User> emailNotEqual(String email) {
+        return (root, query, cb) -> {
+            if (email == null) return cb.conjunction();
+            return cb.notEqual(root.get("email"), email);
+        };
+    }
+
 
 }
 

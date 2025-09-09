@@ -16,6 +16,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +52,8 @@ public class UserController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
         Pageable pageable = PageRequest.of(page, size, sortDirection.equalsIgnoreCase("asc")
                 ? Sort.by(sortedBy).ascending()
                 : Sort.by(sortedBy).descending());
@@ -61,7 +65,9 @@ public class UserController {
                 .and(UserSpecification.hasRoleType(roleType!=null ? Role.RoleType.valueOf(roleType) : null))
                 .and(UserSpecification.hasField("status", status, MatchMode.EXACT))
                 .and(UserSpecification.dateAfter("createdAt", createdAfter))
-                .and(UserSpecification.dateBefore("createdAt", createdBefore));
+                .and(UserSpecification.dateBefore("createdAt", createdBefore))
+                .and(UserSpecification.emailNotEqual(emailUser));
+                ;
         return ResponseEntity.ok(service.getAll(spec,pageable));
     }
 
