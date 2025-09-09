@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
 #    url: jdbc:postgresql://localhost:5432/middleware
-    url: jdbc:postgresql://localhost:5432/middleware
+    url: jdbc:postgresql://localhost:5432/middlewareDB
     username: postgres
-    password: root
+    password: 12345
     driver-class-name: org.postgresql.Driver
 
   sql:

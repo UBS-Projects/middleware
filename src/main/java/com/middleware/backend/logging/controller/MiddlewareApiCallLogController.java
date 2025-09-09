@@ -110,7 +110,7 @@ public class MiddlewareApiCallLogController {
     }
 
     @GetMapping("/attempts/{sourceUUID}")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('middlewareLogs:view')")
     @Operation(
             summary = "Get all attempts for a source UUID",
             description = "Retrieves all attempts for a given source transaction UUID. Requires 'middlewareLogs:view' authority."
@@ -142,7 +142,7 @@ public class MiddlewareApiCallLogController {
         }
     }
     @PostMapping("/{uuid}/retry")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('middlewareLogs:retry')")
     @Operation(
             summary = "Retry a failed API call",
             description = "Retries a failed API call by sending the same request. Only allowed for completed logs with API errors."
@@ -335,7 +335,7 @@ public class MiddlewareApiCallLogController {
         if (s.getRequestUrl() != null && !s.getRequestUrl().isBlank()) return s.getRequestUrl();
         if (s.getRequestPath() != null) {
             String q = (s.getRequestQuery() == null || s.getRequestQuery().isBlank()) ? "" : ("?" + s.getRequestQuery());
-            return "http://localhost:8081" + s.getRequestPath() + q;
+            return "http://10.160.29.97" + s.getRequestPath() + q;
         }
         return null;
     }

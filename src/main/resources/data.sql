@@ -33,52 +33,51 @@ INSERT INTO public.permissions (id, name) VALUES
 
                                               (27, 'middlewareLogs:view'),
                                               (28, 'middlewareLogs:export'),
+                                              (29, 'middlewareLogs:retry'),
 
-                                              (29, 'scheduledJobs:create'),
-                                              (30, 'scheduledJobs:pause'),
-                                              (31, 'scheduledJobs:resume'),
-                                              (32, 'scheduledJobs:edit'),
-                                              (33, 'scheduledJobs:view'),
-                                              (34, 'scheduledJobs:delete'),
-                                              (35, 'scheduledJobs:test'),
-                                              (36, 'scheduledJobs:export'),
+                                              (30, 'scheduledJobs:create'),
+                                              (31, 'scheduledJobs:pause'),
+                                              (32, 'scheduledJobs:resume'),
+                                              (33, 'scheduledJobs:edit'),
+                                              (34, 'scheduledJobs:view'),
+                                              (35, 'scheduledJobs:delete'),
+                                              (36, 'scheduledJobs:test'),
+                                              (37, 'scheduledJobs:export'),
 
-                                              (37, 'jobExecutionLogs:view'),
-                                              (38, 'jobExecutionLogs:export'),
+                                              (38, 'jobExecutionLogs:view'),
+                                              (39, 'jobExecutionLogs:export'),
 
-                                              (39, 'scheduledJobsLogs:view'),
-                                              (40, 'scheduledJobsLogs:export'),
+                                              (40, 'scheduledJobsLogs:view'),
+                                              (41, 'scheduledJobsLogs:export'),
 
-                                              (41, 'user:view'),
-                                              (42, 'user:create'),
-                                              (43, 'user:delete'),
-                                              (44, 'user:activate'),
-                                              (45, 'user:edit'),
-                                              (46, 'user:viewByRole'),
-                                              (47, 'user:generate-token'),
+                                              (42, 'user:view'),
+                                              (43, 'user:create'),
+                                              (44, 'user:delete'),
+                                              (45, 'user:activate'),
+                                              (46, 'user:edit'),
+                                              (47, 'user:viewByRole'),
+                                              (48, 'user:generate-token'),
 
-                                              (48, 'role:view'),
-                                              (49, 'role:create'),
+                                              (49, 'role:view'),
+                                              (50, 'role:create'),
 
-                                              (50, 'userPermissions:view'),
-                                              (51, 'userPermissions:edit'),
+                                              (51, 'userPermissions:view'),
+                                              (52, 'userPermissions:edit'),
 
-                                              (52, 'routePermissions:view'),
-                                              (53, 'routePermissions:edit'),
+                                              (53, 'routePermissions:view'),
+                                              (54, 'routePermissions:edit'),
 
-                                              (54, 'integrationMapping:view'),
-                                              (55, 'integrationMapping:create'),
-                                              (56, 'integrationMapping:edit'),
-                                              (57, 'integrationMapping:delete'),
-                                              (58, 'integrationMapping:export'),
+                                              (55, 'integrationMapping:view'),
+                                              (56, 'integrationMapping:create'),
+                                              (57, 'integrationMapping:edit'),
+                                              (58, 'integrationMapping:delete'),
+                                              (59, 'integrationMapping:export'),
 
-                                              (59, 'dhis2:view'),
-                                              (60, 'dhis2:edit'),
+                                              (60, 'dhis2:view'),
+                                              (61, 'dhis2:edit'),
 
-
-                                              (61, 'throttling:view'),
-                                              (62, 'throttling:edit')
-
+                                              (62, 'throttling:view'),
+                                              (63, 'throttling:edit')
 ON CONFLICT DO NOTHING;
 
 
@@ -106,7 +105,7 @@ ALTER TABLE public.users_roles
     ADD CONSTRAINT uq_users_roles UNIQUE (user_id, roles_id);
 
 INSERT INTO public.users_roles (user_id, roles_id)
-VALUES (30, 6)
+VALUES (1, 1)
     ON CONFLICT(user_id,roles_id) DO NOTHING;
 
 
@@ -116,9 +115,9 @@ ALTER TABLE public.role_permissions
     ADD CONSTRAINT uq_role_permission UNIQUE (role_id, permission_id);
 
 INSERT INTO public.role_permissions (role_id, permission_id)
-SELECT 6, id
+SELECT 1, id
 FROM public.permissions
-WHERE id BETWEEN 1 AND 62
+WHERE id BETWEEN 1 AND 63
     ON CONFLICT(role_id, permission_id) DO NOTHING;
 
 
