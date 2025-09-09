@@ -92,7 +92,7 @@ public class ScheduledJobsService{
         job.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         job.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         job.setActive(true);
-        Optional<User> user = userRepo.findByEmail(email);
+        Optional<User> user = userRepo.findByEmail(email.toLowerCase());
         job.setCreatedBy(user.get().getId());
         job.setUpdatedBy(user.get().getId());
 
@@ -107,7 +107,7 @@ public class ScheduledJobsService{
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
         job.setEnabled(false);
-        Optional<User> user = userRepo.findByEmail(email);
+        Optional<User> user = userRepo.findByEmail(email.toLowerCase());
         job.setUpdatedBy(user.get().getId());
         job.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         repo.save(job);
@@ -121,7 +121,7 @@ public class ScheduledJobsService{
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
         job.setEnabled(true);
-        Optional<User> user = userRepo.findByEmail(email);
+        Optional<User> user = userRepo.findByEmail(email.toLowerCase());
         job.setUpdatedBy(user.get().getId());
         job.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         repo.save(job);
@@ -156,7 +156,7 @@ public class ScheduledJobsService{
         if (job.getHeaders() != null) existingJob.setHeaders(job.getHeaders());
         if (job.getPayload() != null) existingJob.setPayload(job.getPayload());
         existingJob.setEnabled(job.isEnabled());
-        Optional<User> user = userRepo.findByEmail(email);
+        Optional<User> user = userRepo.findByEmail(email.toLowerCase());
         job.setUpdatedBy(user.get().getId());
         existingJob.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
@@ -181,7 +181,7 @@ public class ScheduledJobsService{
                 .orElseThrow(() -> new RuntimeException("Job not found"));
         job.setActive(false);
         job.setEnabled(false);
-        Optional<User> user = userRepo.findByEmail(email);
+        Optional<User> user = userRepo.findByEmail(email.toLowerCase());
         job.setUpdatedBy(user.get().getId());
         repo.save(job);
         pauseJob(id,email);
