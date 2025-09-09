@@ -19437,3 +19437,381 @@ org.springframework.security.core.userdetails.UsernameNotFoundException: User no
 2025-09-09 16:41:39 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
 2025-09-09 16:41:39 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
 2025-09-09 16:41:39 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-09-09 16:41:46 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-09 16:41:47 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23-valhalla with PID 25264 (C:\Users\omard\Desktop\Work\jordan\back-end\target\classes started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-09-09 16:41:47 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-09 16:41:49 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-09-09 16:41:49 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-09 16:41:49 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-09-09 16:41:50 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-09-09 16:41:50 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-09 16:41:50 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-09 16:41:50 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-09 16:41:51 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-09 16:41:51 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@6afaf27']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-09 16:41:53 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-09 16:41:55 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-09 16:41:56 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-09-09 16:41:56 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2025-09-09 16:41:56 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-09-09 16:41:56 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-09 16:41:56 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-09 16:41:56 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-09 16:41:56 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-09 16:41:56 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-09-09 16:41:56 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-09 16:41:56 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-09 16:41:56 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@7352de9c
+2025-09-09 16:41:57 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-09 16:41:57 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-09 16:41:57 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 107 mappings in 'requestMappingHandlerMapping'
+2025-09-09 16:41:58 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-09 16:41:58 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-09 16:41:58 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-09 16:42:00 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-09-09 16:42:00 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-09-09 16:42:00 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-09 16:42:00 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-09 16:42:00 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-09 16:42:00 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 12ms (build:0ms init:0ms start:12ms)
+2025-09-09 16:42:00 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 14.195 seconds (process running for 15.413)
+2025-09-09 16:42:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-09 16:42:00 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-09 16:42:01 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq initialized. setval returned 1
+2025-09-09 16:42:01 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-09 16:42:01 [RMI TCP Connection(2)-192.168.88.3] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-09 16:42:01 [RMI TCP Connection(2)-192.168.88.3] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-09 16:42:01 [RMI TCP Connection(2)-192.168.88.3] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-09-09 16:42:01 [RMI TCP Connection(2)-192.168.88.3] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-09-09 16:42:01 [RMI TCP Connection(2)-192.168.88.3] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-09-09 16:42:01 [RMI TCP Connection(2)-192.168.88.3] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@5342c626
+2025-09-09 16:42:01 [RMI TCP Connection(2)-192.168.88.3] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@6315b3f7
+2025-09-09 16:42:01 [RMI TCP Connection(2)-192.168.88.3] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-09-09 16:42:01 [RMI TCP Connection(2)-192.168.88.3] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 8 ms
+2025-09-09 16:42:01 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route get-user-from-api to context (DB says active)
+2025-09-09 16:42:01 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route get-todo to context (DB says active)
+2025-09-09 16:42:01 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-09 16:42:12 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/auth/login, client=0:0:0:0:0:0:0:1]
+2025-09-09 16:42:12 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/auth/login", parameters={}
+2025-09-09 16:42:12 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.auth.AuthController#login(AuthRequest)
+2025-09-09 16:42:12 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AuthController.AuthRequest(email=admin@mail.com, password=S123@231)]
+2025-09-09 16:42:13 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:42:13 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthController.AuthResponse(token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTc1N (truncated)...]
+2025-09-09 16:42:13 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:42:13 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/auth/login, client=0:0:0:0:0:0:0:1, payload={"email":"admin@mail.com","password":"S123@231"}]
+2025-09-09 16:42:17 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:42:17 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:42:17 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-09 16:42:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:42:17 [http-nio-8081-exec-5] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-09-09 16:42:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:42:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:42:17 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:42:17 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:42:21 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:42:22 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?routeId=get-user-from-api&size=1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:42:22 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?routeId=get-user-from-api&size=1", parameters={masked}
+2025-09-09 16:42:22 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:42:22 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:42:22 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:42:22 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:42:22 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?routeId=get-user-from-api&size=1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:42:28 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:42:29 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?routeId=get-todo&size=1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:42:29 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?routeId=get-todo&size=1", parameters={masked}
+2025-09-09 16:42:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:42:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:42:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:42:29 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:42:29 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?routeId=get-todo&size=1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:42:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-09 16:42:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-09 16:42:48 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:42:48 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:42:48 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-09 16:42:48 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:42:48 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:42:48 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:42:48 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:42:48 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:43:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-09 16:43:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-09 16:43:17 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:43:18 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:43:18 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-09 16:43:18 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:43:18 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:43:18 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:43:18 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:43:18 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:43:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-09 16:43:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-09 16:43:47 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:43:47 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:43:47 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-09 16:43:47 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:43:48 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:43:48 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:43:48 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:43:48 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:44:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-09 16:44:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-09 16:44:17 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:44:18 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:44:18 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-09 16:44:18 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:44:18 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:44:18 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:44:18 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:44:18 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:44:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-09 16:44:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-09 16:44:39 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:44:39 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:44:39 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/update", parameters={}
+2025-09-09 16:44:39 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#update(String, String)
+2025-09-09 16:44:39 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: get-todo<EOL>    description: "GET /todos/{id} → jsonplaceholder"<EOL>    from:<EOL>      uri:  (truncated)..."]
+2025-09-09 16:44:39 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - found 1 versions
+2025-09-09 16:44:39 [http-nio-8081-exec-1] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped get-todo (servlet:/todos/*)
+2025-09-09 16:44:39 [http-nio-8081-exec-1] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown get-todo (servlet:/todos/*)
+2025-09-09 16:44:39 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Uploaded route get-todo version 2
+2025-09-09 16:44:39 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json, application/yaml]
+2025-09-09 16:44:39 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Route get-todo uploaded as version 2"]
+2025-09-09 16:44:39 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:44:39 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com, payload=- route:
+    id: get-todo
+    description: "GET /todos/{id} → jsonplaceholder"
+    from:
+      uri: servlet:/todos/*
+      parameters:
+        httpMethodRestrict: GET
+      steps:
+        # استخرج {id} من آخر جزء بالمسار
+        - setHeader: { name: id, simple: "${header.CamelHttpPath.replaceFirst('.*/','')}" }
+        # نفّذ الطلب الخارجي (GET)
+        - setHeader: { name: CamelHttpMethod, constant: GET }
+        - toD: "https://jsonplaceholder.typicode.com/todos/${header.id}?bridgeEndpoint=true&throwExceptionOnFailure=false"
+        # ارجع الاستجابة كنص
+        - convertBodyTo: { type: java.lang.String }
+]
+2025-09-09 16:44:43 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:44:43 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /camel/todos/5, client=0:0:0:0:0:0:0:1, user=s@mail.com]
+2025-09-09 16:44:43 [http-nio-8081-exec-3] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-todo] - Incoming exchange: 7F60A8438FE61D6-0000000000000000
+2025-09-09 16:44:43 [http-nio-8081-exec-3] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - createTransactionSync... creating log for Route [get-todo] - Exchange content: {CamelCharsetName=UTF-8}
+2025-09-09 16:44:43 [http-nio-8081-exec-3] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - Found transactionUUID in JSON body: 550e8400-e29b-41d4-a716-446655440000
+2025-09-09 16:44:43 [http-nio-8081-exec-3] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-todo] - call log created with ID 10
+2025-09-09 16:44:44 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /camel/todos/5, client=0:0:0:0:0:0:0:1, user=s@mail.com, payload={
+  "transactionUuid": "550e8400-e29b-41d4-a716-446655440000"
+  }]
+2025-09-09 16:44:45 [task-1] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - updateTransaction... updating Route [servlet:/todos/*?httpMethodRestrict=GET] - Exchange content: {transactionUUID=550e8400-e29b-41d4-a716-446655440000, CamelCharsetName=UTF-8, CamelSkipGzipEncoding=true, CamelToEndpoint=https://jsonplaceholder.typicode.com?throwExceptionOnFailure=false&bridgeEndpoint=true, apiLogId=10}
+2025-09-09 16:44:45 [task-1] INFO  c.m.b.l.s.MiddlewareApiCallLogService - Transaction 0c62d317-5985-4b87-809e-a8d463c41686 for routeId: get-todo updated successfully: status=COMPLETED, responseCode=200
+2025-09-09 16:44:48 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:44:48 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:44:48 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-09 16:44:48 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:44:48 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:44:48 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:44:48 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:44:48 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:44:51 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:44:51 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /camel/todos/5, client=0:0:0:0:0:0:0:1, user=s@mail.com]
+2025-09-09 16:44:51 [http-nio-8081-exec-8] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-todo] - Incoming exchange: 7F60A8438FE61D6-0000000000000001
+2025-09-09 16:44:51 [http-nio-8081-exec-8] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - createTransactionSync... creating log for Route [get-todo] - Exchange content: {CamelCharsetName=UTF-8}
+2025-09-09 16:44:51 [http-nio-8081-exec-8] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - Found transactionUUID in JSON body: 550e8400-e29b-41d4-a716-446655440000
+2025-09-09 16:44:51 [http-nio-8081-exec-8] ERROR c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-todo] - Validation failed: Duplicate transactionUUID. This UUID has already been used.
+2025-09-09 16:44:51 [http-nio-8081-exec-8] DEBUG c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeDone: Route [get-todo] - No apiLogId found, skipping update
+2025-09-09 16:44:51 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /camel/todos/5, client=0:0:0:0:0:0:0:1, user=s@mail.com, payload=  {
+  "transactionUuid": "550e8400-e29b-41d4-a716-446655440000"
+  }]
+2025-09-09 16:44:57 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:44:58 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /camel/todos/5, client=0:0:0:0:0:0:0:1, user=s@mail.com]
+2025-09-09 16:44:58 [http-nio-8081-exec-9] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-todo] - Incoming exchange: 7F60A8438FE61D6-0000000000000002
+2025-09-09 16:44:58 [http-nio-8081-exec-9] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - createTransactionSync... creating log for Route [get-todo] - Exchange content: {CamelCharsetName=UTF-8}
+2025-09-09 16:44:58 [http-nio-8081-exec-9] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - Found transactionUUID in JSON body: 550e8400-e29b-41d4-a716-446655440100
+2025-09-09 16:44:58 [http-nio-8081-exec-9] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-todo] - call log created with ID 11
+2025-09-09 16:44:58 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /camel/todos/5, client=0:0:0:0:0:0:0:1, user=s@mail.com, payload=  {
+  "transactionUuid": "550e8400-e29b-41d4-a716-446655440100"
+  }]
+2025-09-09 16:44:58 [task-2] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - updateTransaction... updating Route [servlet:/todos/*?httpMethodRestrict=GET] - Exchange content: {transactionUUID=550e8400-e29b-41d4-a716-446655440100, CamelCharsetName=UTF-8, CamelSkipGzipEncoding=true, CamelToEndpoint=https://jsonplaceholder.typicode.com?throwExceptionOnFailure=false&bridgeEndpoint=true, apiLogId=11}
+2025-09-09 16:44:58 [task-2] INFO  c.m.b.l.s.MiddlewareApiCallLogService - Transaction 9e185589-52ff-4261-bfe5-e9805437b6d2 for routeId: get-todo updated successfully: status=COMPLETED, responseCode=200
+2025-09-09 16:45:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-09 16:45:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-09 16:45:03 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:45:03 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /camel/todos/5, client=0:0:0:0:0:0:0:1, user=s@mail.com]
+2025-09-09 16:45:03 [http-nio-8081-exec-10] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-todo] - Incoming exchange: 7F60A8438FE61D6-0000000000000003
+2025-09-09 16:45:03 [http-nio-8081-exec-10] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - createTransactionSync... creating log for Route [get-todo] - Exchange content: {CamelCharsetName=UTF-8}
+2025-09-09 16:45:03 [http-nio-8081-exec-10] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - Found transactionUUID in JSON body: 550e8400-e29b-41d4-a716-446655440100
+2025-09-09 16:45:03 [http-nio-8081-exec-10] ERROR c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-todo] - Validation failed: Duplicate transactionUUID. This UUID has already been used.
+2025-09-09 16:45:03 [http-nio-8081-exec-10] DEBUG c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeDone: Route [get-todo] - No apiLogId found, skipping update
+2025-09-09 16:45:03 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /camel/todos/5, client=0:0:0:0:0:0:0:1, user=s@mail.com, payload=  {
+  "transactionUuid": "550e8400-e29b-41d4-a716-446655440100"
+  }]
+2025-09-09 16:45:18 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:45:18 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:45:18 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-09 16:45:18 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:45:18 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:45:18 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:45:18 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:45:18 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:45:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-09 16:45:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-09 16:45:58 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:45:58 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:45:58 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-09 16:45:58 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:45:58 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:45:58 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:45:58 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:45:58 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-09 16:46:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-09 16:46:01 [http-nio-8081-exec-3] INFO  o.a.coyote.http11.Http11Processor - Error parsing HTTP request header
+ Note: further occurrences of HTTP request parsing errors will be logged at DEBUG level.
+java.lang.IllegalArgumentException: Invalid character found in the request target [/camel/todos/5?transactionUUID={{transaction_uuid} ]. The valid characters are defined in RFC 7230 and RFC 3986
+	at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:484)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:270)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+2025-09-09 16:46:09 [http-nio-8081-exec-8] INFO  o.a.coyote.http11.Http11Processor - Error parsing HTTP request header
+ Note: further occurrences of HTTP request parsing errors will be logged at DEBUG level.
+java.lang.IllegalArgumentException: Invalid character found in the request target [/camel/todos/5?transactionUUID={{transaction_uuid} ]. The valid characters are defined in RFC 7230 and RFC 3986
+	at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:484)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:270)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+2025-09-09 16:46:20 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:46:21 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:21 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-09 16:46:21 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:46:21 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:46:21 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:46:21 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:46:21 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:23 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:46:23 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/get-todo/versions?size=50, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:23 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/get-todo/versions?size=50", parameters={masked}
+2025-09-09 16:46:23 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRouteVersions(String, int, int)
+2025-09-09 16:46:23 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching routes for routeId=get-todo with pagination
+2025-09-09 16:46:23 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:46:23 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:46:23 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:46:23 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/get-todo/versions?size=50, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:25 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:46:25 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/get-todo/revert/1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:25 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/get-todo/revert/1", parameters={}
+2025-09-09 16:46:25 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#revert(String, int)
+2025-09-09 16:46:25 [http-nio-8081-exec-1] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped get-todo (servlet:/todos/*)
+2025-09-09 16:46:25 [http-nio-8081-exec-1] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown get-todo (servlet:/todos/*)
+2025-09-09 16:46:25 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Deactivated route get-todo version 2
+2025-09-09 16:46:25 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Reverted route get-todo to version 1
+2025-09-09 16:46:25 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json, application/yaml]
+2025-09-09 16:46:25 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Reverted to route get-todo version 1"]
+2025-09-09 16:46:25 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:46:25 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/routes/get-todo/revert/1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:26 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:46:26 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:26 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-09 16:46:26 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:46:26 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:46:26 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:46:26 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:46:26 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-09 16:46:30 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-09 16:46:39 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:46:40 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /camel/todos/5?transactionUUID=f8794c0c-9b44-4b43-a096-4a3f46e60358, client=0:0:0:0:0:0:0:1, user=s@mail.com]
+2025-09-09 16:46:40 [http-nio-8081-exec-7] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-todo] - Incoming exchange: 7F60A8438FE61D6-0000000000000004
+2025-09-09 16:46:40 [http-nio-8081-exec-7] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - createTransactionSync... creating log for Route [get-todo] - Exchange content: {CamelCharsetName=UTF-8}
+2025-09-09 16:46:40 [http-nio-8081-exec-7] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - Found transactionUUID in query parameters: f8794c0c-9b44-4b43-a096-4a3f46e60358
+2025-09-09 16:46:40 [http-nio-8081-exec-7] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-todo] - call log created with ID 12
+2025-09-09 16:46:40 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /camel/todos/5?transactionUUID=f8794c0c-9b44-4b43-a096-4a3f46e60358, client=0:0:0:0:0:0:0:1, user=s@mail.com]
+2025-09-09 16:46:40 [task-3] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - updateTransaction... updating Route [servlet:/todos/*?httpMethodRestrict=GET] - Exchange content: {transactionUUID=f8794c0c-9b44-4b43-a096-4a3f46e60358, CamelCharsetName=UTF-8, CamelSkipGzipEncoding=true, CamelToEndpoint=https://jsonplaceholder.typicode.com?bridgeEndpoint=true, apiLogId=12}
+2025-09-09 16:46:41 [task-3] INFO  c.m.b.l.s.MiddlewareApiCallLogService - Transaction fffddb74-f0ea-42b2-9cbf-34a03cd0435c for routeId: get-todo updated successfully: status=COMPLETED, responseCode=200
+2025-09-09 16:46:46 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:46:47 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:47 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-09 16:46:47 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:46:47 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:46:47 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:46:47 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:46:47 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:50 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:46:50 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/get-todo/versions?size=50, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:50 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/get-todo/versions?size=50", parameters={masked}
+2025-09-09 16:46:50 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRouteVersions(String, int, int)
+2025-09-09 16:46:50 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching routes for routeId=get-todo with pagination
+2025-09-09 16:46:50 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:46:50 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:46:50 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:46:50 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/get-todo/versions?size=50, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:53 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:46:53 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/get-todo/revert/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:53 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/get-todo/revert/2", parameters={}
+2025-09-09 16:46:53 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#revert(String, int)
+2025-09-09 16:46:53 [http-nio-8081-exec-1] INFO  o.a.c.i.engine.AbstractCamelContext - Stopped get-todo (servlet:/todos/*)
+2025-09-09 16:46:53 [http-nio-8081-exec-1] INFO  o.a.c.i.engine.AbstractCamelContext - Shutdown get-todo (servlet:/todos/*)
+2025-09-09 16:46:53 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Deactivated route get-todo version 1
+2025-09-09 16:46:53 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Reverted route get-todo to version 2
+2025-09-09 16:46:53 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json, application/yaml]
+2025-09-09 16:46:53 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Reverted to route get-todo version 2"]
+2025-09-09 16:46:53 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:46:53 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/routes/get-todo/revert/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:53 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:46:54 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:54 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10", parameters={masked}
+2025-09-09 16:46:54 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-09-09 16:46:54 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-09 16:46:54 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-09-09 16:46:54 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-09 16:46:54 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-09 16:46:56 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-09 16:46:56 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /camel/todos/5?transactionUUID=bc94e3f0-edc8-4bd7-9bb3-9d8e6c401385, client=0:0:0:0:0:0:0:1, user=s@mail.com]
+2025-09-09 16:46:56 [http-nio-8081-exec-3] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-todo] - Incoming exchange: 7F60A8438FE61D6-0000000000000005
+2025-09-09 16:46:56 [http-nio-8081-exec-3] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - createTransactionSync... creating log for Route [get-todo] - Exchange content: {CamelCharsetName=UTF-8}
+2025-09-09 16:46:56 [http-nio-8081-exec-3] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - Found transactionUUID in query parameters: bc94e3f0-edc8-4bd7-9bb3-9d8e6c401385
+2025-09-09 16:46:56 [http-nio-8081-exec-3] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [get-todo] - call log created with ID 13
+2025-09-09 16:46:57 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /camel/todos/5?transactionUUID=bc94e3f0-edc8-4bd7-9bb3-9d8e6c401385, client=0:0:0:0:0:0:0:1, user=s@mail.com]
+2025-09-09 16:46:57 [task-4] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - updateTransaction... updating Route [servlet:/todos/*?httpMethodRestrict=GET] - Exchange content: {transactionUUID=bc94e3f0-edc8-4bd7-9bb3-9d8e6c401385, CamelCharsetName=UTF-8, CamelSkipGzipEncoding=true, CamelToEndpoint=https://jsonplaceholder.typicode.com?throwExceptionOnFailure=false&bridgeEndpoint=true, apiLogId=13}
+2025-09-09 16:46:57 [task-4] INFO  c.m.b.l.s.MiddlewareApiCallLogService - Transaction c16c898b-013f-42b4-8614-199b29a4fc73 for routeId: get-todo updated successfully: status=COMPLETED, responseCode=200
+2025-09-09 16:47:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-09 16:47:00 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-09 16:47:11 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-09 16:47:12 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-09 16:47:12 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:2)
+2025-09-09 16:47:12 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped get-todo (servlet:/todos/*)
+2025-09-09 16:47:12 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped get-user-from-api (servlet:/external-user/*)
+2025-09-09 16:47:12 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 17ms (uptime:5m11s)
+2025-09-09 16:47:12 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-09 16:47:12 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-09 16:47:12 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-09 16:47:12 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
