@@ -2,12 +2,7 @@ package com.middleware.backend.logging.model;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,21 +10,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Table(name = "middleware_api_call_log")
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+ @Entity
+@Table(
+        name = "middleware_api_call_log",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_call_uuid_attempt", columnNames = {"source_transaction_uuid", "attempt_no"}),
+                @UniqueConstraint(name = "uk_transaction_id", columnNames = {"transaction_id"})
+        }
+)
+@Getter @Setter @ToString @NoArgsConstructor @AllArgsConstructor @Builder
 public class MiddlewareApiCallLog {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "transaction_id", unique = true)
+    @Column(name = "transaction_id", nullable = false, unique = true, length = 36)
     private String transactionId;
 
     @Column(name = "route_Id", nullable = false)
@@ -40,6 +35,15 @@ public class MiddlewareApiCallLog {
 
     @Column(name = "request_method", length = 10)
     private String requestMethod;
+
+    @Column(name = "request_url", length = 2048)
+    private String requestUrl;
+
+    @Column(name = "request_path", length = 1024)
+    private String requestPath;
+
+    @Column(name = "request_query", length = 2048)
+    private String requestQuery;
 
     @Column(name = "request_headers", columnDefinition = "TEXT")
     private String requestHeaders;
@@ -81,8 +85,11 @@ public class MiddlewareApiCallLog {
     private String errorMessage;
 
     @Column(name = "retry_count")
-    private Integer retryCount;
+    private Integer retryCount;                
 
-    @Column(name = "source_transaction_uuid", length = 36, unique = true)
+    @Column(name = "attempt_no", nullable = false)
+    private Integer attemptNo;
+
+    @Column(name = "source_transaction_uuid", length = 36, nullable = false)
     private String sourceTransactionUUID;
 }

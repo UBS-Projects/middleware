@@ -7,9 +7,14 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.middleware.backend.logging.model.MiddlewareApiCallLog;
 
-public interface MiddlewareApiCallLogRepository
+ public interface MiddlewareApiCallLogRepository
         extends JpaRepository<MiddlewareApiCallLog, Long>, JpaSpecificationExecutor<MiddlewareApiCallLog> {
-        List<MiddlewareApiCallLog> findAllByOrderByReceivedAtDesc();
 
-         boolean existsBySourceTransactionUUID(String sourceTransactionUUID);
-}
+    List<MiddlewareApiCallLog> findAllByOrderByReceivedAtDesc();
+
+    boolean existsBySourceTransactionUUID(String sourceTransactionUUID);
+
+    MiddlewareApiCallLog findTopBySourceTransactionUUIDOrderByAttemptNoDesc(String sourceTransactionUUID);
+
+    List<MiddlewareApiCallLog> findBySourceTransactionUUIDOrderByAttemptNoAsc(String sourceTransactionUUID);
+  }
