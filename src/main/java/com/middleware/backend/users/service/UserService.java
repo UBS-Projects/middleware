@@ -77,7 +77,7 @@ public class UserService {
     }
 
     public ResponseEntity<?> createNewUser(UserRequest user) {
-        Optional<User> exists = repo.findByEmail(user.getEmail());
+        Optional<User> exists = repo.findByEmail(user.getEmail().toLowerCase());
         if(exists.isPresent())return ResponseEntity
                 .badRequest()
                 .body(Collections.singletonMap("message", "User Already Exists"));
@@ -85,7 +85,7 @@ public class UserService {
         req.setPassword(passwordEncoder.encode(req.getPassword()));
         req.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         req.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-
+        req.setEmail(req.getEmail().toLowerCase());
         req = repo.save(req);
         return ResponseEntity.status(HttpStatus.CREATED).body(req);
     }
@@ -106,7 +106,7 @@ public class UserService {
                 user.getUserName() : exists.get().getUserName());
 
         exists.get().setEmail(!user.getEmail().isEmpty() ?
-                user.getEmail() : exists.get().getEmail());
+                user.getEmail().toLowerCase() : exists.get().getEmail().toLowerCase());
 
         exists.get().setStatus(user.getStatus());
         exists.get().setUpdatedAt(new Timestamp(System.currentTimeMillis()));

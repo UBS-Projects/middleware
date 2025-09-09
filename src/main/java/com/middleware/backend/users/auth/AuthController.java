@@ -58,7 +58,7 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
         long expirationMillis = 1000 * 60 * 60 * 8;
-        Optional<User> user = userRepository.findActiveByEmail(request.getEmail());
+        Optional<User> user = userRepository.findActiveByEmail(request.getEmail().toLowerCase());
         List<Role> roles = user.get().getRoles();
 
         if (!roles.isEmpty() && roles.get(0).getRoleType() == Role.RoleType.SYSTEM_USER) {
