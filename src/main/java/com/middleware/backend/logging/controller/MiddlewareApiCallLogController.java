@@ -335,7 +335,7 @@ public class MiddlewareApiCallLogController {
         if (s.getRequestUrl() != null && !s.getRequestUrl().isBlank()) return s.getRequestUrl();
         if (s.getRequestPath() != null) {
             String q = (s.getRequestQuery() == null || s.getRequestQuery().isBlank()) ? "" : ("?" + s.getRequestQuery());
-            return "http://10.160.29.97" + s.getRequestPath() + q;
+            return "http://localhost:8081" + s.getRequestPath() + q;
         }
         return null;
     }
