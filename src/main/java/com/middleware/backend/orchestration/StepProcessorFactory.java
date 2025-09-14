@@ -16,11 +16,11 @@ public class StepProcessorFactory {
 
     public StepProcessor getProcessor(WorkflowStep step) {
         switch (step.getStepType()) {
-            case "HTTP_CALL":
-                return httpCallStepProcessor;
-            // Add other cases for DB_CALL, SCRIPT_EXEC, etc.
-            default:
-                throw new IllegalArgumentException("Unsupported step type: " + step.getStepType());
+        case "HTTP_CALL":
+            return httpCallStepProcessor;
+        // Add other cases for DB_CALL, SCRIPT_EXEC, etc.
+        default:
+            throw new IllegalArgumentException("Unsupported step type: " + step.getStepType());
         }
     }
 }

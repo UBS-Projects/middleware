@@ -3,12 +3,9 @@ package com.middleware.backend.kaotocamel.controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import com.middleware.backend.kaotocamel.spec.DynamicRouteLogsSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +31,7 @@ import com.middleware.backend.kaotocamel.dto.RouteValidationResult;
 import com.middleware.backend.kaotocamel.model.DynamicRouteAudit;
 import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
 import com.middleware.backend.kaotocamel.service.DynamicRouteService;
-import com.middleware.backend.kaotocamel.spec.DynamicRouteSpecification;
+import com.middleware.backend.kaotocamel.spec.DynamicRouteLogsSpecification;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -136,20 +133,14 @@ public class DynamicRouteController {
 
     @GetMapping("/latest")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:view')")
-    public ResponseEntity<Page<DynamicRouteEntity>> getRoutes(
-            @RequestParam(required = false) String routeId,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) String path,
-            @RequestParam(required = false) String httpMethod,
-            @RequestParam(required = false) Boolean active,
-            @RequestParam(required = false) String comment,
-            @RequestParam(required = false) String yamlContains,
+    public ResponseEntity<Page<DynamicRouteEntity>> getRoutes(@RequestParam(required = false) String routeId,
+            @RequestParam(required = false) String description, @RequestParam(required = false) String path,
+            @RequestParam(required = false) String httpMethod, @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) String comment, @RequestParam(required = false) String yamlContains,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-            @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String sortDirection,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(required = false) String sortBy, @RequestParam(required = false) String sortDirection,
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
 
         long startTime = System.currentTimeMillis();
 
@@ -227,30 +218,28 @@ public class DynamicRouteController {
         }
     }
 
-     private String mapColumnToField(String column) {
+    private String mapColumnToField(String column) {
         switch (column.toLowerCase()) {
-            case "routeid":
-                return "routeId";
-            case "version":
-                return "version";
-            case "active":
-                return "active";
-            case "comment":
-                return "comment";
-            case "createdat":
-                return "createdAt";
-            case "description":
-                return "description";
-            case "path":
-                return "path";
-            case "httpmethod":
-                return "httpMethod";
-            default:
-                return "createdAt"; // Default fallback
+        case "routeid":
+            return "routeId";
+        case "version":
+            return "version";
+        case "active":
+            return "active";
+        case "comment":
+            return "comment";
+        case "createdat":
+            return "createdAt";
+        case "description":
+            return "description";
+        case "path":
+            return "path";
+        case "httpmethod":
+            return "httpMethod";
+        default:
+            return "createdAt"; // Default fallback
         }
     }
-
-
 
     @GetMapping("/{routeId}/versions")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:view')")
@@ -292,25 +281,17 @@ public class DynamicRouteController {
         }
     }
 
-
-
-
-// Add these methods to your DynamicRouteController
+    // Add these methods to your DynamicRouteController
 
     @GetMapping("/export/excel")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:export')")
-    public ResponseEntity<byte[]> exportToExcel(
-            @RequestParam(required = false) String routeId,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) String path,
-            @RequestParam(required = false) String httpMethod,
-            @RequestParam(required = false) Boolean active,
-            @RequestParam(required = false) String comment,
-            @RequestParam(required = false) String yamlContains,
+    public ResponseEntity<byte[]> exportToExcel(@RequestParam(required = false) String routeId,
+            @RequestParam(required = false) String description, @RequestParam(required = false) String path,
+            @RequestParam(required = false) String httpMethod, @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) String comment, @RequestParam(required = false) String yamlContains,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-            @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String sortDirection) {
+            @RequestParam(required = false) String sortBy, @RequestParam(required = false) String sortDirection) {
 
         try {
             // Create sort object
@@ -344,13 +325,11 @@ public class DynamicRouteController {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            headers.setContentDispositionFormData("attachment", "routes_export_" +
-                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")) + ".xlsx");
+            headers.setContentDispositionFormData("attachment", "routes_export_"
+                    + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")) + ".xlsx");
             headers.setContentLength(excelData.length);
 
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(excelData);
+            return ResponseEntity.ok().headers(headers).body(excelData);
 
         } catch (Exception e) {
             log.error("Error exporting to Excel", e);
@@ -360,18 +339,13 @@ public class DynamicRouteController {
 
     @GetMapping("/export/csv")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:export')")
-    public ResponseEntity<byte[]> exportToCSV(
-            @RequestParam(required = false) String routeId,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) String path,
-            @RequestParam(required = false) String httpMethod,
-            @RequestParam(required = false) Boolean active,
-            @RequestParam(required = false) String comment,
-            @RequestParam(required = false) String yamlContains,
+    public ResponseEntity<byte[]> exportToCSV(@RequestParam(required = false) String routeId,
+            @RequestParam(required = false) String description, @RequestParam(required = false) String path,
+            @RequestParam(required = false) String httpMethod, @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) String comment, @RequestParam(required = false) String yamlContains,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-            @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String sortDirection) {
+            @RequestParam(required = false) String sortBy, @RequestParam(required = false) String sortDirection) {
 
         try {
             // Create sort object
@@ -405,45 +379,43 @@ public class DynamicRouteController {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.parseMediaType("text/csv"));
-            headers.setContentDispositionFormData("attachment", "routes_export_" +
-                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")) + ".csv");
+            headers.setContentDispositionFormData("attachment", "routes_export_"
+                    + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")) + ".csv");
             headers.setContentLength(csvData.length);
 
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(csvData);
+            return ResponseEntity.ok().headers(headers).body(csvData);
 
         } catch (Exception e) {
             log.error("Error exporting to CSV", e);
             return ResponseEntity.internalServerError().build();
         }
     }
+
     @GetMapping("/audits")
     @PreAuthorize("hasAnyAuthority('dynamicRoutesLogs:view')")
-    public ResponseEntity<Page<?>> getRouteAudits(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String userName,
-            @RequestParam(required = false) String action,
-            @RequestParam(required = false) Integer version,
+    public ResponseEntity<Page<?>> getRouteAudits(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String userName,
+            @RequestParam(required = false) String action, @RequestParam(required = false) Integer version,
             @RequestParam(required = false) String routeId,
             @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
-            ,@RequestParam(required = false, defaultValue = "timestamp") String sortedBy,
-            @RequestParam(defaultValue = "desc") String sortDirection
-            ) {
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(required = false, defaultValue = "timestamp") String sortedBy,
+            @RequestParam(defaultValue = "desc") String sortDirection) {
         try {
             Specification<DynamicRouteAudit> spec = Specification
-                    .where(DynamicRouteLogsSpecification.hasField("userName", userName, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
-                    .and(DynamicRouteLogsSpecification.hasField("action", action, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
-                    .and(DynamicRouteLogsSpecification.hasField("routeId", routeId, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .where(DynamicRouteLogsSpecification.hasField("userName", userName,
+                            DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .and(DynamicRouteLogsSpecification.hasField("action", action,
+                            DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .and(DynamicRouteLogsSpecification.hasField("routeId", routeId,
+                            DynamicRouteLogsSpecification.MatchMode.CONTAINS))
                     .and(DynamicRouteLogsSpecification.createdBetween(startDate, endDate));
             if (version != null) {
-                spec = spec.and(DynamicRouteLogsSpecification.hasField("version", String.valueOf(version), DynamicRouteLogsSpecification.MatchMode.EXACT));
+                spec = spec.and(DynamicRouteLogsSpecification.hasField("version", String.valueOf(version),
+                        DynamicRouteLogsSpecification.MatchMode.EXACT));
             }
             Pageable pageable = PageRequest.of(page, size,
-                    sortDirection.equalsIgnoreCase("asc")
-                            ? Sort.by(sortedBy).ascending()
+                    sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortedBy).ascending()
                             : Sort.by(sortedBy).descending());
 
             Page<?> result = routeService.getLatestRoutesLogs(spec, pageable);
@@ -453,13 +425,9 @@ public class DynamicRouteController {
         }
     }
 
-
-
     @GetMapping("/audits/{id}")
     @PreAuthorize("hasAnyAuthority('dynamicRoutesLogs:view')")
-    public ResponseEntity<?> getRouteAudits(
-        @PathVariable Long id
-    ) {
+    public ResponseEntity<?> getRouteAudits(@PathVariable Long id) {
         try {
             return ResponseEntity.ok().body(routeService.findById(id));
         } catch (Exception e) {
@@ -467,47 +435,39 @@ public class DynamicRouteController {
         }
     }
 
-
-
     @PostMapping("/audits/{type}")
     @PreAuthorize("hasAnyAuthority('dynamicRoutesLogs:view')")
-    public ResponseEntity<byte[]> export(
-            @RequestParam(required = false) String userName,
-            @RequestParam(required = false) String action,
-            @RequestParam(required = false) String routeId,
+    public ResponseEntity<byte[]> export(@RequestParam(required = false) String userName,
+            @RequestParam(required = false) String action, @RequestParam(required = false) String routeId,
             @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
-            ,@RequestParam(required = false, defaultValue = "timestamp") String sortedBy,
-            @RequestParam(defaultValue = "desc") String sortDirection,
-            @PathVariable String type
-    ) {
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(required = false, defaultValue = "timestamp") String sortedBy,
+            @RequestParam(defaultValue = "desc") String sortDirection, @PathVariable String type) {
         try {
             Specification<DynamicRouteAudit> spec = Specification
-                    .where(DynamicRouteLogsSpecification.hasField("userName", userName, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
-                    .and(DynamicRouteLogsSpecification.hasField("action", action, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
-                    .and(DynamicRouteLogsSpecification.hasField("routeId", routeId, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .where(DynamicRouteLogsSpecification.hasField("userName", userName,
+                            DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .and(DynamicRouteLogsSpecification.hasField("action", action,
+                            DynamicRouteLogsSpecification.MatchMode.CONTAINS))
+                    .and(DynamicRouteLogsSpecification.hasField("routeId", routeId,
+                            DynamicRouteLogsSpecification.MatchMode.CONTAINS))
                     .and(DynamicRouteLogsSpecification.createdBetween(startDate, endDate));
             Pageable pageable = PageRequest.of(0, 100000,
-                    sortDirection.equalsIgnoreCase("asc")
-                            ? Sort.by(sortedBy).ascending()
+                    sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortedBy).ascending()
                             : Sort.by(sortedBy).descending());
 
             byte[] fileBytes = routeService.exportFile(spec, pageable, type);
 
             String fileName = "dynamic_routes_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
-            String contentType = type.equalsIgnoreCase("CSV")
-                    ? "text/csv"
+            String contentType = type.equalsIgnoreCase("CSV") ? "text/csv"
                     : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-            return ResponseEntity.ok()
-                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
-                    .contentType(MediaType.parseMediaType(contentType))
-                    .body(fileBytes);
+            return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(contentType)).body(fileBytes);
 
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
-
 
 }

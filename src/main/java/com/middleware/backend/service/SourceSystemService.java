@@ -1,11 +1,11 @@
 package com.middleware.backend.service;
 
-import com.middleware.backend.dto.SourceSystemDto;
-import com.middleware.backend.mapper.SourceSystemMapper;
-import com.middleware.backend.model.ErrorCategory;
-import com.middleware.backend.model.SourceSystem;
-import com.middleware.backend.repository.SourceSystemRepository;
-import lombok.RequiredArgsConstructor;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -16,13 +16,13 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
+import com.middleware.backend.dto.SourceSystemDto;
+import com.middleware.backend.mapper.SourceSystemMapper;
+import com.middleware.backend.model.SourceSystem;
+import com.middleware.backend.repository.SourceSystemRepository;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.stream.Collectors;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -31,17 +31,13 @@ public class SourceSystemService {
     private final SourceSystemRepository sourceSystemRepository;
     private final SourceSystemMapper sourceSystemMapper;
 
-
-
     public List<SourceSystemDto> getActiveSourceSystems() {
-        return sourceSystemRepository.findByActiveTrue().stream()
-                .map(sourceSystemMapper::toDto)
+        return sourceSystemRepository.findByActiveTrue().stream().map(sourceSystemMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     public SourceSystemDto getSourceSystemById(Long id) {
-        return sourceSystemRepository.findById(id)
-                .map(sourceSystemMapper::toDto)
+        return sourceSystemRepository.findById(id).map(sourceSystemMapper::toDto)
                 .orElseThrow(() -> new EntityNotFoundException("Source system not found with id: " + id));
     }
 
@@ -61,8 +57,8 @@ public class SourceSystemService {
                 .orElseThrow(() -> new EntityNotFoundException("Source system not found with id: " + id));
 
         // Check if name is changing and if new name already exists
-        if (!existingSourceSystem.getName().equalsIgnoreCase(dto.getName()) &&
-                sourceSystemRepository.existsByNameIgnoreCase(dto.getName())) {
+        if (!existingSourceSystem.getName().equalsIgnoreCase(dto.getName())
+                && sourceSystemRepository.existsByNameIgnoreCase(dto.getName())) {
             throw new IllegalArgumentException("Source system with name '" + dto.getName() + "' already exists.");
         }
 
@@ -84,7 +80,8 @@ public class SourceSystemService {
         // لا تسمح بحذف source system مستخدم في أي ErrorMapping
         long usageCount = sourceSystemRepository.countErrorMappingsBySourceSystemId(id);
         if (usageCount > 0) {
-            throw new IllegalStateException("Cannot delete source system with id " + id + " because it is used by " + usageCount + " error mapping(s).");
+            throw new IllegalStateException("Cannot delete source system with id " + id + " because it is used by "
+                    + usageCount + " error mapping(s).");
         }
         sourceSystemRepository.deleteById(id);
     }
@@ -134,7 +131,8 @@ public class SourceSystemService {
 
     // CSV escaping helper
     private String escapeCsv(String value) {
-        if (value == null) return "";
+        if (value == null)
+            return "";
         String escaped = value.replace("\"", "\"\"");
         if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
             return "\"" + escaped + "\"";

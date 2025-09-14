@@ -12,9 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.middleware.backend.errormapping.service.BackendErrorMappingService;
 import com.middleware.backend.model.WorkflowStep;
 import com.middleware.backend.orchestration.StepProcessor;
-import com.middleware.backend.service.ErrorMappingService;
 import com.middleware.backend.service.SpelTemplateEvaluatorService;
 import com.middleware.backend.service.VariableService;
 import com.middleware.backend.util.ApplyTemplate;
@@ -32,7 +32,7 @@ public class ApiCallProcessor implements StepProcessor {
     private final SpELTempProcessor spELTempProcessor;
     private final RestTemplate restTemplate;
     private final ApplyTemplate applyTemplate;
-    private final ErrorMappingService errorMappingService;
+    private final BackendErrorMappingService errorMappingService;
     @Autowired
     private SpelTemplateEvaluatorService spelTemplateEvaluatorService;
 

@@ -1,10 +1,15 @@
 package com.middleware.backend.kaotocamel.model;
 
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "dynamic_route_audit")
@@ -21,9 +26,12 @@ public class DynamicRouteAudit {
 
     private String action; // upload, start, stop, revert, deactivate
 
+    @Column(name = "details", columnDefinition = "TEXT")
     private String details; // Additional info (optional)
 
     private LocalDateTime timestamp;
+
+    @Column(name = "userEmail", columnDefinition = "TEXT")
     private String userEmail;
-    String Status;
+    private String status;
 }
