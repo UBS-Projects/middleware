@@ -46,7 +46,17 @@ public class DynamicRouteEntity {
     @Column(name = "default_version", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean defaultVersion = false;
 
+    @Column(name = "created_by", nullable = false)
+    private String createdBy;
+
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_by", nullable = false)
+    private String updatedBy;
+
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
     private String comment; // Admin comment for this version
 

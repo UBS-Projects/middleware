@@ -16,7 +16,9 @@ public class SourceSystemMapper {
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .active(entity.getActive())
+                .createdBy(entity.getCreatedBy())
                 .createdAt(entity.getCreatedAt())
+                .updatedBy(entity.getUpdatedBy())
                 .updatedAt(entity.getUpdatedAt())
                 .build();
     }
@@ -30,6 +32,10 @@ public class SourceSystemMapper {
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .active(dto.getActive())
+                .createdBy(dto.getCreatedBy())
+                .createdAt(dto.getCreatedAt())
+                .updatedBy(dto.getUpdatedBy())
+                .updatedAt(dto.getUpdatedAt())
                 .build();
     }
 }

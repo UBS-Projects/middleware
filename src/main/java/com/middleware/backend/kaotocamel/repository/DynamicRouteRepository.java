@@ -39,8 +39,11 @@ public interface DynamicRouteRepository
         @Query("SELECT dr FROM DynamicRouteEntity dr WHERE dr.active = true AND dr.defaultVersion = true ORDER BY dr.routeId")
         List<DynamicRouteEntity> findLatestActiveRoutes();
 
-        @Query("SELECT dr FROM DynamicRouteEntity dr WHERE dr.routeId = :routeId AND dr.active = true")
-        List<DynamicRouteEntity> findByRouteIdAndActiveTrue(@Param("routeId") String routeId);
+//        @Query("SELECT dr FROM DynamicRouteEntity dr WHERE dr.routeId = :routeId AND dr.active = true")
+//        List<DynamicRouteEntity> findByRouteIdAndActiveTrue(@Param("routeId") String routeId);
+
+        Optional<DynamicRouteEntity> findByRouteIdAndActiveTrue(String routeId);
+
 
         @Query("SELECT COUNT(dr) > 0 FROM DynamicRouteEntity dr WHERE dr.routeId = :routeId AND dr.active = true")
         boolean existsByRouteIdAndActiveTrue(@Param("routeId") String routeId);

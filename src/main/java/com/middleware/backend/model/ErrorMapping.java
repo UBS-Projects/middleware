@@ -63,10 +63,10 @@ public class ErrorMapping {
     private Boolean active = true;
 
     @Column(name = "created_by", nullable = false)
-    private Long createdBy;
+    private String createdBy;
 
     @Column(name = "updated_by")
-    private Long updatedBy;
+    private String updatedBy;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

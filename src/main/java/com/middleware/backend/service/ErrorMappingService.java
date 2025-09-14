@@ -21,12 +21,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -106,8 +109,11 @@ public class ErrorMappingService {
 
         ErrorMapping entity = errorMappingMapper.toEntity(dto);
 
-        Long currentUserId = 1L;
-        entity.setCreatedBy(currentUserId);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
+
+        entity.setCreatedBy(emailUser);
+        entity.setUpdatedBy(emailUser);
         if (dto.getErrorCategoryId() != null) {
             ErrorCategory category = errorCategoryRepository.findById(dto.getErrorCategoryId())
                     .orElseThrow(() -> new EntityNotFoundException("ErrorCategory not found with ID: " + dto.getErrorCategoryId()));
@@ -175,8 +181,11 @@ public class ErrorMappingService {
         existing.setLanguage(dto.getLanguage());
         existing.setActive(dto.getActive());
 
-        Long currentUserId = 1L;
-        existing.setUpdatedBy(currentUserId);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
+
+        existing.setUpdatedBy(emailUser);
+        existing.setUpdatedAt(LocalDateTime.now());
 
         ErrorMapping saved = errorMappingRepository.save(existing);
 
@@ -209,6 +218,11 @@ public class ErrorMappingService {
                 .orElseThrow(() -> new EntityNotFoundException("Error mapping not found with ID: " + id));
 
         mapping.setActive(!mapping.getActive());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
+
+        mapping.setUpdatedBy(emailUser);
+        mapping.setUpdatedAt(LocalDateTime.now());
         errorMappingRepository.save(mapping);
 
         log.info("Toggled error mapping {} to active: {}", id, mapping.getActive());

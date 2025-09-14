@@ -16,6 +16,8 @@ public class SourceSystemDto {
     private String name;
     private String description;
     private Boolean active;
+    private String createdBy;
     private LocalDateTime createdAt;
+    private String updatedBy;
     private LocalDateTime updatedAt;
 }

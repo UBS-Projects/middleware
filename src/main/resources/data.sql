@@ -82,18 +82,19 @@ ON CONFLICT DO NOTHING;
 
 
 INSERT INTO public.users
-(created_at, updated_at, email, password, status, user_name)
+(created_by, created_at, updated_by, updated_at, email, password, status, user_name)
 VALUES
-    (NOW(), NOW(), 'admin@mail.com',
+    ('SYSTEM',NOW(),'SYSTEM',NOW(), 'admin@mail.com',
      '$2a$10$mc8VR2mvx1FLnwLfbcWrSuJBnlRQMJbCz4R/.rVDakUs6LSuLgx3G',
-     'ACTIVE', 'admin')
+     'ACTIVE',
+     'admin')
     ON CONFLICT (email) DO NOTHING;
 
 
 -- ALTER TABLE public.role
 --     ADD CONSTRAINT uq_role_name UNIQUE (role_name);
-INSERT INTO public.role (role_name, role_type)
-VALUES ('ADMIN',0)
+INSERT INTO public.role (role_name, role_type, created_at, created_by, updated_at, updated_by)
+VALUES ('ADMIN', 0, NOW(), 'SYSTEM', NOW(), 'SYSTEM')
     ON CONFLICT (role_name) DO NOTHING;
 
 

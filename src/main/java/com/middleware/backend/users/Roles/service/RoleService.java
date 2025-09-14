@@ -10,8 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -30,6 +33,8 @@ public class RoleService {
     }
 
     public ResponseEntity<Page<?>> getAll(Specification<Role> spec, Pageable pageable) {
+        System.out.println("*****************************************8");
+        System.out.println("*****************************************8");
         return ResponseEntity.ok(
                 repo.findAll(spec,pageable));
 
@@ -40,9 +45,14 @@ public class RoleService {
         if (exists.isPresent()) {
             return ResponseEntity.badRequest().body("FOUND");
         }
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
         Role roleEntity = RoleMapper.mapToEntity(role);
         roleEntity.setId(null);
+        roleEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        roleEntity.setCreatedBy(emailUser);
+        roleEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        roleEntity.setUpdatedBy(emailUser);
         Role saved = repo.save(roleEntity);
         return ResponseEntity.ok(RoleMapper.mapToDto(saved));
     }

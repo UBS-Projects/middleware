@@ -14,26 +14,27 @@ public class ScheduledJobsSpecification {
             String pattern;
             switch (mode) {
                 case STARTS_WITH:
-                    pattern = value + "%";
+                    pattern = value.toLowerCase() + "%";
                     break;
                 case ENDS_WITH:
-                    pattern = "%" + value;
+                    pattern = "%" + value.toLowerCase();
                     break;
                 case CONTAINS:
-                    pattern = "%" + value + "%";
+                    pattern = "%" + value.toLowerCase() + "%";
                     break;
                 case EXACT:
                 default:
-                    pattern = value;
+                    pattern = value.toLowerCase();
                     break;
             }
             if (mode == MatchMode.EXACT) {
-                return cb.equal(root.get(fieldName), value);
+                return cb.equal(cb.lower(root.get(fieldName)), pattern);
             } else {
-                return cb.like(root.get(fieldName), pattern);
+                return cb.like(cb.lower(root.get(fieldName)), pattern);
             }
         };
     }
+
 
     public static Specification<ScheduledJobs> hasField(String fieldName, Boolean boolValue) {
         return (root, query, cb) -> {
