@@ -153,6 +153,18 @@ VALUES (
        )
     ON CONFLICT (id) DO NOTHING;
 
+INSERT INTO public.camel_rate_limit (
+    id,
+    request_limit,
+    seconds
+)
+VALUES (
+           1,
+           100,
+           60
+       )
+    ON CONFLICT (id) DO NOTHING;
+
 -- user
 -- INSERT INTO public.dynamic_routes
 -- (route_id, description, version, path, http_method, yaml_content, active, default_version, created_at, comment)
