@@ -18,7 +18,9 @@ public class UserRequest {
     private String userName;
     private String email;
     private Status status;
+    private String createdBy;
     private Timestamp createdAt;
+    private String updatedBy;
     private Timestamp updatedAt;
     private String password;
     private List<RoleRequest> roles;

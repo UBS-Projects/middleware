@@ -13,6 +13,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,8 +61,14 @@ public class SourceSystemService {
 
         // Set the trimmed name back to dto
         dto.setName(trimmedName);
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
+        dto.setCreatedBy(emailUser);
+        dto.setUpdatedBy(emailUser);
+        dto.setUpdatedAt(LocalDateTime.now());
         SourceSystem sourceSystem = sourceSystemMapper.toEntity(dto);
+
+
         SourceSystem savedSourceSystem = sourceSystemRepository.save(sourceSystem);
         return sourceSystemMapper.toDto(savedSourceSystem);
     }
@@ -93,6 +102,10 @@ public class SourceSystemService {
         existingSourceSystem.setName(trimmedName);
         existingSourceSystem.setDescription(dto.getDescription());
         existingSourceSystem.setActive(dto.getActive());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
+        existingSourceSystem.setUpdatedBy(emailUser);
+        existingSourceSystem.setUpdatedAt(LocalDateTime.now());
 
         SourceSystem updatedSourceSystem = sourceSystemRepository.save(existingSourceSystem);
         return sourceSystemMapper.toDto(updatedSourceSystem);
@@ -113,6 +126,10 @@ public class SourceSystemService {
         }
 
         sourceSystem.setActive(!sourceSystem.getActive());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
+        sourceSystem.setUpdatedBy(emailUser);
+        sourceSystem.setUpdatedAt(LocalDateTime.now());
         SourceSystem savedSourceSystem = sourceSystemRepository.save(sourceSystem);
         return sourceSystemMapper.toDto(savedSourceSystem);
     }

@@ -114,6 +114,7 @@ public class UserController {
             description = "Updates the details of an existing user by their ID. Requires 'user:edit' authority."
     )
     public ResponseEntity<?> EditUser(@PathVariable("id") Long id, @RequestBody UserRequest user){
+
         return service.editUser(id, user);
     }
 

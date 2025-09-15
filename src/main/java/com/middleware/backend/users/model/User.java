@@ -29,9 +29,14 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+    @Column(nullable = false,name = "created_by")
+    private String createdBy;
 
     @Column(nullable = false,name = "created_at")
     private Timestamp createdAt;
+
+    @Column(nullable = false,name = "updated_by")
+    private String updatedBy;
 
     @Column(nullable = false,name = "updated_at")
     private Timestamp updatedAt;
@@ -41,4 +46,5 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
+
 }

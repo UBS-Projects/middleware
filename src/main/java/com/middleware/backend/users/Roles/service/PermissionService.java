@@ -12,8 +12,11 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -47,6 +50,8 @@ public class PermissionService {
         if(optionalRole.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Role not found");
         }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
         Role role = optionalRole.get();
 
         List<String> permissionNames = body.getPermissions();
@@ -55,6 +60,8 @@ public class PermissionService {
 
         role.setPermissions(permissions);
 
+        role.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        role.setUpdatedBy(emailUser);
         roleRepo.save(role);
 
         return ResponseEntity.ok("Permissions updated successfully");

@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -42,6 +43,18 @@ public class Role {
     )
     private List<RoutesPermissions> routesPermissions;
 
+    @Column(nullable = false,name = "created_by")
+    private String createdBy;
+
+    @Column(nullable = false,name = "created_at")
+    private Timestamp createdAt;
+
+
+    @Column(nullable = false,name = "updated_by")
+    private String updatedBy;
+
+    @Column(nullable = false,name = "updated_at")
+    private Timestamp updatedAt;
 
     public enum RoleType{
         USER,

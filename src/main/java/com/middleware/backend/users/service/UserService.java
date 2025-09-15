@@ -1,9 +1,7 @@
 package com.middleware.backend.users.service;
 
-import com.middleware.backend.scheduledJobs.model.ScheduledJobs;
 import com.middleware.backend.users.Roles.dto.RoleRequest;
 import com.middleware.backend.users.Roles.mapper.RoleMapper;
-import com.middleware.backend.users.Roles.model.Permission;
 import com.middleware.backend.users.config.JwtUtil;
 import com.middleware.backend.users.dto.UserRequest;
 import com.middleware.backend.users.dto.UserResponse;
@@ -19,13 +17,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -41,17 +38,6 @@ public class UserService {
         Optional<User> user = repo.findById(id);
         return user.isPresent()? ResponseEntity.ok(userMapper.mapToDto(user.get())):
                 ResponseEntity.badRequest().body("Not Found");
-//        List<String> roles = new ArrayList<>();
-//        roles.add("ADMIN");
-//        roles.add("SYSTEM_USER");
-//        List<String> pers = new ArrayList<>();
-//        pers.add("audit:create");
-//        pers.add("user:show");
-//        String token = jwtUtil.generateToken("admin@mail.com",roles,pers, 2L * 7 * 24 * 60 * 60 * 1000);
-//        System.out.println("**************************************************");
-//        System.out.println("System User Token: " + token);
-//
-//        return null;
     }
 
     public Page<?> getAll(Specification<User> spec, Pageable pageable) {
@@ -62,7 +48,10 @@ public class UserService {
                         .userName(user.getUserName())
                         .email(user.getEmail())
                         .status(user.getStatus())
+                        .createdBy(user.getCreatedBy())
                         .createdAt(user.getCreatedAt())
+                        .updatedBy(user.getUpdatedBy())
+                        .updatedAt(user.getUpdatedAt())
                         .password(user.getPassword())
                         .roles(user.getRoles().stream().map(
                                 r-> RoleRequest.builder()
@@ -77,14 +66,19 @@ public class UserService {
     }
 
     public ResponseEntity<?> createNewUser(UserRequest user) {
+
         Optional<User> exists = repo.findByEmail(user.getEmail().toLowerCase());
         if(exists.isPresent())return ResponseEntity
                 .badRequest()
                 .body(Collections.singletonMap("message", "User Already Exists"));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
         User req = userMapper.mapToEntity(user);
         req.setPassword(passwordEncoder.encode(req.getPassword()));
         req.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         req.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        req.setCreatedBy(emailUser);
+        req.setUpdatedBy(emailUser);
         req.setEmail(req.getEmail().toLowerCase());
         req = repo.save(req);
         return ResponseEntity.status(HttpStatus.CREATED).body(req);
@@ -93,8 +87,11 @@ public class UserService {
     public ResponseEntity<?> deleteUser(Long id) {
         Optional<User> user = repo.findById(id);
         if(user.isEmpty())return ResponseEntity.badRequest().body("User was not Found");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
         user.get().setStatus(Status.INACTIVE);
         user.get().setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        user.get().setUpdatedBy(emailUser);
         repo.save(user.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -102,6 +99,8 @@ public class UserService {
     public ResponseEntity<?> editUser(Long id, UserRequest user) {
         Optional<User> exists = repo.findById(id);
         if(exists.isEmpty())return ResponseEntity.badRequest().body("User wasn't FOUND");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
         exists.get().setUserName(!user.getUserName().isEmpty() ?
                 user.getUserName() : exists.get().getUserName());
 
@@ -118,6 +117,7 @@ public class UserService {
                         .map(RoleMapper::mapToEntity)
                         .collect(Collectors.toList())
         );
+        exists.get().setUpdatedBy(emailUser);
         repo.save(exists.get());
         return ResponseEntity.ok(exists.get());
     }
@@ -125,8 +125,11 @@ public class UserService {
     public ResponseEntity<?> activateUser(Long id) {
         Optional<User> user = repo.findById(id);
         if(user.isEmpty())return ResponseEntity.badRequest().body("User was not Found");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
         user.get().setStatus(Status.ACTIVE);
         user.get().setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        user.get().setUpdatedBy(emailUser);
         repo.save(user.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
