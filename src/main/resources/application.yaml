@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/middleware_new
+    url: jdbc:postgresql://localhost:5432/middlewareDB
 #    url: jdbc:postgresql://localhost:5432/middlewareDB
     username: postgres
     password: 12345
