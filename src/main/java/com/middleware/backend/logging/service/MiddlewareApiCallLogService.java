@@ -334,7 +334,6 @@ public class MiddlewareApiCallLogService {
             return null;
         }
     }
-
     private boolean isSpecialIntegrateApi(MiddlewareApiCallLog log) {
         String url = log.getRequestUrl();
         String path = log.getRequestPath();

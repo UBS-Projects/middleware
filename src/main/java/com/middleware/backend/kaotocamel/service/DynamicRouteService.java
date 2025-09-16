@@ -144,7 +144,12 @@ public class DynamicRouteService {
             entity.setHttpMethod(method);
             entity.setCreatedAt(LocalDateTime.now());
             entity.setComment(comment);
-
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String emailUser = authentication.getName();
+            entity.setCreatedBy(emailUser);
+            entity.setCreatedAt(LocalDateTime.now());
+            entity.setUpdatedBy(emailUser);
+            entity.setUpdatedAt(LocalDateTime.now());
             routeRepository.save(entity);
 
 
@@ -330,28 +335,30 @@ public class DynamicRouteService {
     public String deactivateRoute(String routeId) {
         Integer version = null;
         String userEmail = "anonymous"; // fallback
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getPrincipal() != null) {
-            userEmail = auth.getName(); // Usually the `sub` claim (email/username)
-        }
-
         try {
-            List<DynamicRouteEntity> activeRoutes = routeRepository.findByRouteIdAndActiveTrue(routeId);
-            if (activeRoutes.isEmpty()) {
+            Optional<DynamicRouteEntity> activeRoute = routeRepository.findByRouteIdAndActiveTrue(routeId);
+            if (activeRoute.isEmpty()) {
                 audit(routeId, -1, "deactivate-failed",
                         "No active route found to deactivate.",userEmail ,
                         "FAILED");
                 return "No active route found for: " + routeId;
             }
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String emailUser = authentication.getName();
 
             // Deactivate in DB
-            activeRoutes.forEach(r -> r.setActive(false));
-            routeRepository.saveAll(activeRoutes);
+            activeRoute.get().setActive(false);
+            version = activeRoute.get().getVersion();
 
-            version = activeRoutes.get(0).getVersion();
+
+            camelContext.getRouteController().stopRoute(routeId);
+
+            activeRoute.get().setUpdatedBy(emailUser);
+            activeRoute.get().setUpdatedAt(LocalDateTime.now());
+            routeRepository.save(activeRoute.get());
+
 
             // Stop & remove from Camel
-            camelContext.getRouteController().stopRoute(routeId);
             camelContext.removeRoute(routeId);
 
             log.info("Deactivated route {} version {}", routeId, version);
@@ -402,6 +409,10 @@ public class DynamicRouteService {
                 boolean isTargetVersion = v.getVersion() == version;
                 v.setActive(isTargetVersion);
                 v.setDefaultVersion(isTargetVersion);
+                if(isTargetVersion){
+                    v.setUpdatedAt(LocalDateTime.now());
+                    v.setUpdatedBy(auth.getName());
+                }
             });
             routeRepository.saveAll(versions);
 
@@ -481,12 +492,16 @@ public class DynamicRouteService {
             camelContext.getRouteController().stopRoute(routeId);
 
             // Mark all active routes inactive in DB
-            List<DynamicRouteEntity> activeRoutes = routeRepository.findByRouteIdAndActiveTrue(routeId);
-            if (!activeRoutes.isEmpty()) {
-                version = activeRoutes.get(0).getVersion();
-                activeRoutes.forEach(r -> r.setActive(false));
-                routeRepository.saveAll(activeRoutes);
+            Optional<DynamicRouteEntity> activeRoute = routeRepository.findByRouteIdAndActiveTrue(routeId);
+            if (!activeRoute.isEmpty()) {
+                version = activeRoute.get().getVersion();
+                activeRoute.get().setActive(false);
+                activeRoute.get().setUpdatedAt(LocalDateTime.now());
+                activeRoute.get().setUpdatedBy(userEmail);
+                routeRepository.save(activeRoute.get());
             }
+
+
 
             log.info("Stopped route {} version {}", routeId, version);
             audit(routeId, version != null ? version : -1, "stop", "Route stopped",userEmail,"SUCCESS");
@@ -527,6 +542,8 @@ public class DynamicRouteService {
 
             // Mark version as active in DB
             defaultVersion.setActive(true);
+            defaultVersion.setUpdatedAt(LocalDateTime.now());
+            defaultVersion.setUpdatedBy(userEmail);
             routeRepository.save(defaultVersion);
 
             log.info("Started route {} version {}", routeId, defaultVersion.getVersion());
@@ -1010,8 +1027,8 @@ public class DynamicRouteService {
         return value != null ? value.replace(",", " ") : "";
     }
 
-    public String getRouteIdByPath(String path) {
-        return routeRepository.findByPathAndActive(path,true).get().getRouteId();
+    public String getRouteIdByPathAndMethod(String path, String method) {
+        return routeRepository.findByPathAndHttpMethodAndActive(path, method.toLowerCase(),true).get().getRouteId();
     }
 
     /**

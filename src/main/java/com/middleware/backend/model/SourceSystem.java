@@ -29,8 +29,14 @@ public class SourceSystem {
     @Column(name = "active", nullable = false)
     private Boolean active = true;
 
+    @Column(name = "created_by", nullable = false)
+    private String createdBy;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_by", nullable = false)
+    private String updatedBy;
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;

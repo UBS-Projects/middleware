@@ -13,6 +13,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +55,10 @@ public class ErrorCategoryService {
         if (categoryRepository.existsByNameIgnoreCase(dto.getName())) {
             throw new IllegalArgumentException("Category with name '" + dto.getName() + "' already exists.");
         }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
+        dto.setCreatedBy(emailUser);
+        dto.setUpdatedBy(emailUser);
         ErrorCategory category = categoryMapper.toEntity(dto);
         ErrorCategory savedCategory = categoryRepository.save(category);
         return categoryMapper.toDto(savedCategory);
@@ -79,7 +86,10 @@ public class ErrorCategoryService {
         existingCategory.setName(dto.getName());
         existingCategory.setDescription(dto.getDescription());
         existingCategory.setActive(dto.getActive());
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
+        existingCategory.setUpdatedBy(emailUser);
+        existingCategory.setUpdatedAt(LocalDateTime.now());
         ErrorCategory updatedCategory = categoryRepository.save(existingCategory);
         return categoryMapper.toDto(updatedCategory);
     }
@@ -99,6 +109,10 @@ public class ErrorCategoryService {
         }
 
         category.setActive(!category.getActive());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
+        category.setUpdatedBy(emailUser);
+        category.setUpdatedAt(LocalDateTime.now());
         ErrorCategory savedCategory = categoryRepository.save(category);
         return categoryMapper.toDto(savedCategory);
     }

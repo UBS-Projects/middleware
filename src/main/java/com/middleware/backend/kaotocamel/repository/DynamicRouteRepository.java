@@ -39,8 +39,11 @@ public interface DynamicRouteRepository
         @Query("SELECT dr FROM DynamicRouteEntity dr WHERE dr.active = true AND dr.defaultVersion = true ORDER BY dr.routeId")
         List<DynamicRouteEntity> findLatestActiveRoutes();
 
-        @Query("SELECT dr FROM DynamicRouteEntity dr WHERE dr.routeId = :routeId AND dr.active = true")
-        List<DynamicRouteEntity> findByRouteIdAndActiveTrue(@Param("routeId") String routeId);
+//        @Query("SELECT dr FROM DynamicRouteEntity dr WHERE dr.routeId = :routeId AND dr.active = true")
+//        List<DynamicRouteEntity> findByRouteIdAndActiveTrue(@Param("routeId") String routeId);
+
+        Optional<DynamicRouteEntity> findByRouteIdAndActiveTrue(String routeId);
+
 
         @Query("SELECT COUNT(dr) > 0 FROM DynamicRouteEntity dr WHERE dr.routeId = :routeId AND dr.active = true")
         boolean existsByRouteIdAndActiveTrue(@Param("routeId") String routeId);
@@ -50,7 +53,7 @@ public interface DynamicRouteRepository
 
         // Method to check for duplicate route by path and httpMethod
         Optional<DynamicRouteEntity> findByPathAndHttpMethod(String path, String httpMethod);
-        Optional<DynamicRouteEntity> findByPathAndActive(String path,boolean active);
+        Optional<DynamicRouteEntity> findByPathAndHttpMethodAndActive(String path, String method,boolean active);
 
         Optional<DynamicRouteEntity> findFirstByRouteIdAndActiveTrue(String routeId);
 

@@ -25,8 +25,8 @@ public class ErrorMappingDto {
     private Integer httpStatusCode;
     private String language;
     private Boolean active;
-    private Long createdBy;
-    private Long updatedBy;
+    private String createdBy;
+    private String updatedBy;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
