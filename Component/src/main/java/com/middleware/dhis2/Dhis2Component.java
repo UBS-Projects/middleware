@@ -12,9 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.middleware.dhis2.service.Dhis2Service;
 
-/**
- * DHIS2 Integration Component for CSV uploads and data synchronization
- */
+
 @Component("hakeem")
 public class Dhis2Component extends DefaultComponent {
 
@@ -36,11 +34,9 @@ public class Dhis2Component extends DefaultComponent {
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
         Dhis2Endpoint endpoint = new Dhis2Endpoint(uri, this, remaining);
 
-        // Set properties from URI query parameters
-        setProperties(endpoint, parameters);
+         setProperties(endpoint, parameters);
 
-        // Ensure dhis2Service is set, either via @Autowired or manual lookup
-        if (this.dhis2Service == null) {
+         if (this.dhis2Service == null) {
             this.dhis2Service = getCamelContext().getRegistry()
                     .lookupByNameAndType(Dhis2Service.BEAN_ID, Dhis2Service.class);
 

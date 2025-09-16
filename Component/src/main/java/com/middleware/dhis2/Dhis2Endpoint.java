@@ -28,11 +28,8 @@ import lombok.Setter;
 public class Dhis2Endpoint extends DefaultEndpoint {
 
     private static final Logger LOG = LoggerFactory.getLogger(Dhis2Endpoint.class);
-
     @UriPath
-    @Metadata(required = true, description = "The operation to perform. Options: csvUpload, guard, summarize")
-    private String operation;
-
+   @Metadata(required = true, description = "The operation to perform. Options: csvUpload, guard, summarize") private String operation;
     @UriParam(defaultValue = "true", description = "Whether to perform dry-run before actual import")
     private boolean dryRun = true;
 
@@ -48,8 +45,7 @@ public class Dhis2Endpoint extends DefaultEndpoint {
     @UriParam(defaultValue = "60000", description = "Read timeout in milliseconds")
     private int readTimeout = 60000;
 
-    // The Dhis2Service is passed from the component
-    private Dhis2Service dhis2Service;
+     private Dhis2Service dhis2Service;
 
     public Dhis2Endpoint(String uri, Dhis2Component component, String operation) {
         super(uri, component);

@@ -1,3 +1,4 @@
+
 package com.middleware.dhis2;
 
 import org.apache.camel.Exchange;
@@ -9,9 +10,6 @@ import com.middleware.dhis2.model.Dhis2Request;
 import com.middleware.dhis2.model.Dhis2Response;
 import com.middleware.dhis2.service.Dhis2Service;
 
-/**
- * Producer for DHIS2 Component operations
- */
 public class Dhis2Producer extends DefaultProducer {
     private static final Logger LOG = LoggerFactory.getLogger(Dhis2Producer.class);
 
@@ -29,12 +27,10 @@ public class Dhis2Producer extends DefaultProducer {
         String operation = endpoint.getOperation();
         LOG.info("Processing DHIS2 operation: {}", operation);
 
-        // Build request from exchange
-        Dhis2Request request = buildRequest(exchange);
+         Dhis2Request request = buildRequestLikeBeans(exchange);
         Dhis2Response response;
 
-        // Route to appropriate operation
-        switch (operation.toLowerCase()) {
+         switch (operation.toLowerCase()) {
             case "guard":
             case "csvguard":
                 response = dhis2Service.validateCsvGuard(request);
@@ -52,7 +48,7 @@ public class Dhis2Producer extends DefaultProducer {
 
             case "process":
             case "complete":
-            case "map":  // مثل errormapper:map
+            case "map":
                 response = dhis2Service.processComplete(request);
                 break;
 
@@ -60,99 +56,152 @@ public class Dhis2Producer extends DefaultProducer {
                 response = Dhis2Response.error(400, "ERROR", "Unknown operation: " + operation);
         }
 
-        // Set response back to exchange
-        setResponse(exchange, response);
+         setResponseLikeBeans(exchange, response);
     }
 
-    private Dhis2Request buildRequest(Exchange exchange) {
+    private Dhis2Request buildRequestLikeBeans(Exchange exchange) {
         Dhis2Request request = new Dhis2Request();
 
-        // Get from headers and properties
-        request.setTransactionUUID(getStringValue(exchange, "transactionUUID", "X-Transaction-UUID"));
-        request.setScheme(getStringValue(exchange, "scheme", endpoint.getIdScheme()));
-        request.setStrategy(getStringValue(exchange, "strategy", endpoint.getStrategy()));
-        request.setDryRun(getBooleanValue(exchange, "dryRun", "dry-run", endpoint.isDryRun()));
+         String transactionUUID = getHeaderValue(exchange, "transactionUUID");
+        if (transactionUUID == null) {
+            transactionUUID = getHeaderValue(exchange, "X-Transaction-UUID");
+        }
+        request.setTransactionUUID(transactionUUID);
+
+         String scheme = "CODE"; // default
+        String schemeHdr = getHeaderValue(exchange, "scheme");
+        if (schemeHdr == null) {
+            schemeHdr = getHeaderValue(exchange, "idScheme");
+        }
+        if (schemeHdr != null && schemeHdr.trim().matches("(?i)^uid$")) scheme = "UID";
+        if (schemeHdr != null && schemeHdr.trim().matches("(?i)^code$")) scheme = "CODE";
+        request.setScheme(scheme);
+
+         String strategy = "NEW_AND_UPDATES"; // default
+        String strategyHdr = getHeaderValue(exchange, "strategy");
+        if (strategyHdr != null) {
+            String s = strategyHdr.trim();
+            if (s.matches("(?i)^append$")) strategy = "NEW";
+            else if (s.matches("(?i)^update$")) strategy = "UPDATES";
+            else if (s.matches("(?i)^delete$")) strategy = "DELETE";
+            else if (s.matches("(?i)^(new_and_updates|new|updates|delete)$")) strategy = s;
+        }
+        request.setStrategy(strategy);
+
+         String dryRaw = "true"; // default
+        String dryHdr1 = getHeaderValue(exchange, "dry-run");
+        String dryHdr2 = getHeaderValue(exchange, "dryRun");
+        if (!isBlank(dryHdr1)) dryRaw = dryHdr1;
+        else if (!isBlank(dryHdr2)) dryRaw = dryHdr2;
+
+        boolean dryRun = toBoolString(dryRaw);
+        request.setDryRun(dryRun);
+
         request.setContentType(exchange.getIn().getHeader(Exchange.CONTENT_TYPE, String.class));
         request.setOperation(endpoint.getOperation());
 
-        // Get CSV bytes from body or property
-        byte[] csvBytes = exchange.getProperty("_csvBytes", byte[].class);
-        if (csvBytes == null) {
-            csvBytes = exchange.getIn().getBody(byte[].class);
-        }
+         byte[] csvBytes = exchange.getIn().getBody(byte[].class);
         request.setCsvBytes(csvBytes);
 
-        // For summarize operation, get response body
-        if ("summarize".equalsIgnoreCase(endpoint.getOperation())) {
+         if ("summarize".equalsIgnoreCase(endpoint.getOperation())) {
             request.setResponseBody(exchange.getIn().getBody(String.class));
             Integer statusCode = exchange.getIn().getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
             request.setHttpStatusCode(statusCode != null ? statusCode : 200);
         }
 
-        // Get query base if available
-        request.setQueryBase(exchange.getProperty("_queryBase", String.class));
+         String queryBase = buildQueryBaseLikeCsvGuard(scheme, strategy);
+        request.setQueryBase(queryBase);
+
+        if (request.getContentType() == null && csvBytes != null) {
+            request.setContentType("text/csv");
+        }
+
+        LOG.info("Built request - scheme={}, strategy={}, dryRun={}", scheme, strategy, dryRun);
 
         return request;
     }
 
-    private void setResponse(Exchange exchange, Dhis2Response response) {
-        exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, response.getHttpStatusCode());
+    private String buildQueryBaseLikeCsvGuard(String scheme, String strategy) {
+        return "async=false" +
+                "&preheatCache=false" +
+                "&skipAudit=false" +
+                "&skipExistingCheck=false" +
+                "&firstRowIsHeader=true" +
+                "&strategy=" + strategy +
+                "&dataElementIdScheme=" + scheme +
+                "&orgUnitIdScheme=" + scheme +
+                "&categoryOptionComboIdScheme=" + scheme +
+                "&attributeOptionComboIdScheme=" + scheme +
+                "&idScheme=" + scheme;
+    }
+
+    private void setResponseLikeBeans(Exchange exchange, Dhis2Response response) {
+         if (!response.isSuccess()) {
+            exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, response.getHttpStatusCode());
+            exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "application/json");
+
+             String jsonResponse;
+            if (response.getHttpStatusCode() == 409) {
+                 jsonResponse = String.format(
+                        "{ \"status\":\"%s\",\"message\":\"%s\",\"errorCode\":\"\",\"errorMessage\":\"\",\"details\":%s }",
+                        escape(response.getStatus()),
+                        escape(response.getMessage()),
+                        response.getDetails() != null ? response.getDetails().toString() : "{}"
+                );
+            } else {
+                 jsonResponse = String.format(
+                        "{\"status\":\"%s\",\"message\":\"%s\"}",
+                        escape(response.getStatus()),
+                        escape(response.getMessage())
+                );
+            }
+
+            exchange.getIn().setBody(jsonResponse);
+            exchange.setRouteStop(true);
+            return;
+        }
+
+         exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, response.getHttpStatusCode());
         exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "application/json");
 
-        // Build JSON response
-        String jsonResponse = buildJsonResponse(response);
+        String jsonResponse;
+        if (response.getDetails() != null) {
+             jsonResponse = String.format(
+                    "{ \"status\":\"%s\",\"message\":\"%s\",\"errorCode\":\"\",\"errorMessage\":\"\",\"details\":%s }",
+                    escape(response.getStatus()),
+                    escape(response.getMessage()),
+                    response.getDetails().toString()
+            );
+        } else {
+             jsonResponse = String.format(
+                    "{\"status\":\"%s\",\"message\":\"%s\"}",
+                    escape(response.getStatus()),
+                    escape(response.getMessage())
+            );
+        }
+
         exchange.getIn().setBody(jsonResponse);
 
-        // Set properties for further processing
-        exchange.setProperty("dhis2.status", response.getStatus());
+         exchange.setProperty("dhis2.status", response.getStatus());
         exchange.setProperty("dhis2.success", response.isSuccess());
-
-        if (!response.isSuccess()) {
-            exchange.setRouteStop(true);
-        }
     }
 
-    private String buildJsonResponse(Dhis2Response response) {
-        StringBuilder json = new StringBuilder();
-        json.append("{");
-        json.append("\"status\":\"").append(escape(response.getStatus())).append("\",");
-        json.append("\"message\":\"").append(escape(response.getMessage())).append("\",");
-        json.append("\"errorCode\":\"").append(escape(response.getErrorCode())).append("\",");
-        json.append("\"errorMessage\":\"").append(escape(response.getErrorMessage())).append("\",");
-        json.append("\"details\":").append(response.getDetails() != null ? response.getDetails().toString() : "{}");
-        json.append("}");
-        return json.toString();
+     private String getHeaderValue(Exchange exchange, String headerName) {
+        return exchange.getIn().getHeader(headerName, String.class);
     }
 
-    private String getStringValue(Exchange exchange, String... keys) {
-        for (String key : keys) {
-            String value = exchange.getProperty(key, String.class);
-            if (value == null) {
-                value = exchange.getIn().getHeader(key, String.class);
-            }
-            if (value != null && !value.trim().isEmpty()) {
-                return value.trim();
-            }
-        }
-        return null;
+    private boolean isBlank(String s) {
+        return s == null || s.isBlank();
     }
 
-    private boolean getBooleanValue(Exchange exchange, String propertyKey, String headerKey, boolean defaultValue) {
-        String value = exchange.getProperty(propertyKey, String.class);
-        if (value == null) {
-            value = exchange.getIn().getHeader(headerKey, String.class);
-        }
-        if (value == null) {
-            return defaultValue;
-        }
-        return "true".equalsIgnoreCase(value.trim()) || "1".equals(value.trim()) || "yes".equalsIgnoreCase(value.trim());
+    private boolean toBoolString(String raw) {
+        if (raw == null) return true;
+        String v = raw.trim().toLowerCase();
+        return v.matches("^(true|1|yes)$");
     }
 
     private String escape(String s) {
         if (s == null) return "";
-        return s.replace("\\", "\\\\")
-                .replace("\"", "\\\"")
-                .replace("\r", "\\r")
-                .replace("\n", "\\n");
+        return s.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 }
