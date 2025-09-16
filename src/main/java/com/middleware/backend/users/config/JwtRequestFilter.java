@@ -1,5 +1,6 @@
 package com.middleware.backend.users.config;
 
+import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
 import com.middleware.backend.kaotocamel.service.DynamicRouteService;
 import com.middleware.backend.users.tokens.repository.TokenRepository;
 import jakarta.servlet.FilterChain;
@@ -57,24 +58,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                 // 🔑 Map request path → routeId
                 String path = request.getRequestURI();
+                String method = request.getMethod();
                 AntPathMatcher matcher = new AntPathMatcher();
                 String normalizedPath = path.replaceFirst("^/camel", "");
-                Pageable page = PageRequest.of(0,100000);
-                List<String> dbRoutes = routeService.getActiveRoutes().stream().map(
-                        r -> r.getPath()
-                ).toList();
+                List<DynamicRouteEntity> dbRoutes = routeService.getActiveRoutes();
                 boolean isAdmin = userDetails.getAuthorities().stream()
                         .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
                 if(path.startsWith("/camel/") && !isAdmin) {
 
                     String matchedRouteId = null;
-                    for (String dbRoute : dbRoutes) {
-
-                        String pattern = dbRoute.replaceAll("\\{[^/]+\\}", "*") + "/**";
-
-                        if (matcher.match(pattern, normalizedPath)) {
-
-                             matchedRouteId = routeService.getRouteIdByPath(dbRoute);
+                    for (DynamicRouteEntity dbRoute : dbRoutes) {
+                        String routePath = dbRoute.getPath();
+                        String routeMethod = dbRoute.getHttpMethod();
+                        String pattern = routePath.replaceAll("\\{[^/]+\\}", "*") + "/**";
+                        if (matcher.match(pattern, normalizedPath)&&
+                                method.equalsIgnoreCase(routeMethod)) {
+                             matchedRouteId = routeService.getRouteIdByPathAndMethod(routePath,method);
                             break;
                         }
                     }

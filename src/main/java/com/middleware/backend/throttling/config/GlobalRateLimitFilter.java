@@ -1,4 +1,5 @@
 package com.middleware.backend.throttling.config;
+import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
 import com.middleware.backend.kaotocamel.service.DynamicRouteService;
 import com.middleware.backend.throttling.model.CamelLimitConfig;
 import com.middleware.backend.throttling.model.CustomCamelLimitConfig;
@@ -42,8 +43,8 @@ public class GlobalRateLimitFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String uri = httpRequest.getRequestURI();
-
-        if (uri.contains("/camel/") && !uri.contains("/camel/custom")) {
+        String method = httpRequest.getMethod();
+        if (uri.startsWith("/camel/")) {
             // === 1. Apply global Camel rate limit ===
             CamelLimitConfig globalConfig = rateLimitService.getCamelConfig();
             long now = System.currentTimeMillis();
@@ -70,18 +71,19 @@ public class GlobalRateLimitFilter implements Filter {
 
             // === 2. Apply route-specific limit if exists ===
 
-            List<String> dbRoutes = routeService.getActiveRoutes().stream().map(
-                    r -> r.getPath()
-            ).toList();
+            List<DynamicRouteEntity> dbRoutes = routeService.getActiveRoutes();
+
 
             String matchedRouteId = null;
-            for (String dbRoute : dbRoutes) {
+            for (DynamicRouteEntity dbRoute : dbRoutes) {
 
-                String pattern = dbRoute.replaceAll("\\{[^/]+\\}", "*") + "/**";
+                String routePath = dbRoute.getPath();
+                String routeMethod = dbRoute.getHttpMethod();
+                String pattern = routePath.replaceAll("\\{[^/]+\\}", "*") + "/**";
 
-                if (matcher.match(pattern, normalizedPath)) {
-
-                    matchedRouteId = routeService.getRouteIdByPath(dbRoute);
+                if (matcher.match(pattern, normalizedPath)&&
+                        method.equalsIgnoreCase(routeMethod)) {
+                    matchedRouteId = routeService.getRouteIdByPathAndMethod(routePath,method);
                     break;
                 }
             }

@@ -1027,8 +1027,8 @@ public class DynamicRouteService {
         return value != null ? value.replace(",", " ") : "";
     }
 
-    public String getRouteIdByPath(String path) {
-        return routeRepository.findByPathAndActive(path,true).get().getRouteId();
+    public String getRouteIdByPathAndMethod(String path, String method) {
+        return routeRepository.findByPathAndHttpMethodAndActive(path, method.toLowerCase(),true).get().getRouteId();
     }
 
     /**
