@@ -19,12 +19,12 @@ public class NotificationTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;          // e.g., Password Reset
+    private String name;
     @Enumerated(EnumType.STRING)
-    private ChannelType type;     // SMS, EMAIL
-    private String subject;       // For email templates
+    private ChannelType type;
+    private String subject;
     @Column(columnDefinition = "TEXT")
-    private String body;          // With placeholders
+    private String body;
 
     @Column(name="created_by")
     private String createdBy;

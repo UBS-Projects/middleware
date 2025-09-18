@@ -8,6 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/templates")
 @AllArgsConstructor
@@ -33,12 +36,12 @@ public class TemplateController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody NotificationTemplateDto dto) {
+    public ResponseEntity<?> create(@Valid @RequestBody NotificationTemplateDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
     @PutMapping("")
-    public ResponseEntity<?> update(@RequestBody NotificationTemplateDto dto) {
+    public ResponseEntity<?> update(@Valid @RequestBody NotificationTemplateDto dto) {
         return ResponseEntity.ok(service.update(dto));
     }
 
@@ -46,5 +49,10 @@ public class TemplateController {
     public ResponseEntity<?> delete(@PathVariable long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+     @PostMapping("/validate-json")
+    public ResponseEntity<?> validateJsonStructure(@RequestBody String jsonString) {
+        return ResponseEntity.ok(service.validateJsonStructure(jsonString));
     }
 }

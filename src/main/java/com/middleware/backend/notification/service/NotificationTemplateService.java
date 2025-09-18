@@ -1,5 +1,7 @@
 package com.middleware.backend.notification.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.middleware.backend.notification.dto.NotificationTemplateDto;
 import com.middleware.backend.notification.enums.ChannelType;
 import com.middleware.backend.notification.mapper.TemplateMapper;
@@ -13,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -25,7 +29,7 @@ public class NotificationTemplateService {
                 .orElseThrow(() -> new RuntimeException("Template not found"));
     }
 
-    public Page<NotificationTemplateDto> findAll( Pageable pageable) {
+    public Page<NotificationTemplateDto> findAll(Pageable pageable) {
         return repo.findAll(pageable).map(TemplateMapper::MapToDto);
     }
 
@@ -63,5 +67,44 @@ public class NotificationTemplateService {
         NotificationTemplate entity = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Template not found"));
         repo.delete(entity);
+    }
+
+     public Map<String, Object> validateJsonStructure(String jsonString) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+             ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(jsonString);
+
+             if (!jsonNode.has("subject") || jsonNode.get("subject").isNull() ||
+                    jsonNode.get("subject").asText().trim().isEmpty()) {
+                response.put("valid", false);
+                response.put("message", "JSON must contain 'subject' field");
+                return response;
+            }
+
+             if (!jsonNode.has("body") || jsonNode.get("body").isNull() ||
+                    jsonNode.get("body").asText().trim().isEmpty()) {
+                response.put("valid", false);
+                response.put("message", "JSON must contain 'body' field");
+                return response;
+            }
+
+            response.put("valid", true);
+            response.put("message", "JSON is valid and contains required fields");
+            response.put("subject", jsonNode.get("subject").asText());
+            response.put("body", jsonNode.get("body").asText());
+
+        } catch (com.fasterxml.jackson.core.JsonParseException e) {
+            response.put("valid", false);
+            response.put("message", "Invalid JSON syntax: " + e.getOriginalMessage());
+            response.put("errorType", "JSON Parse Error");
+        } catch (Exception e) {
+            response.put("valid", false);
+            response.put("message", "JSON processing error: " + e.getMessage());
+            response.put("errorType", "General Error");
+        }
+
+        return response;
     }
 }
