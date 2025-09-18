@@ -9,6 +9,7 @@ import com.middleware.backend.scheduledJobs.mapper.Mapper;
 import com.middleware.backend.scheduledJobs.model.ScheduledJobs;
 import com.middleware.backend.scheduledJobs.model.SingleJobDto;
 import com.middleware.backend.scheduledJobs.repository.ScheduledJobRepository;
+import com.middleware.backend.logging.repository.MiddlewareApiCallLogRepository;
 import com.middleware.backend.users.model.User;
 import com.middleware.backend.users.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -32,7 +33,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -44,7 +46,7 @@ public class ScheduledJobsService{
     private Scheduler scheduler;
     private final RestTemplate restTemplate;
     private final UserRepository userRepo;
-
+    private final MiddlewareApiCallLogRepository middlewareApiCallLogRepository; // Add this dependency
 
     public void scheduleAllActiveJobs() {
         List<ScheduledJobs> jobs = repo.findByEnabledTrue();
@@ -115,8 +117,6 @@ public class ScheduledJobsService{
         return job;
     }
 
-
-
     public ScheduledJobs resumeJob(Long id, String email) throws SchedulerException {
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
@@ -134,8 +134,6 @@ public class ScheduledJobsService{
         }
         return job;
     }
-
-
 
     public ScheduledJobs editJob(JobRequest job, String email) throws SchedulerException {
         ScheduledJobs existingJob = repo.findById(job.getId())
@@ -169,8 +167,6 @@ public class ScheduledJobsService{
         return updatedJob;
     }
 
-
-
     public Page<ScheduledJobs> getAllRoutes(Specification<ScheduledJobs> spec, Pageable pageable) {
         Specification<ScheduledJobs> activeSpec = (root, query, cb) -> cb.isTrue(root.get("active"));
         return repo.findAll(spec.and(activeSpec), pageable);
@@ -188,12 +184,25 @@ public class ScheduledJobsService{
         return job;
     }
 
-
     public boolean test(JobRequest job) throws Exception {
         HttpHeaders headers = new HttpHeaders();
         ObjectMapper objectMapper = new ObjectMapper();
+
+        // Parse existing headers
         Map<String, String> headersMap = objectMapper.readValue(job.getHeaders(), new TypeReference<>() {});
         headersMap.forEach(headers::add);
+
+        // Extract transactionUUID from URL
+        String transactionUUID = extractTransactionUUIDFromUrl(job.getApiEndpoint());
+
+        // Add test-specific headers to simulate scheduled job behavior
+        headers.add("X-Scheduled-Job", "true");
+        headers.add("X-Job-Name", job.getJobName() != null ? job.getJobName() : "test-job");
+
+        // Check if this is a retry attempt
+        if (transactionUUID != null && hasBeenUsedBefore(transactionUUID)) {
+            headers.add("X-Retry-Attempt", "true");
+        }
 
         HttpEntity<String> entity = new HttpEntity<>(job.getPayload(), headers);
 
@@ -205,6 +214,25 @@ public class ScheduledJobsService{
         );
 
         return response.getStatusCode().is2xxSuccessful();
+    }
+
+    private String extractTransactionUUIDFromUrl(String url) {
+        if (url == null) return null;
+
+        // Extract transactionUUID from URL parameters
+        Pattern pattern = Pattern.compile("transactionUUID=([a-fA-F0-9-]+)");
+        Matcher matcher = pattern.matcher(url);
+        return matcher.find() ? matcher.group(1) : null;
+    }
+
+    private boolean hasBeenUsedBefore(String transactionUUID) {
+        try {
+            return middlewareApiCallLogRepository.existsBySourceTransactionUUID(transactionUUID.toLowerCase());
+        } catch (Exception e) {
+            // Log error but don't fail the test
+            System.err.println("Error checking UUID existence: " + e.getMessage());
+            return false;
+        }
     }
 
     public byte[] exportFile(Specification<ScheduledJobs> spec, Pageable pageable, String type) throws IOException {

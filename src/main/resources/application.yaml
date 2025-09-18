@@ -9,6 +9,8 @@ spring:
     password: root
     driver-class-name: org.postgresql.Driver
 
+  main:
+    allow-bean-definition-overriding=true:
   sql:
     init:
       mode: always
