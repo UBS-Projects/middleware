@@ -190,11 +190,11 @@
         </dependency>
 
         <!-- Custom DHIS2 Component -->
-        <dependency>
-            <groupId>com.middleware</groupId>
-            <artifactId>camel-dhis2-component</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.middleware</groupId>-->
+<!--            <artifactId>camel-dhis2-component</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -207,6 +207,12 @@
         <!--        </dependency>-->
         <!-- Custom DHIS2 Component -->
 
+<!--        Mail Sender -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>2.0.1</version>
+        </dependency>
 
     </dependencies>
     <build>

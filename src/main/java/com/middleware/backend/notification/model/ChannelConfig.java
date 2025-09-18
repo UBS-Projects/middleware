@@ -19,10 +19,11 @@ public class ChannelConfig {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;        // e.g., "Default Email"
+
     @Enumerated(EnumType.STRING)
     private ChannelType type;   // EMAIL or SMS
 
-    private String name;        // e.g., "Default Email"
     @Column(columnDefinition = "TEXT")
     private String config;      // JSON with credentials & api_url
 

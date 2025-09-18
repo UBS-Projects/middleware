@@ -8,7 +8,7 @@ public class ChannelMapper {
     public static ChannelConfig mapToEntity(ChannelConfigDto channel){
         return ChannelConfig.builder()
                 .id(channel.getId())
-                .type(ChannelType.valueOf(channel.getName()))
+                .type(ChannelType.valueOf(channel.getType()))
                 .name(channel.getName())
                 .config(channel.getConfig())
                 .active(channel.isActive())
@@ -23,7 +23,7 @@ public class ChannelMapper {
     public static ChannelConfigDto mapToDto(ChannelConfig channel){
         return ChannelConfigDto.builder()
                 .id(channel.getId())
-                .type(String.valueOf(channel.getName()))
+                .type(String.valueOf(channel.getType()))
                 .name(channel.getName())
                 .config(channel.getConfig())
                 .active(channel.isActive())
