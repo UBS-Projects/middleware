@@ -59,6 +59,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -101,8 +102,8 @@ public class DynamicRouteService {
                 Optional<DynamicRouteEntity> existingRoute = routeRepository.findByPathAndHttpMethod(path, method);
                 if (existingRoute.isPresent()) {
                     String duplicateRouteId = existingRoute.get().getRouteId();
-                    String errorMsg = String.format("Duplicate route not allowed: path '%s' with method '%s' already exists in route '%s'", 
-                                                    path, method, duplicateRouteId);
+                    String errorMsg = String.format("Duplicate route not allowed: path '%s' with method '%s' already exists in route '%s'",
+                            path, method, duplicateRouteId);
                     audit(routeId, -1, "create-failed", errorMsg, userEmail, "FAILED");
                     throw new RuntimeException(errorMsg);
                 }
@@ -126,7 +127,6 @@ public class DynamicRouteService {
                 v.setActive(false);
                 v.setDefaultVersion(false);
             });
-
 
             routeRepository.saveAll(versions);
 
@@ -152,17 +152,15 @@ public class DynamicRouteService {
             entity.setUpdatedAt(LocalDateTime.now());
             routeRepository.save(entity);
 
-
-//            Save RouteId Into Permissions ...
+            // Save RouteId Into Permissions ...
             RoutesPermissionsRequest r = RoutesPermissionsRequest.builder()
                     .routeId(entity.getRouteId())
                     .build();
             perService.save(r);
 
             log.info("Uploaded route {} version {}", routeId, newVersion);
-            audit(routeId, newVersion, "upload", comment==null? ""
-                    :"Uploaded new version with comment: " + comment,userEmail
-            ,"SUCCESS");
+            audit(routeId, newVersion, "upload", comment == null ? ""
+                    : "Uploaded new version with comment: " + comment, userEmail, "SUCCESS");
 
             return "Route " + routeId + " uploaded as version " + newVersion;
 
@@ -170,50 +168,259 @@ public class DynamicRouteService {
             log.error("Failed to process route update for routeId={} version={} operation={} : {}",
                     routeId, newVersion, operation, ex.getMessage(), ex);
             audit(routeId, newVersion != null ? newVersion : -1, "error",
-                    "Failed to " + operation + " route. Reason: " + ex.getMessage(),userEmail,
+                    "Failed to " + operation + " route. Reason: " + ex.getMessage(), userEmail,
                     "FAILED");
             throw ex; // rethrow to trigger transaction rollback
         }
     }
 
-
+    /**
+     * Improved validateRoute method with better error handling and cleanup
+     */
     public RouteValidationResult validateRoute(String yamlContent) {
-        String routeId = null;
+        String testRouteId = null;
+        String originalRouteId = null;
 
         try {
-            RouteValidationResult checkRouteMandatoryFields = checkRouteMandatoryFields(yamlContent);
-            if (!checkRouteMandatoryFields.isValid()) {
-                return checkRouteMandatoryFields;
+            // Step 1: Check mandatory fields first
+            RouteValidationResult mandatoryFieldsCheck = checkRouteMandatoryFields(yamlContent);
+            if (!mandatoryFieldsCheck.isValid()) {
+                return mandatoryFieldsCheck;
             }
-            yamlContent = modifyYamlForTest(yamlContent);
-            Map<String, String> metadata = extractRouteMetadata(yamlContent);
-            routeId = metadata.get("id");
-            loadRoute(yamlContent);
 
-            return new RouteValidationResult(true, null);
+            // Step 2: Extract metadata from original YAML
+            Map<String, String> metadata = extractRouteMetadata(yamlContent);
+            originalRouteId = metadata.get("id");
+
+            if (originalRouteId == null || originalRouteId.trim().isEmpty()) {
+                return new RouteValidationResult(false, "Route ID is missing in YAML");
+            }
+
+            // Step 3: Generate unique test route ID
+            testRouteId = originalRouteId + "_test_" + UUID.randomUUID().toString().substring(0, 8);
+
+            // Step 4: Modify YAML for testing with the unique ID
+            String modifiedYaml = modifyYamlForValidation(yamlContent, testRouteId);
+
+            // Step 5: Validate YAML syntax
+            try {
+                Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
+                List<Object> parsed = yaml.load(modifiedYaml);
+                if (parsed == null || parsed.isEmpty()) {
+                    return new RouteValidationResult(false, "YAML content is empty or has invalid syntax");
+                }
+            } catch (Exception e) {
+                return new RouteValidationResult(false, "YAML syntax error: " + e.getMessage());
+            }
+
+            // Step 6: Try to load the route in Camel
+            try {
+                Resource resource = new StringResource("validation:" + testRouteId + ".yaml", modifiedYaml);
+                RoutesBuilder builder = yamlRoutesLoader.loadRoutesBuilder(resource);
+
+                // Add routes to context
+                camelContext.addRoutes(builder);
+
+                // Check if route was actually added
+                if (camelContext.getRoute(testRouteId) == null) {
+                    return new RouteValidationResult(false, "Route could not be loaded into Camel context");
+                }
+
+                // Try to start the route to ensure it's fully valid
+                camelContext.getRouteController().startRoute(testRouteId);
+
+                log.info("Validation successful for route: {}", originalRouteId);
+                return new RouteValidationResult(true, null);
+
+            } catch (Exception e) {
+                String errorMessage = parseRouteLoadingError(e);
+                log.error("Route validation failed during loading: {}", errorMessage, e);
+                return new RouteValidationResult(false, "Route loading error: " + errorMessage);
+            }
+
         } catch (Exception e) {
-            log.error("Route validation failed: {}", e.getMessage(), e);
-            return new RouteValidationResult(false, e.getMessage());
+            log.error("Unexpected error during route validation: {}", e.getMessage(), e);
+            return new RouteValidationResult(false, "Validation error: " + e.getMessage());
+
         } finally {
-            if (routeId != null) {
-                tryStopAndRemoveRoute(routeId);
+            // Always clean up test route
+            if (testRouteId != null) {
+                cleanupTestRoute(testRouteId);
             }
         }
     }
 
+    /**
+     * Modified version of modifyYamlForTest specifically for validation
+     * This ensures unique route IDs and paths to avoid conflicts
+     */
+    private String modifyYamlForValidation(String originalYaml, String testRouteId) {
+        try {
+            Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
+            List<Object> parsed = yaml.load(originalYaml);
+
+            if (parsed == null || parsed.isEmpty()) {
+                throw new IllegalArgumentException("YAML content is empty or invalid");
+            }
+
+            String uniqueSuffix = "_" + System.currentTimeMillis();
+
+            for (Object item : parsed) {
+                if (item instanceof Map) {
+                    Map<String, Object> routeWrapper = (Map<String, Object>) item;
+                    Object routeObj = routeWrapper.get("route");
+
+                    if (routeObj instanceof Map) {
+                        Map<String, Object> route = (Map<String, Object>) routeObj;
+
+                        // Update route ID with the provided test ID
+                        route.put("id", testRouteId);
+
+                        // Modify the from URI to avoid conflicts
+                        Object fromObj = route.get("from");
+                        if (fromObj instanceof Map) {
+                            Map<String, Object> from = (Map<String, Object>) fromObj;
+                            String uri = (String) from.get("uri");
+
+                            if (uri != null) {
+                                if ("rest:".equalsIgnoreCase(uri) || "rest".equalsIgnoreCase(uri)) {
+                                    // For REST routes, modify the path
+                                    Object paramsObj = from.get("parameters");
+                                    if (paramsObj instanceof Map) {
+                                        Map<String, Object> params = (Map<String, Object>) paramsObj;
+                                        String path = (String) params.get("path");
+                                        if (path != null) {
+                                            params.put("path", path + uniqueSuffix);
+                                        }
+                                    }
+                                } else if (uri.startsWith("rest:")) {
+                                    // Handle rest:METHOD:PATH format
+                                    String[] parts = uri.split(":", 3);
+                                    if (parts.length == 3) {
+                                        from.put("uri", parts[0] + ":" + parts[1] + ":" + parts[2] + uniqueSuffix);
+                                    }
+                                } else if (uri.startsWith("direct:") || uri.startsWith("seda:")) {
+                                    // Modify direct/seda endpoints
+                                    from.put("uri", uri + uniqueSuffix);
+                                } else if (uri.startsWith("servlet:") || uri.startsWith("platform-http:")) {
+                                    // Modify servlet/platform-http paths
+                                    from.put("uri", uri + uniqueSuffix);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            DumperOptions options = new DumperOptions();
+            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+            options.setPrettyFlow(true);
+            Yaml dumper = new Yaml(options);
+
+            return dumper.dump(parsed);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to modify YAML for validation", e);
+        }
+    }
+
+    /**
+     * Parse route loading errors to provide more meaningful messages
+     */
+    private String parseRouteLoadingError(Exception e) {
+        String message = e.getMessage();
+
+        if (message == null) {
+            message = e.getClass().getSimpleName();
+        }
+
+        // Extract the most relevant error message from the exception chain
+        Throwable cause = e.getCause();
+        while (cause != null) {
+            if (cause.getMessage() != null && !cause.getMessage().isEmpty()) {
+                // Look for more specific error messages
+                if (cause.getMessage().contains("Failed to create route")) {
+                    message = cause.getMessage();
+                    break;
+                } else if (cause.getMessage().contains("No endpoint could be found")) {
+                    message = "Invalid endpoint configuration: " + cause.getMessage();
+                    break;
+                } else if (cause.getMessage().contains("duplicate")) {
+                    message = "Duplicate route or endpoint detected: " + cause.getMessage();
+                    break;
+                }
+            }
+            cause = cause.getCause();
+        }
+
+        // Clean up the message
+        if (message.length() > 500) {
+            message = message.substring(0, 500) + "...";
+        }
+
+        return message;
+    }
+
+    /**
+     * Improved cleanup method for test routes
+     */
+    private void cleanupTestRoute(String testRouteId) {
+        if (testRouteId == null) {
+            return;
+        }
+
+        try {
+            ServiceStatus status = camelContext.getRouteController().getRouteStatus(testRouteId);
+
+            if (status != null) {
+                // Stop the route if it's running
+                if (status.isStarted() || status.isStarting()) {
+                    try {
+                        camelContext.getRouteController().stopRoute(testRouteId);
+                        // Wait a bit for the route to stop
+                        Thread.sleep(100);
+                    } catch (Exception e) {
+                        log.debug("Error stopping test route {}: {}", testRouteId, e.getMessage());
+                    }
+                }
+
+                // Remove the route from context
+                try {
+                    boolean removed = camelContext.removeRoute(testRouteId);
+                    if (removed) {
+                        log.debug("Successfully removed test route: {}", testRouteId);
+                    }
+                } catch (Exception e) {
+                    log.debug("Error removing test route {}: {}", testRouteId, e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            log.debug("Error during test route cleanup for {}: {}", testRouteId, e.getMessage());
+        }
+    }
 
     private RouteValidationResult checkRouteMandatoryFields(String yamlContent) {
-        Map<String, String> metadata = extractRouteMetadata(yamlContent);
-        String routeId = metadata.get("id");
-        String description = metadata.get("description");
+        try {
+            Map<String, String> metadata = extractRouteMetadata(yamlContent);
+            String routeId = metadata.get("id");
+            String description = metadata.get("description");
 
-        if (routeId == null || routeId.isBlank()) {
-            return new RouteValidationResult(false, "Missing route ID in YAML.");
-        }
-        if (description == null || description.isBlank()) {
-            return new RouteValidationResult(false, "Missing route description in YAML.");
-        } else
+            if (routeId == null || routeId.isBlank()) {
+                return new RouteValidationResult(false, "Missing route ID in YAML.");
+            }
+            if (description == null || description.isBlank()) {
+                return new RouteValidationResult(false, "Missing route description in YAML.");
+            }
+
+            // Additional validation for route ID format
+            if (!routeId.matches("^[a-zA-Z0-9_-]+$")) {
+                return new RouteValidationResult(false, "Route ID contains invalid characters. Use only letters, numbers, underscore and hyphen.");
+            }
+
             return new RouteValidationResult(true, null);
+        } catch (Exception e) {
+            return new RouteValidationResult(false, "Error checking mandatory fields: " + e.getMessage());
+        }
     }
 
     private void loadRoute(String yamlContent, String routeId) {
@@ -226,6 +433,7 @@ public class DynamicRouteService {
         }
     }
 
+    // Keep the old modifyYamlForTest for backward compatibility if needed elsewhere
     public static String modifyYamlForTest(String originalYaml) {
         try {
             // Parse the YAML
@@ -283,39 +491,6 @@ public class DynamicRouteService {
         }
     }
 
-    public Optional<String> detectInputUri1() {
-        try {
-            // Cast camelContext to Model to access route definitions
-            Model model = (Model) camelContext;
-            List<RouteDefinition> routeDefinitions = model.getRouteDefinitions();
-
-            return routeDefinitions.stream()
-                    .filter(r -> r.getInput() != null && r.getInput().getUri() != null)
-                    .map(r -> r.getInput().getUri())
-                    .filter(uri -> uri.startsWith("direct:") || uri.startsWith("seda:") || uri.startsWith("rest:"))
-                    .findFirst();
-        } catch (Exception e) {
-            log.warn("Failed to detect input URI: {}", e.getMessage(), e);
-            return Optional.empty();
-        }
-    }
-
-    public Optional<String> detectInputUriByRouteId(String routeId) {
-        try {
-            var route = camelContext.getRoute(routeId);
-            if (route != null && route.getEndpoint() != null) {
-                String uri = route.getEndpoint().getEndpointUri();
-
-                if (uri.startsWith("direct:") || uri.startsWith("seda:") || uri.startsWith("rest:")) {
-                    return Optional.of(uri);
-                }
-            }
-        } catch (Exception e) {
-            log.warn("Failed to detect input URI for routeId '{}': {}", routeId, e.getMessage(), e);
-        }
-        return Optional.empty();
-    }
-
     private void tryStopAndRemoveRoute(String routeId) {
         try {
             if (camelContext.getRouteController().getRouteStatus(routeId) != null) {
@@ -339,7 +514,7 @@ public class DynamicRouteService {
             Optional<DynamicRouteEntity> activeRoute = routeRepository.findByRouteIdAndActiveTrue(routeId);
             if (activeRoute.isEmpty()) {
                 audit(routeId, -1, "deactivate-failed",
-                        "No active route found to deactivate.",userEmail ,
+                        "No active route found to deactivate.", userEmail,
                         "FAILED");
                 return "No active route found for: " + routeId;
             }
@@ -350,19 +525,17 @@ public class DynamicRouteService {
             activeRoute.get().setActive(false);
             version = activeRoute.get().getVersion();
 
-
             camelContext.getRouteController().stopRoute(routeId);
 
             activeRoute.get().setUpdatedBy(emailUser);
             activeRoute.get().setUpdatedAt(LocalDateTime.now());
             routeRepository.save(activeRoute.get());
 
-
             // Stop & remove from Camel
             camelContext.removeRoute(routeId);
 
             log.info("Deactivated route {} version {}", routeId, version);
-            audit(routeId, version, "deactivate", "Deactivated current version",userEmail,"SUCCESS");
+            audit(routeId, version, "deactivate", "Deactivated current version", userEmail, "SUCCESS");
 
             return "Route " + routeId + " deactivated.";
 
@@ -371,13 +544,12 @@ public class DynamicRouteService {
                     routeId, version, e.getMessage(), e);
 
             audit(routeId, version != null ? version : -1, "error",
-                    "Failed to deactivate route. Reason: " + e.getMessage(),userEmail,
+                    "Failed to deactivate route. Reason: " + e.getMessage(), userEmail,
                     "FAILED");
 
             return ResponseEntity.badRequest().toString();
         }
     }
-
 
     /**
      * Reverts to a previous version of a route
@@ -392,7 +564,7 @@ public class DynamicRouteService {
         try {
             Optional<DynamicRouteEntity> targetOpt = routeRepository.findByRouteIdAndVersion(routeId, version);
             if (targetOpt.isEmpty()) {
-                audit(routeId, version, "revert-failed", "Target version not found",userEmail,
+                audit(routeId, version, "revert-failed", "Target version not found", userEmail,
                         "FAILED");
                 return "Version not found";
             }
@@ -409,7 +581,7 @@ public class DynamicRouteService {
                 boolean isTargetVersion = v.getVersion() == version;
                 v.setActive(isTargetVersion);
                 v.setDefaultVersion(isTargetVersion);
-                if(isTargetVersion){
+                if (isTargetVersion) {
                     v.setUpdatedAt(LocalDateTime.now());
                     v.setUpdatedBy(auth.getName());
                 }
@@ -417,31 +589,30 @@ public class DynamicRouteService {
             routeRepository.saveAll(versions);
 
             log.info("Reverted route {} to version {}", routeId, version);
-            audit(routeId, version, "revert", "Reverted to version " + version,userEmail,"SUCCESS");
+            audit(routeId, version, "revert", "Reverted to version " + version, userEmail, "SUCCESS");
 
             return "Reverted to route " + routeId + " version " + version;
 
         } catch (Exception e) {
             log.error("Error reverting route {} to version {}: {}", routeId, version, e.getMessage(), e);
             audit(routeId, version, "error",
-                    "Failed to revert to version. Reason: " + e.getMessage(),userEmail,
+                    "Failed to revert to version. Reason: " + e.getMessage(), userEmail,
                     "FAILED");
             throw e; // ensure rollback
         }
     }
-
 
     @Transactional
     public String setVersionAsDefault(String routeId, int version) {
         String userEmail = "anonymous"; // fallback
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getPrincipal() != null) {
-            userEmail = auth.getName(); // Usually the `sub` claim (email/username)
+            userEmail = auth.getName();
         }
         try {
             Optional<DynamicRouteEntity> targetOpt = routeRepository.findByRouteIdAndVersion(routeId, version);
             if (targetOpt.isEmpty()) {
-                audit(routeId, version, "set-default-failed", "Target version not found",userEmail,
+                audit(routeId, version, "set-default-failed", "Target version not found", userEmail,
                         "FAILED");
                 return "Version not found";
             }
@@ -462,18 +633,17 @@ public class DynamicRouteService {
             routeRepository.saveAll(versions);
 
             log.info("Set route {} version {} as default", routeId, version);
-            audit(routeId, version, "set-default", "Set version " + version + " as default",userEmail,"SUCCESS");
+            audit(routeId, version, "set-default", "Set version " + version + " as default", userEmail, "SUCCESS");
 
             return "Route " + routeId + " version " + version + " set as default.";
 
         } catch (Exception e) {
             log.error("Error setting route {} version {} as default: {}", routeId, version, e.getMessage(), e);
-            audit(routeId, version, "error", "Failed to set version as default. Reason: " + e.getMessage(),userEmail,
+            audit(routeId, version, "error", "Failed to set version as default. Reason: " + e.getMessage(), userEmail,
                     "FAILED");
-            throw e; // rollback if DB update fails
+            throw e;
         }
     }
-
 
     /**
      * Stops a route
@@ -484,7 +654,7 @@ public class DynamicRouteService {
         String userEmail = "anonymous"; // fallback
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getPrincipal() != null) {
-            userEmail = auth.getName(); // Usually the `sub` claim (email/username)
+            userEmail = auth.getName();
         }
 
         try {
@@ -501,22 +671,19 @@ public class DynamicRouteService {
                 routeRepository.save(activeRoute.get());
             }
 
-
-
             log.info("Stopped route {} version {}", routeId, version);
-            audit(routeId, version != null ? version : -1, "stop", "Route stopped",userEmail,"SUCCESS");
+            audit(routeId, version != null ? version : -1, "stop", "Route stopped", userEmail, "SUCCESS");
 
             return "Route stopped: " + routeId;
 
         } catch (Exception e) {
             log.error("Error stopping route {}: {}", routeId, e.getMessage(), e);
             audit(routeId, version != null ? version : -1, "error",
-                    "Failed to stop route. Reason: " + e.getMessage(),userEmail,
+                    "Failed to stop route. Reason: " + e.getMessage(), userEmail,
                     "FAILED");
             return ResponseEntity.badRequest().toString();
         }
     }
-
 
     /**
      * Starts the latest version of a route
@@ -527,10 +694,10 @@ public class DynamicRouteService {
         String userEmail = "anonymous"; // fallback
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getPrincipal() != null) {
-            userEmail = auth.getName(); // Usually the `sub` claim (email/username)
+            userEmail = auth.getName();
         }
         if (defaultVersion == null) {
-            audit(routeId, -1, "start-failed", "No default route found with this ID",userEmail,
+            audit(routeId, -1, "start-failed", "No default route found with this ID", userEmail,
                     "FAILED");
             return "No default route found with ID: " + routeId;
         }
@@ -547,19 +714,18 @@ public class DynamicRouteService {
             routeRepository.save(defaultVersion);
 
             log.info("Started route {} version {}", routeId, defaultVersion.getVersion());
-            audit(routeId, defaultVersion.getVersion(), "start", "Route started",userEmail,"SUCCESS");
+            audit(routeId, defaultVersion.getVersion(), "start", "Route started", userEmail, "SUCCESS");
 
             return "Route started: " + routeId;
 
         } catch (Exception e) {
             log.error("Error starting route {} version={}: {}", routeId, defaultVersion.getVersion(), e.getMessage(), e);
             audit(routeId, defaultVersion.getVersion(), "error",
-                    "Failed to start route. Reason: " + e.getMessage(),userEmail,
+                    "Failed to start route. Reason: " + e.getMessage(), userEmail,
                     "FAILED");
             return ResponseEntity.badRequest().toString();
         }
     }
-
 
     /**
      * Lists all routes
@@ -624,8 +790,7 @@ public class DynamicRouteService {
                                     String httpMethod, Boolean active, String comment, String yamlContains,
                                     LocalDateTime createdAfter, LocalDateTime createdBefore) {
 
-        // Apply active filter - THIS IS THE KEY FIX
-        // If searching for inactive routes, only show routes where the LATEST version is inactive
+        // Apply active filter
         if (active != null && route.isActive() != active) {
             return false;
         }
@@ -886,7 +1051,7 @@ public class DynamicRouteService {
                                 log.error("Invalid rest: URI format: " + uri);
                             }
                         }
-                        // Kaoto rest مع parameters
+                        // Kaoto rest with parameters
                         else if (uri.equalsIgnoreCase("rest")) {
                             if (params != null) {
                                 metadata.put("method", String.valueOf(params.getOrDefault("method", "")).trim());
@@ -914,7 +1079,7 @@ public class DynamicRouteService {
                             metadata.put("method", method.isEmpty() ? "POST" : method);
                             metadata.put("uri", "platform-http");
                         }
-                        // direct/seda: فقط خزّن الـ uri (لا يوجد path/method)
+                        // direct/seda: store uri only (no path/method)
                         else if (uri.startsWith("direct:") || uri.startsWith("seda:")) {
                             metadata.put("uri", uri);
                         } else {
@@ -934,7 +1099,7 @@ public class DynamicRouteService {
     /**
      * Records an audit entry
      */
-    private void audit(String routeId, int version, String action, String details, String userEmail,String status) {
+    private void audit(String routeId, int version, String action, String details, String userEmail, String status) {
         DynamicRouteAudit audit = new DynamicRouteAudit();
         audit.setRouteId(routeId);
         audit.setVersion(version);
@@ -1028,7 +1193,7 @@ public class DynamicRouteService {
     }
 
     public String getRouteIdByPathAndMethod(String path, String method) {
-        return routeRepository.findByPathAndHttpMethodAndActive(path, method.toLowerCase(),true).get().getRouteId();
+        return routeRepository.findByPathAndHttpMethodAndActive(path, method.toLowerCase(), true).get().getRouteId();
     }
 
     /**
@@ -1194,7 +1359,6 @@ public class DynamicRouteService {
         return value;
     }
 
-
     @Scheduled(fixedRate = 30000)
     @Transactional
     public void syncRouteStatuses() {
@@ -1253,6 +1417,4 @@ public class DynamicRouteService {
 
         log.info("Completed route status sync");
     }
-
-
 }

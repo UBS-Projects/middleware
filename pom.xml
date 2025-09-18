@@ -175,12 +175,12 @@
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-sql-starter</artifactId>
-            <version>${camel.version}</version> <!-- لازم تطابق نسخة Camel عندك -->
+            <version>${camel.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-jsonpath</artifactId>
-            <version>${camel.version}</version> <!-- لازم تطابق نسخة Camel عندك -->
+            <version>${camel.version}</version>
         </dependency>
         <!--        PDF,CSV EXPORT      -->
         <dependency>
