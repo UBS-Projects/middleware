@@ -43,8 +43,7 @@ public class SequenceFixService {
 
              Long effective;
             if (maxId == 0L) {
-                // جدول فاضي → أول nextval() = 1
-                effective = jdbc.queryForObject(
+                 effective = jdbc.queryForObject(
                         "SELECT setval(?::regclass, 1, false)",
                         Long.class,
                         seqName

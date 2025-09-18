@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.middleware</groupId>  <!-- غيّر هذا -->
+    <groupId>com.middleware</groupId>
     <artifactId>camel-dhis2-component</artifactId>
-    <version>1.0.0</version>           <!-- احذف SNAPSHOT -->
+    <version>1.0.0</version>
     <name>Camel DHIS2 Component</name>
     <description>Apache Camel component for DHIS2 integration and CSV uploads</description>
 
