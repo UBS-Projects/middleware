@@ -1,43 +1,56 @@
-package com.middleware.backend.notification.model;
-
-import jakarta.persistence.*;
-import lombok.*;
-import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "notifications")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Notification {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String category;
-
-    private String severity;
-
-    @Column(name = "message_template", nullable = false, columnDefinition = "TEXT")
-    private String messageTemplate;
-
-    @Column(nullable = false)
-    private String channel;
-
-    private String status = "ACTIVE";
-
-    private String relatedEntityType;
-
-    private Long relatedEntityId;
-
-    private Long createdBy;
-
-    private Long updatedBy;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
-}
+//package com.middleware.backend.notification.model;
+//
+//import com.middleware.backend.notification.enums.NotificationStatus;
+//import jakarta.persistence.*;
+//import lombok.*;
+//
+//import java.sql.Timestamp;
+//import java.util.List;
+//
+//@Data
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@Builder
+//@Entity
+//@Table(name = "notifications")
+//public class Notification {
+//
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+//
+//    private String subject;
+//
+//    @Column(columnDefinition = "TEXT")
+//    private String body;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private NotificationTemplate template;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private ChannelConfig channel;
+//
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "notification_receivers",
+//            joinColumns = @JoinColumn(name = "notification_id"),
+//            inverseJoinColumns = @JoinColumn(name = "receiver_id")
+//    )
+//    private List<Receiver> receivers;
+//
+//    @Enumerated(EnumType.STRING)
+//    private NotificationStatus status;  // PENDING, SENT, FAILED
+//
+//    private Timestamp scheduledAt; // optional
+//
+//    private Timestamp sentAt;
+//
+//    @Column(name="created_by")
+//    private String createdBy;
+//    @Column(name="created_at")
+//    private Timestamp createdAt;
+//    @Column(name="updated_by")
+//    private String updatedBy;
+//    @Column(name="updated_at")
+//    private Timestamp updatedAt;
+//}
