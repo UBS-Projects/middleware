@@ -15,9 +15,9 @@
 
     <name>middleware-backend</name>
     <description>Advanced Middleware Backend</description>
-<!--    <modules>-->
-<!--        <module>Component</module>-->
-<!--    </modules>-->
+    <!--    <modules>-->
+    <!--        <module>Component</module>-->
+    <!--    </modules>-->
     <properties>
         <java.version>17</java.version>
         <lombok.version>1.18.38</lombok.version>
@@ -161,11 +161,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
-        <!-- BCryptPasswordEncoder Dep-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
@@ -190,11 +186,11 @@
         </dependency>
 
         <!-- Custom DHIS2 Component -->
-<!--        <dependency>-->
-<!--            <groupId>com.middleware</groupId>-->
-<!--            <artifactId>camel-dhis2-component</artifactId>-->
-<!--            <version>1.0.0</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.middleware</groupId>
+            <artifactId>camel-dhis2-component</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -207,7 +203,8 @@
         <!--        </dependency>-->
         <!-- Custom DHIS2 Component -->
 
-<!--        Mail Sender -->
+
+<!--Email Dependency -->
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>jakarta.mail</artifactId>
