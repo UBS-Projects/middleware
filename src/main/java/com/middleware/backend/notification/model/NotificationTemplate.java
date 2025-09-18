@@ -1,0 +1,38 @@
+package com.middleware.backend.notification.model;
+
+import com.middleware.backend.notification.enums.ChannelType;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "notification_templates")
+public class NotificationTemplate {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;          // e.g., Password Reset
+    @Enumerated(EnumType.STRING)
+    private ChannelType type;     // SMS, EMAIL
+    private String subject;       // For email templates
+    @Column(columnDefinition = "TEXT")
+    private String body;          // With placeholders
+
+    @Column(name="created_by")
+    private String createdBy;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+    @Column(name="updated_by")
+    private String updatedBy;
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
+
+}
