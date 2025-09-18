@@ -10895,3 +10895,140 @@ Caused by: java.lang.IllegalArgumentException: Paging query needs to have a Page
 2025-09-18 19:39:09 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
 2025-09-18 19:39:09 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
 2025-09-18 19:39:09 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-09-18 19:40:00 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-18 19:40:00 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 24.0.1 with PID 31992 (C:\Users\1\OneDrive\Desktop\middleware\target\classes started by 1 in C:\Users\1\OneDrive\Desktop\middleware)
+2025-09-18 19:40:00 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-18 19:40:02 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-09-18 19:40:02 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-18 19:40:02 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-09-18 19:40:02 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-09-18 19:40:03 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-18 19:40:03 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-18 19:40:03 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-18 19:40:03 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-18 19:40:03 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@34e68840']
+	Database driver: undefined/unknown
+	Database version: 17.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-18 19:40:05 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-18 19:40:06 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-18 19:40:08 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-09-18 19:40:08 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2025-09-18 19:40:08 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-09-18 19:40:10 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-18 19:40:10 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-18 19:40:10 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-18 19:40:10 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-18 19:40:10 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-09-18 19:40:10 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-18 19:40:10 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-18 19:40:10 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@71499df0
+2025-09-18 19:40:10 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-18 19:40:10 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-18 19:40:10 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 125 mappings in 'requestMappingHandlerMapping'
+2025-09-18 19:40:11 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-18 19:40:11 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-18 19:40:11 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-18 19:40:13 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-09-18 19:40:13 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-09-18 19:40:13 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-18 19:40:13 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-18 19:40:13 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-18 19:40:13 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 23ms (build:0ms init:0ms start:23ms)
+2025-09-18 19:40:13 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 13.996 seconds (process running for 14.734)
+2025-09-18 19:40:13 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-18 19:40:13 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-18 19:40:14 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq initialized. setval returned 1
+2025-09-18 19:40:14 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-18 19:40:14 [http-nio-8081-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-18 19:40:14 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-18 19:40:14 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-09-18 19:40:14 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-09-18 19:40:14 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-09-18 19:40:14 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@3af207fc
+2025-09-18 19:40:14 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@320967d4
+2025-09-18 19:40:14 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-09-18 19:40:14 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2025-09-18 19:40:14 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/auth/login, client=0:0:0:0:0:0:0:1]
+2025-09-18 19:40:14 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/auth/login", parameters={}
+2025-09-18 19:40:14 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.auth.AuthController#login(AuthRequest)
+2025-09-18 19:40:14 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AuthController.AuthRequest(email=admin@mail.com, password=S123@231)]
+2025-09-18 19:40:14 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route2 to context (DB says active)
+2025-09-18 19:40:14 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-09-18 19:40:14 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-18 19:40:15 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-18 19:40:15 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthController.AuthResponse(token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTc1O (truncated)...]
+2025-09-18 19:40:15 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-18 19:40:15 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/auth/login, client=0:0:0:0:0:0:0:1, payload={"email":"admin@mail.com","password":"S123@231"}]
+2025-09-18 19:40:20 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-18 19:40:20 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/templates?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-18 19:40:20 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/templates?page=0&size=10&sortedBy=updatedAt&sortDirection=desc", parameters={masked}
+2025-09-18 19:40:20 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.notification.controller.TemplateController#getAll(int, int, String, String)
+2025-09-18 19:40:20 [http-nio-8081-exec-5] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-09-18 19:40:20 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-18 19:40:20 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.notification.dto.NotificationTemplateDto instances]
+2025-09-18 19:40:20 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-18 19:40:20 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/templates?page=0&size=10&sortedBy=updatedAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-18 19:40:35 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-18 19:40:35 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/templates/1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-18 19:40:35 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/templates/1", parameters={}
+2025-09-18 19:40:35 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.notification.controller.TemplateController#get(Long)
+2025-09-18 19:40:35 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-18 19:40:35 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [NotificationTemplateDto(id=1, name=21, type=EMAIL, subject=Welcome {name}!, body=Hello {name}, thank (truncated)...]
+2025-09-18 19:40:35 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-18 19:40:35 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/templates/1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-18 19:40:37 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-18 19:40:37 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/templates/validate-json, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-18 19:40:37 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/templates/validate-json", parameters={}
+2025-09-18 19:40:37 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Using @ExceptionHandler com.middleware.backend.exception.GlobalExceptionHandler#handleGenericException(Exception)
+2025-09-18 19:40:37 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-18 19:40:37 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{message=An unexpected error occurred, error=Request method 'POST' is not supported, timestamp=2025- (truncated)...]
+2025-09-18 19:40:37 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2025-09-18 19:40:37 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 500 INTERNAL_SERVER_ERROR
+2025-09-18 19:40:37 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/templates/validate-json, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-18 19:40:43 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-18 19:40:43 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-18 19:40:46 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-18 19:40:47 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/templates/validate-json, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-18 19:40:47 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/templates/validate-json", parameters={}
+2025-09-18 19:40:47 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Using @ExceptionHandler com.middleware.backend.exception.GlobalExceptionHandler#handleGenericException(Exception)
+2025-09-18 19:40:47 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-18 19:40:47 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{message=An unexpected error occurred, error=Request method 'POST' is not supported, timestamp=2025- (truncated)...]
+2025-09-18 19:40:47 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2025-09-18 19:40:47 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 500 INTERNAL_SERVER_ERROR
+2025-09-18 19:40:47 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/templates/validate-json, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-18 19:41:09 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-18 19:41:09 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/templates/validate-json, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-18 19:41:09 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/templates/validate-json", parameters={}
+2025-09-18 19:41:09 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Using @ExceptionHandler com.middleware.backend.exception.GlobalExceptionHandler#handleGenericException(Exception)
+2025-09-18 19:41:09 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-18 19:41:09 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{message=An unexpected error occurred, error=Request method 'POST' is not supported, timestamp=2025- (truncated)...]
+2025-09-18 19:41:09 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2025-09-18 19:41:09 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 500 INTERNAL_SERVER_ERROR
+2025-09-18 19:41:09 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/templates/validate-json, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-18 19:41:13 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-18 19:41:13 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-18 19:41:21 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-18 19:41:21 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-18 19:41:21 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:2)
+2025-09-18 19:41:21 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-18 19:41:21 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route2 (rest://get:/api/hello)
+2025-09-18 19:41:21 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 15ms (uptime:1m8s)
+2025-09-18 19:41:21 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-18 19:41:21 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-18 19:41:21 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-18 19:41:21 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
