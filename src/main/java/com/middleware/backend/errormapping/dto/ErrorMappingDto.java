@@ -1,10 +1,11 @@
-package com.middleware.backend.dto;
-
-import com.middleware.backend.model.ErrorMapping;
-import lombok.Builder;
-import lombok.Data;
+package com.middleware.backend.errormapping.dto;
 
 import java.time.LocalDateTime;
+
+import com.middleware.backend.errormapping.model.ErrorMapping;
+
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder
@@ -13,7 +14,7 @@ public class ErrorMappingDto {
     private String routeId;
     private String routePath;
 
-     private Long sourceSystemId;
+    private Long sourceSystemId;
     private String sourceSystemName;
 
     private String rawErrorSubstring;

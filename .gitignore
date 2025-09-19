@@ -3,7 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-*.log
+
 
 ### STS ###
 .apt_generated
@@ -34,3 +34,4 @@ build/
 .vscode/
 .logs
 logs/middleware.log
+logs/middleware.2025-08-25.0.log

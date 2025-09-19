@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.middleware.backend.model.ErrorMapping;
+import com.middleware.backend.errormapping.model.ErrorMapping;
 
 import jakarta.persistence.criteria.Predicate;
 
@@ -35,10 +35,14 @@ public class ErrorMappingSpecification_old {
         try {
             Field field = clazz.getDeclaredField(fieldName);
             Class<?> type = field.getType();
-            if (type.equals(Integer.class)) return Integer.valueOf(value);
-            if (type.equals(Long.class)) return Long.valueOf(value);
-            if (type.equals(Boolean.class)) return Boolean.valueOf(value);
-            if (type.equals(String.class)) return value;
+            if (type.equals(Integer.class))
+                return Integer.valueOf(value);
+            if (type.equals(Long.class))
+                return Long.valueOf(value);
+            if (type.equals(Boolean.class))
+                return Boolean.valueOf(value);
+            if (type.equals(String.class))
+                return value;
             // Add LocalDateTime parsing if needed
         } catch (NoSuchFieldException | NumberFormatException | SecurityException e) {
             return value;

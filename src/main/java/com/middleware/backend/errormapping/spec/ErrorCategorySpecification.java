@@ -1,14 +1,14 @@
-package com.middleware.backend.spec;
+package com.middleware.backend.errormapping.spec;
 
-import com.middleware.backend.model.ErrorCategory;
+import java.time.LocalDate;
+
 import org.springframework.data.jpa.domain.Specification;
+
+import com.middleware.backend.errormapping.model.ErrorCategory;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Specifications for filtering {@link com.middleware.backend.model.ErrorCategory} queries.
@@ -22,10 +22,7 @@ public class ErrorCategorySpecification {
      * Modes for matching string fields in criteria.
      */
     public enum MatchMode {
-        EXACT,
-        STARTS_WITH,
-        ENDS_WITH,
-        CONTAINS
+        EXACT, STARTS_WITH, ENDS_WITH, CONTAINS
     }
 
     /**
@@ -45,18 +42,18 @@ public class ErrorCategorySpecification {
 
             String pattern;
             switch (matchMode) {
-                case CONTAINS:
-                    pattern = "%" + value + "%";
-                    return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
-                case STARTS_WITH:
-                    pattern = value + "%";
-                    return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
-                case ENDS_WITH:
-                    pattern = "%" + value;
-                    return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
-                case EXACT:
-                default:
-                    return cb.equal(cb.lower(root.get(fieldName)), value.toLowerCase());
+            case CONTAINS:
+                pattern = "%" + value + "%";
+                return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
+            case STARTS_WITH:
+                pattern = value + "%";
+                return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
+            case ENDS_WITH:
+                pattern = "%" + value;
+                return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
+            case EXACT:
+            default:
+                return cb.equal(cb.lower(root.get(fieldName)), value.toLowerCase());
             }
         };
     }
@@ -99,6 +96,5 @@ public class ErrorCategorySpecification {
             return cb.equal(root.get(fieldName), value);
         };
     }
-
 
 }

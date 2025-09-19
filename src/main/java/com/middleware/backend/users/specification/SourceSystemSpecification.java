@@ -1,12 +1,10 @@
 package com.middleware.backend.users.specification;
 
+import java.time.LocalDate;
 
-import com.middleware.backend.model.ErrorCategory;
-import com.middleware.backend.model.SourceSystem;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import com.middleware.backend.model.SourceSystem;
 
 /**
  * JPA Specifications for filtering {@link com.middleware.backend.model.SourceSystem} entities.
@@ -17,10 +15,7 @@ public class SourceSystemSpecification {
      * Text matching modes supported by {@link #hasField(String, String, MatchMode)}.
      */
     public enum MatchMode {
-        EQUALS,
-        CONTAINS,
-        STARTS_WITH,
-        ENDS_WITH
+        EQUALS, CONTAINS, STARTS_WITH, ENDS_WITH
     }
 
     /**
@@ -36,17 +31,17 @@ public class SourceSystemSpecification {
             }
             String pattern = value;
             switch (matchMode) {
-                case CONTAINS:
-                    pattern = "%" + value + "%";
-                    return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
-                case STARTS_WITH:
-                    pattern = value + "%";
-                    return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
-                case ENDS_WITH:
-                    pattern = "%" + value;
-                    return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
-                default:
-                    return cb.equal(cb.lower(root.get(fieldName)), value.toLowerCase());
+            case CONTAINS:
+                pattern = "%" + value + "%";
+                return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
+            case STARTS_WITH:
+                pattern = value + "%";
+                return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
+            case ENDS_WITH:
+                pattern = "%" + value;
+                return cb.like(cb.lower(root.get(fieldName)), pattern.toLowerCase());
+            default:
+                return cb.equal(cb.lower(root.get(fieldName)), value.toLowerCase());
             }
         };
     }
@@ -82,4 +77,3 @@ public class SourceSystemSpecification {
         };
     }
 }
-

@@ -1,20 +1,14 @@
-package com.middleware.backend.model;
+package com.middleware.backend.errormapping.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import com.middleware.backend.model.ErrorCategory;
 import com.middleware.backend.model.SourceSystem;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "error_mapping")
- @NamedEntityGraph(
-        name = "ErrorMapping.withCategoryAndSourceSystem",
-        attributeNodes = {
-                @NamedAttributeNode("errorCategory"),
-                @NamedAttributeNode("sourceSystem")
-        }
-)
+@NamedEntityGraph(name = "ErrorMapping.withCategoryAndSourceSystem", attributeNodes = {
+        @NamedAttributeNode("errorCategory"), @NamedAttributeNode("sourceSystem") })
 @Getter
 @Setter
 @Builder
@@ -93,9 +87,7 @@ public class ErrorMapping {
     }
 
     public enum MatchType {
-        CONTAINS("Substring match"),
-        EQUALS("Exact match"),
-        REGEX("Regular expression");
+        CONTAINS("Substring match"), EQUALS("Exact match"), REGEX("Regular expression");
 
         private final String description;
 

@@ -1,6 +1,7 @@
-package com.middleware.backend.repository;
+package com.middleware.backend.errormapping.repository;
 
-import com.middleware.backend.model.ErrorCategory;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -8,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.middleware.backend.errormapping.model.ErrorCategory;
 
 /**
  * Spring Data repository for {@link com.middleware.backend.model.ErrorCategory} entities.

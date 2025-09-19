@@ -1,5 +1,5 @@
 // ErrorCategory Model
-package com.middleware.backend.model;
+package com.middleware.backend.errormapping.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
  * Lifecycle hooks initialize timestamps and default activation state.
  */
 @Entity
-@Table(name = "error_categories", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "name") // Ensure category names are unique
+@Table(name = "error_categories", uniqueConstraints = { @UniqueConstraint(columnNames = "name") // Ensure category names
+                                                                                                // are unique
 })
 @Getter
 @Setter
