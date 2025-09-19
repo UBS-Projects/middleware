@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.middleware.backend.errormapping.model.ErrorCategory;
 
 /**
- * Spring Data repository for {@link com.middleware.backend.model.ErrorCategory} entities.
+ * Spring Data repository for {@link com.middleware.backend.errormapping.model.ErrorCategory} entities.
  * <p>
  * Provides convenience methods for uniqueness checks, fetching active records,
  * usage counts in mappings, and specification-based pagination.

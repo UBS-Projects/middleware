@@ -1,6 +1,5 @@
 package com.middleware.backend.repository;
 
-import com.middleware.backend.model.ErrorCategory;
 import com.middleware.backend.model.SourceSystem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

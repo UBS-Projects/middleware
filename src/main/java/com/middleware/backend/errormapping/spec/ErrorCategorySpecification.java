@@ -11,7 +11,6 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
 /**
- * Specifications for filtering {@link com.middleware.backend.model.ErrorCategory} queries.
  * <p>
  * Provides case-insensitive string matching with multiple modes, boolean field
  * filtering, and inclusive createdAt date range filtering.

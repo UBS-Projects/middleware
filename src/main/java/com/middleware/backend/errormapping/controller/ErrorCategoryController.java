@@ -1,10 +1,10 @@
-package com.middleware.backend.controller;
+package com.middleware.backend.errormapping.controller;
 
 import com.middleware.backend.dto.ErrorCategoryDto;
-import com.middleware.backend.model.ErrorCategory;
-import com.middleware.backend.service.ErrorCategoryService;
-import com.middleware.backend.spec.ErrorCategorySpecification;
-import io.swagger.v3.oas.annotations.Operation;
+import com.middleware.backend.errormapping.model.ErrorCategory;
+import com.middleware.backend.errormapping.service.ErrorCategoryService;
+import com.middleware.backend.errormapping.spec.ErrorCategorySpecification;
+  import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

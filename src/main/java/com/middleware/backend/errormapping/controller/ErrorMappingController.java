@@ -1,13 +1,15 @@
-// تعديل ErrorMappingController.java
-package com.middleware.backend.errormapping.controller;
+ package com.middleware.backend.errormapping.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.data.domain.Page; // إضافة هذا
+ import com.middleware.backend.dto.RouteOptionDto;
+import com.middleware.backend.dto.SourceSystemOptionDto;
+ import com.middleware.backend.errormapping.dto.ErrorMappingDto;
+ import com.middleware.backend.errormapping.service.BackendErrorMappingService;
+ import com.middleware.backend.errormapping.service.ErrorCategoryService;
+ import com.middleware.backend.service.SourceSystemService;
+  import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,29 +17,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.middleware.backend.dto.RouteOptionDto;
-import com.middleware.backend.dto.SourceSystemOptionDto;
-import com.middleware.backend.errormapping.dto.ErrorMappingDto;
-import com.middleware.backend.errormapping.service.BackendErrorMappingService;
-import com.middleware.backend.errormapping.service.ErrorCategoryService;
-import com.middleware.backend.service.SourceSystemService;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/error-mappings")
+@RequestMapping("/api/error-mappings")
 @RequiredArgsConstructor
 @Slf4j
 public class ErrorMappingController {
@@ -48,13 +38,21 @@ public class ErrorMappingController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('errorMappings:view')")
-    public ResponseEntity<Page<ErrorMappingDto>> getAllErrorMappings(@RequestParam Map<String, String> filters,
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+    @Operation(
+            summary = "Get all error mappings",
+            description = "Fetches a paginated list of error mappings with optional filters. Supports sorting and pagination. Requires 'errorMappings:view' authority."
+    )
+    public ResponseEntity<Page<ErrorMappingDto>> getAllErrorMappings(
+            @RequestParam Map<String, String> filters,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "desc") String sortDir) {
 
         try {
-            Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+            Sort sort = sortDir.equalsIgnoreCase("desc")
+                    ? Sort.by(sortBy).descending()
+                    : Sort.by(sortBy).ascending();
 
             Pageable pageable = PageRequest.of(page, size, sort);
             Page<ErrorMappingDto> result = errorMappingService.getAllErrorMappings(filters, pageable);
@@ -68,6 +66,10 @@ public class ErrorMappingController {
 
     @GetMapping("/routes")
     @PreAuthorize("hasAuthority('errorMappings:view')")
+    @Operation(
+            summary = "Get available routes",
+            description = "Retrieves a list of all available routes that can be used for error mappings. Requires 'errorMappings:view' authority."
+    )
     public ResponseEntity<List<RouteOptionDto>> getAvailableRoutes() {
         try {
             List<RouteOptionDto> routes = errorMappingService.getAvailableRoutes();
@@ -80,10 +82,15 @@ public class ErrorMappingController {
 
     @GetMapping("/source-systems")
     @PreAuthorize("hasAuthority('sourceSystems:view')")
+    @Operation(
+            summary = "Get available source systems",
+            description = "Retrieves a list of all active source systems. Requires 'errorMappings:view' authority."
+    )
     public ResponseEntity<List<SourceSystemOptionDto>> getAvailableSourceSystems() {
         try {
-            List<SourceSystemOptionDto> sourceSystems = sourceSystemService.getActiveSourceSystems().stream().map(
-                    dto -> new SourceSystemOptionDto(dto.getId(), dto.getName(), dto.getDescription(), dto.getActive()))
+            List<SourceSystemOptionDto> sourceSystems = sourceSystemService.getActiveSourceSystems()
+                    .stream()
+                    .map(dto -> new SourceSystemOptionDto(dto.getId(), dto.getName(), dto.getDescription(), dto.getActive()))
                     .collect(Collectors.toList());
             return ResponseEntity.ok(sourceSystems);
         } catch (Exception e) {
@@ -95,16 +102,23 @@ public class ErrorMappingController {
     // إضافة endpoint جديد للحصول على Error Categories النشطة فقط
     @GetMapping("/error-categories")
     @PreAuthorize("hasAuthority('errorCategories:view')")
+    @Operation(
+            summary = "Get active error categories",
+            description = "Returns a list of active error categories with basic details (id, name, description, status). Requires 'errorMappings:view' authority."
+    )
     public ResponseEntity<List<Map<String, Object>>> getActiveErrorCategories() {
         try {
-            List<Map<String, Object>> categories = errorCategoryService.getActiveCategories().stream().map(dto -> {
-                Map<String, Object> categoryMap = new HashMap<>();
-                categoryMap.put("id", dto.getId());
-                categoryMap.put("name", dto.getName());
-                categoryMap.put("description", dto.getDescription());
-                categoryMap.put("active", dto.getActive());
-                return categoryMap;
-            }).collect(Collectors.toList());
+            List<Map<String, Object>> categories = errorCategoryService.getActiveCategories()
+                    .stream()
+                    .map(dto -> {
+                        Map<String, Object> categoryMap = new HashMap<>();
+                        categoryMap.put("id", dto.getId());
+                        categoryMap.put("name", dto.getName());
+                        categoryMap.put("description", dto.getDescription());
+                        categoryMap.put("active", dto.getActive());
+                        return categoryMap;
+                    })
+                    .collect(Collectors.toList());
             return ResponseEntity.ok(categories);
         } catch (Exception e) {
             log.error("Error retrieving active error categories", e);
@@ -112,104 +126,16 @@ public class ErrorMappingController {
         }
     }
 
-    // باقي methods تبقى كما هي...
-    @GetMapping("/match")
-    @PreAuthorize("hasAuthority('errorMappings:view')")
-    public ResponseEntity<?> findMatchingErrorMapping(@RequestParam String routeId,
-            @RequestParam(required = false) Long sourceSystemId, @RequestParam String errorMessage) {
-
-        try {
-            log.info("Smart Error Matching Request - Route: '{}', SourceSystem: {}, Error: '{}'", routeId,
-                    sourceSystemId != null ? sourceSystemId : "ANY", errorMessage);
-
-            Optional<ErrorMappingDto> result = errorMappingService.findMatchingErrorMapping(routeId, sourceSystemId,
-                    errorMessage);
-
-            if (result.isPresent()) {
-                ErrorMappingDto mapping = result.get();
-                log.info("Match found - Returning ErrorMapping ID: {}, Code: '{}', Message: '{}'", mapping.getId(),
-                        mapping.getMappedErrorCode(), mapping.getMappedMessage());
-                return ResponseEntity.ok(result.get());
-            } else {
-                log.info(" No match found for route: '{}', sourceSystemId: {}, error: '{}'", routeId, sourceSystemId,
-                        errorMessage);
-                return ResponseEntity.notFound().build();
-            }
-
-        } catch (Exception e) {
-            log.error("Error during smart matching for route: '{}', sourceSystemId: {}, error: '{}'", routeId,
-                    sourceSystemId, errorMessage, e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(createErrorResponse("Failed to find matching error mapping: " + e.getMessage()));
-        }
-    }
-
-    @GetMapping("/match/debug")
-    @PreAuthorize("hasAuthority('errorMappings:view')")
-    public ResponseEntity<?> debugErrorMatching(@RequestParam String routeId,
-            @RequestParam(required = false) Long sourceSystemId, @RequestParam String errorMessage) {
-
-        try {
-            Map<String, Object> debugInfo = new HashMap<>();
-            debugInfo.put("routeId", routeId);
-            debugInfo.put("sourceSystemId", sourceSystemId);
-            debugInfo.put("errorMessage", errorMessage);
-
-            Optional<ErrorMappingDto> result = errorMappingService.findMatchingErrorMapping(routeId, sourceSystemId,
-                    errorMessage);
-
-            debugInfo.put("matchFound", result.isPresent());
-            if (result.isPresent()) {
-                debugInfo.put("matchedMapping", result.get());
-            }
-
-            return ResponseEntity.ok(debugInfo);
-
-        } catch (Exception e) {
-            log.error("Error in debug matching", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(createErrorResponse("Debug matching failed: " + e.getMessage()));
-        }
-    }
-
-    @GetMapping("/count/{routeId}")
-    @PreAuthorize("hasAuthority('errorMappings:view')")
-    public ResponseEntity<Map<String, Long>> getErrorMappingCount(@PathVariable String routeId) {
-        try {
-            long count = errorMappingService.getCountByRouteId(routeId);
-            Map<String, Long> response = new HashMap<>();
-            response.put("count", count);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Error getting error mapping count for route: {}", routeId, e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @GetMapping("/export")
-    @PreAuthorize("hasAuthority('errorMappings:export')")
-    public ResponseEntity<List<ErrorMappingDto>> exportErrorMappings(@RequestParam(required = false) String routeId) {
-        try {
-            Map<String, String> filters = new HashMap<>();
-            if (routeId != null) {
-                filters.put("routeId", routeId);
-            }
-
-            Pageable pageable = PageRequest.of(0, Integer.MAX_VALUE);
-            Page<ErrorMappingDto> result = errorMappingService.getAllErrorMappings(filters, pageable);
-
-            return ResponseEntity.ok(result.getContent());
-        } catch (Exception e) {
-            log.error("Error exporting error mappings", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('errorMappings:view')")
+    @Operation(
+            summary = "Get error mapping by ID",
+            description = "Retrieves the details of a specific error mapping by its ID. Requires 'errorMappings:view' authority."
+    )
     public ResponseEntity<ErrorMappingDto> getErrorMappingById(@PathVariable Long id) {
         try {
-            return errorMappingService.getErrorMappingById(id).map(ResponseEntity::ok)
+            return errorMappingService.getErrorMappingById(id)
+                    .map(ResponseEntity::ok)
                     .orElse(ResponseEntity.notFound().build());
         } catch (Exception e) {
             log.error("Error retrieving error mapping with ID: {}", id, e);
@@ -219,6 +145,10 @@ public class ErrorMappingController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('errorMappings:create')")
+    @Operation(
+            summary = "Create error mapping",
+            description = "Creates a new error mapping with the provided details. Requires 'errorMappings:create' authority."
+    )
     public ResponseEntity<?> createErrorMapping(@RequestBody ErrorMappingDto dto) {
         try {
             ErrorMappingDto created = errorMappingService.createErrorMapping(dto);
@@ -235,6 +165,10 @@ public class ErrorMappingController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('errorMappings:edit')")
+    @Operation(
+            summary = "Update error mapping",
+            description = "Updates an existing error mapping by its ID. Requires 'errorMappings:edit' authority."
+    )
     public ResponseEntity<?> updateErrorMapping(@PathVariable Long id, @RequestBody ErrorMappingDto dto) {
         try {
             ErrorMappingDto updated = errorMappingService.updateErrorMapping(id, dto);
@@ -251,23 +185,13 @@ public class ErrorMappingController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('errorMappings:delete')")
-    public ResponseEntity<?> deleteErrorMapping(@PathVariable Long id) {
-        try {
-            errorMappingService.deleteErrorMapping(id);
-            return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            log.error("Error deleting error mapping with ID: {}", id, e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(createErrorResponse("Failed to delete error mapping"));
-        }
-    }
 
     @PostMapping("/{id}/toggle")
-    @PreAuthorize("hasAuthority('errorMappings:create')")
+    @PreAuthorize("hasAuthority('errorMappings:edit')")
+    @Operation(
+            summary = "Toggle error mapping status",
+            description = "Activates or deactivates an error mapping by flipping its status. Requires 'errorMappings:edit' authority."
+    )
     public ResponseEntity<?> toggleErrorMapping(@PathVariable Long id) {
         try {
             errorMappingService.toggleErrorMapping(id);
@@ -287,26 +211,41 @@ public class ErrorMappingController {
         return error;
     }
 
+
+
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('errorMappings:export')")
-    public ResponseEntity<byte[]> export(@RequestParam Map<String, String> filters,
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
-            @PathVariable("type") String type, @RequestParam(defaultValue = "createdAt") String sortBy,
+    @Operation(
+            summary = "Export error mappings (CSV/Excel)",
+            description = "Exports error mappings into CSV or Excel format with optional filters, pagination, and sorting. Requires 'errorMappings:export' authority."
+    )
+    public ResponseEntity<byte[]> export(
+            @RequestParam Map<String, String> filters,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @PathVariable("type") String type,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "desc") String sortDir) {
 
         try {
-            Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+            Sort sort = sortDir.equalsIgnoreCase("desc")
+                    ? Sort.by(sortBy).descending()
+                    : Sort.by(sortBy).ascending();
 
             Pageable pageable = PageRequest.of(page, size, sort);
+
 
             byte[] fileBytes = errorMappingService.exportFile(filters, pageable, type);
 
             String fileName = "error_configuration." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
-            String contentType = type.equalsIgnoreCase("CSV") ? "text/csv"
+            String contentType = type.equalsIgnoreCase("CSV")
+                    ? "text/csv"
                     : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-            return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
-                    .contentType(MediaType.parseMediaType(contentType)).body(fileBytes);
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(fileBytes);
         } catch (Exception e) {
             log.error("Error retrieving error mappings", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

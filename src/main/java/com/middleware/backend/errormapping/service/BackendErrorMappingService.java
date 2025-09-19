@@ -1,14 +1,21 @@
 package com.middleware.backend.errormapping.service;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+ import com.middleware.backend.dto.RouteOptionDto;
+ import com.middleware.backend.errormapping.dto.ErrorMappingDto;
+ import com.middleware.backend.errormapping.mapper.ErrorMappingMapper;
+ import com.middleware.backend.errormapping.model.ErrorCategory;
+ import com.middleware.backend.errormapping.model.ErrorMapping;
+ import com.middleware.backend.errormapping.repository.ErrorCategoryRepository;
+ import com.middleware.backend.errormapping.repository.ErrorMappingRepository;
+ import com.middleware.backend.errormapping.spec.ErrorMappingSpecification;
+ import com.middleware.backend.kaotocamel.repository.DynamicRouteRepository;
 
+import com.middleware.backend.model.SourceSystem;
+
+import com.middleware.backend.repository.SourceSystemRepository;
+ import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -16,24 +23,20 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.middleware.backend.dto.RouteOptionDto;
-import com.middleware.backend.errormapping.dto.ErrorMappingDto;
-import com.middleware.backend.errormapping.mapper.ErrorMappingMapper;
-import com.middleware.backend.errormapping.model.ErrorCategory;
-import com.middleware.backend.errormapping.model.ErrorMapping;
-import com.middleware.backend.errormapping.repository.ErrorCategoryRepository;
-import com.middleware.backend.errormapping.repository.ErrorMappingRepository;
-import com.middleware.backend.errormapping.spec.ErrorMappingSpecification;
-import com.middleware.backend.kaotocamel.repository.DynamicRouteRepository;
-import com.middleware.backend.model.SourceSystem;
-import com.middleware.backend.repository.SourceSystemRepository;
-
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +57,8 @@ public class BackendErrorMappingService {
     }
 
     public Optional<ErrorMappingDto> getErrorMappingById(Long id) {
-        return errorMappingRepository.findWithCategoryAndSourceSystemById(id).map(errorMappingMapper::toDto);
+        return errorMappingRepository.findWithCategoryAndSourceSystemById(id)
+                .map(errorMappingMapper::toDto);
     }
 
     private void validateErrorMappingDto(ErrorMappingDto dto) {
@@ -85,147 +89,8 @@ public class BackendErrorMappingService {
             }
         }
     }
-
-    @Transactional
-    public ErrorMappingDto createErrorMapping(ErrorMappingDto dto) {
-        validateErrorMappingDto(dto);
-
-        boolean isWildcardRoute = "*".equals(dto.getRouteId());
-
-        if (!isWildcardRoute && !routeExists(dto.getRouteId())) {
-            throw new IllegalArgumentException("Route with ID '" + dto.getRouteId() + "' does not exist");
-        }
-
-        if (isWildcardRoute) {
-            log.info(" Creating WILDCARD error mapping - applies to ALL routes and APIs");
-        }
-
-        if (errorMappingRepository.existsByRouteIdAndRawErrorSubstringAndActiveTrue(dto.getRouteId(),
-                dto.getRawErrorSubstring())) {
-            throw new IllegalArgumentException("Error mapping already exists for this route and error substring");
-        }
-
-        ErrorMapping entity = errorMappingMapper.toEntity(dto);
-
-        Long currentUserId = 1L;
-        entity.setCreatedBy(currentUserId);
-        if (dto.getErrorCategoryId() != null) {
-            ErrorCategory category = errorCategoryRepository.findById(dto.getErrorCategoryId()).orElseThrow(
-                    () -> new EntityNotFoundException("ErrorCategory not found with ID: " + dto.getErrorCategoryId()));
-            entity.setErrorCategory(category);
-        }
-
-        if (dto.getSourceSystemId() != null) {
-            SourceSystem sourceSystem = sourceSystemRepository.findById(dto.getSourceSystemId())
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "SourceSystem not found with ID: ".concat(String.valueOf(dto.getSourceSystemId()))));
-            entity.setSourceSystem(sourceSystem);
-        }
-
-        ErrorMapping saved = errorMappingRepository.save(entity);
-
-        if (isWildcardRoute) {
-            log.info("WILDCARD error mapping created successfully - ID: {}, Pattern: '{}', Code: '{}'", saved.getId(),
-                    saved.getRawErrorSubstring(), saved.getMappedErrorCode());
-        } else {
-            log.info("Specific error mapping created - ID: {}, Route: '{}'", saved.getId(), saved.getRouteId());
-        }
-
-        return getErrorMappingById(saved.getId()).orElseThrow(
-                () -> new IllegalStateException("Could not retrieve created error mapping with ID: " + saved.getId()));
-    }
-
-    @Transactional
-    public ErrorMappingDto updateErrorMapping(Long id, ErrorMappingDto dto) {
-        ErrorMapping existing = errorMappingRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Error mapping not found with ID: " + id));
-
-        validateErrorMappingDto(dto);
-
-        if (!"*".equals(dto.getRouteId()) && !existing.getRouteId().equals(dto.getRouteId())
-                && !routeExists(dto.getRouteId())) {
-            throw new IllegalArgumentException("Route with ID '" + dto.getRouteId() + "' does not exist");
-        }
-
-        // Update fields
-        existing.setRouteId(dto.getRouteId());
-        existing.setRoutePath(dto.getRoutePath());
-        existing.setRawErrorSubstring(dto.getRawErrorSubstring());
-        existing.setMatchType(dto.getMatchType());
-        existing.setMappedErrorCode(dto.getMappedErrorCode());
-        existing.setMappedMessage(dto.getMappedMessage());
-
-        if (dto.getErrorCategoryId() != null) {
-            ErrorCategory category = errorCategoryRepository.findById(dto.getErrorCategoryId()).orElseThrow(
-                    () -> new EntityNotFoundException("ErrorCategory not found with ID: " + dto.getErrorCategoryId()));
-            existing.setErrorCategory(category);
-        } else {
-            existing.setErrorCategory(null);
-        }
-
-        if (dto.getSourceSystemId() != null) {
-            SourceSystem sourceSystem = sourceSystemRepository.findById(dto.getSourceSystemId()).orElseThrow(
-                    () -> new EntityNotFoundException("SourceSystem not found with ID: " + dto.getSourceSystemId()));
-            existing.setSourceSystem(sourceSystem);
-        } else {
-            existing.setSourceSystem(null);
-        }
-
-        existing.setHttpStatusCode(dto.getHttpStatusCode());
-        existing.setLanguage(dto.getLanguage());
-        existing.setActive(dto.getActive());
-
-        Long currentUserId = 1L;
-        existing.setUpdatedBy(currentUserId);
-
-        ErrorMapping saved = errorMappingRepository.save(existing);
-
-        String routeType = "*".equals(saved.getRouteId()) ? "WILDCARD" : "SPECIFIC";
-        log.info("Updated error mapping with ID: {} for route: '{}' ({})", saved.getId(), saved.getRouteId(),
-                routeType);
-
-        // Since relations are loaded, we can map them directly.
-        return getErrorMappingById(saved.getId()).orElseThrow(
-                () -> new IllegalStateException("Could not retrieve updated error mapping with ID: " + saved.getId()));
-    }
-
-    @Transactional
-    public void deleteErrorMapping(Long id) {
-        if (!errorMappingRepository.existsById(id)) {
-            throw new EntityNotFoundException("Error mapping not found with ID: " + id);
-        }
-        errorMappingRepository.deleteById(id);
-        log.info("Deleted error mapping with ID: {}", id);
-    }
-
-    public List<RouteOptionDto> getAvailableRoutes() {
-        return dynamicRouteRepository.findLatestActiveRoutes().stream()
-                .map(route -> new RouteOptionDto(route.getRouteId(), route.getPath(), route.getHttpMethod(),
-                        route.getDescription()))
-                .collect(Collectors.toList());
-    }
-
-    public long getCountByRouteId(String routeId) {
-        return errorMappingRepository.countActiveByRouteId(routeId);
-    }
-
-    @Transactional
-    public void toggleErrorMapping(Long id) {
-        ErrorMapping mapping = errorMappingRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Error mapping not found with ID: " + id));
-
-        mapping.setActive(!mapping.getActive());
-        errorMappingRepository.save(mapping);
-
-        log.info("Toggled error mapping {} to active: {}", id, mapping.getActive());
-    }
-
-    private boolean routeExists(String routeId) {
-        return dynamicRouteRepository.findByRouteIdAndActiveTrue(routeId).stream().findFirst().isPresent();
-    }
-
     public Optional<ErrorMappingDto> findMatchingErrorMapping(String routeId, Long sourceSystemId,
-            String errorMessage) {
+                                                              String errorMessage) {
         log.info("Database-level error matching - routeId: '{}', sourceSystemId: {}, errorMessage: '{}'", routeId,
                 sourceSystemId, errorMessage);
 
@@ -255,6 +120,153 @@ public class BackendErrorMappingService {
                 errorMessage);
         return Optional.empty();
     }
+    @Transactional
+    public ErrorMappingDto createErrorMapping(ErrorMappingDto dto) {
+        validateErrorMappingDto(dto);
+
+        boolean isWildcardRoute = "*".equals(dto.getRouteId());
+
+        if (!isWildcardRoute && !routeExists(dto.getRouteId())) {
+            throw new IllegalArgumentException("Route with ID '" + dto.getRouteId() + "' does not exist");
+        }
+
+        if (isWildcardRoute) {
+            log.info(" Creating WILDCARD error mapping - applies to ALL routes and APIs");
+        }
+
+        if (errorMappingRepository.existsByRouteIdAndRawErrorSubstringAndActiveTrue(
+                dto.getRouteId(), dto.getRawErrorSubstring())) {
+            throw new IllegalArgumentException("Error mapping already exists for this route and error substring");
+        }
+
+        ErrorMapping entity = errorMappingMapper.toEntity(dto);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
+
+        entity.setCreatedBy(emailUser);
+        entity.setUpdatedBy(emailUser);
+        if (dto.getErrorCategoryId() != null) {
+            ErrorCategory category = errorCategoryRepository.findById(dto.getErrorCategoryId())
+                    .orElseThrow(() -> new EntityNotFoundException("ErrorCategory not found with ID: " + dto.getErrorCategoryId()));
+            entity.setErrorCategory(category);
+        }
+
+        if (dto.getSourceSystemId() != null) {
+            SourceSystem sourceSystem = sourceSystemRepository.findById(dto.getSourceSystemId())
+                    .orElseThrow(() -> new EntityNotFoundException("SourceSystem not found with ID: ".concat(String.valueOf(dto.getSourceSystemId()))));
+            entity.setSourceSystem(sourceSystem);
+        }
+
+        ErrorMapping saved = errorMappingRepository.save(entity);
+
+        if (isWildcardRoute) {
+            log.info("WILDCARD error mapping created successfully - ID: {}, Pattern: '{}', Code: '{}'",
+                    saved.getId(), saved.getRawErrorSubstring(), saved.getMappedErrorCode());
+        } else {
+            log.info("Specific error mapping created - ID: {}, Route: '{}'", saved.getId(), saved.getRouteId());
+        }
+
+        return getErrorMappingById(saved.getId()).orElseThrow(() ->
+                new IllegalStateException("Could not retrieve created error mapping with ID: " + saved.getId())
+        );
+    }
+
+    @Transactional
+    public ErrorMappingDto updateErrorMapping(Long id, ErrorMappingDto dto) {
+        ErrorMapping existing = errorMappingRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Error mapping not found with ID: " + id));
+
+        validateErrorMappingDto(dto);
+
+        if (!"*".equals(dto.getRouteId()) &&
+                !existing.getRouteId().equals(dto.getRouteId()) &&
+                !routeExists(dto.getRouteId())) {
+            throw new IllegalArgumentException("Route with ID '" + dto.getRouteId() + "' does not exist");
+        }
+
+        // Update fields
+        existing.setRouteId(dto.getRouteId());
+        existing.setRoutePath(dto.getRoutePath());
+        existing.setRawErrorSubstring(dto.getRawErrorSubstring());
+        existing.setMatchType(dto.getMatchType());
+        existing.setMappedErrorCode(dto.getMappedErrorCode());
+        existing.setMappedMessage(dto.getMappedMessage());
+
+        if (dto.getErrorCategoryId() != null) {
+            ErrorCategory category = errorCategoryRepository.findById(dto.getErrorCategoryId())
+                    .orElseThrow(() -> new EntityNotFoundException("ErrorCategory not found with ID: " + dto.getErrorCategoryId()));
+            existing.setErrorCategory(category);
+        } else {
+            existing.setErrorCategory(null);
+        }
+
+        if (dto.getSourceSystemId() != null) {
+            SourceSystem sourceSystem = sourceSystemRepository.findById(dto.getSourceSystemId())
+                    .orElseThrow(() -> new EntityNotFoundException("SourceSystem not found with ID: " + dto.getSourceSystemId()));
+            existing.setSourceSystem(sourceSystem);
+        } else {
+            existing.setSourceSystem(null);
+        }
+
+        existing.setHttpStatusCode(dto.getHttpStatusCode());
+        existing.setLanguage(dto.getLanguage());
+        existing.setActive(dto.getActive());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
+
+        existing.setUpdatedBy(emailUser);
+        existing.setUpdatedAt(LocalDateTime.now());
+
+        ErrorMapping saved = errorMappingRepository.save(existing);
+
+        String routeType = "*".equals(saved.getRouteId()) ? "WILDCARD" : "SPECIFIC";
+        log.info("Updated error mapping with ID: {} for route: '{}' ({})", saved.getId(), saved.getRouteId(), routeType);
+
+        // Since relations are loaded, we can map them directly.
+        return getErrorMappingById(saved.getId()).orElseThrow(() ->
+                new IllegalStateException("Could not retrieve updated error mapping with ID: " + saved.getId())
+        );
+    }
+
+
+    public List<RouteOptionDto> getAvailableRoutes() {
+        return dynamicRouteRepository.findLatestActiveRoutes()
+                .stream()
+                .map(route -> new RouteOptionDto(
+                        route.getRouteId(),
+                        route.getPath(),
+                        route.getHttpMethod(),
+                        route.getDescription()
+                ))
+                .collect(Collectors.toList());
+    }
+
+
+    @Transactional
+    public void toggleErrorMapping(Long id) {
+        ErrorMapping mapping = errorMappingRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Error mapping not found with ID: " + id));
+
+        mapping.setActive(!mapping.getActive());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailUser = authentication.getName();
+
+        mapping.setUpdatedBy(emailUser);
+        mapping.setUpdatedAt(LocalDateTime.now());
+        errorMappingRepository.save(mapping);
+
+        log.info("Toggled error mapping {} to active: {}", id, mapping.getActive());
+    }
+
+    private boolean routeExists(String routeId) {
+        return dynamicRouteRepository.findByRouteIdAndActiveTrue(routeId).stream()
+                .findFirst()
+                .isPresent();
+    }
+
+
 
     public byte[] exportFile(Map<String, String> filters, Pageable pageable, String type) {
         // Build dynamic specification from filters
@@ -280,8 +292,7 @@ public class BackendErrorMappingService {
     // === CSV Export ===
     private String convertToCSV(List<ErrorMapping> mappings) {
         StringBuilder sb = new StringBuilder();
-        sb.append(
-                "Route ID,Route Path,Source System,Raw Error Substring,Match Type,Mapped Error Code,Mapped Message,Error Category,HTTP Status,Language,Active,Created At,Updated At\n");
+        sb.append("Route ID,Route Path,Source System,Raw Error Substring,Match Type,Mapped Error Code,Mapped Message,Error Category,HTTP Status,Language,Active,Created At,Updated At\n");
 
         for (ErrorMapping em : mappings) {
             sb.append(escapeCsv(em.getRouteId())).append(",");
@@ -302,8 +313,7 @@ public class BackendErrorMappingService {
     }
 
     private String escapeCsv(String value) {
-        if (value == null)
-            return "";
+        if (value == null) return "";
         String escaped = value.replace("\"", "\"\"");
         if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
             return "\"" + escaped + "\"";
@@ -318,9 +328,11 @@ public class BackendErrorMappingService {
 
             // Header row
             Row header = sheet.createRow(0);
-            String[] headers = { "Route ID", "Route Path", "Source System", "Raw Error Substring", "Match Type",
-                    "Mapped Error Code", "Mapped Message", "Error Category", "HTTP Status", "Language", "Active",
-                    "Created At", "Updated At" };
+            String[] headers = {
+                    "Route ID", "Route Path", "Source System", "Raw Error Substring",
+                    "Match Type", "Mapped Error Code", "Mapped Message", "Error Category",
+                    "HTTP Status", "Language", "Active", "Created At", "Updated At"
+            };
 
             for (int i = 0; i < headers.length; i++) {
                 header.createCell(i).setCellValue(headers[i]);

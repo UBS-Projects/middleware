@@ -9,11 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * Spring configuration for providing the ErrorMappingService implementation.
- * This class defines the error mapping rules that the custom Camel component
- * will use.
- */
+
 @Slf4j
 @Configuration
 public class BackendErrorConfiguration {

@@ -1,11 +1,11 @@
-package com.middleware.backend.service;
+package com.middleware.backend.errormapping.service;
 
 import com.middleware.backend.dto.ErrorCategoryDto;
-import com.middleware.backend.mapper.ErrorCategoryMapper;
-import com.middleware.backend.model.ErrorCategory;
-import com.middleware.backend.repository.ErrorCategoryRepository;
-import com.middleware.backend.scheduledJobs.model.ScheduledJobs;
-import lombok.RequiredArgsConstructor;
+import com.middleware.backend.errormapping.mapper.ErrorCategoryMapper;
+import com.middleware.backend.errormapping.model.ErrorCategory;
+import com.middleware.backend.errormapping.repository.ErrorCategoryRepository;
+
+ import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
