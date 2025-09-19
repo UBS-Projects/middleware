@@ -9,6 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * REST endpoints for viewing and updating DHIS2 configuration.
+ * Uses {@link Dhis2Config} to refresh the in-memory cache after updates.
+ */
 @RestController
 @RequestMapping("/api/dhis2")
 @AllArgsConstructor
@@ -17,6 +21,9 @@ public class Dhis2Controller {
     private final Dhis2Service service;
     private final Dhis2Config config;
 
+    /**
+     * Returns the current DHIS2 settings.
+     */
     @GetMapping
     @PreAuthorize("hasAuthority('dhis2:view')")
     @Operation(
@@ -28,6 +35,9 @@ public class Dhis2Controller {
         return service.getSettings();
     }
 
+    /**
+     * Updates the DHIS2 settings with provided fields; then refreshes cache.
+     */
     @PatchMapping
     @PreAuthorize("hasAuthority('dhis2:edit')")
     @Operation(

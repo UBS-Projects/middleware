@@ -12,6 +12,12 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Maps between user domain objects and DTOs.
+ * <p>
+ * When converting role DTOs to entities, role references are resolved via the
+ * {@link RoleRepository} to ensure only existing roles are associated.
+ */
 @Component
 public class UserMapper {
 
@@ -21,6 +27,12 @@ public class UserMapper {
         this.roleRepository = roleRepository;
     }
 
+    /**
+     * Maps a {@link UserResponse} DTO to a {@link User} entity.
+     * Role names are looked up through {@link RoleRepository}.
+     * @param user response DTO
+     * @return populated entity
+     */
     public User mapToEntity(UserResponse user) {
         return User.builder()
                 .id(user.getId())
@@ -42,6 +54,11 @@ public class UserMapper {
                 .build();
     }
 
+    /**
+     * Maps a {@link User} entity to a {@link UserResponse} DTO.
+     * @param user entity
+     * @return response DTO including role basic info
+     */
     public UserResponse mapToDto(User user) {
         return UserResponse.builder()
                 .id(user.getId())
@@ -59,6 +76,12 @@ public class UserMapper {
                 .build();
     }
 
+    /**
+     * Maps a {@link UserRequest} DTO to a {@link User} entity.
+     * Role names are resolved via {@link RoleRepository}.
+     * @param user request DTO
+     * @return populated entity
+     */
     public User mapToEntity(UserRequest user) {
         return User.builder()
                 .userName(user.getUserName())
@@ -79,6 +102,12 @@ public class UserMapper {
                 .build();
     }
 
+    /**
+     * Maps a {@link User} entity to a {@link UserRequest} DTO.
+     * Useful for edit forms where the request structure is reused.
+     * @param user entity
+     * @return request DTO
+     */
     public UserRequest mapToDTO(User user) {
         return UserRequest.builder()
                 .userName(user.getUserName())

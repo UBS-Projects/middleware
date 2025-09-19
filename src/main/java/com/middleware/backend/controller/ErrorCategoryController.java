@@ -25,6 +25,13 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * REST controller for managing error categories.
+ * <p>
+ * Exposes endpoints to list, filter, create, update, toggle status, and export
+ * error categories. All endpoints are secured with authority-based access
+ * checks and documented via OpenAPI annotations.
+ */
 @RestController
 @RequestMapping("/api/error-categories")
 @RequiredArgsConstructor
@@ -33,6 +40,20 @@ public class ErrorCategoryController {
 
     private final ErrorCategoryService categoryService;
 
+    /**
+     * Retrieves a paginated list of error categories with optional filters.
+     *
+     * @param name          optional substring to match against name (contains)
+     * @param description   optional substring to match against description (contains)
+     * @param status        optional status filter: "active" or "inactive" (case-insensitive)
+     * @param createdAfter  optional start date (inclusive) for createdAt filter
+     * @param createdBefore optional end date (inclusive) for createdAt filter
+     * @param sortedBy      field to sort by (default: createdAt)
+     * @param sortDirection sort direction: "asc" or "desc" (default: desc)
+     * @param page          zero-based page index
+     * @param size          page size
+     * @return a paged result containing matching categories
+     */
     @GetMapping
     @PreAuthorize("hasAuthority('errorCategories:view')")
     @Operation(
@@ -77,6 +98,12 @@ public class ErrorCategoryController {
     }
 
 
+    /**
+     * Retrieves an error category by its id.
+     *
+     * @param id category identifier
+     * @return 200 with the category if found; 404 if not found; 500 on errors
+     */
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('errorCategories:view')")
     @Operation(
@@ -95,6 +122,12 @@ public class ErrorCategoryController {
         }
     }
 
+    /**
+     * Creates a new error category.
+     *
+     * @param dto payload describing the category to create
+     * @return 201 with created resource; 400 on validation problems; 500 on errors
+     */
     @PostMapping
     @PreAuthorize("hasAuthority('errorCategories:create')")
     @Operation(
@@ -115,6 +148,13 @@ public class ErrorCategoryController {
         }
     }
 
+    /**
+     * Updates an existing error category.
+     *
+     * @param id  the id of the category to update
+     * @param dto updated field values
+     * @return 200 with updated resource; 404 if not found; 400 on validation/state errors; 500 on errors
+     */
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('errorCategories:edit')")
     @Operation(
@@ -141,6 +181,12 @@ public class ErrorCategoryController {
 
 
 
+    /**
+     * Toggles the active status of a category.
+     *
+     * @param id category identifier
+     * @return 200 with updated resource; 404 if not found; 400 on invalid state; 500 on errors
+     */
     @PostMapping("/{id}/toggle")
     @PreAuthorize("hasAuthority('errorCategories:edit')")
     @Operation(
@@ -163,6 +209,12 @@ public class ErrorCategoryController {
         }
     }
 
+    /**
+     * Utility to wrap an error message for consistent error responses.
+     *
+     * @param message explanation of the error
+     * @return map containing a single entry with key "error"
+     */
     private Map<String, String> createErrorResponse(String message) {
         Map<String, String> error = new HashMap<>();
         error.put("error", message);
@@ -170,6 +222,19 @@ public class ErrorCategoryController {
     }
 
 
+    /**
+     * Exports error categories to CSV or Excel format applying optional filters.
+     *
+     * @param name          optional substring to match against name
+     * @param description   optional substring to match against description
+     * @param status        optional status filter: "active" or "inactive"
+     * @param createdAfter  optional start date (inclusive)
+     * @param createdBefore optional end date (inclusive)
+     * @param sortedBy      field to sort by when exporting
+     * @param sortDirection sort direction: "asc" or "desc"
+     * @param type          file type to export: "CSV" or "EXCEL" (xlsx)
+     * @return the generated file as bytes with appropriate content type and filename
+     */
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('errorCategories:export')")
     @Operation(

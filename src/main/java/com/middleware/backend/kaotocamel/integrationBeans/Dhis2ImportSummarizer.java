@@ -10,12 +10,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Component("dhis2ImportSummarizer")
+/**
+ * Camel Processor that normalizes DHIS2 import responses into a unified JSON structure
+ * with fields: status, message, errorCode, errorMessage, and details. Also sets HTTP code.
+ */
 public class Dhis2ImportSummarizer implements Processor {
 
     private static final Logger log = LoggerFactory.getLogger(Dhis2ImportSummarizer.class);
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Override
+    /**
+     * Reads the current message body (expected JSON), infers a normalized status/message,
+     * sets appropriate HTTP status, and writes a compact JSON response for clients.
+     */
     public void process(Exchange exchange) {
         Message in = exchange.getMessage();
         String body = in.getBody(String.class);

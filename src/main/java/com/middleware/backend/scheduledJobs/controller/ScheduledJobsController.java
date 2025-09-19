@@ -26,6 +26,11 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
 import java.util.Map;
 
+/**
+ * REST controller for managing scheduled jobs lifecycle and querying definitions.
+ * <p>
+ * Supports create, edit, pause, resume, deactivate, list, get by id, test, and export actions.
+ */
 @RestController
 @RequestMapping("/api/scheduledjobs")
 @AllArgsConstructor
@@ -33,6 +38,9 @@ public class ScheduledJobsController {
     private final ScheduledJobsService service;
     private final JobLogsService logsService;
 
+    /**
+     * Utility to persist an audit log for a job-related action.
+     */
     private void logJob(String jobName, String method, String path, String action, boolean success, String email, String error) {
         JobExecutionDTO log = JobExecutionDTO.builder()
                 .scheduledJobName(jobName)
@@ -47,6 +55,13 @@ public class ScheduledJobsController {
         logsService.save(log);
     }
 
+    /**
+     * Pauses or resumes a scheduled job by id.
+     *
+     * @param id job id to change status for
+     * @param status either "pause" or anything else treated as resume
+     * @return the updated job definition or an error response
+     */
     @PatchMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('scheduledJobs:pause','scheduledJobs:resume')")
     @Operation(
@@ -69,6 +84,12 @@ public class ScheduledJobsController {
         }
     }
 
+    /**
+     * Edits an existing job definition.
+     *
+     * @param job the new job request payload
+     * @return the updated job if successful or error response
+     */
     @PatchMapping("")
     @PreAuthorize("hasAuthority('scheduledJobs:edit')")
     @Operation(
@@ -88,6 +109,12 @@ public class ScheduledJobsController {
     }
 
 
+    /**
+     * Creates and schedules a new job definition.
+     *
+     * @param job the job request payload
+     * @return the created job or error response
+     */
     @PostMapping()
     @PreAuthorize("hasAuthority('scheduledJobs:create')")
     @Operation(
@@ -106,6 +133,12 @@ public class ScheduledJobsController {
         }
     }
 
+    /**
+     * Retrieves a job definition by id.
+     *
+     * @param id the job id
+     * @return the job details or not found/error from service
+     */
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('scheduledJobs:view')")
     @Operation(
@@ -116,6 +149,19 @@ public class ScheduledJobsController {
         return service.getById(id);
     }
 
+    /**
+     * Retrieves a paginated list of scheduled jobs with optional filters.
+     *
+     * @param jobName optional contains filter by job name
+     * @param apiEndpoint optional contains filter by API endpoint
+     * @param method optional exact match filter by HTTP method
+     * @param enabled optional exact match filter for enabled flag
+     * @param sortedBy field to sort by (default updatedAt)
+     * @param sortDirection asc/desc (default desc)
+     * @param page zero-based page index
+     * @param size page size
+     * @return page of scheduled jobs or error response
+     */
     @GetMapping("")
     @PreAuthorize("hasAuthority('scheduledJobs:view')")
     @Operation(
@@ -151,6 +197,12 @@ public class ScheduledJobsController {
     }
 
 
+    /**
+     * Deactivates (soft deletes) a job by id.
+     *
+     * @param id the job id
+     * @return the deactivated job or error response
+     */
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('scheduledJobs:delete')")
     @Operation(
@@ -169,6 +221,12 @@ public class ScheduledJobsController {
         }
     }
 
+    /**
+     * Tests a job configuration without persisting changes.
+     *
+     * @param jobRequest the job to test
+     * @return status pass/fail depending on test outcome
+     */
     @PostMapping("/test")
     @PreAuthorize("hasAuthority('scheduledJobs:test')")
     @Operation(
@@ -190,6 +248,18 @@ public class ScheduledJobsController {
 
 
 
+    /**
+     * Exports scheduled jobs to CSV or Excel.
+     *
+     * @param jobName optional contains filter by job name
+     * @param apiEndpoint optional contains filter by API endpoint
+     * @param method optional exact match filter by HTTP method
+     * @param enabled optional exact match filter by enabled flag
+     * @param sortedBy field to sort by (default updatedAt)
+     * @param sortDirection asc/desc (default desc)
+     * @param type export type CSV or EXCEL/XLSX
+     * @return the exported file bytes with appropriate headers
+     */
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('scheduledJobs:export')")
     @Operation(

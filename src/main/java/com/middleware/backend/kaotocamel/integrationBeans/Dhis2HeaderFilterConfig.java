@@ -8,11 +8,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Configuration
+/**
+ * Spring configuration for a permissive Camel HeaderFilterStrategy bean used in DHIS2 routes.
+ * Currently allows most headers and filters cookies; adjust as needed for production.
+ */
 public class Dhis2HeaderFilterConfig {
 
     private static final Logger log = LoggerFactory.getLogger(Dhis2HeaderFilterConfig.class);
 
     @Bean("dhis2HeaderFilter")
+    /**
+     * Provides a case-insensitive header filter that excludes cookie headers from outbound messages.
+     */
     public HeaderFilterStrategy dhis2HeaderFilter() {
         log.info("=== Configuring DHIS2 Header Filter (Static Test) ===");
 

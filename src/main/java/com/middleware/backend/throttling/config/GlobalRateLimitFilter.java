@@ -19,6 +19,24 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Servlet {@link Filter} that enforces HTTP request rate limits for the application.
+ * <p>
+ * Behavior:
+ * <ul>
+ *   <li>For URIs under <code>/camel/**</code>: applies a global Camel routes limit based on
+ *   {@link com.middleware.backend.throttling.model.CamelLimitConfig} and, if configured, a per-route
+ *   limit based on {@link com.middleware.backend.throttling.model.CustomCamelLimitConfig} matched
+ *   against active routes from {@link com.middleware.backend.kaotocamel.service.DynamicRouteService}.</li>
+ *   <li>For all other URIs: applies a global system rate limit from
+ *   {@link com.middleware.backend.throttling.model.RateLimitConfig}.</li>
+ * </ul>
+ * Thread-safety is achieved via {@link java.util.concurrent.atomic.AtomicInteger} counters and minimal
+ * synchronized sections for window resets.
+ * </p>
+ *
+ * Responses exceeding limits are short-circuited with HTTP 429 and a <code>Retry-After</code> header.
+ */
 @Component
 @RequiredArgsConstructor
 public class GlobalRateLimitFilter implements Filter {
@@ -38,9 +56,18 @@ public class GlobalRateLimitFilter implements Filter {
     private final Map<String, Long> routeWindowStarts = new ConcurrentHashMap<>();
 
 
+    /**
+     * Apply rate limiting to the incoming request.
+     *
+     * @param request  the incoming {@link ServletRequest}
+     * @param response the outgoing {@link ServletResponse}
+     * @param chain    the {@link FilterChain} to continue processing when allowed
+     * @throws IOException      if I/O error occurs
+     * @throws ServletException if the filter chain cannot be continued
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+        throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String uri = httpRequest.getRequestURI();
         String method = httpRequest.getMethod();

@@ -11,6 +11,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 
 @Component("csvGuard")
+/**
+ * Camel Processor that validates incoming CSV uploads for DHIS2 dataValueSets.
+ * It enforces presence/format of a transaction UUID, normalizes body to bytes,
+ * rejects multipart forms, derives ID scheme and import strategy from headers,
+ * and prepares query parameters and flags for downstream processors.
+ */
 public class CsvGuard implements Processor {
 
     private static final Logger log = LoggerFactory.getLogger(CsvGuard.class);
@@ -19,6 +25,15 @@ public class CsvGuard implements Processor {
     );
 
     @Override
+    /**
+     * Validates headers/body and sets exchange properties:
+     * - transactionUUID (required, RFC4122)
+     * - scheme (UID/CODE)
+     * - strategy (NEW/UPDATES/DELETE/NEW_AND_UPDATES)
+     * - _csvBytes (raw payload)
+     * - _queryBase (DHIS2 import query string)
+     * - dryRun ("true"/"false")
+     */
     public void process(Exchange exchange) {
         Message in = exchange.getIn();
 

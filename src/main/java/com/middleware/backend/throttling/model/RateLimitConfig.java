@@ -3,6 +3,9 @@ package com.middleware.backend.throttling.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * Entity storing system-wide HTTP rate limit configuration.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,6 +16,8 @@ public class RateLimitConfig {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;  // single row for global config
 
+    /** Maximum number of HTTP requests allowed within the window. */
     private int limitRequests;          // e.g., 100
+    /** Window duration in seconds. */
     private int windowSeconds;  // e.g., 60
 }

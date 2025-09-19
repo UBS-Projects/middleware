@@ -12,9 +12,18 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Global exception handler translating exceptions into structured HTTP responses.
+ * <p>
+ * Provides consistent timestamped JSON bodies and appropriate status codes for
+ * security, validation, database, and generic errors.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Maps {@link org.springframework.security.access.AccessDeniedException} to 403.
+     */
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<?> handleAccessDenied(AccessDeniedException ex) {
         Map<String, Object> body = new HashMap<>();
@@ -23,6 +32,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.FORBIDDEN); // 403
     }
 
+    /**
+     * Handles generic runtime exceptions as 400 Bad Request.
+     */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> handleRuntimeException(RuntimeException ex) {
         Map<String, Object> body = new HashMap<>();
@@ -31,6 +43,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Handles parameter type mismatches as 400 Bad Request with field context.
+     */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<?> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
         Map<String, Object> body = new HashMap<>();
@@ -39,7 +54,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
-      @ExceptionHandler(PSQLException.class)
+    /**
+     * Handles PostgreSQL-specific exceptions as 400 Bad Request.
+     */
+    @ExceptionHandler(PSQLException.class)
     public ResponseEntity<?> handlePSQLException(PSQLException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
@@ -47,6 +65,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Fallback handler producing a 500 Internal Server Error with a generic message
+     * and the underlying error for diagnostics.
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGenericException(Exception ex) {
         Map<String, Object> body = new HashMap<>();

@@ -35,6 +35,10 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+/**
+ * Service handling persistence and lifecycle tracking of middleware API call logs,
+ * including attempt sequencing, retry correlation, and async completion updates.
+ */
 public class MiddlewareApiCallLogService {
 
     private final MiddlewareApiCallLogRepository callLogRepository;
@@ -46,7 +50,7 @@ public class MiddlewareApiCallLogService {
 //    );
 
     /**
-     * Get all logs with pagination, filtering, and sorting
+     * Retrieves logs with pagination, filtering, and multi-field sorting.
      */
     public Page<?> getAllLogs(Map<String, String> filters, int page, int size, String sortParam) {
         Specification<MiddlewareApiCallLog> spec = MiddlewareApiCallLogSpecification.fromFilters(filters);
@@ -58,7 +62,7 @@ public class MiddlewareApiCallLogService {
     }
 
     /**
-     * Get all attempts for a specific source UUID
+     * Returns all attempts for a specific client-provided transaction UUID.
      */
     public ResponseEntity<?> getAllAttempts(String sourceUUID) {
         try {
@@ -88,6 +92,10 @@ public class MiddlewareApiCallLogService {
     }
 
     @Transactional
+    /**
+     * Creates a new transaction log row at request ingress and stores ID on exchange.
+     * Determines attempt sequencing and validates the correlation UUID.
+     */
     public Long createTransactionSync(String routeId, Exchange exchange) {
         log.debug("createTransactionSync... creating log for Route [{}] - Exchange content: {}", routeId,
                 exchange.getAllProperties());
@@ -112,6 +120,9 @@ public class MiddlewareApiCallLogService {
 
     @Async
     @Transactional
+    /**
+     * Finalizes a transaction by recording response details and duration asynchronously.
+     */
     public CompletableFuture<Void> updateTransaction(Exchange exchange) {
         log.debug("updateTransaction... updating Route [{}] - Exchange content: {}",
                 exchange.getFromEndpoint().getEndpointUri(), exchange.getAllProperties());

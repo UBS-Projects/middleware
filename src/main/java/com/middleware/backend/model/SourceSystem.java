@@ -5,6 +5,12 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * JPA entity representing an upstream source system that emits data.
+ * <p>
+ * Enforces a unique name, maintains activation state, and records audit
+ * information. Lifecycle hooks manage timestamps and default values.
+ */
 @Entity
 @Table(name = "source_systems", uniqueConstraints = {
         @UniqueConstraint(columnNames = "name") // Ensure source system names are unique
@@ -41,6 +47,9 @@ public class SourceSystem {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    /**
+     * Initializes audit timestamps and defaults prior to first persist.
+     */
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
@@ -50,6 +59,9 @@ public class SourceSystem {
         }
     }
 
+    /**
+     * Refreshes the update timestamp before each update.
+     */
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();

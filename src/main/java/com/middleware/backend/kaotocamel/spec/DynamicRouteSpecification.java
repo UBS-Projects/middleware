@@ -4,10 +4,14 @@ import java.time.LocalDateTime;
 import org.springframework.data.jpa.domain.Specification;
 import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
 
+/**
+ * Factory for building JPA Specifications used to filter {@link DynamicRouteEntity}
+ * by common fields like routeId, path, description, httpMethod, flags and dates.
+ */
 public class DynamicRouteSpecification {
 
     /**
-     * Generic field specification with exact match
+     * Generic field specification with exact match.
      */
     public static Specification<DynamicRouteEntity> hasField(String fieldName, Object value) {
         return (root, query, criteriaBuilder) -> {
@@ -19,8 +23,7 @@ public class DynamicRouteSpecification {
     }
 
     /**
-     * Path specification with LIKE search (partial matching)
-     * مثال: إذا بحثت عن "api" بيطلع "/api/users", "/workflow/api", "/test/api/data"
+     * Path specification with LIKE search (partial matching).
      */
     public static Specification<DynamicRouteEntity> pathContains(String path) {
         return (root, query, criteriaBuilder) -> {
@@ -35,7 +38,7 @@ public class DynamicRouteSpecification {
     }
 
     /**
-     * Route ID specification with LIKE search (partial matching)
+     * Route ID specification with LIKE search (partial matching).
      */
     public static Specification<DynamicRouteEntity> routeIdContains(String routeId) {
         return (root, query, criteriaBuilder) -> {
@@ -50,7 +53,7 @@ public class DynamicRouteSpecification {
     }
 
     /**
-     * Description specification with LIKE search (partial matching)
+     * Description specification with LIKE search (partial matching).
      */
     public static Specification<DynamicRouteEntity> descriptionContains(String description) {
         return (root, query, criteriaBuilder) -> {
@@ -65,7 +68,7 @@ public class DynamicRouteSpecification {
     }
 
     /**
-     * HTTP Method specification with LIKE search (partial matching)
+     * HTTP Method specification with LIKE search (partial matching).
      */
     public static Specification<DynamicRouteEntity> httpMethodContains(String httpMethod) {
         return (root, query, criteriaBuilder) -> {
@@ -80,7 +83,7 @@ public class DynamicRouteSpecification {
     }
 
     /**
-     * Comment contains specification
+     * Comment contains specification.
      */
     public static Specification<DynamicRouteEntity> containsComment(String comment) {
         return (root, query, criteriaBuilder) -> {
@@ -95,7 +98,7 @@ public class DynamicRouteSpecification {
     }
 
     /**
-     * YAML content contains specification
+     * YAML content contains specification.
      */
     public static Specification<DynamicRouteEntity> containsInYaml(String yamlContains) {
         return (root, query, criteriaBuilder) -> {
@@ -110,7 +113,7 @@ public class DynamicRouteSpecification {
     }
 
     /**
-     * Created after specification
+     * Created after specification.
      */
     public static Specification<DynamicRouteEntity> createdAfter(LocalDateTime date) {
         return (root, query, criteriaBuilder) -> {
@@ -122,7 +125,7 @@ public class DynamicRouteSpecification {
     }
 
     /**
-     * Created before specification
+     * Created before specification.
      */
     public static Specification<DynamicRouteEntity> createdBefore(LocalDateTime date) {
         return (root, query, criteriaBuilder) -> {
@@ -134,7 +137,7 @@ public class DynamicRouteSpecification {
     }
 
     /**
-     * Active status specification
+     * Active status specification.
      */
     public static Specification<DynamicRouteEntity> hasActiveStatus(Boolean active) {
         return (root, query, criteriaBuilder) -> {
@@ -146,7 +149,7 @@ public class DynamicRouteSpecification {
     }
 
     /**
-     * Version specification
+     * Version specification.
      */
     public static Specification<DynamicRouteEntity> hasVersion(Integer version) {
         return (root, query, criteriaBuilder) -> {
@@ -158,7 +161,7 @@ public class DynamicRouteSpecification {
     }
 
     /**
-     * Default version specification
+     * Default version specification.
      */
     public static Specification<DynamicRouteEntity> isDefaultVersion(Boolean defaultVersion) {
         return (root, query, criteriaBuilder) -> {

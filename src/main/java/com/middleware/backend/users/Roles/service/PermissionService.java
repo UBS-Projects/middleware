@@ -22,12 +22,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service for viewing and editing permissions assigned to roles.
+ */
 @Service
 @AllArgsConstructor
 public class PermissionService {
     private final PermissionRepository repo;
     private final RoleRepository roleRepo;
 
+    /**
+     * Retrieve all permissions with their associated roles, mapped to DTOs.
+     * @return HTTP 200 containing a stream of {@link PermissionsDTO}
+     */
     public ResponseEntity<?> getAll() {
         List<Permission> pers = repo.findAll();
         return ResponseEntity.ok(pers.stream().map(
@@ -44,6 +51,13 @@ public class PermissionService {
     }
 
     @Transactional
+    /**
+     * Replace the set of basic permissions for a given role.
+     * Updates audit fields (updatedBy/updatedAt) from the authenticated user.
+     * @param roleName role to modify
+     * @param body request containing permission names
+     * @return 404 if role not found; 200 on success
+     */
     public ResponseEntity<?> editPermissions(String roleName, PermissionEditDto body) {
 
         Optional<Role> optionalRole = roleRepo.findByRoleName(roleName);

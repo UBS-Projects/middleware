@@ -17,6 +17,10 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/logs")
 @RequiredArgsConstructor
+/**
+ * REST controller exposing endpoints to view, export, and retry middleware API call logs.
+ * Secured via method-level authorities for viewing, exporting, and retrying.
+ */
 public class MiddlewareApiCallLogController {
 
     private final MiddlewareApiCallLogService logService;
@@ -24,6 +28,14 @@ public class MiddlewareApiCallLogController {
     private final MiddlewareLogRetryService retryService;
 
     @GetMapping
+    /**
+     * Retrieves a paginated list of API call logs with optional filters and sorting.
+     * @param filters map of filter keys/values consumed by the specification builder
+     * @param page page index (0-based)
+     * @param size page size
+     * @param sortParam sort expression like "id,desc" or "field,asc;field2,desc"
+     * @return page of log DTOs
+     */
     @PreAuthorize("hasAuthority('middlewareLogs:view')")
     @Operation(
             summary = "List middleware API call logs",
@@ -40,6 +52,12 @@ public class MiddlewareApiCallLogController {
     }
 
     @GetMapping("/export/{type}")
+    /**
+     * Exports logs to CSV or Excel format based on path variable.
+     * @param filters filter map for narrowing results
+     * @param type export type: CSV or Excel/XLSX
+     * @return file response with appropriate content type
+     */
     @PreAuthorize("hasAuthority('middlewareLogs:export')")
     @Operation(
             summary = "Export middleware API call logs",
@@ -53,6 +71,11 @@ public class MiddlewareApiCallLogController {
     }
 
     @GetMapping("/attempts/{sourceUUID}")
+    /**
+     * Returns all attempts recorded for a given transaction UUID.
+     * @param sourceUUID transaction UUID
+     * @return attempts array with metadata
+     */
     @PreAuthorize("hasAuthority('middlewareLogs:view')")
     @Operation(
             summary = "Get all attempts for a source UUID",
@@ -63,6 +86,11 @@ public class MiddlewareApiCallLogController {
     }
 
     @PostMapping("/{uuid}/retry")
+    /**
+     * Retries a failed API call by resending the original request.
+     * @param uuid transaction UUID
+     * @return retry dispatch result
+     */
     @PreAuthorize("hasAuthority('middlewareLogs:retry')")
     @Operation(
             summary = "Retry a failed API call",

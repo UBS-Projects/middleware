@@ -3,19 +3,25 @@ package com.middleware.backend.config;
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.support.DefaultExchange;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.middleware.dhis2.model.Dhis2Request;
-import com.middleware.dhis2.model.Dhis2Response;
-import com.middleware.dhis2.service.Dhis2Service;
 import com.middleware.backend.kaotocamel.integrationBeans.CsvGuard;
 import com.middleware.backend.kaotocamel.integrationBeans.Dhis2CsvDryRunThenCommit;
 import com.middleware.backend.kaotocamel.integrationBeans.Dhis2ImportSummarizer;
+import com.middleware.dhis2.model.Dhis2Request;
+import com.middleware.dhis2.model.Dhis2Response;
+import com.middleware.dhis2.service.Dhis2Service;
 
+/**
+ * Configuration class for setting up DHIS2 related components and services.
+ * This class defines beans that encapsulate the logic for interacting with a DHIS2 instance,
+ * including data validation, uploading, and processing import summaries. It leverages
+ * custom Camel integration beans to perform these operations within a Camel route context.
+ */
 @Configuration
 public class Dhis2ComponentConfiguration {
 
@@ -29,10 +35,24 @@ public class Dhis2ComponentConfiguration {
 
     @Autowired
     private Dhis2ImportSummarizer importSummarizer;
+
+    /**
+     * Creates and configures the {@link Dhis2Service} bean.
+     * This service provides a high-level interface for performing DHIS2 operations
+     * such as CSV validation, data upload, and import summarization.
+     *
+     * @return An implementation of the {@link Dhis2Service}.
+     */
     @Bean(name = "dhis2ComponentService")
     public Dhis2Service dhis2ComponentServiceImplementation() {
         return new Dhis2Service() {
 
+            /**
+             * Validates a CSV file using the CsvGuard component.
+             *
+             * @param request The DHIS2 request containing the CSV data.
+             * @return A {@link Dhis2Response} indicating the result of the validation.
+             */
             @Override
             public Dhis2Response validateCsvGuard(Dhis2Request request) {
                 try {
@@ -48,7 +68,6 @@ public class Dhis2ComponentConfiguration {
 
                     Boolean routeStop = exchange.getProperty(Exchange.ROUTE_STOP, Boolean.class);
                     if (routeStop != null && routeStop) {
-                        String body = exchange.getIn().getBody(String.class);
                         Integer statusCode = exchange.getIn().getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
 
                         return createResponseFromExchange(exchange, statusCode != null ? statusCode : 400);
@@ -62,6 +81,12 @@ public class Dhis2ComponentConfiguration {
                 }
             }
 
+            /**
+             * Uploads a CSV file to DHIS2.
+             *
+             * @param request The DHIS2 request containing the CSV data and other parameters.
+             * @return A {@link Dhis2Response} with the result of the upload operation.
+             */
             @Override
             public Dhis2Response uploadCsv(Dhis2Request request) {
                 try {
@@ -109,6 +134,12 @@ public class Dhis2ComponentConfiguration {
                 }
             }
 
+            /**
+             * Summarizes the import results from a DHIS2 response.
+             *
+             * @param request The DHIS2 request containing the response body from a previous import.
+             * @return A {@link Dhis2Response} with the summarized import status.
+             */
             @Override
             public Dhis2Response summarizeImport(Dhis2Request request) {
                 try {
@@ -138,6 +169,12 @@ public class Dhis2ComponentConfiguration {
                 }
             }
 
+            /**
+             * Executes the complete DHIS2 processing pipeline: validate, upload, and summarize.
+             *
+             * @param request The DHIS2 request to process.
+             * @return A {@link Dhis2Response} with the final result of the pipeline.
+             */
             @Override
             public Dhis2Response processComplete(Dhis2Request request) {
                 try {
@@ -182,6 +219,12 @@ public class Dhis2ComponentConfiguration {
                 }
             }
 
+            /**
+             * Creates a mock Camel {@link Exchange} from a {@link Dhis2Request}.
+             *
+             * @param request The source request.
+             * @return A new {@link Exchange} instance populated with data from the request.
+             */
             private Exchange createMockExchangeFromRequest(Dhis2Request request) {
                 Exchange exchange = new DefaultExchange(new DefaultCamelContext());
 
@@ -213,6 +256,13 @@ public class Dhis2ComponentConfiguration {
                 return exchange;
             }
 
+            /**
+             * Creates a {@link Dhis2Response} from a Camel {@link Exchange}.
+             *
+             * @param exchange   The exchange containing the response data.
+             * @param statusCode The HTTP status code to set in the response.
+             * @return A new {@link Dhis2Response} instance.
+             */
             private Dhis2Response createResponseFromExchange(Exchange exchange, int statusCode) {
                 String body = exchange.getIn().getBody(String.class);
                 Object details = parseJsonSafely(body);
@@ -229,6 +279,12 @@ public class Dhis2ComponentConfiguration {
                 }};
             }
 
+            /**
+             * Safely parses a string into a JSON object.
+             *
+             * @param jsonString The string to parse.
+             * @return The parsed JSON object or an escaped string if parsing fails.
+             */
             private Object parseJsonSafely(String jsonString) {
                 if (jsonString == null || jsonString.trim().isEmpty()) {
                     return "{}";
@@ -248,6 +304,12 @@ public class Dhis2ComponentConfiguration {
                 return "\"" + escape(jsonString) + "\"";
             }
 
+            /**
+             * Extracts the 'message' field from a JSON string.
+             *
+             * @param jsonString The JSON string to search.
+             * @return The extracted message or a default string.
+             */
             private String extractMessageFromJson(String jsonString) {
                 if (jsonString == null) return "";
 
@@ -262,6 +324,12 @@ public class Dhis2ComponentConfiguration {
                 return "Operation completed";
             }
 
+            /**
+             * Escapes special characters in a string.
+             *
+             * @param s The string to escape.
+             * @return The escaped string.
+             */
             private String escape(String s) {
                 if (s == null) return "";
                 return s.replace("\\", "\\\\").replace("\"", "\\\"");

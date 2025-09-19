@@ -8,6 +8,10 @@ import lombok.*;
 
 import java.sql.Timestamp;
 
+/**
+ * Entity capturing a single execution of a scheduled job including request/response payloads.
+ * Linked to {@link ScheduledJobs} and records timing, status, and error details.
+ */
 @Entity
 @Table(name = "job_execution_logs")
 @Data

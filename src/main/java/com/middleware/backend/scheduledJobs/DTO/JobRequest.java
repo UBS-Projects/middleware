@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 
+/**
+ * Request payload for creating or updating a scheduled job definition.
+ */
 @Data
 @Builder
 public class JobRequest {

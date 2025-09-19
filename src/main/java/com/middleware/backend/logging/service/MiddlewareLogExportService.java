@@ -26,10 +26,19 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+/**
+ * Service to export middleware API call logs to CSV or Excel formats using filters.
+ */
 public class MiddlewareLogExportService {
 
     private final MiddlewareApiCallLogRepository repository;
 
+    /**
+     * Exports logs filtered by the provided map into CSV or Excel.
+     * @param filters key/value filters interpreted by the JPA specification
+     * @param type export type: CSV or Excel/XLSX
+     * @return HTTP response containing the bytes and appropriate content headers
+     */
     public ResponseEntity<byte[]> exportLogs(Map<String, String> filters, String type) {
         try {
             Pageable pageable = PageRequest.of(0, 100_000);

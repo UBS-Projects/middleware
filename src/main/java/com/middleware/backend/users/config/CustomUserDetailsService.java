@@ -15,12 +15,27 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Loads application users for Spring Security authentication.
+ * <p>
+ * Users are fetched from the database only if ACTIVE and their authorities are
+ * composed of both role names (prefixed with ROLE_) and fine-grained
+ * permissions derived from those roles.
+ */
 @Service
 @AllArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-     private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    /**
+     * Loads a user by email (case-insensitive) and builds a Spring Security
+     * {@link UserDetails} with roles and permissions as authorities.
+     *
+     * @param email user email used as username
+     * @return a populated {@link UserDetails}
+     * @throws UsernameNotFoundException if user is not found or not active
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findActiveByEmail(email.toLowerCase())

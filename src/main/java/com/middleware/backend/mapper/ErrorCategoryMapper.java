@@ -4,9 +4,19 @@ import com.middleware.backend.dto.ErrorCategoryDto;
 import com.middleware.backend.model.ErrorCategory;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper component for converting between {@code ErrorCategory} entities and
+ * {@code ErrorCategoryDto} objects.
+ */
 @Component
 public class ErrorCategoryMapper {
 
+    /**
+     * Converts an entity to a DTO.
+     *
+     * @param entity the source entity; may be null
+     * @return the mapped DTO or null when input is null
+     */
     public ErrorCategoryDto toDto(ErrorCategory entity) {
         if (entity == null) {
             return null;
@@ -23,6 +33,12 @@ public class ErrorCategoryMapper {
                 .build();
     }
 
+    /**
+     * Converts a DTO to an entity instance.
+     *
+     * @param dto the source DTO; may be null
+     * @return the mapped entity or null when input is null
+     */
     public ErrorCategory toEntity(ErrorCategoryDto dto) {
         if (dto == null) {
             return null;

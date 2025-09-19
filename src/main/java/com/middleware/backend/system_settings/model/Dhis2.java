@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing DHIS2 integration settings (base URL, credentials, timeouts).
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -35,6 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * REST endpoints for authentication and token management.
+ * <p>
+ * Provides login/logout for end users and a restricted endpoint to generate
+ * service-user tokens with configurable expiration. Issued JWTs embed roles,
+ * permissions, allowed route identifiers, and the user's active status.
+ */
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
@@ -47,6 +54,16 @@ public class AuthController {
     private final TokenService tokenService;
 
 
+    /**
+     * Authenticates a user by email and password and returns a signed JWT.
+     * <p>
+     * The JWT includes user roles, permissions, allowed route IDs, and whether
+     * the account is active. Tokens are persisted for allow-list validation on
+     * subsequent requests and default to an 8-hour expiration.
+     *
+     * @param request credentials payload containing email and password
+     * @return 200 OK with {@link AuthResponse} that wraps the JWT; 404 if user is a system user
+     */
     @PostMapping("/login")
     @Operation(
             summary = "User login",
@@ -89,6 +106,12 @@ public class AuthController {
 
         return ResponseEntity.ok(new AuthResponse(jwt));
     }
+    /**
+     * Logs out a user by invalidating the provided JWT in the token store.
+     *
+     * @param req response wrapper containing the token to invalidate
+     * @return 200 OK if invalidated; 400/404 for invalid requests
+     */
     @PostMapping("/logout")
     @Operation(
             summary = "User logout",
@@ -97,6 +120,17 @@ public class AuthController {
     public ResponseEntity<?> logout(@RequestBody AuthResponse req) {
         return tokenService.logout(jwtUtil.extractEmail(req.getToken().toLowerCase()));
     }
+    /**
+     * Generates a JWT token for the given user id. Intended for service users.
+     * <p>
+     * Expiration can be specified by either a number of days or a custom date
+     * (formatted yyyy-MM-dd). If both are absent, defaults to 1 day.
+     *
+     * @param id user identifier
+     * @param expirationDays optional expiration in days
+     * @param customExpirationDate optional ISO date (yyyy-MM-dd) used as absolute expiration date
+     * @return 200 OK with {@link AuthResponse} wrapping the token, or 404 if user is not a service user
+     */
     @PostMapping("/token")
     @PreAuthorize("hasAuthority('user:generate-token')")
     @Operation(
@@ -177,21 +211,35 @@ public class AuthController {
     }
 
 
+    /**
+     * Login request payload containing user credentials.
+     */
     @Data
     static class AuthRequest {
+        /** user email used as username (case-insensitive). */
         private String email;
+        /** raw user password. */
         private String password;
     }
 
+    /**
+     * Registration payload (currently unused in this controller).
+     */
     @Data
     static class RegisterRequest {
+        /** email to register. */
         private String email;
+        /** initial password to set. */
         private String password;
     }
 
+    /**
+     * Authentication response wrapping a JWT or a message.
+     */
     @Data
     @AllArgsConstructor
     static class AuthResponse {
+        /** issued JWT token or a message in error scenarios. */
         private String token;
     }
 }

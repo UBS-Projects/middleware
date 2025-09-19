@@ -27,6 +27,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service layer for managing error categories.
+ * <p>
+ * Encapsulates validation rules (e.g., unique name, prevent deactivation when in use),
+ * mapping between DTOs and entities, audit field updates based on the current user,
+ * and export to CSV/Excel formats.
+ */
 @Service
 @RequiredArgsConstructor
 public class ErrorCategoryService {
@@ -34,16 +41,35 @@ public class ErrorCategoryService {
     private final ErrorCategoryRepository categoryRepository;
     private final ErrorCategoryMapper categoryMapper;
 
+    /**
+     * Retrieves a page of categories matching the given specification.
+     *
+     * @param spec     specification with optional filters
+     * @param pageable pagination and sorting options
+     * @return page of matching categories
+     */
     public Page<ErrorCategory> getAllCategories(Specification<ErrorCategory> spec, Pageable pageable) {
         return categoryRepository.findAll(spec, pageable);
     }
 
+    /**
+     * Returns all active categories as DTOs.
+     *
+     * @return list of active category DTOs
+     */
     public List<ErrorCategoryDto> getActiveCategories() {
         return categoryRepository.findByActiveTrue().stream()
                 .map(categoryMapper::toDto)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves a single category by id.
+     *
+     * @param id category identifier
+     * @return the mapped DTO
+     * @throws jakarta.persistence.EntityNotFoundException when not found
+     */
     public ErrorCategoryDto getCategoryById(Long id) {
         return categoryRepository.findById(id)
                 .map(categoryMapper::toDto)
@@ -51,6 +77,14 @@ public class ErrorCategoryService {
     }
 
     @Transactional
+    /**
+     * Creates a new error category after enforcing uniqueness constraint.
+     * Sets audit fields using the current authenticated user.
+     *
+     * @param dto input DTO
+     * @return created category as DTO
+     * @throws IllegalArgumentException when name already exists
+     */
     public ErrorCategoryDto createCategory(ErrorCategoryDto dto) {
         if (categoryRepository.existsByNameIgnoreCase(dto.getName())) {
             throw new IllegalArgumentException("Category with name '" + dto.getName() + "' already exists.");
@@ -65,6 +99,18 @@ public class ErrorCategoryService {
     }
 
     @Transactional
+    /**
+     * Updates an existing category, validating name uniqueness and preventing
+     * deactivation when the category is referenced by error mappings.
+     * Updates audit fields using the current authenticated user.
+     *
+     * @param id  category id
+     * @param dto updated values
+     * @return updated category as DTO
+     * @throws jakarta.persistence.EntityNotFoundException when the category does not exist
+     * @throws IllegalArgumentException when renaming to an existing name
+     * @throws IllegalStateException when attempting to deactivate a used category
+     */
     public ErrorCategoryDto updateCategory(Long id, ErrorCategoryDto dto) {
         ErrorCategory existingCategory = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
@@ -96,6 +142,16 @@ public class ErrorCategoryService {
 
 
     @Transactional
+    /**
+     * Toggles the active status of a category, ensuring active-to-inactive
+     * transitions are allowed only when not referenced by error mappings.
+     * Updates audit fields using the current authenticated user.
+     *
+     * @param id category id
+     * @return updated category as DTO
+     * @throws jakarta.persistence.EntityNotFoundException when the category does not exist
+     * @throws IllegalStateException when attempting to deactivate a used category
+     */
     public ErrorCategoryDto toggleCategory(Long id) {
         ErrorCategory category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
@@ -117,6 +173,15 @@ public class ErrorCategoryService {
         return categoryMapper.toDto(savedCategory);
     }
 
+    /**
+     * Exports categories matching the specification into CSV or XLSX format.
+     *
+     * @param spec     filters to apply
+     * @param pageable sort/pagination used to bound and order the export
+     * @param type     export type: "CSV", "Excel", or "XLSX"
+     * @return file bytes
+     * @throws IllegalArgumentException when an unsupported type is requested
+     */
     public byte[] exportFile(Specification<ErrorCategory> spec, Pageable pageable, String type) {
         Page<ErrorCategory> res = categoryRepository.findAll(spec, pageable);
         List<ErrorCategory> data = res.getContent();
@@ -134,6 +199,12 @@ public class ErrorCategoryService {
         }
     }
 
+    /**
+     * Converts a list of categories into a CSV string.
+     *
+     * @param categories list to serialize
+     * @return CSV contents
+     */
     private String convertToCSV(List<ErrorCategory> categories) {
         StringBuilder sb = new StringBuilder();
         // CSV headers
@@ -150,6 +221,12 @@ public class ErrorCategoryService {
         return sb.toString();
     }
 
+    /**
+     * Escapes a CSV field by doubling quotes and quoting when necessary.
+     *
+     * @param value raw field value
+     * @return escaped CSV field
+     */
     private String escapeCsv(String value) {
         if (value == null) return "";
         String escaped = value.replace("\"", "\"\"");
@@ -159,6 +236,13 @@ public class ErrorCategoryService {
         return escaped;
     }
 
+    /**
+     * Converts a list of categories into an XLSX workbook and returns its bytes.
+     *
+     * @param categories list to serialize
+     * @return xlsx bytes
+     * @throws IOException if writing fails
+     */
     private byte[] convertToExcel(List<ErrorCategory> categories) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Error Categories");

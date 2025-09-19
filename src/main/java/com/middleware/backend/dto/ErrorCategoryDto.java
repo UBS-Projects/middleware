@@ -8,6 +8,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Data transfer object representing an error category.
+ * <p>
+ * Mirrors the {@code ErrorCategory} entity for API payloads and responses,
+ * including audit fields and activation state.
+ */
 @Data
 @Builder
 @NoArgsConstructor

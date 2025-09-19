@@ -6,6 +6,12 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * JPA entity representing an error category used to classify errors.
+ * <p>
+ * Enforces unique names and tracks activation plus audit timestamps/users.
+ * Lifecycle hooks initialize timestamps and default activation state.
+ */
 @Entity
 @Table(name = "error_categories", uniqueConstraints = {
         @UniqueConstraint(columnNames = "name") // Ensure category names are unique
@@ -41,6 +47,9 @@ public class ErrorCategory {
     @Column(name = "updated_by", nullable = false)
     private String updatedBy;
 
+    /**
+     * Initializes audit timestamps and defaults prior to first persist.
+     */
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
@@ -50,6 +59,9 @@ public class ErrorCategory {
         }
     }
 
+    /**
+     * Refreshes the update timestamp before each update.
+     */
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();

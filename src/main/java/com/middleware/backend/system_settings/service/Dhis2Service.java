@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for retrieving and persisting DHIS2 system settings.
+ */
 @Service
 @AllArgsConstructor
 public class Dhis2Service {
@@ -18,11 +21,17 @@ public class Dhis2Service {
         return repo.findTopByOrderByIdDesc().orElse(null);
     }
 
+    /**
+     * Retrieves the current settings as DTO wrapped in HTTP response.
+     */
     public ResponseEntity<?> getSettings() {
         Dhis2 settings = getActiveSettings();
         return ResponseEntity.ok(Dhis2Mapper.mapToDto(settings));
     }
 
+    /**
+     * Creates or updates DHIS2 settings. Empty strings keep existing non-null values.
+     */
     public ResponseEntity<?> save(Dhis2Dto dhis2Dto) {
         Dhis2 existing = repo.findTopByOrderByIdDesc().orElse(new Dhis2());
 

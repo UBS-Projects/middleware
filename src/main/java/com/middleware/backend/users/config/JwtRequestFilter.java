@@ -22,6 +22,17 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Stateless authentication filter that validates JWTs on each request.
+ * <p>
+ * Responsibilities:
+ * - Extracts the Bearer token from the Authorization header
+ * - Verifies signature, expiration, and subject via {@link JwtUtil}
+ * - Checks token allow-list using {@link TokenRepository}
+ * - Resolves route access: for /camel/** paths, non-admin users must have the
+ *   matching routeId in the JWT "routes" claim as provided by DynamicRouteService
+ * - Populates the SecurityContext with a {@link UsernamePasswordAuthenticationToken}
+ */
 @Component
 @AllArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -30,6 +41,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private final DynamicRouteService routeService;
     private final TokenRepository tokenRepository;
 
+    /**
+     * Processes the current HTTP request by authenticating the user via JWT and
+     * enforcing route-level authorization when applicable.
+     *
+     * @param request current HTTP request
+     * @param response current HTTP response
+     * @param chain filter chain to continue processing
+     * @throws ServletException on filter errors
+     * @throws IOException on IO errors
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -56,7 +77,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     return;
                 }
 
-                // 🔑 Map request path → routeId
+                // Map request path → routeId
                 String path = request.getRequestURI();
                 String method = request.getMethod();
                 AntPathMatcher matcher = new AntPathMatcher();
@@ -73,14 +94,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                         String pattern = routePath.replaceAll("\\{[^/]+\\}", "*") + "/**";
                         if (matcher.match(pattern, normalizedPath)&&
                                 method.equalsIgnoreCase(routeMethod)) {
-                             matchedRouteId = routeService.getRouteIdByPathAndMethod(routePath,method);
+                            matchedRouteId = routeService.getRouteIdByPathAndMethod(routePath,method);
                             break;
                         }
                     }
 
                     List<String> allowedRoutes = jwtUtil.extractRoutes(jwt);
 
-                    // 🔑 Authorization check
+                    // Authorization check
                     if (matchedRouteId == null || allowedRoutes == null || !allowedRoutes.contains(matchedRouteId)) {
                         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                         response.setContentType("application/json");

@@ -8,9 +8,20 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Configures Cross-Origin Resource Sharing (CORS) for the application.
+ * This class defines global CORS rules to allow or restrict cross-origin requests
+ * from web browsers, which is essential for frontend applications interacting with this backend.
+ */
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
+    /**
+     * Configures CORS mappings for the entire application.
+     * This method sets up rules for allowed origins, methods, headers, and other CORS-related properties.
+     *
+     * @param registry The {@link CorsRegistry} to which the CORS mappings are added.
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -21,6 +32,13 @@ public class CorsConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 
+    /**
+     * Creates a {@link CorsConfigurationSource} bean that provides a global CORS configuration.
+     * This configuration is used by Spring Security and other parts of the framework
+     * to handle CORS pre-flight requests and add necessary headers to responses.
+     *
+     * @return A configured {@link CorsConfigurationSource} instance.
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

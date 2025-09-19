@@ -11,9 +11,18 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Repository for managing {@link Role} entities.
+ */
 @Repository
 public interface RoleRepository extends JpaRepository<Role,Long> {
+    /**
+     * Retrieves a role by its unique name.
+     */
     Optional<Role> findByRoleName(String name);
 
+    /**
+     * Finds roles by specification with pagination and sorting.
+     */
     Page<Role> findAll(Specification<Role> spec, Pageable pageable);
 }

@@ -44,12 +44,22 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/routes")
 @RequiredArgsConstructor
 @Slf4j
+/**
+ * REST controller exposing endpoints to create, update, manage, validate, query,
+ * and export dynamic Camel routes and their audit logs.
+ */
 public class DynamicRouteController {
 
     private final DynamicRouteService routeService;
     // private final RouteValidationService routeValidationService;
 
     @PostMapping("/create")
+    /**
+     * Creates a new dynamic route from YAML content.
+     * @param yaml Camel YAML content
+     * @param comment optional audit comment
+     * @return operation status text
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:create')")
     @Operation(
             summary = "Create a new dynamic route",
@@ -66,6 +76,12 @@ public class DynamicRouteController {
     }
 
     @PostMapping("/update")
+    /**
+     * Updates an existing dynamic route by uploading a new version.
+     * @param yaml Camel YAML content
+     * @param comment optional audit comment
+     * @return operation status text
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:edit')")
     @Operation(
             summary = "Update an existing dynamic route",
@@ -82,6 +98,10 @@ public class DynamicRouteController {
     }
 
     @DeleteMapping("/{routeId}")
+    /**
+     * Deactivates a route by id and removes it from the Camel context.
+     * @param routeId logical route identifier
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:delete')")
     @Operation(
             summary = "Deactivate a route",
@@ -98,6 +118,9 @@ public class DynamicRouteController {
     }
 
     @PostMapping("/{routeId}/revert/{version}")
+    /**
+     * Reverts a route to a previous version.
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:revert')")
     @Operation(
             summary = "Revert a route to a previous version",
@@ -114,6 +137,9 @@ public class DynamicRouteController {
     }
 
     @PostMapping("/{routeId}/stop")
+    /**
+     * Stops a running route.
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:stop')")
     @Operation(
             summary = "Stop a route",
@@ -130,6 +156,9 @@ public class DynamicRouteController {
     }
 
     @PostMapping("/{routeId}/start")
+    /**
+     * Starts the default version of a route.
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:start')")
     @Operation(
             summary = "Start a route",
@@ -146,6 +175,9 @@ public class DynamicRouteController {
     }
 
     @PostMapping(value = "/validate", consumes = "application/json", produces = "application/json")
+    /**
+     * Validates route YAML content by loading a temporary test route.
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:validate')")
     @Operation(
             summary = "Validate route YAML",
@@ -157,6 +189,9 @@ public class DynamicRouteController {
     }
 
     @GetMapping("/latest")
+    /**
+     * Returns the latest/default representation per route with optional filtering and sorting.
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:view')")
     @Operation(
             summary = "List latest routes",
@@ -304,6 +339,9 @@ public class DynamicRouteController {
     }
 
     @GetMapping("/{routeId}/versions/{version}")
+    /**
+     * Retrieves a specific version document for the given route.
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:view')")
     @Operation(
             summary = "Get a specific route version",
@@ -332,6 +370,9 @@ public class DynamicRouteController {
 // Add these methods to your DynamicRouteController
 
     @GetMapping("/export/excel")
+    /**
+     * Exports filtered/sorted routes list to an Excel file.
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:export')")
     @Operation(
             summary = "Export routes to Excel",
@@ -397,6 +438,9 @@ public class DynamicRouteController {
     }
 
     @GetMapping("/export/csv")
+    /**
+     * Exports filtered/sorted routes list to a CSV file.
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:export')")
     @Operation(
             summary = "Export routes to CSV",
@@ -461,6 +505,9 @@ public class DynamicRouteController {
         }
     }
     @GetMapping("/audits")
+    /**
+     * Retrieves paginated audit logs for route operations with filters.
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutesLogs:view')")
     @Operation(
             summary = "Get route audit logs",
@@ -502,6 +549,9 @@ public class DynamicRouteController {
 
 
     @GetMapping("/audits/{id}")
+    /**
+     * Retrieves a single audit record by id.
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutesLogs:view')")
     @Operation(
             summary = "Get a specific route audit log",
@@ -520,6 +570,9 @@ public class DynamicRouteController {
 
 
     @PostMapping("/audits/{type}")
+    /**
+     * Exports audit logs to CSV or Excel based on the provided type.
+     */
     @PreAuthorize("hasAnyAuthority('dynamicRoutesLogs:view')")
     @Operation(
             summary = "Export route audit logs",
