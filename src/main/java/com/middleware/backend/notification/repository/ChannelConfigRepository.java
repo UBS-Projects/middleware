@@ -6,6 +6,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,4 +17,6 @@ public interface ChannelConfigRepository extends JpaRepository<ChannelConfig, Lo
     Optional<ChannelConfig> findByName(String name);
 
     void removeById(Long id);
+
+    List<ChannelConfig> findTop5ByNameContainingIgnoreCase(String search);
 }

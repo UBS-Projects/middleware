@@ -28,10 +28,10 @@ public class ReceiverService {
     }
 
     public ReceiverDto create(ReceiverDto dto) {
-        repo.findByPhone(dto.getPhone())
+        repo.findByPhone(dto.getPhone().trim())
                 .ifPresent(r -> { throw new RuntimeException("Phone already in use"); });
 
-        repo.findByEmail(dto.getEmail())
+        repo.findByEmail(dto.getEmail().trim())
                 .ifPresent(r -> { throw new RuntimeException("Email already in use"); });
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -40,6 +40,9 @@ public class ReceiverService {
         dto.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         dto.setUpdatedBy(currentUser);
         dto.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        dto.setName(dto.getName().trim());
+        dto.setEmail(dto.getEmail().trim());
+        dto.setEmail(dto.getEmail().trim());
         Receiver saved = repo.save(ReceiverMapper.mapToEntity(dto));
         return ReceiverMapper.mapToDto(saved);
     }
@@ -49,9 +52,7 @@ public class ReceiverService {
                 .orElseThrow(() -> new RuntimeException("Receiver not found"));
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
-        entity.setName(dto.getName());
-        entity.setEmail(dto.getEmail());
-        entity.setPhone(dto.getPhone());
+        entity.setName(dto.getName().trim());
         entity.setUpdatedBy(currentUser);
         entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 

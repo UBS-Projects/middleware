@@ -3,12 +3,14 @@ package com.middleware.backend.notification.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.middleware.backend.notification.dto.NotificationTemplateDto;
+import com.middleware.backend.notification.dto.ReceiverRequest;
 import com.middleware.backend.notification.enums.ChannelType;
 import com.middleware.backend.notification.mapper.TemplateMapper;
 import com.middleware.backend.notification.model.NotificationTemplate;
 import com.middleware.backend.notification.repository.TemplateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -34,11 +37,12 @@ public class NotificationTemplateService {
     }
 
     public NotificationTemplateDto create(NotificationTemplateDto dto) {
-        repo.findByName(dto.getName())
+        repo.findByName(dto.getName().trim())
                 .ifPresent(t -> { throw new RuntimeException("Template already exists"); });
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
+        dto.setName(dto.getName().trim());
         dto.setCreatedBy(currentUser);
         dto.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         dto.setUpdatedBy(currentUser);
@@ -51,6 +55,9 @@ public class NotificationTemplateService {
     public NotificationTemplateDto update(NotificationTemplateDto dto) {
         NotificationTemplate entity = repo.findById(dto.getId())
                 .orElseThrow(() -> new RuntimeException("Template not found"));
+
+        repo.findByName(dto.getName().trim())
+                .orElseThrow(() -> new RuntimeException("Template Name Exists"));
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
@@ -106,5 +113,22 @@ public class NotificationTemplateService {
         }
 
         return response;
+    }
+
+    public List<ReceiverRequest> getReceivers(String search) {
+        if (search == null || search.isBlank()) {
+            return repo.findAll(PageRequest.of(0, 3)) // fetch first 5 if no search term
+                    .stream()
+                    .map(r->
+                            ReceiverRequest.builder().id(r.getId())
+                                    .name(r.getName())
+                                    .build())
+                    .toList();
+        } else {
+            return repo.findTop5ByNameContainingIgnoreCase(search).stream().map(r->
+                    ReceiverRequest.builder().id(r.getId())
+                            .name(r.getName())
+                            .build()).toList();
+        }
     }
 }

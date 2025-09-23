@@ -55,4 +55,11 @@ public class TemplateController {
     public ResponseEntity<?> validateJsonStructure(@RequestBody String jsonString) {
         return ResponseEntity.ok(service.validateJsonStructure(jsonString));
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllReceivers(
+            @RequestParam(required = false) String search
+    ) {
+        return ResponseEntity.ok(service.getReceivers(search));
+    }
 }
