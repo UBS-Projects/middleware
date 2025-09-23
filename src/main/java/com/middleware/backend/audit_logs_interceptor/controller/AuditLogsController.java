@@ -16,6 +16,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * REST controller for accessing and managing audit logs.
+ * Provides endpoints for retrieving, filtering, and exporting audit log data.
+ * Access to these endpoints is protected by method-level security.
+ */
 @RestController
 @RequestMapping("/api/auditlogs")
 @AllArgsConstructor
@@ -23,6 +28,23 @@ public class AuditLogsController {
 
     private final AuditLogsService service;
 
+    /**
+     * Retrieves a paginated list of audit logs based on specified filter criteria.
+     * Supports filtering by user, method, API path, response status, and a date range.
+     * Also supports sorting and pagination.
+     *
+     * @param user           Optional filter for the user associated with the log.
+     * @param method         Optional filter for the HTTP method (e.g., GET, POST).
+     * @param apiPath        Optional filter for the API path.
+     * @param startTime      Optional start of the date range for filtering logs (format: yyyy-MM-dd HH:mm:ss).
+     * @param endTime        Optional end of the date range for filtering logs (format: yyyy-MM-dd HH:mm:ss).
+     * @param responseStatus Optional filter for the HTTP response status code.
+     * @param sortedBy       The field to sort the results by. Defaults to "startTime".
+     * @param sortDirection  The direction of the sort (asc or desc). Defaults to "desc".
+     * @param page           The page number for pagination. Defaults to 0.
+     * @param size           The number of items per page. Defaults to 10.
+     * @return A {@link ResponseEntity} containing a {@link Page} of {@link AuditResponse} objects.
+     */
     @GetMapping("")
     @PreAuthorize("hasAuthority('auditLogs:view')")
     @Operation(
@@ -65,6 +87,12 @@ public class AuditLogsController {
     // Simple reusable filter builder
 
 
+    /**
+     * Retrieves a single audit log entry by its unique ID.
+     *
+     * @param id The unique identifier of the audit log to retrieve.
+     * @return A {@link ResponseEntity} containing the audit log details or a not-found response.
+     */
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('auditLogs:view')")
     @Operation(
@@ -80,6 +108,20 @@ public class AuditLogsController {
 
 //    ********************************************** Export File ***************************************************
 
+    /**
+     * Exports audit logs to a file (CSV or Excel) based on specified filter criteria.
+     *
+     * @param user           Optional filter for the user associated with the log.
+     * @param method         Optional filter for the HTTP method.
+     * @param apiPath        Optional filter for the API path.
+     * @param startTime      Optional start of the date range for filtering.
+     * @param endTime        Optional end of the date range for filtering.
+     * @param responseStatus Optional filter for the HTTP response status code.
+     * @param sortedBy       The field to sort the results by.
+     * @param sortDirection  The direction of the sort.
+     * @param type           The desired file format for export ("CSV" or "Excel").
+     * @return A {@link ResponseEntity} containing the exported file as a byte array.
+     */
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('auditLogs:export')")
     @Operation(

@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**
+ * Role entity grouping permissions and route permissions.
+ * Includes audit fields and a type to distinguish USER vs SYSTEM_USER.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +23,7 @@ import java.util.List;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /** primary key. */
     private Long id;
     @Column(unique = true,nullable = false, name = "role_name")
     private String roleName;
@@ -31,6 +36,7 @@ public class Role {
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
+    /** permissions granted to this role. */
     private List<Permission> permissions;
 
 
@@ -41,19 +47,24 @@ public class Role {
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "route_id")
     )
+    /** route-level permissions for dynamic endpoints. */
     private List<RoutesPermissions> routesPermissions;
 
     @Column(nullable = false,name = "created_by")
+    /** audit: creator email/id. */
     private String createdBy;
 
     @Column(nullable = false,name = "created_at")
+    /** audit: creation timestamp. */
     private Timestamp createdAt;
 
 
     @Column(nullable = false,name = "updated_by")
+    /** audit: last updater email/id. */
     private String updatedBy;
 
     @Column(nullable = false,name = "updated_at")
+    /** audit: last update timestamp. */
     private Timestamp updatedAt;
 
     public enum RoleType{

@@ -20,11 +20,30 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
+/**
+ * REST controller exposing read-only endpoints for job execution logs.
+ * <p>
+ * Provides pagination, filtering, and export capabilities for execution logs.
+ */
 @RestController
 @RequestMapping("/api/executionlogs")
 @AllArgsConstructor
 public class JobExecutionLogController {
     private final JobExecutionlogsService service;
+    /**
+     * Retrieves a paginated list of execution logs with optional filters.
+     *
+     * @param jobName optional job name filter (contains)
+     * @param apiEndpoint optional API endpoint filter (contains)
+     * @param status optional execution status filter (exact)
+     * @param sortedBy field to sort by (default startTime)
+     * @param sortDirection sort direction asc/desc (default desc)
+     * @param startAfter optional start date lower bound (inclusive)
+     * @param startBefore optional start date upper bound (inclusive)
+     * @param page zero-based page index
+     * @param size page size
+     * @return a ResponseEntity containing a page of logs or an error status
+     */
     @GetMapping
     @PreAuthorize("hasAuthority('jobExecutionLogs:view')")
     @Operation(
@@ -57,6 +76,12 @@ public class JobExecutionLogController {
         return service.getAll(spec, pageable);
     }
 
+    /**
+     * Fetches a single execution log by its identifier.
+     *
+     * @param id the execution log id
+     * @return the log entry if found or a 404/appropriate error from service
+     */
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('jobExecutionLogs:view')")
     @Operation(
@@ -72,6 +97,19 @@ public class JobExecutionLogController {
 
 
 
+    /**
+     * Exports execution logs into CSV or Excel file.
+     *
+     * @param jobName optional job name filter (contains)
+     * @param apiEndpoint optional API endpoint filter (contains)
+     * @param status optional execution status filter (exact)
+     * @param sortedBy field to sort by (default startTime)
+     * @param sortDirection sort direction asc/desc (default desc)
+     * @param startAfter optional start date lower bound (inclusive)
+     * @param startBefore optional start date upper bound (inclusive)
+     * @param type export type, either CSV or EXCEL/XLSX
+     * @return a ResponseEntity with file bytes and appropriate headers
+     */
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('jobExecutionLogs:export')")
     @Operation(
@@ -115,6 +153,6 @@ public class JobExecutionLogController {
                 .body(fileBytes);
     } catch (Exception e) {
         return ResponseEntity.internalServerError().build();
-    }
+        }
     }
 }

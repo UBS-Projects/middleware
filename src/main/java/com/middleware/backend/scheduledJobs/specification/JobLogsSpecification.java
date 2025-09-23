@@ -8,12 +8,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+/**
+ * Specification helpers for filtering {@link ExecutionHistory} audit records.
+ */
 public class JobLogsSpecification {
 
     public enum MatchMode {
         EXACT, CONTAINS
     }
 
+    /**
+     * Generic field filter supporting exact or contains semantics for string fields.
+     */
     public static <T> Specification<ExecutionHistory> hasField(String fieldName, Object value, MatchMode matchMode) {
         return (root, query, cb) -> {
             if (value == null) {
@@ -36,6 +42,9 @@ public class JobLogsSpecification {
         };
     }
 
+    /**
+     * Filters audit records by createdAt between provided dates (inclusive day bounds).
+     */
     public static <T> Specification<ExecutionHistory> createdBetween(LocalDate createdBefore, LocalDate createdAfter) {
         return (root, query, cb) -> {
             Predicate predicate = cb.conjunction();

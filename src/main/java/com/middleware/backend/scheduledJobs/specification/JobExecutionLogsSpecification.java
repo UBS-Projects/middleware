@@ -7,10 +7,16 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
+/**
+ * Factory for {@link Specification} filters against {@link JobExecutionLogs}.
+ */
 public class JobExecutionLogsSpecification {
 
     public enum MatchMode { EXACT, CONTAINS }
 
+    /**
+     * Builds a generic equals/contains filter for the given field. Supports nested paths like "job.jobName".
+     */
     public static <T> Specification<JobExecutionLogs> hasField(String field, T value, MatchMode matchMode) {
         return (root, query, cb) -> {
             if (value == null) return null;
@@ -38,6 +44,9 @@ public class JobExecutionLogsSpecification {
         };
     }
 
+    /**
+     * Filters logs by startTime between inclusive day boundaries from LocalDate inputs.
+     */
     public static Specification<JobExecutionLogs> startedBetween(LocalDate startAfter, LocalDate startBefore) {
         return (root, query, cb) -> {
             if (startAfter == null && startBefore == null) return null;

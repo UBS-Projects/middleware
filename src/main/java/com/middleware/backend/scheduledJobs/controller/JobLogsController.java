@@ -19,12 +19,30 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
+/**
+ * REST controller exposing audit logs for user operations on scheduled jobs.
+ */
 @RestController
 @RequestMapping("/api/scheduledjobslogs")
 @AllArgsConstructor
 public class JobLogsController {
     private final JobLogsService service;
 
+        /**
+         * Retrieves a paginated list of user actions performed on scheduled jobs.
+         *
+         * @param jobName optional job name filter (contains)
+         * @param userEmail optional user email filter (contains)
+         * @param apiEndpoint optional API endpoint filter (contains)
+         * @param status optional action status filter (exact)
+         * @param sortedBy field to sort by (default createdAt)
+         * @param sortDirection asc/desc (default desc)
+         * @param createdAfter optional lower bound for creation date (inclusive)
+         * @param createdBefore optional upper bound for creation date (inclusive)
+         * @param page zero-based page index
+         * @param size page size
+         * @return list of logs matching filters
+         */
     @GetMapping()
     @PreAuthorize("hasAuthority('scheduledJobsLogs:view')")
     @Operation(
@@ -59,6 +77,19 @@ public class JobLogsController {
     }
 
 
+    /**
+     * Exports audit logs into CSV or Excel file.
+     *
+     * @param jobName optional job name filter (contains)
+     * @param apiEndpoint optional API endpoint filter (contains)
+     * @param status optional action status filter (exact)
+     * @param sortedBy field to sort by (default createdAt)
+     * @param sortDirection asc/desc (default desc)
+     * @param createdAfter optional lower bound date (inclusive)
+     * @param createdBefore optional upper bound date (inclusive)
+     * @param type export type, CSV or EXCEL/XLSX
+     * @return the exported file bytes with content headers
+     */
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('scheduledJobsLogs:export')")
     @Operation(

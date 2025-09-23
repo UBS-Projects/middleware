@@ -22,6 +22,11 @@ import java.security.cert.X509Certificate;
 import java.util.Base64;
 
 @Component("dhis2CsvDryRunThenCommit")
+/**
+ * Camel Processor that uploads CSV data to DHIS2's dataValueSets API.
+ * It performs an optional dry-run first to detect conflicts, then commits;
+ * or imports directly when dry-run is disabled. Produces a unified JSON response.
+ */
 public class Dhis2CsvDryRunThenCommit implements Processor {
 
     private static final Logger log = LoggerFactory.getLogger(Dhis2CsvDryRunThenCommit.class);
@@ -35,6 +40,13 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
     private volatile int lastResponseCode = 0;
 
     @Override
+    /**
+     * Executes the DHIS2 CSV upload flow using exchange properties populated by {@code CsvGuard}:
+     * - {@code _csvBytes}: raw CSV payload
+     * - {@code _queryBase}: base query parameters
+     * - {@code dryRun}: "true"/"false" string flag
+     * Writes unified JSON body and HTTP status headers on the exchange.
+     */
     public void process(Exchange exchange) {
         Message in = exchange.getIn();
 
@@ -120,6 +132,10 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
         }
     }
 
+    /**
+     * Calls DHIS2 dataValueSets endpoint with the given CSV and query parameters.
+     * Returns the response body and stores the HTTP code internally.
+     */
     private String callDhis2(byte[] csv, String qBase, boolean dryRun) {
         HttpURLConnection conn = null;
         try {
@@ -172,6 +188,9 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
         catch (Exception e) { return 0; }
     }
 
+    /**
+     * Detects conflict conditions in DHIS2 responses using status code and JSON patterns.
+     */
     private static boolean checkConflictsYamlLogic(String response, int responseCode) {
         if (responseCode == 409) return true;
         if (response == null) return false;

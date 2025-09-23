@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.sql.Timestamp;
+
+/**
+ * Detailed DTO for returning a single job execution log including request/response data.
+ */
 @Data
 @AllArgsConstructor
 public class LogResponse {
@@ -22,6 +26,12 @@ public class LogResponse {
     private String status;   // SUCCESS / FAILURE
     private String errorMessage;
 
+    /**
+     * Maps a {@link JobExecutionLogs} entity to a detailed response DTO.
+     *
+     * @param entity source execution log entity
+     * @return mapped {@code LogResponse}
+     */
     public static LogResponse fromEntity(JobExecutionLogs entity) {
         return new LogResponse(
                 entity.getId(),

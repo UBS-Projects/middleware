@@ -23,19 +23,31 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Service handling persistence and export of user action logs for scheduled jobs.
+ */
 @Service
 @AllArgsConstructor
 public class JobLogsService {
     private final LogsRepository repo;
+    /**
+     * Saves an audit entry for a scheduled job action.
+     */
     public void save(JobExecutionDTO job){
         repo.save(LogsMapper.MapToEntity(job));
     }
 
+    /**
+     * Retrieves a page of audit entries matching filters.
+     */
     public ResponseEntity<?> getAll(Specification<ExecutionHistory> spec, Pageable pageable) {
         Page<ExecutionHistory> page = repo.findAll(spec, pageable);
         return ResponseEntity.ok(page);
     }
 
+    /**
+     * Exports audit entries to CSV or Excel bytes.
+     */
     public byte[] exportFile(Specification<ExecutionHistory> spec, Pageable pageable, String type) throws IOException {
         List<ExecutionHistory> data;
         try {

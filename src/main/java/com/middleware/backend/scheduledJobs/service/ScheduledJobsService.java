@@ -39,6 +39,10 @@ import java.util.regex.Matcher;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+/**
+ * Service orchestrating lifecycle of scheduled jobs: create, edit, pause/resume, deactivate, test, list, and export.
+ * Integrates with Quartz to schedule jobs and with repositories for persistence.
+ */
 @Service
 @AllArgsConstructor
 public class ScheduledJobsService{
@@ -48,6 +52,9 @@ public class ScheduledJobsService{
     private final UserRepository userRepo;
     private final MiddlewareApiCallLogRepository middlewareApiCallLogRepository; // Add this dependency
 
+    /**
+     * Loads all enabled jobs from DB and schedules them with Quartz.
+     */
     public void scheduleAllActiveJobs() {
         List<ScheduledJobs> jobs = repo.findByEnabledTrue();
         List<JobRequest> jobDTOs = jobs.stream()
@@ -56,6 +63,9 @@ public class ScheduledJobsService{
         jobDTOs.forEach(this::scheduleJob);
     }
 
+    /**
+     * Creates Quartz job + trigger for the given job definition.
+     */
     private void scheduleJob(JobRequest job) {
         try {
             JobDetail jobDetail = JobBuilder.newJob(JobExecution.class)
@@ -76,6 +86,13 @@ public class ScheduledJobsService{
         }
     }
 
+    /**
+     * Persists a new job definition and schedules it.
+     *
+     * @param job job request payload
+     * @param email user email performing the operation
+     * @return saved job
+     */
     public ScheduledJobs createNewJob(JobRequest job, String email) {
         Optional<ScheduledJobs> sc = repo.findByJobNameAndActiveTrue(job.getJobName());
         if(sc.isPresent()){
@@ -105,6 +122,9 @@ public class ScheduledJobsService{
         return savedJob;
     }
 
+    /**
+     * Disables a job and pauses its Quartz schedule.
+     */
     public ScheduledJobs pauseJob(Long id, String email) throws SchedulerException {
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
@@ -117,6 +137,9 @@ public class ScheduledJobsService{
         return job;
     }
 
+    /**
+     * Enables a job and resumes or creates its Quartz schedule if missing.
+     */
     public ScheduledJobs resumeJob(Long id, String email) throws SchedulerException {
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
@@ -135,6 +158,9 @@ public class ScheduledJobsService{
         return job;
     }
 
+    /**
+     * Updates a job definition and re-schedules it.
+     */
     public ScheduledJobs editJob(JobRequest job, String email) throws SchedulerException {
         ScheduledJobs existingJob = repo.findById(job.getId())
                 .orElseThrow(() -> new RuntimeException("Job not found"));
@@ -167,11 +193,17 @@ public class ScheduledJobsService{
         return updatedJob;
     }
 
+    /**
+     * Returns active jobs matching the given specification.
+     */
     public Page<ScheduledJobs> getAllRoutes(Specification<ScheduledJobs> spec, Pageable pageable) {
         Specification<ScheduledJobs> activeSpec = (root, query, cb) -> cb.isTrue(root.get("active"));
         return repo.findAll(spec.and(activeSpec), pageable);
     }
 
+    /**
+     * Soft-deletes a job (active=false), disables it, and pauses scheduling.
+     */
     public ScheduledJobs deactivateJob(Long id, String email) throws SchedulerException {
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
@@ -184,6 +216,9 @@ public class ScheduledJobsService{
         return job;
     }
 
+    /**
+     * Executes a test HTTP call simulating scheduled job behavior, without persisting or scheduling.
+     */
     public boolean test(JobRequest job) throws Exception {
         HttpHeaders headers = new HttpHeaders();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -235,6 +270,9 @@ public class ScheduledJobsService{
         }
     }
 
+    /**
+     * Exports jobs matching spec to CSV or Excel bytes.
+     */
     public byte[] exportFile(Specification<ScheduledJobs> spec, Pageable pageable, String type) throws IOException {
         Specification<ScheduledJobs> activeSpec = (root, query, cb) -> cb.isTrue(root.get("active"));
         Page<ScheduledJobs> res = repo.findAll(spec.and(activeSpec), pageable);
@@ -316,6 +354,9 @@ public class ScheduledJobsService{
         }
     }
 
+    /**
+     * Returns a view-model of a job including creator/updater emails.
+     */
     public ResponseEntity<?> getById(long id) {
         Optional<ScheduledJobs> job = repo.findById(id);
         if(job.isEmpty())

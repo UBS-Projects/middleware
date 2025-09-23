@@ -8,7 +8,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * Repository for persisting and querying DHIS2 settings.
+ */
 @Repository
 public interface Dhis2Repository extends JpaRepository<Dhis2,Long> {
+    /**
+     * Returns the latest saved settings by descending id.
+     */
     Optional<Dhis2> findTopByOrderByIdDesc();
 }

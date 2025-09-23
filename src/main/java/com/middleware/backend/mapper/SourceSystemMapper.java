@@ -4,9 +4,19 @@ import com.middleware.backend.dto.SourceSystemDto;
 import com.middleware.backend.model.SourceSystem;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper component for converting between {@code SourceSystem} entities and
+ * {@code SourceSystemDto} objects.
+ */
 @Component
 public class SourceSystemMapper {
 
+    /**
+     * Converts an entity to a DTO.
+     *
+     * @param entity the source entity; may be null
+     * @return the mapped DTO or null when input is null
+     */
     public SourceSystemDto toDto(SourceSystem entity) {
         if (entity == null) {
             return null;
@@ -23,6 +33,12 @@ public class SourceSystemMapper {
                 .build();
     }
 
+    /**
+     * Converts a DTO to an entity instance.
+     *
+     * @param dto the source DTO; may be null
+     * @return the mapped entity or null when input is null
+     */
     public SourceSystem toEntity(SourceSystemDto dto) {
         if (dto == null) {
             return null;

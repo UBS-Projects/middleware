@@ -22,6 +22,10 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+/**
+ * Service that reconstructs and replays failed API calls based on stored request snapshots.
+ * Applies safety checks and sets retry headers to ensure attempts are tracked properly.
+ */
 public class MiddlewareLogRetryService {
 
     private final MiddlewareApiCallLogRepository repository;
@@ -30,6 +34,10 @@ public class MiddlewareLogRetryService {
     @Value("${middleware.retry.base-url:http://localhost:8081}")
     private String baseUrl;
 
+    /**
+     * Attempts to replay a failed API call identified by the correlation UUID.
+     * Returns validation errors for invalid states, or dispatch result.
+     */
     public ResponseEntity<?> retryApiCall(String uuid) {
         MiddlewareApiCallLog lastAttempt = repository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(uuid.toLowerCase());
 
@@ -49,6 +57,7 @@ public class MiddlewareLogRetryService {
         return executeRetry(originalRequest);
     }
 
+    /** Validates whether retry is allowed for the last attempt snapshot. */
     private ResponseEntity<?> validateRetryConditions(MiddlewareApiCallLog lastAttempt) {
         if (!"COMPLETED".equalsIgnoreCase(lastAttempt.getStatus())) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
@@ -65,6 +74,7 @@ public class MiddlewareLogRetryService {
         return null;
     }
 
+    /** Reconstructs the HTTP request and performs the retry using RestTemplate. */
     private ResponseEntity<?> executeRetry(MiddlewareApiCallLog originalRequest) {
         String url = buildUrl(originalRequest);
         if (url == null) {

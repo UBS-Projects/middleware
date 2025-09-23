@@ -26,6 +26,12 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Business logic for user management.
+ * <p>
+ * Handles CRUD operations, status changes, pagination and filtering, password
+ * encoding, and mapping between entities and DTOs.
+ */
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -34,12 +40,23 @@ public class UserService {
     private final JwtUtil jwtUtil;
     private final UserMapper userMapper;
 
+    /**
+     * Retrieves a user by id.
+     * @param id user id
+     * @return 200 with {@link UserResponse} or 400 if not found
+     */
     public ResponseEntity<?> getUserById(Long id) {
         Optional<User> user = repo.findById(id);
         return user.isPresent()? ResponseEntity.ok(userMapper.mapToDto(user.get())):
                 ResponseEntity.badRequest().body("Not Found");
     }
 
+    /**
+     * Returns a paginated list of users mapped to DTO, applying the provided specification.
+     * @param spec filter specification
+     * @param pageable pagination and sorting
+     * @return page of {@link UserResponse}
+     */
     public Page<?> getAll(Specification<User> spec, Pageable pageable) {
         Page<User> page = repo.findAll(spec, pageable);
         Page<UserResponse> res = page.map(user ->
@@ -65,6 +82,12 @@ public class UserService {
         return res;
     }
 
+    /**
+     * Creates a new user, encoding the password and setting audit fields.
+     * Rejects duplicate emails.
+     * @param user request payload
+     * @return 201 with created entity or 400 if exists
+     */
     public ResponseEntity<?> createNewUser(UserRequest user) {
 
         Optional<User> exists = repo.findByEmail(user.getEmail().toLowerCase());
@@ -84,6 +107,11 @@ public class UserService {
         return ResponseEntity.status(HttpStatus.CREATED).body(req);
     }
 
+    /**
+     * Soft-deletes a user by setting status to INACTIVE and updating audit fields.
+     * @param id user id
+     * @return 200 when updated or 400 if not found
+     */
     public ResponseEntity<?> deleteUser(Long id) {
         Optional<User> user = repo.findById(id);
         if(user.isEmpty())return ResponseEntity.badRequest().body("User was not Found");
@@ -96,6 +124,13 @@ public class UserService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Edits an existing user; selectively updates fields and encodes password if provided.
+     * Also replaces roles when provided.
+     * @param id user id
+     * @param user partial update payload
+     * @return 200 with updated entity or 400 if not found
+     */
     public ResponseEntity<?> editUser(Long id, UserRequest user) {
         Optional<User> exists = repo.findById(id);
         if(exists.isEmpty())return ResponseEntity.badRequest().body("User wasn't FOUND");
@@ -122,6 +157,11 @@ public class UserService {
         return ResponseEntity.ok(exists.get());
     }
 
+    /**
+     * Activates a user by setting status to ACTIVE and updating audit fields.
+     * @param id user id
+     * @return 200 when updated or 400 if not found
+     */
     public ResponseEntity<?> activateUser(Long id) {
         Optional<User> user = repo.findById(id);
         if(user.isEmpty())return ResponseEntity.badRequest().body("User was not Found");
@@ -134,6 +174,12 @@ public class UserService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Retrieves users by role name with pagination and returns a minimal projection.
+     * @param role role name
+     * @param page page index (size fixed to 10)
+     * @return page of {@link UserResponseRoles}
+     */
     public ResponseEntity<?> getUsersByRole(String role, int page) {
         Page<UserResponseRoles> users = repo.findByRoles_RoleName(role.toUpperCase(), PageRequest.of(page,10)).map(
                 user -> UserResponseRoles.builder()

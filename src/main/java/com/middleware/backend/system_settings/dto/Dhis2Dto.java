@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO representing DHIS2 settings payload exchanged via the API.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

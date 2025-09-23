@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
+/**
+ * View-model representing a scheduled job with metadata used in responses.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 
+/**
+ * Lightweight DTO for listing job execution log entries.
+ */
 @Data
 @AllArgsConstructor
 public class JobExecutionLogDTO {
@@ -18,6 +21,12 @@ public class JobExecutionLogDTO {
     private int responseStatus;
     private String status;   // SUCCESS / FAILURE
 
+    /**
+     * Maps a {@link JobExecutionLogs} entity to a DTO instance for responses.
+     *
+     * @param entity source entity
+     * @return mapped {@code JobExecutionLogDTO}
+     */
     public static JobExecutionLogDTO fromEntity(JobExecutionLogs entity) {
         return new JobExecutionLogDTO(
                 entity.getId(),

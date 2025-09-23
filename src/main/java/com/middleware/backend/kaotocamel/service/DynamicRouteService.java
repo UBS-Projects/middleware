@@ -64,6 +64,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @RequiredArgsConstructor
 @Slf4j
 @EnableScheduling
+/**
+ * Service for managing dynamically defined Apache Camel routes stored in the database.
+ * Provides CRUD-like operations on route versions, validation and test loading of YAML,
+ * synchronization of runtime route state with database state, and export utilities.
+ */
 public class DynamicRouteService {
 
     private final CamelContext camelContext;
@@ -74,7 +79,15 @@ public class DynamicRouteService {
     private final RoutesPermissionsService perService;
 
     /**
-     * Uploads a new route version (or first version if new routeId)
+     * Creates or updates a route by uploading a YAML definition and activating it.
+     * When {@code operation} is "create" it ensures no duplicate path/method exists;
+     * when "update" it increments the version of the existing route.
+     *
+     * @param yamlContent the Camel YAML route definition
+     * @param comment optional change note to store with the version
+     * @param operation either "create" or "update"
+     * @return a human-readable status message
+     * @throws RuntimeException if validation fails or the route cannot be loaded
      */
     @Transactional
     public String updateRoute(String yamlContent, String comment, String operation) {
@@ -175,7 +188,11 @@ public class DynamicRouteService {
     }
 
     /**
-     * Improved validateRoute method with better error handling and cleanup
+     * Validates a YAML route by modifying it to a unique test form and attempting
+     * to load and start it in the Camel context. Always cleans up the temporary route.
+     *
+     * @param yamlContent original YAML definition to validate
+     * @return validation result with error details when invalid
      */
     public RouteValidationResult validateRoute(String yamlContent) {
         String testRouteId = null;
@@ -251,8 +268,8 @@ public class DynamicRouteService {
     }
 
     /**
-     * Modified version of modifyYamlForTest specifically for validation
-     * This ensures unique route IDs and paths to avoid conflicts
+     * Rewrites the given YAML to a validation-safe form by ensuring a unique route id
+     * and avoiding endpoint conflicts (e.g., rest, servlet, direct, seda).
      */
     private String modifyYamlForValidation(String originalYaml, String testRouteId) {
         try {
@@ -325,7 +342,7 @@ public class DynamicRouteService {
     }
 
     /**
-     * Parse route loading errors to provide more meaningful messages
+     * Extracts the most meaningful message from a route-loading exception chain.
      */
     private String parseRouteLoadingError(Exception e) {
         String message = e.getMessage();
@@ -362,7 +379,7 @@ public class DynamicRouteService {
     }
 
     /**
-     * Improved cleanup method for test routes
+     * Removes a temporary test route from the Camel context if present.
      */
     private void cleanupTestRoute(String testRouteId) {
         if (testRouteId == null) {
@@ -400,6 +417,7 @@ public class DynamicRouteService {
     }
 
     private RouteValidationResult checkRouteMandatoryFields(String yamlContent) {
+        // Validates presence and format of basic metadata (id, description)
         try {
             Map<String, String> metadata = extractRouteMetadata(yamlContent);
             String routeId = metadata.get("id");
@@ -424,6 +442,7 @@ public class DynamicRouteService {
     }
 
     private void loadRoute(String yamlContent, String routeId) {
+        // Loads a route from YAML into the Camel context using the given routeId as location hint
         try {
             Resource resource = new StringResource("inline:" + routeId + ".yaml", yamlContent);
             RoutesBuilder builder = yamlRoutesLoader.loadRoutesBuilder(resource);
@@ -435,6 +454,7 @@ public class DynamicRouteService {
 
     // Keep the old modifyYamlForTest for backward compatibility if needed elsewhere
     public static String modifyYamlForTest(String originalYaml) {
+        // Legacy helper retained for backward compatibility
         try {
             // Parse the YAML
             Yaml yaml = new Yaml(new SafeConstructor(new org.yaml.snakeyaml.LoaderOptions()));
@@ -492,6 +512,7 @@ public class DynamicRouteService {
     }
 
     private void tryStopAndRemoveRoute(String routeId) {
+        // Best-effort removal of a temporary route
         try {
             if (camelContext.getRouteController().getRouteStatus(routeId) != null) {
                 camelContext.getRouteController().stopRoute(routeId);
@@ -504,7 +525,10 @@ public class DynamicRouteService {
     }
 
     /**
-     * Deactivates a route (soft delete) and stops in Camel
+     * Deactivates the currently active version of a route and removes it from Camel.
+     *
+     * @param routeId logical route identifier
+     * @return status message
      */
     @Transactional
     public String deactivateRoute(String routeId) {
@@ -552,7 +576,11 @@ public class DynamicRouteService {
     }
 
     /**
-     * Reverts to a previous version of a route
+     * Reverts a route to a previous version and marks it active/default.
+     *
+     * @param routeId logical route identifier
+     * @param version target version to activate
+     * @return status message
      */
     @Transactional
     public String revertToVersion(String routeId, int version) {
@@ -604,6 +632,7 @@ public class DynamicRouteService {
 
     @Transactional
     public String setVersionAsDefault(String routeId, int version) {
+        // Activates the specified version and marks it as default
         String userEmail = "anonymous"; // fallback
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getPrincipal() != null) {
@@ -646,7 +675,10 @@ public class DynamicRouteService {
     }
 
     /**
-     * Stops a route
+     * Stops a route in Camel and marks the active DB version inactive.
+     *
+     * @param routeId logical route identifier
+     * @return status message
      */
     @Transactional
     public String stopRoute(String routeId) {
@@ -686,7 +718,10 @@ public class DynamicRouteService {
     }
 
     /**
-     * Starts the latest version of a route
+     * Starts the default version of a route in Camel and marks it active in DB.
+     *
+     * @param routeId logical route identifier
+     * @return status message
      */
     @Transactional
     public String startRoute(String routeId) {
@@ -728,7 +763,7 @@ public class DynamicRouteService {
     }
 
     /**
-     * Lists all routes
+     * Lists all route versions with pagination.
      */
     public Page<DynamicRouteEntity> getAllRoutes(Pageable pageable) {
         log.info("Fetching all routes with pagination: page={}, size={}", pageable.getPageNumber(),
@@ -737,30 +772,36 @@ public class DynamicRouteService {
     }
 
     public Page<DynamicRouteEntity> getAllRoutes(Specification<DynamicRouteEntity> spec, Pageable pageable) {
+        // Lists all routes matching the given specification
         log.info("Fetching all routes with pagination: page={}, size={}", pageable.getPageNumber(),
                 pageable.getPageSize());
         return routeRepository.findAll(spec, pageable);
     }
 
     public List<DynamicRouteEntity> getActiveRoutes() {
+        // Returns all active routes (any version) without paging
         log.info("Fetching active routes with pagination");
         return routeRepository.findByActiveTrue();
     }
 
     public Page<DynamicRouteEntity> getRoutesByRouteId(String routeId, Pageable pageable) {
+        // Returns all versions of a single routeId
         log.info("Fetching routes for routeId={} with pagination", routeId);
         return routeRepository.findByRouteId(routeId, pageable);
     }
 
     public Optional<DynamicRouteEntity> getSpecificVersion(String routeId, int version) {
+        // Looks up a specific version for a routeId
         return routeRepository.findByRouteIdAndVersion(routeId, version);
     }
 
     public List<DynamicRouteEntity> listVersions(String routeId) {
+        // Lists versions of a routeId newest first
         return routeRepository.findByRouteIdOrderByVersionDesc(routeId);
     }
 
     public Page<DynamicRouteEntity> getLatestRoutesOptimized(Pageable pageable) {
+        // Selects latest/default/active representation per routeId and paginates
         List<DynamicRouteEntity> allRoutes = routeRepository.findAllOrderByCreatedAtDesc();
 
         Map<String, DynamicRouteEntity> latestRoutes = allRoutes.stream().collect(Collectors
@@ -789,6 +830,7 @@ public class DynamicRouteService {
     private boolean applyAllFilters(DynamicRouteEntity route, String routeId, String description, String path,
                                     String httpMethod, Boolean active, String comment, String yamlContains,
                                     LocalDateTime createdAfter, LocalDateTime createdBefore) {
+        // Applies in-memory filter criteria to a single route entity
 
         // Apply active filter
         if (active != null && route.isActive() != active) {
@@ -857,6 +899,7 @@ public class DynamicRouteService {
     public Page<DynamicRouteEntity> getLatestRoutesWithFiltersOptimized(String routeId, String description, String path,
                                                                         String httpMethod, Boolean active, String comment, String yamlContains, LocalDateTime createdAfter,
                                                                         LocalDateTime createdBefore, Pageable pageable) {
+        // Optimized latest-versions query with in-memory filtering then pagination
 
         // Step 1: Get all routes and find the latest version of each routeId
         List<DynamicRouteEntity> allRoutes = routeRepository.findAllOrderByCreatedAtDesc();
@@ -887,7 +930,8 @@ public class DynamicRouteService {
     }
 
     /**
-     * Selects the latest/most appropriate route from two routes with the same routeId
+     * Selects the best candidate between two versions of the same route based on
+     * default flag, active flag, version number, and creation date.
      */
     private DynamicRouteEntity selectLatestRoute(DynamicRouteEntity a, DynamicRouteEntity b) {
         if (a == null) return b;
@@ -910,7 +954,7 @@ public class DynamicRouteService {
     }
 
     /**
-     * Creates a comparator for sorting routes by different properties
+     * Creates a comparator for sorting routes by a supported property name.
      */
     private Comparator<DynamicRouteEntity> getComparator(String property, boolean ascending) {
         Comparator<DynamicRouteEntity> comparator;
@@ -958,7 +1002,7 @@ public class DynamicRouteService {
     }
 
     /**
-     * Applies pagination to a list of routes
+     * Applies {@link Pageable} pagination to an in-memory list of routes.
      */
     private Page<DynamicRouteEntity> applyPagination(List<DynamicRouteEntity> routes, Pageable pageable) {
         int start = (int) pageable.getOffset();
@@ -971,7 +1015,7 @@ public class DynamicRouteService {
     }
 
     /**
-     * Builds JPA Specification for filtering routes
+     * Builds a JPA {@link Specification} for filtering routes by common fields.
      */
     private Specification<DynamicRouteEntity> buildSpecification(String routeId, String description, String path,
                                                                  String httpMethod, Boolean active, String comment, String yamlContains, LocalDateTime createdAfter,
@@ -989,6 +1033,7 @@ public class DynamicRouteService {
     }
 
     private void loadRoute(String yaml) {
+        // Loads the given YAML into the Camel context
         try {
             Resource resource = new StringResource("inline:dynamic.yaml", yaml);
             RoutesBuilder routesBuilder = yamlRoutesLoader.loadRoutesBuilder(resource);
@@ -999,6 +1044,7 @@ public class DynamicRouteService {
     }
 
     private Map<String, String> extractRouteMetadata(String yamlContent) {
+        // Parses YAML and extracts id, description, path, method and uri scheme
         Map<String, String> metadata = new HashMap<>();
         try {
             Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
@@ -1097,7 +1143,7 @@ public class DynamicRouteService {
     }
 
     /**
-     * Records an audit entry
+     * Records an audit entry for a route action.
      */
     private void audit(String routeId, int version, String action, String details, String userEmail, String status) {
         DynamicRouteAudit audit = new DynamicRouteAudit();
@@ -1113,10 +1159,12 @@ public class DynamicRouteService {
     }
 
     public ResponseEntity<?> findById(Long id) {
+        // Fetches an audit record by id
         return ResponseEntity.ok(auditRepository.findById(id));
     }
 
     public byte[] exportFile(Specification<DynamicRouteAudit> spec, Pageable pageable, String type) {
+        // Exports audit logs in CSV or Excel format
         Page<?> audits = getLatestRoutesLogs(spec, pageable);
         List<DynamicRouteAudit> data = (List<DynamicRouteAudit>) audits.getContent();
         try {
@@ -1131,6 +1179,7 @@ public class DynamicRouteService {
     }
 
     private byte[] exportToCsv(List<DynamicRouteAudit> audits) {
+        // Serializes audit logs to CSV
         StringBuilder sb = new StringBuilder();
 
         // Header row
@@ -1152,6 +1201,7 @@ public class DynamicRouteService {
     }
 
     private byte[] exporLogstToExcel(List<DynamicRouteAudit> audits) throws Exception {
+        // Serializes audit logs to XLSX
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("DynamicRouteLogs");
 
@@ -1189,10 +1239,12 @@ public class DynamicRouteService {
     }
 
     private String safe(String value) {
+        // Safe CSV cell string
         return value != null ? value.replace(",", " ") : "";
     }
 
     public String getRouteIdByPathAndMethod(String path, String method) {
+        // Convenience lookup for active routeId by path and method
         return routeRepository.findByPathAndHttpMethodAndActive(path, method.toLowerCase(), true).get().getRouteId();
     }
 
@@ -1219,15 +1271,18 @@ public class DynamicRouteService {
     }
 
     public Page<?> getLatestRoutesLogs(Specification<DynamicRouteAudit> spec, Pageable pageable) {
+        // Delegates to repository to fetch paginated audit logs
         return auditRepository.findAll(spec, pageable);
     }
 
     public Page<DynamicRouteAudit> getLatestRoutesLogsWithFilters(Long id, String routeId, Integer version,
                                                                   String action, String details, LocalDateTime timestamp, Pageable pageable) {
+        // Fetches paginated audit logs matching the optional filters
         return auditRepository.findByFilters(id, routeId, version, action, details, timestamp, pageable);
     }
 
     public byte[] exportToExcel(List<DynamicRouteEntity> routes) throws IOException {
+        // Exports routes to XLSX with basic styling
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Routes");
 
@@ -1315,7 +1370,7 @@ public class DynamicRouteService {
     }
 
     /**
-     * Export routes to CSV format
+     * Export routes to CSV format.
      */
     public byte[] exportToCSV(List<DynamicRouteEntity> routes) throws IOException {
         StringBuilder csvBuilder = new StringBuilder();
@@ -1342,7 +1397,7 @@ public class DynamicRouteService {
     }
 
     /**
-     * Helper method to escape CSV values
+     * Escapes a string for safe inclusion in CSV.
      */
     private String escapeCsvValue(String value) {
         if (value == null) {
@@ -1362,6 +1417,7 @@ public class DynamicRouteService {
     @Scheduled(fixedRate = 30000)
     @Transactional
     public void syncRouteStatuses() {
+        // Periodically reconciles DB state with Camel context for active routes
 
         String userEmail = "System";
 

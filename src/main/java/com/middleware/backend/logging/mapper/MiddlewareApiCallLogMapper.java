@@ -9,8 +9,13 @@ import com.middleware.backend.logging.model.MiddlewareApiCallLog;
 
 @Mapper(componentModel = "spring")
 @Primary
+/**
+ * MapStruct mapper to convert between {@link MiddlewareApiCallLog} entity and {@link MiddlewareApiCallLogDto}.
+ */
 public interface MiddlewareApiCallLogMapper {
+    /** Converts a DTO into a new entity instance. */
     MiddlewareApiCallLog toEntity(MiddlewareApiCallLogDto dto);
+    /** Converts an entity into its DTO representation. */
     @Mapping(target = "userId", source = "userId")
     MiddlewareApiCallLogDto toDto(MiddlewareApiCallLog entity);
 }

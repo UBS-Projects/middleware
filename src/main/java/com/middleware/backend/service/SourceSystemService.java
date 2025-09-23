@@ -2,7 +2,6 @@ package com.middleware.backend.service;
 
 import com.middleware.backend.dto.SourceSystemDto;
 import com.middleware.backend.mapper.SourceSystemMapper;
-import com.middleware.backend.model.ErrorCategory;
 import com.middleware.backend.model.SourceSystem;
 import com.middleware.backend.repository.SourceSystemRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +26,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service layer for managing source systems.
+ * <p>
+ * Enforces validation rules (trimmed non-empty unique name, prevent deactivation
+ * when referenced), handles audit fields from the authenticated user, maps
+ * entities to DTOs, and supports CSV/XLSX export.
+ */
 @Service
 @RequiredArgsConstructor
 public class SourceSystemService {
@@ -34,12 +40,24 @@ public class SourceSystemService {
     private final SourceSystemRepository sourceSystemRepository;
     private final SourceSystemMapper sourceSystemMapper;
 
+    /**
+     * Returns all active source systems as DTOs.
+     *
+     * @return list of active systems
+     */
     public List<SourceSystemDto> getActiveSourceSystems() {
         return sourceSystemRepository.findByActiveTrue().stream()
                 .map(sourceSystemMapper::toDto)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves a single source system by id.
+     *
+     * @param id source system id
+     * @return the mapped DTO
+     * @throws jakarta.persistence.EntityNotFoundException when not found
+     */
     public SourceSystemDto getSourceSystemById(Long id) {
         return sourceSystemRepository.findById(id)
                 .map(sourceSystemMapper::toDto)
@@ -47,6 +65,14 @@ public class SourceSystemService {
     }
 
     @Transactional
+    /**
+     * Creates a new source system after trimming and validating the name and
+     * enforcing uniqueness. Sets audit fields using the authenticated user.
+     *
+     * @param dto input DTO
+     * @return created source system as DTO
+     * @throws IllegalArgumentException when name is blank or already exists
+     */
     public SourceSystemDto createSourceSystem(SourceSystemDto dto) {
         // Trim the name before processing
         String trimmedName = dto.getName() != null ? dto.getName().trim() : null;
@@ -74,6 +100,17 @@ public class SourceSystemService {
     }
 
     @Transactional
+    /**
+     * Updates an existing source system, validating name, uniqueness, and
+     * preventing deactivation when mappings exist. Updates audit fields.
+     *
+     * @param id  source system id
+     * @param dto updated values
+     * @return updated source system as DTO
+     * @throws jakarta.persistence.EntityNotFoundException when the system does not exist
+     * @throws IllegalArgumentException when renaming to an existing name or name is blank
+     * @throws IllegalStateException when attempting to deactivate a used system
+     */
     public SourceSystemDto updateSourceSystem(Long id, SourceSystemDto dto) {
         SourceSystem existingSourceSystem = sourceSystemRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Source system not found with id: " + id));
@@ -113,6 +150,15 @@ public class SourceSystemService {
 
 
     @Transactional
+    /**
+     * Toggles the active status of a source system, ensuring deactivation is
+     * not allowed when the system is referenced by mappings. Updates audit fields.
+     *
+     * @param id source system id
+     * @return updated source system as DTO
+     * @throws jakarta.persistence.EntityNotFoundException when the system does not exist
+     * @throws IllegalStateException when attempting to deactivate a used system
+     */
     public SourceSystemDto toggleSourceSystem(Long id) {
         SourceSystem sourceSystem = sourceSystemRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Source system not found with id: " + id));
@@ -134,10 +180,27 @@ public class SourceSystemService {
         return sourceSystemMapper.toDto(savedSourceSystem);
     }
 
+    /**
+     * Retrieves a page of source systems matching the given specification.
+     *
+     * @param spec     specification with optional filters
+     * @param pageable pagination and sorting options
+     * @return page of matching systems
+     */
     public Page<SourceSystem> getAllSourceSystems(Specification<SourceSystem> spec, Pageable pageable) {
         return sourceSystemRepository.findAll(spec, pageable);
     }
 
+    /**
+     * Exports source systems matching the specification into CSV or XLSX format.
+     *
+     * @param spec     filters to apply
+     * @param pageable sort/pagination used to bound and order the export
+     * @param type     export type: "CSV", "Excel", or "XLSX"
+     * @return file bytes
+     * @throws IOException              on I/O errors
+     * @throws IllegalArgumentException when an unsupported type is requested
+     */
     public byte[] exportFile(Specification<SourceSystem> spec, Pageable pageable, String type) throws IOException {
         // Fetch filtered & paged data
         Page<SourceSystem> page = sourceSystemRepository.findAll(spec, pageable);
@@ -153,6 +216,12 @@ public class SourceSystemService {
     }
 
     // Convert List<SourceSystem> to CSV string
+    /**
+     * Converts a list of source systems into a CSV string.
+     *
+     * @param systems list to serialize
+     * @return CSV contents
+     */
     private String convertToCSV(List<SourceSystem> systems) {
         StringBuilder sb = new StringBuilder();
         sb.append("Name,Description,Active,Created At,Updated At\n");
@@ -168,6 +237,12 @@ public class SourceSystemService {
     }
 
     // CSV escaping helper
+    /**
+     * Escapes a CSV field by doubling quotes and quoting when necessary.
+     *
+     * @param value raw field value
+     * @return escaped CSV field
+     */
     private String escapeCsv(String value) {
         if (value == null) return "";
         String escaped = value.replace("\"", "\"\"");
@@ -178,6 +253,13 @@ public class SourceSystemService {
     }
 
     // Convert List<SourceSystem> to Excel bytes
+    /**
+     * Converts a list of source systems into an XLSX workbook and returns its bytes.
+     *
+     * @param systems list to serialize
+     * @return xlsx bytes
+     * @throws IOException if writing fails
+     */
     private byte[] convertToExcel(List<SourceSystem> systems) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Source Systems");

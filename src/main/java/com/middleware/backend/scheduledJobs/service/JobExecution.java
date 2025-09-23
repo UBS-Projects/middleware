@@ -16,6 +16,16 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Quartz {@link Job} implementation that executes a configured HTTP request for a scheduled job.
+ * <p>
+ * Responsibilities:
+ * - Build the HTTP request from persisted job details and Quartz job data.
+ * - Add tracking headers (X-Scheduled-Job, X-Job-Name, optional X-Retry-Attempt).
+ * - Perform the HTTP call via {@link RestTemplate}.
+ * - Persist a {@link JobExecutionLogs} record with request/response and timing.
+ * - Update the job's last execution timestamp.
+ */
 @RequiredArgsConstructor
 public class JobExecution implements Job {
 
@@ -23,6 +33,12 @@ public class JobExecution implements Job {
     private final ScheduledJobRepository jobRepo;
     private final JobExecutionLogsRepository logsRepo;
 
+    /**
+     * Executes the HTTP call for the scheduled job and writes an execution log.
+     *
+     * @param context Quartz job context containing job data (url, method, headers, payload)
+     * @throws JobExecutionException when an unrecoverable error occurs during execution
+     */
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         JobDataMap data = context.getMergedJobDataMap();

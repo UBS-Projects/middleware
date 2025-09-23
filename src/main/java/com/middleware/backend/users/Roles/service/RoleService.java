@@ -22,6 +22,15 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RoleService {
     private final RoleRepository repo;
+    /**
+     * Retrieve all roles in the system.
+     * <p>
+     * Results are mapped to DTOs using {@link RoleMapper#mapToDto(Role)} and returned
+     * as the body of a {@link ResponseEntity}.
+     * </p>
+     *
+     * @return {@link ResponseEntity} containing a list of role DTOs.
+     */
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(
                 repo.findAll()
@@ -32,6 +41,13 @@ public class RoleService {
 
     }
 
+    /**
+     * Retrieve a paginated list of roles matching the provided specification.
+     *
+     * @param spec     JPA {@link Specification} used to filter {@link Role} entities.
+     * @param pageable {@link Pageable} describing page number, size, and sorting.
+     * @return {@link ResponseEntity} containing a {@link Page} of roles that match the criteria.
+     */
     public ResponseEntity<Page<?>> getAll(Specification<Role> spec, Pageable pageable) {
         System.out.println("*****************************************8");
         System.out.println("*****************************************8");
@@ -40,6 +56,19 @@ public class RoleService {
 
     }
 
+    /**
+     * Create a new role.
+     * <p>
+     * If a role with the same name (case-insensitive) already exists, the method returns
+     * {@code 400 Bad Request} with a body of {@code "FOUND"}. Otherwise, it persists a new
+     * {@link Role} entity populated from the provided {@link RoleRequest}, sets audit
+     * information (createdBy/updatedBy and timestamps) from the currently authenticated user,
+     * and returns the saved role mapped to a DTO.
+     * </p>
+     *
+     * @param role the incoming request payload describing the role to create.
+     * @return {@link ResponseEntity} with either an error message if duplicate, or the created role DTO.
+     */
     public ResponseEntity<?> addNewRole(RoleRequest role) {
         Optional<Role> exists = repo.findByRoleName(role.getRoleName().toUpperCase());
         if (exists.isPresent()) {

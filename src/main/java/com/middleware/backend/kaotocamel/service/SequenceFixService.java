@@ -10,11 +10,19 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+/**
+ * Service that verifies and fixes the PostgreSQL sequence for the table
+ * {@code integration_mapping} at application startup to prevent key conflicts.
+ */
 public class SequenceFixService {
 
     private final JdbcTemplate jdbc;
 
     @EventListener(ApplicationReadyEvent.class)
+    /**
+    * Ensures the backing sequence for {@code integration_mapping.id} is aligned
+    * with the current max(id). Creates and wires the sequence if missing.
+    */
     public void fixSequencesOnStartup() {
          fixIntegrationMappingSequence();
     }

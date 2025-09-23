@@ -11,8 +11,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Specifications for filtering {@link com.middleware.backend.logging.model.MiddlewareApiCallLog}.
+ * <p>
+ * Builds a dynamic specification from a map of string filters. Recognized keys:
+ * durationMsMin/Max, retryCountMin/Max, responseCode, responseCodeGt/Lt/Min/Max,
+ * throttlingApplied, receivedAtFrom/To (yyyy-MM-dd), completedAtFrom/To (ISO LocalDateTime),
+ * id/apiEndpointId/workflowId/apiKeyId (as long), sourceTransactionUUID, userId/userEmail/user_email
+ * (contains match, case-insensitive). Unrecognized keys default to contains-like
+ * matching on string fields. Invalid filter values are ignored.
+ */
 public class MiddlewareApiCallLogSpecification {
 
+    /**
+     * Builds a specification from the provided filters map.
+     *
+     * @param filters map of filter key to value (strings)
+     * @return specification combining all parsed predicates with AND
+     */
     public static Specification<MiddlewareApiCallLog> fromFilters(Map<String, String> filters) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();

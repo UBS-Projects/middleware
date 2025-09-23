@@ -25,6 +25,12 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 
+/**
+ * User management APIs.
+ * <p>
+ * Provides endpoints to list, retrieve, create, edit, delete/activate users,
+ * and query by role. Authorization is enforced via method-level security.
+ */
 @RestController
 @RequestMapping("/api/user")
 @AllArgsConstructor
@@ -38,6 +44,23 @@ public class UserController {
             description = "Retrieves a paginated list of users with optional filters by ID, username, email, status, " +
                     "and creation date range. Supports sorting by any field."
     )
+    /**
+     * Retrieves a paginated list of users with optional filtering and sorting.
+     *
+     * @param id exact id match
+     * @param userName contains match on username
+     * @param email contains match on email
+     * @param status exact status match
+     * @param role role name filter
+     * @param roleType role type filter (enum name)
+     * @param createdAfter filter users created on/after this date
+     * @param createdBefore filter users created on/before this date
+     * @param sortedBy property to sort by (default updatedAt)
+     * @param sortDirection asc or desc
+     * @param page zero-based page index
+     * @param size page size
+     * @return page of users matching criteria
+     */
     public ResponseEntity<Page<?>> getAllUsers(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String userName,
@@ -67,7 +90,7 @@ public class UserController {
                 .and(UserSpecification.dateAfter("createdAt", createdAfter))
                 .and(UserSpecification.dateBefore("createdAt", createdBefore))
                 .and(UserSpecification.emailNotEqual(emailUser));
-                ;
+        ;
         return ResponseEntity.ok(service.getAll(spec,pageable));
     }
 
@@ -77,6 +100,11 @@ public class UserController {
             summary = "Get user by ID",
             description = "Retrieves detailed information of a specific user by their ID."
     )
+    /**
+     * Retrieves a single user by id.
+     * @param id user id
+     * @return user details if found
+     */
     public ResponseEntity<?> getUserById(@PathVariable Long id){
         return service.getUserById(id);
     }
@@ -88,6 +116,11 @@ public class UserController {
             summary = "Create new user",
             description = "Creates a new user in the system using the provided user details. Requires 'user:create' authority."
     )
+    /**
+     * Creates a new user.
+     * @param user request body with user details
+     * @return created user or validation errors
+     */
     public ResponseEntity<?> createNewUser(@RequestBody UserRequest user){
         return service.createNewUser(user);
     }
@@ -97,9 +130,17 @@ public class UserController {
     @Operation(
             summary = "Update user status",
             description = "Updates a user's status to either ACTIVATE or INACTIVATE based on the provided status path variable. "+
-                          "Requires appropriate authority depending on action ('user:edit', 'user:activate', 'user:delete')."
+                    "Requires appropriate authority depending on action ('user:edit', 'user:activate', 'user:delete')."
 
     )
+    /**
+     * Updates a user's lifecycle state.
+     * <p>
+     * If status is DELETE, performs a delete; otherwise activates the user.
+     * @param id user id
+     * @param status action, e.g., DELETE or ACTIVATE
+     * @return operation result
+     */
     public ResponseEntity<?> deleteUser(@PathVariable Long id,
                                         @PathVariable String status){
         if(status.equals("DELETE"))
@@ -113,6 +154,12 @@ public class UserController {
             summary = "Edit user details",
             description = "Updates the details of an existing user by their ID. Requires 'user:edit' authority."
     )
+    /**
+     * Partially updates an existing user.
+     * @param id user id
+     * @param user partial fields to update
+     * @return updated user
+     */
     public ResponseEntity<?> EditUser(@PathVariable("id") Long id, @RequestBody UserRequest user){
 
         return service.editUser(id, user);
@@ -126,8 +173,14 @@ public class UserController {
             summary = "Get users by role",
             description = "Retrieves a paginated list of users who are assigned a specific role. Requires 'user:viewByRole' authority."
     )
+    /**
+     * Retrieves users by role name with pagination.
+     * @param role role name
+     * @param page page index
+     * @return page of users
+     */
     public ResponseEntity<?> getUsersByRole(@PathVariable String role,
-    @RequestParam(defaultValue = "0") int page
+                                            @RequestParam(defaultValue = "0") int page
 
     ){
         return service.getUsersByRole(role,page);

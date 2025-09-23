@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
+/**
+ * Entity representing a scheduled job definition persisted in the database.
+ * Stores scheduling expression, target API endpoint, request details, and audit metadata.
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

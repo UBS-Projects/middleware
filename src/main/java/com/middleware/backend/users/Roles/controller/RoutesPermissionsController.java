@@ -10,6 +10,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Endpoints for managing route-level permissions mapped to roles.
+ */
 @RestController
 @RequestMapping("/api/routespermissions")
 @AllArgsConstructor
@@ -22,6 +25,9 @@ public class RoutesPermissionsController {
             summary = "List all route permissions",
             description = "Retrieves a list of all route permissions assigned to roles. Requires 'routePermissions:view' authority."
     )
+    /**
+     * Lists all route permissions across roles.
+     */
     public ResponseEntity<?> getAll(){
         return service.getAll();
     }
@@ -32,6 +38,11 @@ public class RoutesPermissionsController {
             summary = "Edit route permissions for a role",
             description = "Updates the route permissions assigned to a specific role. Requires 'routePermissions:edit' authority."
     )
+    /**
+     * Updates route permissions of a given role.
+     * @param roleName role to update
+     * @param body payload containing route permission identifiers
+     */
     public ResponseEntity<?> editPermissions(@PathVariable String roleName,
                                              @RequestBody PermissionEditDto body){
         return service.editPermissions(roleName,body);

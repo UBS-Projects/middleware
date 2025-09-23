@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
+/**
+ * Endpoints for querying and managing roles.
+ */
 @RestController
 @RequestMapping("/api/role")
 @AllArgsConstructor
@@ -31,7 +34,10 @@ public class RoleController {
             summary = "List roles",
             description = "Retrieves a list of all roles available in the system. Requires 'role:view' authority."
     )
-    public ResponseEntity<?> getAllRolesForUsers(){
+        /**
+         * Returns all roles targeted for user assignment.
+         */
+        public ResponseEntity<?> getAllRolesForUsers(){
         return service.getAll();
     }
     @GetMapping("")
@@ -40,6 +46,15 @@ public class RoleController {
             summary = "List roles",
             description = "Retrieves a list of all roles available in the system. Requires 'role:view' authority."
     )
+    /**
+     * Returns a paginated list of roles with optional filters.
+     * @param roleName contains filter on role name
+     * @param roleType exact enum filter on role type
+     * @param sortedBy property to sort by
+     * @param sortDirection asc or desc
+     * @param page page index
+     * @param size page size
+     */
     public ResponseEntity<Page<?>> getAllRoles(
             @RequestParam(required = false) String roleName,
             @RequestParam(required = false) String roleType,
@@ -69,7 +84,10 @@ public class RoleController {
             summary = "Create new role",
             description = "Creates a new role with the provided details. Requires 'role:create' authority."
     )
-    public ResponseEntity<?> addNewRole(@RequestBody RoleRequest role){
+        /**
+         * Creates a new role.
+         */
+        public ResponseEntity<?> addNewRole(@RequestBody RoleRequest role){
         return  service.addNewRole(role);
     }
 

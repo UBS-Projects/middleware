@@ -12,6 +12,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Spring Security HTTP configuration.
+ * <p>
+ * Configures stateless JWT-based authentication, allows unauthenticated access
+ * to login and Swagger endpoints, and installs a custom JWT filter that
+ * enforces route-level permissions for dynamic routes.
+ */
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
@@ -19,6 +26,12 @@ public class WebSecurityConfig {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
+    /**
+     * Configures the security filter chain: disables CSRF for stateless APIs,
+     * permits unauthenticated access to login and API docs, sets 401/403
+     * handlers, and adds {@link JwtRequestFilter} before username/password
+     * authentication.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -50,6 +63,9 @@ public class WebSecurityConfig {
         return http.build();
     }
 
+    /**
+     * Exposes the {@link AuthenticationManager} from Spring configuration.
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

@@ -7,6 +7,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Data transfer object for source system records.
+ * <p>
+ * Used to move data between the API and service layers without exposing the
+ * JPA entity, including audit fields and activation flag.
+ */
 @Data
 @Builder
 @NoArgsConstructor

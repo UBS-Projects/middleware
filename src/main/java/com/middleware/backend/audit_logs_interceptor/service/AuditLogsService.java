@@ -21,11 +21,23 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service layer for handling business logic related to audit logs.
+ * This class provides methods for retrieving, filtering, and exporting audit log data.
+ */
 @Service
 @AllArgsConstructor
 public class AuditLogsService {
     private final AuditLogRepository repo;
 
+    /**
+     * Retrieves a paginated and filtered list of audit logs.
+     * The result is mapped to {@link AuditResponse} objects to provide a summary view.
+     *
+     * @param spec     A {@link Specification} for dynamic query filtering.
+     * @param pageable A {@link Pageable} object for pagination and sorting.
+     * @return A {@link Page} of {@link AuditResponse} objects.
+     */
     public Page<AuditResponse> getAll(Specification<AuditLog> spec, Pageable pageable) {
         Page<AuditResponse> result = repo.findAll(spec, pageable).map(audit ->
                 AuditResponse.builder()
@@ -43,6 +55,13 @@ public class AuditLogsService {
     }
 
 
+    /**
+     * Finds a single audit log by its ID.
+     * If found, it returns the full details of the log as an {@link AuditDTO}.
+     *
+     * @param id The unique identifier of the audit log.
+     * @return A {@link ResponseEntity} containing the {@link AuditDTO} if found, or a 404 Not Found response.
+     */
     public ResponseEntity<?> findById(Long id) {
         Optional<AuditLog> audit = repo.findById(id);
         if (audit.isPresent()) {
@@ -69,6 +88,16 @@ public class AuditLogsService {
     }
 
 
+    /**
+     * Exports filtered audit logs to a file (CSV or Excel).
+     *
+     * @param spec     A {@link Specification} for filtering the logs to be exported.
+     * @param pageable A {@link Pageable} object for sorting the exported data.
+     * @param type     The desired file format ("CSV" or "Excel").
+     * @return A byte array containing the generated file.
+     * @throws IllegalArgumentException if the export type is unsupported.
+     * @throws RuntimeException if there is an error generating the Excel file.
+     */
     public byte[] exportFile(Specification<AuditLog> spec, Pageable pageable, String type) {
         Page<AuditLog> res = repo.findAll(spec, pageable);
         List<AuditLog> data = res.getContent();
@@ -86,6 +115,12 @@ public class AuditLogsService {
         }
     }
 
+    /**
+     * Converts a list of {@link AuditLog} objects to a CSV formatted string.
+     *
+     * @param logs The list of audit logs to convert.
+     * @return A string in CSV format.
+     */
     private String convertToCSV(List<AuditLog> logs) {
         StringBuilder sb = new StringBuilder();
 
@@ -107,6 +142,12 @@ public class AuditLogsService {
         return sb.toString();
     }
 
+    /**
+     * Escapes special characters in a string for CSV compatibility.
+     *
+     * @param value The string to escape.
+     * @return The escaped string, safe for inclusion in a CSV file.
+     */
     private String escapeCsv(String value) {
         if (value == null) return "";
         String escaped = value.replace("\"", "\"\"");
@@ -116,6 +157,13 @@ public class AuditLogsService {
         return escaped;
     }
 
+    /**
+     * Converts a list of {@link AuditLog} objects to an Excel file (XLSX format).
+     *
+     * @param logs The list of audit logs to convert.
+     * @return A byte array representing the Excel file.
+     * @throws IOException if an I/O error occurs during Excel file creation.
+     */
     private byte[] convertToExcel(List<AuditLog> logs) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Audit Logs");
@@ -158,6 +206,12 @@ public class AuditLogsService {
         }
     }
 
+    /**
+     * Returns the given string or an empty string if the value is null.
+     *
+     * @param value The string to check.
+     * @return The original string or an empty string.
+     */
     private String safeString(String value) {
         return value != null ? value : "";
     }

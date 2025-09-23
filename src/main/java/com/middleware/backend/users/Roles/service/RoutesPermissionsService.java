@@ -23,6 +23,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Service for managing route-based permissions associations for roles.
+ */
 @Service
 @AllArgsConstructor
 public class RoutesPermissionsService {
@@ -32,6 +35,10 @@ public class RoutesPermissionsService {
 
 
 
+    /**
+     * Ensure a route exists in the permissions table; creates if missing.
+     * @param body request containing the route identifier
+     */
     public void save(RoutesPermissionsRequest body){
         Optional<RoutesPermissions> exists = repo.findByRouteId(body.getRouteId());
         if(exists.isPresent()){
@@ -43,12 +50,23 @@ public class RoutesPermissionsService {
         repo.save(entity);
     }
 
+    /**
+     * List all registered routes permissions as DTOs.
+     * @return HTTP 200 with a stream of {@link RoutesPermissionsDto}
+     */
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(repo.findAll().stream().map(
                 RoutesPermissionMapper::mapToDto
         ));
     }
     @Transactional
+    /**
+     * Replace the set of routes permissions attached to a role.
+     * Updates audit fields from the authenticated user.
+     * @param roleName role to modify
+     * @param body list of route identifiers in {@link PermissionEditDto#permissions}
+     * @return 404 if role not found; 200 on success
+     */
     public ResponseEntity<?> editPermissions(String roleName, PermissionEditDto body) {
 
         Optional<Role> optionalRole = roleRepo.findByRoleName(roleName);
@@ -67,6 +85,11 @@ public class RoutesPermissionsService {
         return ResponseEntity.ok("Permissions updated successfully");
     }
 
+    /**
+     * Get the set of route ids matching the provided route (alias; returns unique ids).
+     * @param routeId route identifier
+     * @return set of unique route ids
+     */
     public Set<String> getRolesForRoute(String routeId) {
         return repo.findAllByRouteId(routeId).stream().map(
                 r-> r.getRouteId()

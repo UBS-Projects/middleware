@@ -23,18 +23,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service for querying and exporting job execution logs.
+ */
 @Service
 @AllArgsConstructor
 public class JobExecutionlogsService {
     private final JobExecutionLogsRepository repo;
 
-
+    /**
+     * Returns a page of execution logs mapped to lightweight DTOs.
+     */
     public ResponseEntity<?> getAll(Specification<JobExecutionLogs> spec, Pageable pageable) {
         Page<JobExecutionLogs> page = repo.findAll(spec, pageable);
         Page<JobExecutionLogDTO> dtoPage = page.map(JobExecutionLogDTO::fromEntity);
         return ResponseEntity.ok(dtoPage);
     }
 
+    /**
+     * Fetches a single execution log by id and maps it to detailed response DTO.
+     */
     public ResponseEntity<?> getById(Long id) {
         Optional<JobExecutionLogs> log = repo.findById(id);
         return log.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(log.map(LogResponse::fromEntity));
@@ -44,6 +52,14 @@ public class JobExecutionlogsService {
 
 
 
+    /**
+     * Exports execution logs to CSV or Excel bytes according to type.
+     *
+     * @param spec filters for data
+     * @param pageable pagination to cap exported size
+     * @param type CSV or Excel/XLSX
+     * @return file content bytes
+     */
     public byte[] exportFile(Specification<JobExecutionLogs> spec, Pageable pageable, String type) {
         List<JobExecutionLogs> data;
         try {

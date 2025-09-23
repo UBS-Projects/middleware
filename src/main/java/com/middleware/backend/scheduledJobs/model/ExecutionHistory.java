@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
+/**
+ * Entity auditing user actions performed on scheduled job definitions (create/edit/etc.).
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

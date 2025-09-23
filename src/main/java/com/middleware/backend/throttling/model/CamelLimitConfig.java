@@ -6,6 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity storing global Camel routes rate limit configuration.
+ * <p>
+ * Controls how many Camel requests are allowed within a given time window.
+ * </p>
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +22,12 @@ public class CamelLimitConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    /**
+     * Window duration in seconds.
+     */
     private int seconds;
+    /**
+     * Maximum number of requests allowed within the window.
+     */
     private int requestLimit;
 }

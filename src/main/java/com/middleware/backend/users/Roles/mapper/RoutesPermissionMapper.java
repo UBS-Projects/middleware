@@ -5,8 +5,14 @@ import com.middleware.backend.users.Roles.dto.RoutesPermissionsDto;
 import com.middleware.backend.users.Roles.model.Role;
 import com.middleware.backend.users.Roles.model.RoutesPermissions;
 
+/**
+ * Mapper for converting between RoutesPermissions entity and DTO.
+ */
 public class RoutesPermissionMapper {
-    public static RoutesPermissions mapToEntity(RoutesPermissionsDto route){
+        /**
+         * Maps a DTO to the entity, projecting roles by id and name only.
+         */
+        public static RoutesPermissions mapToEntity(RoutesPermissionsDto route){
         return RoutesPermissions.builder()
                 .id(route.getId())
                 .routeId(route.getRouteId())
@@ -19,7 +25,10 @@ public class RoutesPermissionMapper {
                 .build();
     }
 
-    public static RoutesPermissionsDto mapToDto(RoutesPermissions route){
+        /**
+         * Maps the entity to a DTO, exposing basic role fields.
+         */
+        public static RoutesPermissionsDto mapToDto(RoutesPermissions route){
         return RoutesPermissionsDto.builder()
                 .id(route.getId())
                 .routeId(route.getRouteId())
