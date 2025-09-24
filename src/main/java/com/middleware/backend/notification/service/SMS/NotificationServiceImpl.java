@@ -37,7 +37,7 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationGroupRepository groupRepository;
     private final TemplateRepository templateRepository;
     private final ChannelConfigRepository channelRepository;
-        private final NotificationLogRepository logRepository;
+    private final NotificationLogRepository logRepository;
     private final TaskScheduler taskScheduler = createScheduler();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -152,8 +152,6 @@ public class NotificationServiceImpl implements NotificationService {
     private void sendSms(NotificationGroup group, NotificationTemplate template,
                          Map<String, String> config) throws Exception {
 
-        String provider = config.get("provider");
-
         for (Receiver receiver : group.getReceivers()) {
             Map<String, String> placeholders = Map.of(
                     "name", receiver.getName(),
@@ -162,64 +160,66 @@ public class NotificationServiceImpl implements NotificationService {
             );
             String messageText = applyPlaceholders(template.getBody(), placeholders);
 
-            switch (provider.toLowerCase()) {
-                case "twilio" -> sendTwilioSms(config, receiver.getPhone(), messageText);
-                case "vonage" -> sendVonageSms(config, receiver.getPhone(), messageText);
-                default -> throw new UnsupportedOperationException("Unsupported provider: " + provider);
-            }
+            sendSmsRequest(config, receiver.getPhone(), messageText);
         }
     }
 
-    private void sendTwilioSms(Map<String, String> config, String to, String body) {
-        String accountSid = config.get("accountSid");
-        String authToken = config.get("authToken");
-        String from = config.get("fromNumber");
-
-        String url = String.format("https://api.twilio.com/2010-04-01/Accounts/%s/Messages.json", accountSid);
-        String auth = Base64.getEncoder().encodeToString((accountSid + ":" + authToken).getBytes(StandardCharsets.UTF_8));
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.set("Authorization", "Basic " + auth);
-
-        String payload = "From=" + from + "&To=" + to + "&Body=" + body;
-        HttpEntity<String> entity = new HttpEntity<>(payload, headers);
-
-        RestTemplate rest = new RestTemplate();
-        try {
-            ResponseEntity<String> response = rest.exchange(url, HttpMethod.POST, entity, String.class);
-            System.out.println("Twilio Response: " + response.getBody());
-        } catch (Exception e) {
-            System.err.println("Twilio SMS failed for " + to + ": " + e.getMessage());
-        }
-    }
-
-    private void sendVonageSms(Map<String, String> config, String to, String body) {
-        String apiKey = config.get("apiKey");
-        String apiSecret = config.get("apiSecret");
-        String from = config.get("fromNumber");
-
-        String url = "https://rest.nexmo.com/sms/json";
+    private void sendSmsRequest(Map<String, String> config, String to, String body) {
+        String url = config.get("ipUrl");
+        String method = config.getOrDefault("method", "POST").toUpperCase();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        String payload = "api_key=" + apiKey +
-                "&api_secret=" + apiSecret +
-                "&to=" + to +
-                "&from=" + from +
-                "&text=" + body;
+        // --- Optional Auth ---
+        if (config.containsKey("accountSid") && config.containsKey("authToken")) {
+            String auth = Base64.getEncoder().encodeToString(
+                    (config.get("accountSid") + ":" + config.get("authToken"))
+                            .getBytes(StandardCharsets.UTF_8)
+            );
+            headers.set("Authorization", "Basic " + auth);
+        }
 
-        HttpEntity<String> entity = new HttpEntity<>(payload, headers);
+        // --- Dynamic payload ---
+        StringBuilder payload = new StringBuilder();
+        if (config.containsKey("apiKey")) {
+            payload.append("api_key=").append(config.get("apiKey")).append("&");
+        }
+        if (config.containsKey("apiSecret")) {
+            payload.append("api_secret=").append(config.get("apiSecret")).append("&");
+        }
+        if (config.containsKey("username")) {
+            payload.append("username=").append(config.get("username")).append("&");
+        }
+        if (config.containsKey("password")) {
+            payload.append("password=").append(config.get("password")).append("&");
+        }
+
+        // Use dynamic keys
+        String fromKey = config.getOrDefault("fromKey", "from");
+        String toKey = config.getOrDefault("toKey", "to");
+        String bodyKey = config.getOrDefault("bodyKey", "text");
+
+        payload.append(fromKey).append("=").append(config.get("fromNumber")).append("&")
+                .append(toKey).append("=").append(to).append("&")
+                .append(bodyKey).append("=").append(body);
+
+        HttpEntity<String> entity = new HttpEntity<>(payload.toString(), headers);
         RestTemplate rest = new RestTemplate();
 
         try {
-            ResponseEntity<String> response = rest.exchange(url, HttpMethod.POST, entity, String.class);
-            System.out.println("Vonage Response: " + response.getBody());
+            ResponseEntity<String> response = rest.exchange(
+                    url,
+                    HttpMethod.valueOf(method),
+                    entity,
+                    String.class
+            );
+            System.out.println("SMS Response: " + response.getBody());
         } catch (Exception e) {
-            System.err.println("Vonage SMS failed for " + to + ": " + e.getMessage());
+            System.err.println("SMS failed for " + to + ": " + e.getMessage());
         }
     }
+
 
 
 

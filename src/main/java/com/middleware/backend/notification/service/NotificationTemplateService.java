@@ -38,11 +38,15 @@ public class NotificationTemplateService {
 
     public NotificationTemplateDto create(NotificationTemplateDto dto) {
         repo.findByName(dto.getName().trim())
-                .ifPresent(t -> { throw new RuntimeException("Template already exists"); });
+                .ifPresent(t -> { throw new RuntimeException("Template Name already exists"); });
+
+        repo.findByCode(dto.getCode().trim())
+                .ifPresent(t -> { throw new RuntimeException("Template Code already exists"); });
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
         dto.setName(dto.getName().trim());
+        dto.setCode(dto.getCode().trim());
         dto.setCreatedBy(currentUser);
         dto.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         dto.setUpdatedBy(currentUser);
@@ -58,6 +62,7 @@ public class NotificationTemplateService {
 
         repo.findByName(dto.getName().trim())
                 .orElseThrow(() -> new RuntimeException("Template Name Exists"));
+
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();

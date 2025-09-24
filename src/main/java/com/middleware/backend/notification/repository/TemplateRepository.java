@@ -17,4 +17,6 @@ public interface TemplateRepository extends JpaRepository<NotificationTemplate, 
     Optional<NotificationTemplate> findByName(String name);
 
     List<NotificationTemplate> findTop5ByNameContainingIgnoreCase(String search);
+
+    Optional<NotificationTemplate> findByCode(String trim);
 }

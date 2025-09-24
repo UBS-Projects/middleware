@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class GroupRequest {
     private Long id;
     private String groupName;
+    private String code;
 }

@@ -34,7 +34,10 @@ public class ChannelService {
 
     public ChannelConfigDto create(ChannelConfigDto dto) {
         repo.findByName(dto.getName().trim())
-                .ifPresent(c -> { throw new RuntimeException("Channel already exists"); });
+                .ifPresent(c -> { throw new RuntimeException("Channel Name already exists"); });
+
+        repo.findByCode(dto.getCode().trim())
+                .ifPresent(c -> { throw new RuntimeException("Channel Code already exists"); });
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
@@ -43,6 +46,7 @@ public class ChannelService {
         dto.setUpdatedBy(currentUser);
         dto.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         dto.setName(dto.getName().trim());
+        dto.setCode(dto.getCode().trim());
         ChannelConfig saved = repo.save(ChannelMapper.mapToEntity(dto));
         return ChannelMapper.mapToDto(saved);
     }

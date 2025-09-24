@@ -23,6 +23,8 @@ public class NotificationTemplateDto {
     @NotBlank(message = "Name is required")
     private String name;          // e.g., Password Reset
 
+    private String code;
+
     @NotBlank(message = "Type is required")
     @Pattern(regexp = "SMS|EMAIL", message = "Type must be either SMS or EMAIL")
     private String type;     // SMS, EMAIL

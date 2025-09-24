@@ -19,6 +19,10 @@ public class NotificationTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "code", unique = true)
+    private String code;
+
+
     private String name;
     @Enumerated(EnumType.STRING)
     private ChannelType type;

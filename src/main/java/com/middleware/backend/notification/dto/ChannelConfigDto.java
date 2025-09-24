@@ -16,6 +16,7 @@ public class ChannelConfigDto {
     private Long id;
     private String type;   // EMAIL or SMS
     private String name;        // e.g., "Default Email"
+    private String code;
     private String config;      // JSON with credentials & api_url
     private boolean active;
     private String createdBy;

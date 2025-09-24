@@ -38,7 +38,10 @@ public class NotificationGroupService {
 
     public NotificationGroupDto create(NotificationGroupDto dto) {
         repo.findByName(dto.getName().trim())
-                .ifPresent(g -> { throw new RuntimeException("Group already exists"); });
+                .ifPresent(g -> { throw new RuntimeException("Group Name already exists"); });
+
+        repo.findByCode(dto.getCode().trim())
+                .ifPresent(g -> { throw new RuntimeException("Group Code already exists"); });
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
@@ -47,6 +50,7 @@ public class NotificationGroupService {
         dto.setUpdatedBy(currentUser);
         dto.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         dto.setName(dto.getName().trim());
+        dto.setCode(dto.getCode().trim());
         NotificationGroup saved = GroupMapper.mapToEntity(dto);
         saved.setReceivers(null);
         saved = repo.save(saved);

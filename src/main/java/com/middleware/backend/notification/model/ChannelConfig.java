@@ -21,6 +21,10 @@ public class ChannelConfig {
 
     private String name;        // e.g., "Default Email"
 
+
+    @Column(name = "code", unique = true)
+    private String code;
+
     @Enumerated(EnumType.STRING)
     private ChannelType type;   // EMAIL or SMS
 

@@ -15,6 +15,7 @@ import java.util.List;
 public class NotificationGroupDto {
     private Long id;
     private String name;
+    private String code;
     private String description;
     private List<ReceiverDto> receivers;
     private String createdBy;

@@ -19,4 +19,6 @@ public interface ChannelConfigRepository extends JpaRepository<ChannelConfig, Lo
     void removeById(Long id);
 
     List<ChannelConfig> findTop5ByNameContainingIgnoreCase(String search);
+
+    Optional<ChannelConfig> findByCode(String trim);
 }

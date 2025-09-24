@@ -27,4 +27,6 @@ public interface NotificationGroupRepository extends JpaRepository<NotificationG
     List<NotificationGroup> findAllWithoutReceivers();
 
     List<NotificationGroup> findTop5ByNameContainingIgnoreCase(String search);
+
+    Optional<NotificationGroup> findByCode(String trim);
 }
