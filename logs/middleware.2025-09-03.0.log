@@ -3998,13 +3998,13 @@ org.springframework.web.client.HttpClientErrorException$BadRequest: 400  on POST
 2025-09-03 14:21:31 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
 2025-09-03 14:21:31 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
 2025-09-03 14:21:31 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@5d15c5f7
-2025-09-03 14:21:31 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dhis2Config' defined in file [C:\Users\1\OneDrive\Desktop\middleware\target\classes\com\middleware\backend\system_settings\config\Dhis2Config.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'dhis2Service' defined in file [C:\Users\1\OneDrive\Desktop\middleware\target\classes\com\middleware\backend\system_settings\service\Dhis2Service.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'dhis2Repository' defined in com.middleware.backend.system_settings.repository.Dhis2Repository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract java.util.Optional com.middleware.backend.system_settings.repository.Dhis2Repository.findByName(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.middleware.backend.system_settings.repository.Dhis2Repository.findByName(java.lang.String); No property 'name' found for type 'Dhis2'
+2025-09-03 14:21:31 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dhis2Config' defined in file [C:\Users\1\OneDrive\Desktop\middleware\target\classes\com\middleware\backend\system_settings\config\Dhis2Config.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'dhis2Service' defined in file [C:\Users\1\OneDrive\Desktop\middleware\target\classes\com\middleware\backend\system_settings\service\Dhis2Service.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'dhis2Repository' defined in com.middleware.backend.system_settings.repository.ConfigRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract java.util.Optional com.middleware.backend.system_settings.repository.ConfigRepository.findByName(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.middleware.backend.system_settings.repository.ConfigRepository.findByName(java.lang.String); No property 'name' found for type 'Dhis2'
 2025-09-03 14:21:31 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
 2025-09-03 14:21:31 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
 2025-09-03 14:21:31 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
 2025-09-03 14:21:31 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
 2025-09-03 14:21:31 [main] ERROR o.s.boot.SpringApplication - Application run failed
-org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dhis2Config' defined in file [C:\Users\1\OneDrive\Desktop\middleware\target\classes\com\middleware\backend\system_settings\config\Dhis2Config.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'dhis2Service' defined in file [C:\Users\1\OneDrive\Desktop\middleware\target\classes\com\middleware\backend\system_settings\service\Dhis2Service.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'dhis2Repository' defined in com.middleware.backend.system_settings.repository.Dhis2Repository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract java.util.Optional com.middleware.backend.system_settings.repository.Dhis2Repository.findByName(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.middleware.backend.system_settings.repository.Dhis2Repository.findByName(java.lang.String); No property 'name' found for type 'Dhis2'
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dhis2Config' defined in file [C:\Users\1\OneDrive\Desktop\middleware\target\classes\com\middleware\backend\system_settings\config\Dhis2Config.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'dhis2Service' defined in file [C:\Users\1\OneDrive\Desktop\middleware\target\classes\com\middleware\backend\system_settings\service\Dhis2Service.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'dhis2Repository' defined in com.middleware.backend.system_settings.repository.ConfigRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract java.util.Optional com.middleware.backend.system_settings.repository.ConfigRepository.findByName(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.middleware.backend.system_settings.repository.ConfigRepository.findByName(java.lang.String); No property 'name' found for type 'Dhis2'
 	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804)
 	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1381)
@@ -4027,7 +4027,7 @@ org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
 	at com.middleware.MiddlewareApplication.main(MiddlewareApplication.java:14)
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dhis2Service' defined in file [C:\Users\1\OneDrive\Desktop\middleware\target\classes\com\middleware\backend\system_settings\service\Dhis2Service.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'dhis2Repository' defined in com.middleware.backend.system_settings.repository.Dhis2Repository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract java.util.Optional com.middleware.backend.system_settings.repository.Dhis2Repository.findByName(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.middleware.backend.system_settings.repository.Dhis2Repository.findByName(java.lang.String); No property 'name' found for type 'Dhis2'
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dhis2Service' defined in file [C:\Users\1\OneDrive\Desktop\middleware\target\classes\com\middleware\backend\system_settings\service\Dhis2Service.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'dhis2Repository' defined in com.middleware.backend.system_settings.repository.ConfigRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract java.util.Optional com.middleware.backend.system_settings.repository.ConfigRepository.findByName(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.middleware.backend.system_settings.repository.ConfigRepository.findByName(java.lang.String); No property 'name' found for type 'Dhis2'
 	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804)
 	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1381)
@@ -4043,7 +4043,7 @@ Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Err
 	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:913)
 	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
 	... 21 common frames omitted
-Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dhis2Repository' defined in com.middleware.backend.system_settings.repository.Dhis2Repository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract java.util.Optional com.middleware.backend.system_settings.repository.Dhis2Repository.findByName(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.middleware.backend.system_settings.repository.Dhis2Repository.findByName(java.lang.String); No property 'name' found for type 'Dhis2'
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dhis2Repository' defined in com.middleware.backend.system_settings.repository.ConfigRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Could not create query for public abstract java.util.Optional com.middleware.backend.system_settings.repository.ConfigRepository.findByName(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.middleware.backend.system_settings.repository.ConfigRepository.findByName(java.lang.String); No property 'name' found for type 'Dhis2'
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1812)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
@@ -4057,7 +4057,7 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:913)
 	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
 	... 34 common frames omitted
-Caused by: org.springframework.data.repository.query.QueryCreationException: Could not create query for public abstract java.util.Optional com.middleware.backend.system_settings.repository.Dhis2Repository.findByName(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.middleware.backend.system_settings.repository.Dhis2Repository.findByName(java.lang.String); No property 'name' found for type 'Dhis2'
+Caused by: org.springframework.data.repository.query.QueryCreationException: Could not create query for public abstract java.util.Optional com.middleware.backend.system_settings.repository.ConfigRepository.findByName(java.lang.String); Reason: Failed to create query for method public abstract java.util.Optional com.middleware.backend.system_settings.repository.ConfigRepository.findByName(java.lang.String); No property 'name' found for type 'Dhis2'
 	at org.springframework.data.repository.query.QueryCreationException.create(QueryCreationException.java:101)
 	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.lookupQuery(QueryExecutorMethodInterceptor.java:120)
 	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.mapMethodsToQuery(QueryExecutorMethodInterceptor.java:104)
@@ -4073,7 +4073,7 @@ Caused by: org.springframework.data.repository.query.QueryCreationException: Cou
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1859)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
 	... 45 common frames omitted
-Caused by: java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional com.middleware.backend.system_settings.repository.Dhis2Repository.findByName(java.lang.String); No property 'name' found for type 'Dhis2'
+Caused by: java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.Optional com.middleware.backend.system_settings.repository.ConfigRepository.findByName(java.lang.String); No property 'name' found for type 'Dhis2'
 	at org.springframework.data.jpa.repository.query.PartTreeJpaQuery.<init>(PartTreeJpaQuery.java:107)
 	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$CreateQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:128)
 	at org.springframework.data.jpa.repository.query.JpaQueryLookupStrategy$CreateIfNotFoundQueryLookupStrategy.resolveQuery(JpaQueryLookupStrategy.java:262)
@@ -4310,9 +4310,9 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
 	at com.middleware.MiddlewareApplication.main(MiddlewareApplication.java:14)
 Caused by: java.lang.RuntimeException: No DHIS2 settings found
-	at com.middleware.backend.system_settings.service.Dhis2Service.lambda$getActiveSettings$0(Dhis2Service.java:19)
+	at com.middleware.backend.system_settings.service.ConfigService.lambda$getActiveSettings$0(Dhis2Service.java:19)
 	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
-	at com.middleware.backend.system_settings.service.Dhis2Service.getActiveSettings(Dhis2Service.java:19)
+	at com.middleware.backend.system_settings.service.ConfigService.getActiveSettings(Dhis2Service.java:19)
 	at com.middleware.backend.system_settings.config.Dhis2Config.loadSettings(Dhis2Config.java:20)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
@@ -4389,7 +4389,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at com.middleware.MiddlewareApplication.main(MiddlewareApplication.java:14)
 Caused by: java.util.NoSuchElementException: No value present
 	at java.base/java.util.Optional.get(Optional.java:143)
-	at com.middleware.backend.system_settings.service.Dhis2Service.getActiveSettings(Dhis2Service.java:18)
+	at com.middleware.backend.system_settings.service.ConfigService.getActiveSettings(Dhis2Service.java:18)
 	at com.middleware.backend.system_settings.config.Dhis2Config.loadSettings(Dhis2Config.java:20)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
@@ -5797,7 +5797,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 14:54:00 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:54:00 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:54:00 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 14:54:00 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 14:54:00 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 14:54:00 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 14:54:00 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 14:54:00 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -5805,7 +5805,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 14:54:05 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 14:54:05 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:54:05 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 14:54:05 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 14:54:05 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 14:54:05 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 14:54:05 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 14:54:05 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -5869,7 +5869,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 14:56:45 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 14:56:45 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:56:45 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 14:56:45 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 14:56:45 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 14:56:45 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:56:45 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=10", parameters={masked}
 2025-09-03 14:56:45 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
@@ -5899,7 +5899,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 14:57:20 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-09-03 14:57:20 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:57:20 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 14:57:20 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 14:57:20 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 14:57:20 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 14:57:20 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 14:57:20 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -5914,7 +5914,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 14:57:23 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 14:57:23 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:57:23 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 14:57:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 14:57:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 14:57:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 14:57:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 14:57:23 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6042,7 +6042,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 14:59:13 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 14:59:13 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:59:13 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 14:59:13 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 14:59:13 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 14:59:13 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:59:13 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/routes/latest?page=0&size=10", parameters={masked}
 2025-09-03 14:59:13 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
@@ -6146,7 +6146,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 14:59:30 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 14:59:30 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:59:30 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 14:59:30 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 14:59:30 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 14:59:30 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 14:59:30 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 14:59:30 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6154,7 +6154,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 14:59:30 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 14:59:31 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:59:31 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 14:59:31 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 14:59:31 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 14:59:31 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 14:59:31 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 14:59:31 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6162,7 +6162,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 14:59:31 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 14:59:31 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:59:31 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 14:59:31 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 14:59:31 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 14:59:31 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 14:59:31 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 14:59:31 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6170,7 +6170,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 14:59:32 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 14:59:32 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 14:59:32 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 14:59:32 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 14:59:32 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 14:59:32 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 14:59:32 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 14:59:32 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6208,7 +6208,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:00:30 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:00:30 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:00:30 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 15:00:30 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 15:00:30 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 15:00:30 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:00:30 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 15:00:30 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6222,7 +6222,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:00:46 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:00:46 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
 2025-09-03 15:00:46 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 15:00:46 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 15:00:46 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 15:00:46 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-09-03 15:00:46 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:00:46 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
@@ -6243,7 +6243,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:01:13 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /routes/latest?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:01:13 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:01:13 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 15:01:13 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 15:01:13 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 15:01:13 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:01:13 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 15:01:13 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6356,7 +6356,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:01:41 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:01:41 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:01:41 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 15:01:41 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 15:01:41 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 15:01:41 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:01:41 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 15:01:41 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6461,7 +6461,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:02:02 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:02:02 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:02:02 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 15:02:02 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 15:02:02 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 15:02:02 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:02:02 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 15:02:02 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6574,7 +6574,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:02:49 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:02:49 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:02:49 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 15:02:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 15:02:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 15:02:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:02:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 15:02:49 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6582,7 +6582,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:02:52 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:02:52 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:02:52 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 15:02:52 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 15:02:52 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 15:02:52 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-03 15:02:53 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:02:53 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
@@ -6594,7 +6594,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:03:00 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:03:00 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:03:00 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 15:03:00 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 15:03:00 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 15:03:00 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh323, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<: (truncated)...]
 2025-09-03 15:03:01 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:03:01 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh323, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<: (truncated)...]
@@ -6603,7 +6603,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:03:04 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:03:04 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:03:04 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 15:03:04 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 15:03:04 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 15:03:04 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:03:04 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh323, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<: (truncated)...]
 2025-09-03 15:03:04 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6705,7 +6705,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:08:18 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:08:19 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:08:19 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 15:08:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 15:08:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 15:08:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh323, userName=abood, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z (truncated)...]
 2025-09-03 15:08:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:08:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh323, userName=abood, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z (truncated)...]
@@ -6717,7 +6717,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:08:23 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:08:23 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:08:23 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 15:08:23 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 15:08:23 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 15:08:23 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:08:23 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh323, userName=abood, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z (truncated)...]
 2025-09-03 15:08:23 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6725,7 +6725,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:08:23 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:08:23 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:08:23 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 15:08:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 15:08:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 15:08:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:08:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh323, userName=abood, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z (truncated)...]
 2025-09-03 15:08:23 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6733,7 +6733,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:08:24 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:08:24 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:08:24 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 15:08:24 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 15:08:24 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 15:08:24 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:08:24 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh323, userName=abood, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z (truncated)...]
 2025-09-03 15:08:24 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -7110,7 +7110,7 @@ io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period
 2025-09-03 15:22:15 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:22:15 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:22:15 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 15:22:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 15:22:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 15:22:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:22:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh323, userName=abood, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z (truncated)...]
 2025-09-03 15:22:15 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -7416,7 +7416,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 15:26:12 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:26:12 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:26:12 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 15:26:12 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 15:26:12 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 15:26:13 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:26:13 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh323, userName=abood, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z (truncated)...]
 2025-09-03 15:26:13 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -7438,7 +7438,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 15:27:11 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:27:11 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:27:11 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 15:27:11 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 15:27:11 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 15:27:11 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 15:27:12 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:27:12 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
@@ -7556,7 +7556,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 15:27:42 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 15:27:42 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 15:27:42 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 15:27:42 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 15:27:42 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 15:27:42 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admindede, password=districtdeed, timeout (truncated)...]
 2025-09-03 15:27:42 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 15:27:42 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admindede, password=districtdeed, timeout (truncated)...]
@@ -11641,7 +11641,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 18:21:20 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 18:21:20 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 18:21:20 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 18:21:20 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 18:21:20 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 18:21:20 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 18:21:20 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admindede, password=districtdeed, timeout (truncated)...]
 2025-09-03 18:21:20 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -12395,7 +12395,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 19:43:11 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:43:11 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:43:11 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 19:43:11 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 19:43:11 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 19:43:11 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:43:11 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admindede, password=districtdeed, timeout (truncated)...]
 2025-09-03 19:43:11 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -12403,7 +12403,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 19:43:36 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:43:36 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:43:36 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 19:43:36 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 19:43:36 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 19:43:36 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:43:36 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admindede, password=districtdeed, timeout (truncated)...]
 2025-09-03 19:43:36 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -12414,7 +12414,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 19:44:04 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:44:04 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:44:04 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 19:44:04 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 19:44:04 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 19:44:04 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admindede, password=districtdeed, timeout (truncated)...]
 2025-09-03 19:44:04 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:44:04 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admindede, password=districtdeed, timeout (truncated)...]
@@ -12426,7 +12426,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 19:44:24 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:44:24 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:44:24 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 19:44:24 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 19:44:24 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 19:44:24 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:44:24 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admindede, password=districtdeed, timeout (truncated)...]
 2025-09-03 19:44:24 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -12434,7 +12434,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 19:44:28 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:44:29 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:44:29 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 19:44:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 19:44:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 19:44:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admindede, password=districtdeed, timeout (truncated)...]
 2025-09-03 19:44:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:44:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admindede, password=districtdeed, timeout (truncated)...]
@@ -12443,7 +12443,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 19:44:36 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:44:36 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:44:36 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 19:44:36 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 19:44:36 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 19:44:36 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-4, userName=admindede, password=districtdeed, timeout (truncated)...]
 2025-09-03 19:44:37 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:44:37 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-4, userName=admindede, password=districtdeed, timeout (truncated)...]
@@ -12455,7 +12455,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 19:44:49 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:44:50 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:44:50 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 19:44:50 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 19:44:50 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 19:44:50 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admindede, password=districtdeed, timeout (truncated)...]
 2025-09-03 19:44:50 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:44:50 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admindede, password=districtdeed, timeout (truncated)...]
@@ -12467,7 +12467,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 19:45:11 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:45:11 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:45:11 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 19:45:11 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 19:45:11 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 19:45:11 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=districtdeed, timeout=300 (truncated)...]
 2025-09-03 19:45:12 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:45:12 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=districtdeed, timeout=300 (truncated)...]
@@ -12476,7 +12476,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 19:45:17 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:45:17 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:45:17 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 19:45:17 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 19:45:17 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 19:45:17 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=districtdeed, timeout=300 (truncated)...]
 2025-09-03 19:45:17 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:45:17 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=districtdeed, timeout=300 (truncated)...]
@@ -12485,7 +12485,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 19:45:24 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:45:24 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:45:24 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 19:45:24 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 19:45:24 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 19:45:24 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=districtdeed, timeout=300 (truncated)...]
 2025-09-03 19:45:25 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:45:25 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=districtdeed, timeout=300 (truncated)...]
@@ -12534,7 +12534,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 19:46:50 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:46:51 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:46:51 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 19:46:51 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 19:46:51 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 19:46:51 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:46:51 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=districtdeed, timeout=300 (truncated)...]
 2025-09-03 19:46:51 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -12542,7 +12542,7 @@ Caused by: org.hibernate.StaleObjectStateException: Row was updated or deleted b
 2025-09-03 19:47:01 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:47:02 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PATCH /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:47:02 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - PATCH "/dhis2", parameters={}
-2025-09-03 19:47:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#updateSettings(Dhis2Dto)
+2025-09-03 19:47:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#updateSettings(Dhis2Dto)
 2025-09-03 19:47:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 19:47:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:47:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
@@ -12744,9 +12744,9 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
 	... 21 common frames omitted
 Caused by: java.lang.RuntimeException: No DHIS2 settings found
-	at com.middleware.backend.system_settings.service.Dhis2Service.lambda$getActiveSettings$0(Dhis2Service.java:19)
+	at com.middleware.backend.system_settings.service.ConfigService.lambda$getActiveSettings$0(Dhis2Service.java:19)
 	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
-	at com.middleware.backend.system_settings.service.Dhis2Service.getActiveSettings(Dhis2Service.java:19)
+	at com.middleware.backend.system_settings.service.ConfigService.getActiveSettings(Dhis2Service.java:19)
 	at com.middleware.backend.system_settings.config.Dhis2Config.loadSettings(Dhis2Config.java:20)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
@@ -12821,7 +12821,7 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	... 21 common frames omitted
 Caused by: java.util.NoSuchElementException: No value present
 	at java.base/java.util.Optional.get(Optional.java:143)
-	at com.middleware.backend.system_settings.service.Dhis2Service.getActiveSettings(Dhis2Service.java:18)
+	at com.middleware.backend.system_settings.service.ConfigService.getActiveSettings(Dhis2Service.java:18)
 	at com.middleware.backend.system_settings.config.Dhis2Config.loadSettings(Dhis2Config.java:20)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
@@ -13086,7 +13086,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 19:53:29 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:53:29 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:53:29 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 19:53:29 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 19:53:29 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 19:53:29 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:53:29 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 19:53:29 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13094,7 +13094,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 19:53:31 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 19:53:31 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 19:53:31 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 19:53:31 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 19:53:31 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 19:53:31 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 19:53:31 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 19:53:31 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13185,7 +13185,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 20:06:05 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:06:05 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:06:05 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:06:05 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:06:05 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:06:05 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:06:05 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:06:05 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13196,7 +13196,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 20:06:46 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:06:46 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:06:46 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:06:46 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:06:46 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:06:46 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:06:46 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:06:46 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13207,7 +13207,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 20:06:55 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:06:55 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:06:55 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:06:55 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:06:55 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:06:55 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:06:55 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:06:55 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13215,7 +13215,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 20:07:13 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:07:13 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:07:13 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:07:13 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:07:13 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:07:13 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:07:13 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:07:13 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13223,7 +13223,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 20:07:19 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:07:19 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:07:19 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:07:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:07:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:07:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:07:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:07:19 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13231,7 +13231,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 20:07:19 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:07:19 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:07:19 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:07:19 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:07:19 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:07:19 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:07:19 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:07:19 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13239,7 +13239,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 20:07:20 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:07:20 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:07:20 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:07:20 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:07:20 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:07:20 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:07:20 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:07:20 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13247,7 +13247,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 20:07:20 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:07:20 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:07:20 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:07:20 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:07:20 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:07:20 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:07:20 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:07:20 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13255,7 +13255,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 20:07:21 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:07:21 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:07:21 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:07:21 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:07:21 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:07:21 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:07:21 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:07:21 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13263,7 +13263,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 20:07:23 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:07:23 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:07:23 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:07:23 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:07:23 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:07:23 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:07:23 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:07:23 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13274,7 +13274,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 20:07:29 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:07:29 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:07:29 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:07:29 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:07:29 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:07:29 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:07:29 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:07:29 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13282,7 +13282,7 @@ DE_34,202505,OU_559,COC_292,]
 2025-09-03 20:07:51 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:07:52 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:07:52 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:07:52 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:07:52 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:07:52 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:07:52 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:07:52 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13643,7 +13643,7 @@ Caused by: org.postgresql.util.PSQLException: ERROR: syntax error at or near "ON
 2025-09-03 20:12:35 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 20:12:35 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 20:12:35 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 20:12:35 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 20:12:35 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 20:12:35 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 20:12:35 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 20:12:35 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -13855,7 +13855,7 @@ Caused by: org.postgresql.util.PSQLException: ERROR: syntax error at or near "ON
 2025-09-03 21:34:35 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-03 21:34:36 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-03 21:34:36 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/dhis2", parameters={}
-2025-09-03 21:34:36 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-03 21:34:36 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-03 21:34:36 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-03 21:34:36 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-03 21:34:36 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK

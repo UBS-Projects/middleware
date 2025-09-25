@@ -75,12 +75,12 @@ camel:
   ssl:
     config:
       trust-all: true
-dhis2:
-  base-url: play.im.dhis2.org/stable-2-41-5
-  username: admin
-  password: district
-  timeout: 30000
-  connect-timeout: 10000
+#dhis2:
+#  base-url: play.im.dhis2.org/stable-2-41-5
+#  username: admin
+#  password: district
+#  timeout: 30000
+#  connect-timeout: 10000
 #dhis2:
 #  base-url: hmis-dev.moh.gov.jo/dwh
 #  username: supp_user

@@ -346,7 +346,7 @@ java.lang.RuntimeException: Duplicate route not allowed: path '/api/hello' with 
 2025-09-16 10:46:00 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-16 10:46:00 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-16 10:46:00 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dhis2", parameters={}
-2025-09-16 10:46:00 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-16 10:46:00 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-16 10:46:00 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-16 10:46:00 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-16 10:46:00 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -2910,7 +2910,7 @@ Caused by: java.io.FileNotFoundException: class path resource [com/middleware/ba
 2025-09-16 12:39:54 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-16 12:39:54 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-16 12:39:54 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dhis2", parameters={}
-2025-09-16 12:39:54 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-16 12:39:54 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-16 12:39:54 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-16 12:39:54 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-16 12:39:54 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -2922,7 +2922,7 @@ Caused by: java.io.FileNotFoundException: class path resource [com/middleware/ba
 2025-09-16 12:40:57 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-16 12:40:57 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-16 12:40:57 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dhis2", parameters={}
-2025-09-16 12:40:57 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-16 12:40:57 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-16 12:40:58 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-16 12:40:58 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-16 12:40:58 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK

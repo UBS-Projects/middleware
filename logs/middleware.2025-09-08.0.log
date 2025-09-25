@@ -4028,7 +4028,7 @@
 2025-09-08 13:10:18 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-08 13:10:18 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-08 13:10:18 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dhis2", parameters={}
-2025-09-08 13:10:18 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-08 13:10:18 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-08 13:10:18 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-08 13:10:18 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=play.im.dhis2.org/stable-2-41-5, userName=admin, password=district, timeout=30000,  (truncated)...]
 2025-09-08 13:10:18 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK

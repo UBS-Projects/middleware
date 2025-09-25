@@ -6356,7 +6356,7 @@ Caused by: org.postgresql.util.PSQLException: ERROR: column "created_by" of rela
 2025-09-14 17:22:15 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-14 17:22:15 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-14 17:22:15 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dhis2", parameters={}
-2025-09-14 17:22:15 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-14 17:22:15 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-14 17:22:16 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-14 17:22:16 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-14 17:22:16 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6408,7 +6408,7 @@ Caused by: org.postgresql.util.PSQLException: ERROR: column "created_by" of rela
 2025-09-14 17:31:20 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-09-14 17:31:21 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dhis2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-09-14 17:31:21 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dhis2", parameters={}
-2025-09-14 17:31:21 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.Dhis2Controller#getSettings()
+2025-09-14 17:31:21 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.system_settings.controller.ConfigController#getSettings()
 2025-09-14 17:31:21 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-09-14 17:31:21 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Dhis2Dto(baseUrl=hmis-dev.moh.gov.jo/dwh, userName=supp_user, password=F^*+(<2:&!^.L7:6GTtfP7>2<:6)@ (truncated)...]
 2025-09-14 17:31:21 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK

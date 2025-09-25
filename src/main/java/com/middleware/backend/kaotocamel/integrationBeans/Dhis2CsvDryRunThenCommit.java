@@ -1,10 +1,8 @@
 package com.middleware.backend.kaotocamel.integrationBeans;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.middleware.backend.system_settings.config.Dhis2Config;
-import com.middleware.backend.system_settings.model.Dhis2;
+import com.middleware.backend.system_settings.model.Config;
+import com.middleware.backend.system_settings.repository.ConfigRepository;
 import org.apache.camel.Exchange;
-import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
@@ -20,6 +18,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component("dhis2CsvDryRunThenCommit")
 /**
@@ -30,14 +31,11 @@ import java.util.Base64;
 public class Dhis2CsvDryRunThenCommit implements Processor {
 
     private static final Logger log = LoggerFactory.getLogger(Dhis2CsvDryRunThenCommit.class);
-    private static final ObjectMapper MAPPER = new ObjectMapper();
-    private final Dhis2Config dhis2Config;
-
-    public Dhis2CsvDryRunThenCommit(Dhis2Config dhis2Config) {
-        this.dhis2Config = dhis2Config;
-    }
-
+    private final ConfigRepository configRepository; // inject repository
     private volatile int lastResponseCode = 0;
+    public Dhis2CsvDryRunThenCommit(ConfigRepository configRepository) {
+        this.configRepository = configRepository;
+    }
 
     @Override
     /**
@@ -48,138 +46,116 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
      * Writes unified JSON body and HTTP status headers on the exchange.
      */
     public void process(Exchange exchange) {
-        Message in = exchange.getIn();
-
-        log.info("=== DHIS2 CSV Upload Starting ===");
-
-        byte[] csv = exchange.getProperty("_csvBytes", byte[].class);
-        String qBase = exchange.getProperty("_queryBase", String.class);
-        String dryRun = exchange.getProperty("dryRun", String.class); // "true" / "false"
-
-        if (csv == null || qBase == null) {
-            writeError(exchange, 500, "Internal processing state is missing (_csvBytes/_queryBase)");
+        String code = exchange.getIn().getHeader("_dhis2Code", String.class);
+        if (code == null) {
+            writeError(exchange, 400, "DHIS2 code not provided in exchange property '_dhis2Code'");
+            return;
+        }
+        // Fetch config dynamically
+        Map<String, String> config = getDhis2Config(code);
+        if (config.isEmpty()) {
+            writeError(exchange, 404, "No DHIS2 configuration found for code: " + code);
             return;
         }
 
-        boolean isDryRunMode = !"false".equalsIgnoreCase(dryRun); // default true
-        log.info("CSV size={} bytes, dryRunMode={}", csv.length, isDryRunMode);
+        byte[] csv = exchange.getProperty("_csvBytes", byte[].class);
+        String qBase = exchange.getProperty("_queryBase", String.class);
+        String dryRun = exchange.getProperty("dryRun", String.class);
+
+        if (csv == null || qBase == null) {
+            writeError(exchange, 500, "Missing CSV bytes or query parameters");
+            return;
+        }
+
+        boolean isDryRunMode = !"false".equalsIgnoreCase(dryRun);
 
         try {
             if (isDryRunMode) {
-                String dryResp = callDhis2(csv, qBase, true);
-                int dryCode = getLastResponseCode();
-                log.info("Dry-run httpCode={}, bodyPreview={}", dryCode, preview(dryResp));
-
-                if (dryResp == null || dryCode == 0) {
-                     setJson(exchange, 500,
-                            "{ \"status\":\"ERROR\",\"message\":\"DHIS2 unreachable (no HTTP status in dry-run)\"," +
-                                    "\"errorCode\":\"\",\"errorMessage\":\"\"," +
-                                    "\"details\":{ \"raw\":" + rawAsJson(exchange) + " } }"
-                    );
-                    exchange.setRouteStop(true);
-                    return;
-                }
-
-                boolean hasConflict = checkConflictsYamlLogic(dryResp, dryCode);
-                if (hasConflict) {
-                    log.warn("Dry-run conflicts detected — stopping before commit");
-                    setJson(exchange, 409,
-                            "{ \"status\":\"CONFLICT\",\"message\":\"Resolve the conflicts then re-upload\"," +
-                                    "\"errorCode\":\"\",\"errorMessage\":\"\",\"details\":" + safeJson(dryResp) + " }");
-                    exchange.setRouteStop(true);
-                    return;
-                }
-
-                String commitResp = callDhis2(csv, qBase, false);
-                int commitCode = getLastResponseCode();
-                log.info("Commit httpCode={}, bodyPreview={}", commitCode, preview(commitResp));
-
-                if (commitResp == null || commitCode == 0) {
-                    writeError(exchange, 500, "Failed to get commit response from DHIS2");
-                    return;
-                }
-
-                String status = (commitCode >= 200 && commitCode <= 202) ? "SUCCESS" : "ERROR";
-                setJson(exchange, 200,
-                        "{ \"status\":\"" + status + "\",\"message\":\"completed successfully\"," +
-                                "\"errorCode\":\"\",\"errorMessage\":\"\",\"details\":" + safeJson(commitResp) + " }");
-                exchange.setRouteStop(true);
-                return;
-
+                handleDryRun(exchange, csv, qBase, config);
             } else {
-                String resp = callDhis2(csv, qBase, false);
-                int code = getLastResponseCode();
-                log.info("Direct import httpCode={}, bodyPreview={}", code, preview(resp));
-
-                if (resp == null || code == 0) {
-                    writeError(exchange, 500, "Failed to get response from DHIS2");
-                    return;
-                }
-
-                String status = (code == 409) ? "CONFLICT"
-                        : (code >= 200 && code <= 202) ? "SUCCESS"
-                        : "ERROR";
-
-                setJson(exchange, code,
-                        "{ \"status\":\"" + status + "\",\"message\":\"completed (no dry-run)\"," +
-                                "\"errorCode\":\"\",\"errorMessage\":\"\",\"details\":" + safeJson(resp) + " }");
-                exchange.setRouteStop(true);
-                return;
+                handleDirectCommit(exchange, csv, qBase, config);
             }
         } catch (Exception e) {
-            log.error("Error during DHIS2 upload process: {}", e.getMessage(), e);
-            writeError(exchange, 500, "Failed to call DHIS2: " + e.getMessage());
+            writeError(exchange, 500, "DHIS2 upload failed: " + e.getMessage());
         }
     }
+
+    private Map<String, String> getDhis2Config(String code) {
+        List<Config> configs = configRepository.findByModuleAndKeyStartingWith("dhis2", code + ".");
+        Map<String, String> map = new HashMap<>();
+        for (Config c : configs) {
+            map.put(c.getKey().substring((code + ".").length()), c.getValue());
+        }
+        return map;
+    }
+    private void handleDryRun(Exchange exchange, byte[] csv, String qBase, Map<String, String> config) throws Exception {
+        String dryResp = callDhis2(csv, qBase, true, config);
+        int dryCode = getLastResponseCode();
+
+        if (dryResp == null || dryCode == 0) {
+            writeError(exchange, 500, "DHIS2 unreachable during dry-run");
+            return;
+        }
+
+        if (checkConflictsYamlLogic(dryResp, dryCode)) {
+            setJson(exchange, 409, "{ \"status\":\"CONFLICT\",\"message\":\"Resolve conflicts then re-upload\",\"details\":" + safeJson(dryResp) + "}");
+            exchange.setRouteStop(true);
+            return;
+        }
+
+        String commitResp = callDhis2(csv, qBase, false, config);
+        int commitCode = getLastResponseCode();
+
+        String status = (commitCode >= 200 && commitCode <= 202) ? "SUCCESS" : "ERROR";
+        setJson(exchange, commitCode, "{ \"status\":\"" + status + "\",\"message\":\"completed successfully\",\"details\":" + safeJson(commitResp) + " }");
+    }
+
+    private void handleDirectCommit(Exchange exchange, byte[] csv, String qBase, Map<String, String> config) throws Exception {
+        String resp = callDhis2(csv, qBase, false, config);
+        int codeResp = getLastResponseCode();
+        String status = (codeResp == 409) ? "CONFLICT" : (codeResp >= 200 && codeResp <= 202) ? "SUCCESS" : "ERROR";
+        setJson(exchange, codeResp, "{ \"status\":\"" + status + "\",\"message\":\"completed (no dry-run)\",\"details\":" + safeJson(resp) + " }");
+    }
+
 
     /**
      * Calls DHIS2 dataValueSets endpoint with the given CSV and query parameters.
      * Returns the response body and stores the HTTP code internally.
      */
-    private String callDhis2(byte[] csv, String qBase, boolean dryRun) {
-        HttpURLConnection conn = null;
-        try {
-            dhis2Config.refreshSettings();
-            Dhis2 current = dhis2Config.getCurrentSettings();
-            String fullUrl = "https://" + current.getBaseUrl() + "/api/dataValueSets?dryRun=" + (dryRun ? "true" : "false") + "&" + qBase;
-            log.info("Calling DHIS2 {}", fullUrl);
+    private String callDhis2(byte[] csv, String qBase, boolean dryRun, Map<String, String> config) throws Exception {
+        String baseUrl = config.get("baseUrl");
+        String user = config.get("userName");
+        String pass = config.get("password");
 
-            disableSSLVerification();
+        String fullUrl = "https://" + baseUrl + "/api/dataValueSets?dryRun=" + (dryRun ? "true" : "false") + "&" + qBase;
+        log.info("Calling DHIS2 {}", fullUrl);
 
-            URL url = new URL(fullUrl);
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
+        disableSSLVerification();
 
-            String auth = "Basic " + Base64.getEncoder().encodeToString(
-                    (current.getUserName() + ":" + current.getPassword()).getBytes(StandardCharsets.UTF_8)
-            );
-            conn.setRequestProperty("Authorization", auth);
-            conn.setRequestProperty("Content-Type", "application/csv");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestProperty("User-Agent", "Middleware-DHIS2/1.0");
-            conn.setRequestProperty("Cache-Control", "no-cache");
-            conn.setConnectTimeout(30000);
-            conn.setReadTimeout(60000);
+        URL url = new URL(fullUrl);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
 
-            try (OutputStream os = conn.getOutputStream()) {
-                os.write(csv);
-                os.flush();
-            }
+        String auth = "Basic " + Base64.getEncoder().encodeToString((user + ":" + pass).getBytes(StandardCharsets.UTF_8));
+        conn.setRequestProperty("Authorization", auth);
+        conn.setRequestProperty("Content-Type", "application/csv");
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setRequestProperty("User-Agent", "Middleware-DHIS2/1.0");
+        conn.setRequestProperty("Cache-Control", "no-cache");
+        conn.setConnectTimeout(30000);
+        conn.setReadTimeout(60000);
 
-            lastResponseCode = safeCode(conn);
-            InputStream is = (lastResponseCode >= 200 && lastResponseCode < 300) ? conn.getInputStream() : conn.getErrorStream();
-            String body = readAll(is);
-
-            return body;
-        } catch (Exception e) {
-            log.error("Error calling DHIS2: {}", e.getMessage(), e);
-            lastResponseCode = 0;
-            return null;
-        } finally {
-            if (conn != null) conn.disconnect();
+        try (OutputStream os = conn.getOutputStream()) {
+            os.write(csv);
+            os.flush();
         }
+
+        lastResponseCode = conn.getResponseCode();
+        InputStream is = (lastResponseCode >= 200 && lastResponseCode < 300) ? conn.getInputStream() : conn.getErrorStream();
+        return readAll(is);
     }
+
 
     private int getLastResponseCode() { return lastResponseCode; }
 

@@ -106,7 +106,7 @@ public interface DynamicRouteRepository
         /**
          * Finds a route by REST path, HTTP method, and active flag.
          */
-        Optional<DynamicRouteEntity> findByPathAndHttpMethodAndActive(String path, String method,boolean active);
+        Optional<DynamicRouteEntity> findByPathAndHttpMethodIgnoreCaseAndActive(String path, String method,boolean active);
 
         /**
          * Finds the first active version for a route identifier.
