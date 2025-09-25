@@ -1,0 +1,548 @@
+2025-09-06 00:00:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:00:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:00:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:00:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:01:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:01:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:01:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:01:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:02:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:02:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:02:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:02:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:03:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:03:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:03:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:03:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:04:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:04:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:04:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:04:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:05:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:05:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:05:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:05:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:06:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:06:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:06:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:06:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:07:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:07:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:07:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:07:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:07:36 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/auth/login, client=0:0:0:0:0:0:0:1]
+2025-09-06 00:07:36 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/auth/login", parameters={}
+2025-09-06 00:07:36 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.auth.AuthController#login(AuthRequest)
+2025-09-06 00:07:36 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AuthController.AuthRequest(email=admin@mail.com, password=S123@231)]
+2025-09-06 00:07:37 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 00:07:37 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthController.AuthResponse(token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTc1N (truncated)...]
+2025-09-06 00:07:37 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 00:07:37 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/auth/login, client=0:0:0:0:0:0:0:1, payload={"email":"admin@mail.com","password":"S123@231"}]
+2025-09-06 00:07:45 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 00:07:45 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/scheduledjobslogs?page=0&size=10&sortedBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 00:07:45 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/scheduledjobslogs?page=0&size=10&sortedBy=createdAt&sortDirection=desc", parameters={masked}
+2025-09-06 00:07:45 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.JobLogsController#getAll(String, String, String, Status, String, String, LocalDate, LocalDate, int, int)
+2025-09-06 00:07:45 [http-nio-8081-exec-4] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-09-06 00:07:45 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 00:07:45 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.scheduledJobs.model.ExecutionHistory instances]
+2025-09-06 00:07:45 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 00:07:45 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/scheduledjobslogs?page=0&size=10&sortedBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 00:07:52 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 00:07:52 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/scheduledjobslogs?page=0&size=10&sortedBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 00:07:52 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/scheduledjobslogs?page=0&size=10&sortedBy=createdAt&sortDirection=desc", parameters={masked}
+2025-09-06 00:07:52 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.scheduledJobs.controller.JobLogsController#getAll(String, String, String, Status, String, String, LocalDate, LocalDate, int, int)
+2025-09-06 00:07:52 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 00:07:52 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.scheduledJobs.model.ExecutionHistory instances]
+2025-09-06 00:07:52 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 00:07:52 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/scheduledjobslogs?page=0&size=10&sortedBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 00:08:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 00:08:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 00:08:04 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-06 00:08:04 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-06 00:08:04 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:2)
+2025-09-06 00:08:04 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped dhis2-upload-csv-sync-raw-only (servlet:/external/integrate)
+2025-09-06 00:08:04 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-06 00:08:04 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 16ms (uptime:9m30s)
+2025-09-06 00:08:04 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-06 00:08:04 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-06 00:08:04 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-06 00:08:04 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-09-06 11:44:54 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-06 11:44:54 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23-valhalla with PID 18344 (C:\Users\omard\Desktop\Work\jordan\back-end\target\classes started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-09-06 11:44:54 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-06 11:45:03 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-09-06 11:45:03 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-06 11:45:03 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-09-06 11:45:03 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-09-06 11:45:04 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-06 11:45:05 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-06 11:45:05 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-06 11:45:06 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-06 11:45:06 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@69c0bae6']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-06 11:45:13 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-06 11:45:19 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-06 11:45:24 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-09-06 11:45:24 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2025-09-06 11:45:24 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-09-06 11:45:27 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-06 11:45:27 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-06 11:45:27 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-06 11:45:27 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-06 11:45:27 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-09-06 11:45:27 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-06 11:45:27 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-06 11:45:27 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@364cc95
+2025-09-06 11:45:28 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-06 11:45:28 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-06 11:45:29 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 106 mappings in 'requestMappingHandlerMapping'
+2025-09-06 11:45:30 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-06 11:45:32 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-06 11:45:32 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-06 11:45:34 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-09-06 11:45:34 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-09-06 11:45:34 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-06 11:45:34 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-06 11:45:34 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-06 11:45:34 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 24ms (build:0ms init:0ms start:24ms)
+2025-09-06 11:45:34 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 40.551 seconds (process running for 42.824)
+2025-09-06 11:45:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:45:34 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-06 11:45:35 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq synced to 211. setval returned 211
+2025-09-06 11:45:35 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-06 11:45:35 [RMI TCP Connection(2)-192.168.88.12] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-06 11:45:35 [RMI TCP Connection(2)-192.168.88.12] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-06 11:45:35 [RMI TCP Connection(2)-192.168.88.12] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-09-06 11:45:35 [RMI TCP Connection(2)-192.168.88.12] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-09-06 11:45:35 [RMI TCP Connection(2)-192.168.88.12] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-09-06 11:45:35 [RMI TCP Connection(2)-192.168.88.12] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@6217dda0
+2025-09-06 11:45:35 [RMI TCP Connection(2)-192.168.88.12] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@649e1f4c
+2025-09-06 11:45:35 [RMI TCP Connection(2)-192.168.88.12] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-09-06 11:45:35 [RMI TCP Connection(2)-192.168.88.12] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 8 ms
+2025-09-06 11:45:35 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-09-06 11:45:35 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route dhis2-upload-csv-sync-raw-only to context (DB says active)
+2025-09-06 11:45:35 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:45:38 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/auth/login, client=0:0:0:0:0:0:0:1]
+2025-09-06 11:45:38 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/auth/login", parameters={}
+2025-09-06 11:45:38 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.auth.AuthController#login(AuthRequest)
+2025-09-06 11:45:38 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AuthController.AuthRequest(email=admin@mail.com, password=S123@231)]
+2025-09-06 11:45:39 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:45:39 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthController.AuthResponse(token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTc1N (truncated)...]
+2025-09-06 11:45:39 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:45:39 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/auth/login, client=0:0:0:0:0:0:0:1, payload={"email":"admin@mail.com","password":"S123@231"}]
+2025-09-06 11:45:45 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:45:45 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:45:45 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:45:45 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:45:45 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings/source-systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:45:45 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings/source-systems", parameters={}
+2025-09-06 11:45:45 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableSourceSystems()
+2025-09-06 11:45:45 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:45:45 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings/routes", parameters={}
+2025-09-06 11:45:45 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableRoutes()
+2025-09-06 11:45:45 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings/error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:45:45 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:45:45 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings/error-categories", parameters={}
+2025-09-06 11:45:45 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getActiveErrorCategories()
+2025-09-06 11:45:45 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc", parameters={masked}
+2025-09-06 11:45:45 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAllErrorMappings(Map, int, int, String, String)
+2025-09-06 11:45:45 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:45:45 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[SourceSystemOptionDto(id=1, name=Hakeem, description=Hakeem, active=true)]]
+2025-09-06 11:45:45 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:45:45 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings/source-systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:45:45 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:45:45 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RouteOptionDto(routeId=dhis2-upload-csv-sync-raw-only, path=/external/integrate, httpMethod=POST, d (truncated)...]
+2025-09-06 11:45:45 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:45:45 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:45:45 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:45:45 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[{name=Hakeem, description=null, active=true, id=1}]]
+2025-09-06 11:45:45 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:45:45 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings/error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:45:45 [http-nio-8081-exec-8] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-09-06 11:45:45 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:45:45 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.dto.ErrorMappingDto instances]
+2025-09-06 11:45:45 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:45:45 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:46:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:46:06 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:46:06 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:46:06 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:46:06 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:46:06 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:06 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings/routes", parameters={}
+2025-09-06 11:46:06 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableRoutes()
+2025-09-06 11:46:06 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:06 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc", parameters={masked}
+2025-09-06 11:46:06 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAllErrorMappings(Map, int, int, String, String)
+2025-09-06 11:46:06 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings/error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:06 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings/error-categories", parameters={}
+2025-09-06 11:46:06 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getActiveErrorCategories()
+2025-09-06 11:46:06 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:46:06 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RouteOptionDto(routeId=dhis2-upload-csv-sync-raw-only, path=/external/integrate, httpMethod=POST, d (truncated)...]
+2025-09-06 11:46:06 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:46:06 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:06 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:46:06 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.dto.ErrorMappingDto instances]
+2025-09-06 11:46:06 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:46:06 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:06 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:46:06 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[{name=Hakeem, description=null, active=true, id=1}]]
+2025-09-06 11:46:06 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:46:06 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings/error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:07 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings/source-systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:07 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings/source-systems", parameters={}
+2025-09-06 11:46:07 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableSourceSystems()
+2025-09-06 11:46:07 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:46:07 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[SourceSystemOptionDto(id=1, name=Hakeem, description=Hakeem, active=true)]]
+2025-09-06 11:46:07 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:46:07 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings/source-systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:16 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:46:16 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:16 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/logs?page=0&size=10&sort=receivedAt%2Cdesc", parameters={masked}
+2025-09-06 11:46:16 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.logging.controller.MiddlewareApiCallLogController#getAll(Map, int, int, String)
+2025-09-06 11:46:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:46:17 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.logging.dto.MiddlewareApiCallLogDto instances]
+2025-09-06 11:46:17 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:46:17 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:46:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:46:36 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:46:36 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:36 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/logs?page=0&size=10&sort=receivedAt%2Cdesc", parameters={masked}
+2025-09-06 11:46:36 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.logging.controller.MiddlewareApiCallLogController#getAll(Map, int, int, String)
+2025-09-06 11:46:36 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:46:36 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.logging.dto.MiddlewareApiCallLogDto instances]
+2025-09-06 11:46:36 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:46:36 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:46:59 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:47:00 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:47:00 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:47:00 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:47:00 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:00 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings/routes", parameters={}
+2025-09-06 11:47:00 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableRoutes()
+2025-09-06 11:47:00 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:00 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc", parameters={masked}
+2025-09-06 11:47:00 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAllErrorMappings(Map, int, int, String, String)
+2025-09-06 11:47:00 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings/error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:00 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings/error-categories", parameters={}
+2025-09-06 11:47:00 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getActiveErrorCategories()
+2025-09-06 11:47:00 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:47:00 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[RouteOptionDto(routeId=dhis2-upload-csv-sync-raw-only, path=/external/integrate, httpMethod=POST, d (truncated)...]
+2025-09-06 11:47:00 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:47:00 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:00 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-mappings/source-systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:00 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-mappings/source-systems", parameters={}
+2025-09-06 11:47:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorMappingController#getAvailableSourceSystems()
+2025-09-06 11:47:00 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:47:00 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[{name=Hakeem, description=null, active=true, id=1}]]
+2025-09-06 11:47:00 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:47:00 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings/error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:00 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:47:00 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.dto.ErrorMappingDto instances]
+2025-09-06 11:47:00 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:47:00 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings?page=0&size=10&sortBy=createdAt&sortDir=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:47:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[SourceSystemOptionDto(id=1, name=Hakeem, description=Hakeem, active=true)]]
+2025-09-06 11:47:00 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:47:00 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-mappings/source-systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:47:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:47:05 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:47:06 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:06 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=", parameters={masked}
+2025-09-06 11:47:06 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorCategoryController#getAll(String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-06 11:47:06 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:47:06 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.model.ErrorCategory instances]
+2025-09-06 11:47:06 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:47:06 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:10 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:47:10 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:10 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/error-categories", parameters={}
+2025-09-06 11:47:10 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorCategoryController#createCategory(ErrorCategoryDto)
+2025-09-06 11:47:10 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [ErrorCategoryDto(id=null, name=s, description=s, active=true, createdAt=null, updatedAt=null)]
+2025-09-06 11:47:10 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:47:10 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [ErrorCategoryDto(id=2, name=s, description=s, active=true, createdAt=2025-09-06T11:47:10.676457600,  (truncated)...]
+2025-09-06 11:47:10 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 201 CREATED
+2025-09-06 11:47:10 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/error-categories, client=0:0:0:0:0:0:0:1, user=admin@mail.com, payload={"name":"s","description":"s","active":true}]
+2025-09-06 11:47:11 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:47:11 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:11 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=", parameters={masked}
+2025-09-06 11:47:11 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.ErrorCategoryController#getAll(String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-06 11:47:11 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:47:11 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.model.ErrorCategory instances]
+2025-09-06 11:47:11 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:47:11 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/error-categories?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:14 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:47:15 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/source-systems?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:15 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/source-systems?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=", parameters={masked}
+2025-09-06 11:47:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.SourceSystemController#getAllSourceSystems(String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-06 11:47:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:47:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.model.SourceSystem instances]
+2025-09-06 11:47:15 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:47:15 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/source-systems?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:17 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:47:17 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/source-systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:17 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/source-systems", parameters={}
+2025-09-06 11:47:17 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.SourceSystemController#createSourceSystem(SourceSystemDto)
+2025-09-06 11:47:17 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [SourceSystemDto(id=null, name=s, description=s, active=true, createdAt=null, updatedAt=null)]
+2025-09-06 11:47:17 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:47:17 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [SourceSystemDto(id=2, name=s, description=s, active=true, createdAt=2025-09-06T11:47:17.811143200, u (truncated)...]
+2025-09-06 11:47:17 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 201 CREATED
+2025-09-06 11:47:17 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/source-systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com, payload={"name":"s","description":"s","active":true}]
+2025-09-06 11:47:18 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:47:18 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/source-systems?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:18 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/source-systems?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=", parameters={masked}
+2025-09-06 11:47:18 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.SourceSystemController#getAllSourceSystems(String, String, String, LocalDate, LocalDate, String, String, int, int)
+2025-09-06 11:47:18 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:47:18 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.model.SourceSystem instances]
+2025-09-06 11:47:18 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:47:18 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/source-systems?page=0&size=10&name=&description=&sortedBy=createdAt&sortDirection=desc&status=&startDate=&endDate=, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:23 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:47:23 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/source-systems/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:23 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/source-systems/2", parameters={}
+2025-09-06 11:47:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.SourceSystemController#getSourceSystemById(Long)
+2025-09-06 11:47:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:47:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [SourceSystemDto(id=2, name=s, description=s, active=true, createdAt=2025-09-06T11:47:17.811143, upda (truncated)...]
+2025-09-06 11:47:23 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:47:23 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/source-systems/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:23 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 11:47:23 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/source-systems/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:23 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/source-systems/2", parameters={}
+2025-09-06 11:47:23 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.controller.SourceSystemController#getSourceSystemById(Long)
+2025-09-06 11:47:24 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-09-06 11:47:24 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [SourceSystemDto(id=2, name=s, description=s, active=true, createdAt=2025-09-06T11:47:17.811143, upda (truncated)...]
+2025-09-06 11:47:24 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-06 11:47:24 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/source-systems/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-09-06 11:47:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:47:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:48:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:48:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:48:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:48:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:49:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:49:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:49:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:49:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:50:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:50:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:50:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:50:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:51:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:51:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:51:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:51:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:52:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:52:04 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:57:24 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:57:24 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:57:24 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:57:24 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:57:24 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:57:24 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:57:24 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:57:24 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:57:24 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:57:24 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:57:25 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:57:25 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:57:25 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:57:25 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:57:25 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:57:25 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:57:25 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:57:25 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:57:25 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:57:25 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:57:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:57:34 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:58:02 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-06 11:58:02 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-06 11:58:02 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:2)
+2025-09-06 11:58:02 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped dhis2-upload-csv-sync-raw-only (servlet:/external/integrate)
+2025-09-06 11:58:02 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-06 11:58:02 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 16ms (uptime:12m27s)
+2025-09-06 11:58:02 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-06 11:58:02 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-06 11:58:02 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-06 11:58:02 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-09-06 11:58:48 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-06 11:58:49 [main] INFO  c.m.MiddlewareApplicationTests - Starting MiddlewareApplicationTests using Java 23-valhalla with PID 31024 (started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-09-06 11:58:49 [main] INFO  c.m.MiddlewareApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-09-06 11:58:49 [main] DEBUG o.s.w.c.s.GenericWebApplicationContext - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52
+2025-09-06 11:58:53 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-06 11:58:54 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-06 11:58:54 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-06 11:58:54 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-06 11:58:54 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@36cf6377']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-06 11:58:57 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-06 11:58:59 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-06 11:59:02 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-06 11:59:02 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-06 11:59:02 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-06 11:59:02 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-06 11:59:02 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-09-06 11:59:02 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-06 11:59:02 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-06 11:59:02 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@44f41e44
+2025-09-06 11:59:03 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-06 11:59:03 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-06 11:59:03 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 106 mappings in 'requestMappingHandlerMapping'
+2025-09-06 11:59:03 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-06 11:59:04 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-06 11:59:04 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-06 11:59:06 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-06 11:59:06 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 11:59:06 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-06 11:59:06 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-06 11:59:06 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 12ms (build:0ms init:0ms start:12ms)
+2025-09-06 11:59:06 [main] INFO  c.m.MiddlewareApplicationTests - Started MiddlewareApplicationTests in 17.733 seconds (process running for 19.55)
+2025-09-06 11:59:06 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-06 11:59:06 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq synced to 211. setval returned 211
+2025-09-06 11:59:06 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-06 11:59:06 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-09-06 11:59:06 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route dhis2-upload-csv-sync-raw-only to context (DB says active)
+2025-09-06 11:59:06 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 11:59:07 [SpringApplicationShutdownHook] DEBUG o.s.w.c.s.GenericWebApplicationContext - Closing org.springframework.web.context.support.GenericWebApplicationContext@1ad8df52, started on Sat Sep 06 11:58:49 EEST 2025
+2025-09-06 11:59:07 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-06 11:59:07 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-06 11:59:07 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:2)
+2025-09-06 11:59:07 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped dhis2-upload-csv-sync-raw-only (servlet:/external/integrate)
+2025-09-06 11:59:07 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
+2025-09-06 11:59:07 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 11ms (uptime:1s)
+2025-09-06 11:59:07 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-06 11:59:07 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-06 11:59:07 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-06 23:58:58 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-06 23:58:58 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23-valhalla with PID 32616 (C:\Users\omard\Desktop\Work\jordan\back-end\target\classes started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-09-06 23:58:58 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-06 23:59:02 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-09-06 23:59:02 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-06 23:59:02 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-09-06 23:59:02 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-09-06 23:59:02 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-06 23:59:03 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-06 23:59:03 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-06 23:59:03 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-06 23:59:03 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@26d445e9']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-06 23:59:05 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-06 23:59:07 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-06 23:59:08 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-09-06 23:59:08 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2025-09-06 23:59:08 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-09-06 23:59:09 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-06 23:59:09 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-06 23:59:09 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-06 23:59:09 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-06 23:59:09 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-09-06 23:59:09 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-06 23:59:09 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-06 23:59:09 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@4125a698
+2025-09-06 23:59:09 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-06 23:59:09 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-06 23:59:10 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 106 mappings in 'requestMappingHandlerMapping'
+2025-09-06 23:59:10 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-06 23:59:10 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-06 23:59:10 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-06 23:59:12 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-09-06 23:59:12 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-09-06 23:59:12 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-06 23:59:12 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-06 23:59:12 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-06 23:59:12 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 10ms (build:0ms init:0ms start:10ms)
+2025-09-06 23:59:12 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 14.196 seconds (process running for 15.482)
+2025-09-06 23:59:12 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 23:59:12 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-09-06 23:59:12 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq synced to 211. setval returned 211
+2025-09-06 23:59:12 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-06 23:59:12 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-09-06 23:59:12 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route dhis2-upload-csv-sync-raw-only to context (DB says active)
+2025-09-06 23:59:12 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 23:59:13 [RMI TCP Connection(3)-192.168.88.6] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-06 23:59:13 [RMI TCP Connection(3)-192.168.88.6] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-06 23:59:13 [RMI TCP Connection(3)-192.168.88.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-09-06 23:59:13 [RMI TCP Connection(3)-192.168.88.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-09-06 23:59:13 [RMI TCP Connection(3)-192.168.88.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-09-06 23:59:13 [RMI TCP Connection(3)-192.168.88.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@576bedd9
+2025-09-06 23:59:13 [RMI TCP Connection(3)-192.168.88.6] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@13c33a12
+2025-09-06 23:59:13 [RMI TCP Connection(3)-192.168.88.6] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-09-06 23:59:13 [RMI TCP Connection(3)-192.168.88.6] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2025-09-06 23:59:41 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-09-06 23:59:41 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /camel/external/integrate?transactionUUID=8a2c3251-d319-4b7f-a68a-2d83df005046, client=0:0:0:0:0:0:0:1, user=hakeem@mail.com]
+2025-09-06 23:59:41 [http-nio-8081-exec-2] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [dhis2-upload-csv-sync-raw-only] - Incoming exchange: DBACFDAC8E3E161-0000000000000000
+2025-09-06 23:59:41 [http-nio-8081-exec-2] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - createTransactionSync... creating log for Route [dhis2-upload-csv-sync-raw-only] - Exchange content: {CamelCharsetName=UTF-8}
+2025-09-06 23:59:41 [http-nio-8081-exec-2] INFO  c.m.b.policy.LoggingRoutePolicy - LoggingRoutePolicy.onExchangeBegin: Route [dhis2-upload-csv-sync-raw-only] - call log created with ID 5
+2025-09-06 23:59:41 [http-nio-8081-exec-2] INFO  c.m.b.k.integrationBeans.CsvGuard - === CSV Guard Processing ===
+2025-09-06 23:59:41 [http-nio-8081-exec-2] INFO  c.m.b.k.integrationBeans.CsvGuard - CSV Guard OK — bytes=251950, scheme=CODE, strategy=NEW_AND_UPDATES, dryRun=true, qBase=async=false&preheatCache=false&skipAudit=false&skipExistingCheck=false&firstRowIsHeader=true&strategy=NEW_AND_UPDATES&dataElementIdScheme=CODE&orgUnitIdScheme=CODE&categoryOptionComboIdScheme=CODE&attributeOptionComboIdScheme=CODE&idScheme=CODE
+2025-09-06 23:59:41 [http-nio-8081-exec-2] INFO  c.m.b.k.i.Dhis2CsvDryRunThenCommit - === DHIS2 CSV Upload Starting ===
+2025-09-06 23:59:41 [http-nio-8081-exec-2] INFO  c.m.b.k.i.Dhis2CsvDryRunThenCommit - CSV size=251950 bytes, dryRunMode=true
+2025-09-06 23:59:41 [http-nio-8081-exec-2] INFO  c.m.b.k.i.Dhis2CsvDryRunThenCommit - Calling DHIS2 https://hmis-dev.moh.gov.jo/dwh/api/dataValueSets?dryRun=true&async=false&preheatCache=false&skipAudit=false&skipExistingCheck=false&firstRowIsHeader=true&strategy=NEW_AND_UPDATES&dataElementIdScheme=CODE&orgUnitIdScheme=CODE&categoryOptionComboIdScheme=CODE&attributeOptionComboIdScheme=CODE&idScheme=CODE
+2025-09-06 23:59:42 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-06 23:59:42 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-06 23:59:44 [http-nio-8081-exec-2] INFO  c.m.b.k.i.Dhis2CsvDryRunThenCommit - Dry-run httpCode=200, bodyPreview={"httpStatus":"OK","httpStatusCode":200,"status":"OK","message":"Import was successful.","response":{"responseType":"ImportSummary","status":"SUCCESS","importOptions":{"idSchemes":{"idScheme":{"type":
+2025-09-06 23:59:44 [http-nio-8081-exec-2] INFO  c.m.b.k.i.Dhis2CsvDryRunThenCommit - Calling DHIS2 https://hmis-dev.moh.gov.jo/dwh/api/dataValueSets?dryRun=false&async=false&preheatCache=false&skipAudit=false&skipExistingCheck=false&firstRowIsHeader=true&strategy=NEW_AND_UPDATES&dataElementIdScheme=CODE&orgUnitIdScheme=CODE&categoryOptionComboIdScheme=CODE&attributeOptionComboIdScheme=CODE&idScheme=CODE
+2025-09-06 23:59:47 [http-nio-8081-exec-2] INFO  c.m.b.k.i.Dhis2CsvDryRunThenCommit - Commit httpCode=200, bodyPreview={"httpStatus":"OK","httpStatusCode":200,"status":"OK","message":"Import was successful.","response":{"responseType":"ImportSummary","status":"SUCCESS","importOptions":{"idSchemes":{"idScheme":{"type":
+2025-09-06 23:59:47 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /camel/external/integrate?transactionUUID=8a2c3251-d319-4b7f-a68a-2d83df005046, client=0:0:0:0:0:0:0:1, user=hakeem@mail.com, payload=dataelement,period,orgunit,categoryoptioncombo,attributeoptioncombo,value,storedby,lastupdated,comment,followup,deleted
+GP-01,202401,D1930,0-1M,default,2,9802009523,2024-02-15T10:01:41.708+0000,,FALSE,null
+GP-01,202401,D1930,0-1F,default,2,9802009523,2024-02-15T10:01:42.282+0000,,FALSE,null
+GP-01,202401,D1930,1-4M,default,36,9802009523,2024-02-15T10:01:43.818+0000,,FALSE,null
+GP-01,202401,D1930,1-4F,default,46,9802009523,2024-02-15T10:01:44.646+0000,,FALSE,null
+GP-01,202401,D1930,5-14M,default,35,9802009523,2024-02-15T10:01:45.495+0000,,FALSE,null
+GP-01,202401,D1930,5-14F,default,78,9802009523,2024-02-15T10:01:46.602+0000,,FALSE,null
+GP-01,202401,D1930,15-44M,default,33,9802009523,2024-02-15T10:01:47.274+0000,,FALSE,null
+GP-01,202401,D1930,15-44F,default,37,9802009523,2024-02-15T10:01:48.447+0000,,FALSE,null
+GP-01,202401,D1930,45-59M,default,17,9802009523,2024-02-15T10:01:49.360+0000,,FALSE,null
+GP-01,202401,D1930,45-59F,default,23,9802009523,2024-02-15T10:01:50.193+0000,,FAL]
+2025-09-06 23:59:47 [task-1] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - updateTransaction... updating Route [servlet:/external/integrate?httpMethodRestrict=POST] - Exchange content: {transactionUUID=8a2c3251-d319-4b7f-a68a-2d83df005046, dryRun=true, scheme=CODE, CamelCharsetName=UTF-8, _csvBytes=[B@6f4c90da, strategy=NEW_AND_UPDATES, apiLogId=5, _queryBase=async=false&preheatCache=false&skipAudit=false&skipExistingCheck=false&firstRowIsHeader=true&strategy=NEW_AND_UPDATES&dataElementIdScheme=CODE&orgUnitIdScheme=CODE&categoryOptionComboIdScheme=CODE&attributeOptionComboIdScheme=CODE&idScheme=CODE}
+2025-09-06 23:59:47 [task-1] DEBUG c.m.b.l.s.MiddlewareApiCallLogService - Updating transaction log with ID: 5 routeId dhis2-upload-csv-sync-raw-only and transactionId 61fe30e5-129e-4659-bbf6-0cda83a59301
+2025-09-06 23:59:47 [task-1] INFO  c.m.b.l.s.MiddlewareApiCallLogService - updateTransaction() Route [dhis2-upload-csv-sync-raw-only] - Completed exchange: DBACFDAC8E3E161-0000000000000000
+2025-09-06 23:59:47 [task-1] INFO  c.m.b.l.s.MiddlewareApiCallLogService - Transaction 61fe30e5-129e-4659-bbf6-0cda83a59301 completed successfully with response code: 200
+2025-09-06 23:59:47 [task-1] INFO  c.m.b.l.s.MiddlewareApiCallLogService - Transaction 61fe30e5-129e-4659-bbf6-0cda83a59301 for routeId: dhis2-upload-csv-sync-raw-only updated successfully in database
