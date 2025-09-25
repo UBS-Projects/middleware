@@ -30,14 +30,15 @@ public class Dhis2ClientService {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
-    private final Dhis2Config dhis2Config;
+    private final Dhis2Config dhis2Config; // ✅ إضافة Dhis2Config
 
     /**
      * Execute API call with period injection using dynamic DHIS2 settings
      */
     public Map<String, Object> executeApiCall(IntegratedApi api, String periodParam) {
         try {
-             dhis2Config.refreshSettings();
+            // ✅ تحديث الإعدادات ديناميكياً
+            dhis2Config.refreshSettings();
             Dhis2 currentSettings = dhis2Config.getCurrentSettings();
 
             log.info("Using DHIS2 settings: baseUrl={}, userName={}",
@@ -146,14 +147,18 @@ public class Dhis2ClientService {
     private String buildFullUrl(String integratedSystem, String relativeUrl, Dhis2 currentSettings) {
         String baseUrl;
 
-         if ("HMIS-DWH".equals(integratedSystem)) {
-             baseUrl = "https://" + currentSettings.getBaseUrl();
+        // ✅ استخدام الإعدادات الديناميكية
+        if ("HMIS-DWH".equals(integratedSystem)) {
+            // للنظام الحكومي الأردني
+            baseUrl = "https://" + currentSettings.getBaseUrl();
             log.debug("Using HMIS-DWH system: {}", baseUrl);
         } else if ("DHIS2".equals(integratedSystem)) {
-             baseUrl = "https://" + currentSettings.getBaseUrl();
+            // للـDHIS2 العادي
+            baseUrl = "https://" + currentSettings.getBaseUrl();
             log.debug("Using DHIS2 system: {}", baseUrl);
         } else {
-             baseUrl = "https://" + currentSettings.getBaseUrl();
+            // Fallback للأنظمة الأخرى
+            baseUrl = "https://" + currentSettings.getBaseUrl();
             log.debug("Using default system: {}", baseUrl);
         }
 
@@ -301,4 +306,45 @@ public class Dhis2ClientService {
         }
     }
 
+    /**
+     * ✅ Get current DHIS2 settings for external use
+     */
+    public Dhis2 getCurrentDhis2Settings() {
+        try {
+            dhis2Config.refreshSettings();
+            return dhis2Config.getCurrentSettings();
+        } catch (Exception e) {
+            log.error("Error getting current DHIS2 settings: {}", e.getMessage());
+            throw new RuntimeException("Failed to get DHIS2 settings: " + e.getMessage());
+        }
+    }
+
+    /**
+     * ✅ Test connection to DHIS2 using current settings
+     */
+    public boolean testDhis2Connection() {
+        try {
+            dhis2Config.refreshSettings();
+            Dhis2 currentSettings = dhis2Config.getCurrentSettings();
+
+            String testUrl = "https://" + currentSettings.getBaseUrl() + "/api/me";
+            log.info("Testing DHIS2 connection to: {}", testUrl);
+
+            HttpHeaders headers = createHeaders(currentSettings);
+            ResponseEntity<String> response = restTemplate.exchange(
+                    testUrl,
+                    HttpMethod.GET,
+                    new HttpEntity<>(headers),
+                    String.class
+            );
+
+            boolean isSuccess = response.getStatusCode().is2xxSuccessful();
+            log.info("DHIS2 connection test result: {}", isSuccess ? "SUCCESS" : "FAILED");
+            return isSuccess;
+
+        } catch (Exception e) {
+            log.error("DHIS2 connection test failed: {}", e.getMessage());
+            return false;
+        }
+    }
 }
