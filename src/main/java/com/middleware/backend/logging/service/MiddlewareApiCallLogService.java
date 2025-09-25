@@ -214,7 +214,7 @@ public class MiddlewareApiCallLogService {
 //
 //        return new int[]{attemptNo, retryCount};
 //    }
-
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////
 //    private int[] calculateAttemptInfo(String sourceTransactionUUID, boolean isRetry, Exchange exchange) {
 //        String cleanUUID = sourceTransactionUUID.trim().toLowerCase();
 //        int attemptNo;
@@ -283,7 +283,6 @@ private int[] calculateAttemptInfo(String sourceTransactionUUID, boolean isRetry
 
     return new int[]{attemptNo, retryCount};
 }
-
     private MiddlewareApiCallLog buildLogEntity(String routeId, Exchange exchange, String sourceTransactionUUID, int attemptNo, int retryCount) {
         String clientIp = extractClientIp(exchange);
         String userEmail = extractUserFromToken(exchange);

@@ -49,7 +49,7 @@ logging:
   level:
     org.springframework.web: DEBUG
     com.middleware.backend: DEBUG
-    rg.apache.camel: DEBUG
+    org.apache.camel: DEBUG
     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
 
 camel:
@@ -75,6 +75,7 @@ camel:
   ssl:
     config:
       trust-all: true
+      verify-hostname: false
 #dhis2:
 #  base-url: play.im.dhis2.org/stable-2-41-5
 #  username: admin
@@ -96,6 +97,15 @@ springdoc:
     tryItOutEnabled: true
     operationsSorter: alpha
     tagsSorter: alpha
+
+cache:
+  type: simple
+  cache-names:
+    - dhis2-responses
+    - metadata-cache
+    - api-definitions
+
+
 
 #http://localhost:8081/swagger-ui/index.html
 #https://generate-uuid.com/?utm_source=chatgpt.com#

@@ -7,31 +7,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.ArrayList;
-
-/**
- * DTO for IntegratedApi entity
+import java.util.ArrayList;/**
+ * Request DTO for creating/updating IntegrationMapping
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class IntegrationMappingDto {
-    private Long id;
+public class IntegrationMappingRequestDto {
     private String middlewareApiName;
     private Long integratedApiId;
-    private String integratedApiCode;  // For display purposes
-    private String integratedApiName;  // For display purposes
-    private String mappingType;  // String representation of MappingType enum
+    private String mappingType;
     private String data;
     private String attribute;
     private String externalKey;
     private Boolean isActive;
     private String notes;
-
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime createdAt;
-
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime updatedAt;
 }

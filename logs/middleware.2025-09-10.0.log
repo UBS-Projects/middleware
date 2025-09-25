@@ -1,32 +1,32 @@
-2025-09-10 13:29:08 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-09-10 13:29:08 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 24.0.1 with PID 15856 (C:\Users\1\OneDrive\Desktop\middleware\target\classes started by 1 in C:\Users\1\OneDrive\Desktop\middleware)
-2025-09-10 13:29:08 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
-2025-09-10 13:29:13 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
-2025-09-10 13:29:13 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-09-10 13:29:13 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
-2025-09-10 13:29:13 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-09-10 13:29:13 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-09-10 13:29:13 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
-2025-09-10 13:29:13 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-09-10 13:29:13 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-09-10 13:29:13 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@220be130']
+2025-09-10 13:55:07 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-09-10 13:55:07 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23-valhalla with PID 36972 (C:\Users\omard\Desktop\Work\jordan\back-end\target\classes started by omard in C:\Users\omard\Desktop\Work\jordan\back-end)
+2025-09-10 13:55:07 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-10 13:55:11 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-09-10 13:55:11 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-10 13:55:11 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-09-10 13:55:11 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-09-10 13:55:11 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-10 13:55:11 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-09-10 13:55:11 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-10 13:55:12 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-10 13:55:12 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@5868ea91']
 	Database driver: undefined/unknown
-	Database version: 17.0
+	Database version: 17.4
 	Autocommit mode: undefined/unknown
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-09-10 13:29:15 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-09-10 13:29:16 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
-2025-09-10 13:29:17 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
-2025-09-10 13:29:17 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
-2025-09-10 13:29:17 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
-2025-09-10 13:29:18 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
-2025-09-10 13:29:18 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
-2025-09-10 13:29:18 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
-2025-09-10 13:29:18 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
-2025-09-10 13:29:18 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+2025-09-10 13:55:14 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-10 13:55:15 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-09-10 13:55:16 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-09-10 13:55:16 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2025-09-10 13:55:16 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-09-10 13:55:17 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-09-10 13:55:17 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-09-10 13:55:17 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-09-10 13:55:17 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-09-10 13:55:17 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
   Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
   NOT STARTED.
   Currently in standby mode.
@@ -34,769 +34,173 @@
   Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
   Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
 
-2025-09-10 13:29:18 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
-2025-09-10 13:29:18 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
-2025-09-10 13:29:18 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@5b4b3c51
-2025-09-10 13:29:18 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
-2025-09-10 13:29:18 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
-2025-09-10 13:29:18 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 107 mappings in 'requestMappingHandlerMapping'
-2025-09-10 13:29:19 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
-2025-09-10 13:29:19 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-09-10 13:29:19 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
-2025-09-10 13:29:20 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
-2025-09-10 13:29:20 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
-2025-09-10 13:29:20 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
-2025-09-10 13:29:20 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
-2025-09-10 13:29:20 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
-2025-09-10 13:29:20 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 6ms (build:0ms init:0ms start:6ms)
-2025-09-10 13:29:20 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 12.109 seconds (process running for 21.578)
-2025-09-10 13:29:20 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
-2025-09-10 13:29:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:29:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:29:20 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq initialized. setval returned 1
-2025-09-10 13:29:20 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
-2025-09-10 13:29:20 [RMI TCP Connection(4)-192.168.18.7] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-09-10 13:29:20 [RMI TCP Connection(4)-192.168.18.7] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2025-09-10 13:29:20 [RMI TCP Connection(4)-192.168.18.7] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
-2025-09-10 13:29:20 [RMI TCP Connection(4)-192.168.18.7] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
-2025-09-10 13:29:20 [RMI TCP Connection(4)-192.168.18.7] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
-2025-09-10 13:29:20 [RMI TCP Connection(4)-192.168.18.7] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@316245b6
-2025-09-10 13:29:20 [RMI TCP Connection(4)-192.168.18.7] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@26827f2e
-2025-09-10 13:29:20 [RMI TCP Connection(4)-192.168.18.7] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2025-09-10 13:29:20 [RMI TCP Connection(4)-192.168.18.7] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
-2025-09-10 13:29:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-routdee to context (DB says active)
-2025-09-10 13:29:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
-2025-09-10 13:29:21 [scheduling-1] INFO  o.a.c.s.LifecycleStrategySupport - Autowired property: dataSource on component: sql as exactly one instance of type: javax.sql.DataSource (org.springframework.jdbc.datasource.DriverManagerDataSource) found in the registry
-2025-09-10 13:29:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route get-integration-api-dynamic-logic to context (DB says active)
-2025-09-10 13:29:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route dhis2-upload-csv-sync-raw-only to context (DB says active)
-2025-09-10 13:29:21 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:29:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-routeg to context (DB says active)
-2025-09-10 13:29:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-rourfte to context (DB says active)
-2025-09-10 13:29:21 [scheduling-1] WARN  o.a.c.d.y.d.CustomResolver - The kebab-case 'set-header' is deprecated and it will be removed in the next version. Use the camelCase 'setHeader' instead.
-2025-09-10 13:29:21 [scheduling-1] WARN  o.a.c.d.y.d.CustomResolver - The kebab-case 'convert-body-to' is deprecated and it will be removed in the next version. Use the camelCase 'convertBodyTo' instead.
-2025-09-10 13:29:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route get-user-from-ap21ewi to context (DB says active)
-2025-09-10 13:29:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:29:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:29:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:29:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:29:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:30:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:30:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:30:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:30:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:30:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:30:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:30:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:30:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:31:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:31:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:31:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:31:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:31:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:31:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:31:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:31:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:32:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:32:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:32:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:32:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:32:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:32:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:32:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:32:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:33:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:33:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:33:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:33:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:33:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:33:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:33:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:33:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:34:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:34:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:34:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:34:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:34:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:34:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:34:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:34:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:35:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:35:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:35:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:35:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:35:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:35:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:35:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:35:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:36:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:36:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:36:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:36:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:36:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:36:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:36:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:36:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:37:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:37:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:37:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:37:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:37:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:37:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:37:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:37:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:38:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:38:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:38:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:38:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:38:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:38:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:38:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:38:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:39:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:39:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:39:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:39:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:39:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:39:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:39:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:39:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:40:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:40:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:40:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:40:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:40:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:40:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:40:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:40:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:41:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:41:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:41:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:41:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:41:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:41:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:41:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:41:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:42:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:42:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:42:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:42:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:42:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:42:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:42:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:42:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:43:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:43:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:43:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:43:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:43:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:43:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:43:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:43:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:44:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:44:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:44:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:44:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:44:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:44:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:44:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:44:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:45:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:45:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:45:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:45:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:45:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:45:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:45:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:45:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:46:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:46:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:46:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:46:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:46:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:46:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:46:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:46:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:47:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:47:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:47:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:47:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:47:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:47:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:47:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:47:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:48:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:48:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:48:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:48:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:48:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:48:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:48:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:48:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:49:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:49:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:49:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:49:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:49:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:49:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:49:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:49:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:50:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:50:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:50:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:50:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:50:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:50:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:50:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:50:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:51:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:51:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:51:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:51:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:51:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:51:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:51:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:51:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:52:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:52:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:52:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:52:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:52:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:52:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:52:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:52:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:53:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:53:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:53:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:53:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:53:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:53:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:53:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:53:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:54:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:54:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:54:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:54:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:54:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:54:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:54:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:54:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:55:14 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/auth/login, client=0:0:0:0:0:0:0:1]
-2025-09-10 13:55:14 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/auth/login", parameters={}
-2025-09-10 13:55:14 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.users.auth.AuthController#login(AuthRequest)
-2025-09-10 13:55:14 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AuthController.AuthRequest(email=admin@mail.com, password=silver3nova3)]
-2025-09-10 13:55:15 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-09-10 13:55:15 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthController.AuthResponse(token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTc1N (truncated)...]
-2025-09-10 13:55:15 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-09-10 13:55:15 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /api/auth/login, client=0:0:0:0:0:0:0:1, payload={"email":"admin@mail.com","password":"silver3nova3"}]
+2025-09-10 13:55:17 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-09-10 13:55:17 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-09-10 13:55:17 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@532f5c5d
+2025-09-10 13:55:17 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-09-10 13:55:17 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-09-10 13:55:18 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 107 mappings in 'requestMappingHandlerMapping'
+2025-09-10 13:55:18 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-10 13:55:18 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-10 13:55:18 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-10 13:55:19 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-09-10 13:55:19 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-09-10 13:55:19 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-09-10 13:55:19 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-09-10 13:55:19 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-09-10 13:55:19 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 9ms (build:0ms init:0ms start:9ms)
+2025-09-10 13:55:19 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 12.592 seconds (process running for 13.979)
+2025-09-10 13:55:19 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
 2025-09-10 13:55:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:55:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:55:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
+2025-09-10 13:55:20 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq initialized. setval returned 1
+2025-09-10 13:55:20 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-09-10 13:55:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route get-user-from-api to context (DB says active)
+2025-09-10 13:55:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route dhis2-upload-csv to context (DB says active)
+2025-09-10 13:55:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route get-todo to context (DB says active)
 2025-09-10 13:55:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:55:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:55:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:55:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:55:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:56:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:56:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:56:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:56:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:56:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:56:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:56:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:56:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:57:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:57:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:57:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:57:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:57:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:57:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:57:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:57:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:58:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:58:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:58:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:58:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:58:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:58:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:58:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:58:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:59:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:59:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:59:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:59:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 13:59:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 13:59:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 13:59:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 13:59:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:00:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:00:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:00:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:00:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:00:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:00:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:00:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:00:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:01:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:01:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:01:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:01:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:01:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:01:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:01:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:01:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:02:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:02:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:02:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:02:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:02:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:02:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:02:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:02:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:03:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:03:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:03:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:03:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:03:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:03:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:03:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:03:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:04:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:04:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:04:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:04:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:04:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:04:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:04:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:04:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:05:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:05:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:05:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:05:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:05:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:05:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:05:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:05:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:06:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:06:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:06:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:06:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:06:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:06:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:06:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:06:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:07:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:07:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:07:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:07:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:07:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:07:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:07:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:07:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 13:55:20 [RMI TCP Connection(4)-192.168.88.7] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-10 13:55:20 [RMI TCP Connection(4)-192.168.88.7] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-10 13:55:20 [RMI TCP Connection(4)-192.168.88.7] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-09-10 13:55:20 [RMI TCP Connection(4)-192.168.88.7] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-09-10 13:55:20 [RMI TCP Connection(4)-192.168.88.7] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-09-10 13:55:20 [RMI TCP Connection(4)-192.168.88.7] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@7974d4d0
+2025-09-10 13:55:20 [RMI TCP Connection(4)-192.168.88.7] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@481bd693
+2025-09-10 13:55:20 [RMI TCP Connection(4)-192.168.88.7] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-09-10 13:55:20 [RMI TCP Connection(4)-192.168.88.7] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+2025-09-10 13:55:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 13:55:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 13:56:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 13:56:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 13:56:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 13:56:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 13:57:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 13:57:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 13:57:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 13:57:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 13:58:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 13:58:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 13:58:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 13:58:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 13:59:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 13:59:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 13:59:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 13:59:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:00:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:00:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:00:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:00:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:01:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:01:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:01:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:01:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:02:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:02:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:02:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:02:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:03:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:03:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:03:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:03:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:04:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:04:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:04:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:04:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:05:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:05:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:05:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:05:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:06:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:06:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:06:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:06:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:07:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:07:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:07:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:07:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
 2025-09-10 14:08:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:08:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:08:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
 2025-09-10 14:08:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:08:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:08:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:08:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:08:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:09:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:09:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:09:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:09:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:09:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:09:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:09:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:09:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:10:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:10:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:10:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:10:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:10:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:10:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:10:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:10:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:11:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:11:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:11:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:11:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:11:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:11:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:11:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:11:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:08:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:08:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:09:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:09:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:09:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:09:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:10:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:10:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:10:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:10:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:11:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:11:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:11:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:11:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
 2025-09-10 14:12:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:12:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:12:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
 2025-09-10 14:12:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:12:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:12:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:12:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:12:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:13:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:13:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:13:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:13:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:13:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:13:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:13:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:13:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:12:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:12:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:13:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:13:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:13:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:13:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
 2025-09-10 14:14:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:14:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:14:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
 2025-09-10 14:14:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:14:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:14:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:14:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:14:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:15:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:15:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:15:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:15:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:15:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:15:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:15:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:15:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:16:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:16:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:16:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:16:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:16:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:16:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:16:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:16:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:17:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:17:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:17:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:17:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:17:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:17:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:17:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:17:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:14:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:14:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:15:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:15:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:15:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:15:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:16:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:16:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:16:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:16:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:17:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:17:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:17:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:17:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
 2025-09-10 14:18:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:18:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:18:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
 2025-09-10 14:18:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
 2025-09-10 14:18:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:18:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:18:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
 2025-09-10 14:18:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:19:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:19:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:19:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:19:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:19:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:19:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:19:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:19:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:20:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:20:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:20:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:20:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:20:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:20:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:20:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:20:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:21:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:21:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:21:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:21:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:19:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:19:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:19:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:19:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:20:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:20:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:20:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:20:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:21:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:21:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
 2025-09-10 14:21:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:21:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:21:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
 2025-09-10 14:21:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
 2025-09-10 14:22:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:22:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:22:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
 2025-09-10 14:22:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:22:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:22:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:22:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:22:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:23:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:23:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:23:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:23:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:23:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:23:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:23:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:23:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:24:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:24:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:24:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:24:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:24:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:24:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:24:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:24:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:25:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:25:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:25:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:25:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:25:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:25:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:25:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:25:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:26:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:26:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:26:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:26:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:26:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:26:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:26:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:26:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:27:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:27:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:27:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:27:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:27:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:27:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:27:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:27:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:28:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:28:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:28:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:28:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:28:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:28:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:28:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:28:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:29:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:29:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:29:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:29:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:29:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:29:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:29:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:29:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:30:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:30:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:30:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:30:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:30:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:30:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:30:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:30:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:31:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:31:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:31:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:31:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:31:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:31:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:31:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:31:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:32:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:32:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:32:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:32:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:32:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:32:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:32:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:32:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:33:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:33:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:33:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:33:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:33:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:33:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:33:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:33:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:34:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:34:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:34:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:34:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:34:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:34:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:34:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:34:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:35:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:35:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:35:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:35:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:35:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:35:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:35:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:35:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:36:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:36:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:36:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:36:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:36:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:36:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:36:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:36:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:37:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:37:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:37:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:37:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:37:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:37:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:37:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:37:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:38:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:38:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:38:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:38:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:38:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:38:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:38:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:38:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:39:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:39:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:39:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:39:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:39:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:39:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:39:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:39:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:40:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:40:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:40:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:40:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:40:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:40:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:40:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:40:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:41:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:41:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:41:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:41:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:41:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:41:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:41:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:41:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:42:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:42:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:42:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:42:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:42:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:42:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:42:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:42:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:43:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:43:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:43:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:43:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:43:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:43:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:43:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:43:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:44:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:44:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:44:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:44:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:44:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:44:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:44:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:44:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:45:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:45:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:45:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:45:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:45:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:45:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:45:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:45:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:46:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:46:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:46:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:46:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:46:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:46:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:46:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:46:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:47:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:47:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:47:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:47:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:47:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:47:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:47:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:47:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:48:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:48:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:48:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:48:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:48:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:48:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:48:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:48:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:49:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:49:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:49:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:49:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:49:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:49:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:49:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:49:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:50:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:50:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:50:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:50:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:50:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:50:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:50:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:50:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:51:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:51:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:51:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:51:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:51:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:51:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:51:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:51:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:52:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:52:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:52:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:52:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:52:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:52:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:52:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:52:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:53:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:53:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:53:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:53:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:53:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:53:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:53:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:53:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:54:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:54:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:54:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:54:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:54:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:54:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:54:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:54:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:55:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:55:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:55:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:55:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:55:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:55:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:55:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:55:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:56:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:56:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:56:20 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:56:20 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:56:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
-2025-09-10 14:56:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roud3te
-2025-09-10 14:56:50 [scheduling-1] WARN  c.m.b.k.service.DynamicRouteService - No active version found for route my-new-roudeeete
-2025-09-10 14:56:50 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
-2025-09-10 14:56:50 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:8)
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped get-user-from-ap21ewi (rest://get:/external-user/%7Bid%7D)
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-rourfte (rest://post:/api/heldelrfo)
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-routeg (rest://post:/apggi/hello)
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped dhis2-upload-csv-sync-raw-only (servlet:/external/integrate)
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped get-integration-api-dynamic-logic (direct://integration_api_logic)
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped http-entry-integration-api-dynamic (servlet:/integration/api)
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-route (rest://post:/api/hello)
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped my-new-routdee (rest://post:/api/hdeello)
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 20ms (uptime:1h27m)
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
-2025-09-10 14:56:51 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-09-10 14:22:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:22:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:23:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:23:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:23:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:23:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:24:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:24:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:24:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:24:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:25:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:25:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:25:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:25:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:26:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:26:19 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:26:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-09-10 14:26:49 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-09-10 14:27:13 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-10 14:27:13 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-09-10 14:27:13 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:3)
+2025-09-10 14:27:13 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped get-todo (servlet:/todos/*)
+2025-09-10 14:27:13 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped dhis2-upload-csv (servlet:/v1/datasets)
+2025-09-10 14:27:13 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped get-user-from-api (servlet:/external-user/*)
+2025-09-10 14:27:13 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 18ms (uptime:31m54s)
+2025-09-10 14:27:13 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-10 14:27:13 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-10 14:27:13 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-10 14:27:13 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]

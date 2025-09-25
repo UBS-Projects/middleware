@@ -1,183 +1,144 @@
 package com.middleware.backend.kaotocamel.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
+/**
+ * Entity representing field mapping configuration for middleware APIs
+ * Defines how to extract data from DHIS2 responses and map to output fields
+ */
 @Entity
 @Table(name = "integration_mapping",
+        indexes = {
+                @Index(name = "idx_middleware_api", columnList = "middleware_api_name"),
+                @Index(name = "idx_integrated_api", columnList = "integrated_api_id"),
+                @Index(name = "idx_mapping_type", columnList = "mapping_type"),
+                @Index(name = "idx_external_key", columnList = "external_key")
+        },
         uniqueConstraints = {
-                @UniqueConstraint(name = "uk_api_external_key_active",
-                        columnNames = {"api_name", "external_key", "is_active"}),
-                @UniqueConstraint(name = "uk_api_dhis2_source_active",
-                        columnNames = {"api_name", "dataset_id", "data_element_id",
-                                "category_option_combo_id", "attribute_option_combo_id",
-                                "external_key", "is_active"})
-        })
+                @UniqueConstraint(
+                        name = "uk_mapping_unique",
+                        columnNames = {"middleware_api_name", "integrated_api_id",
+                                "mapping_type", "data", "external_key"}
+                )
+        }
+)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class IntegrationMapping {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "api_name", nullable = false, length = 100)
-    private String apiName;
+    @Column(name = "middleware_api_name", nullable = false, length = 100)
+    private String middlewareApiName;
 
-    @Column(name = "external_system", nullable = false, length = 50)
-    private String externalSystem;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "integrated_api_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_mapping_api"))
+    @JsonIgnore
+    private IntegratedApi integratedApi;
 
-    @Column(name = "dataset_id", nullable = false, length = 500)
-    private String datasetId;
+    @Column(name = "integrated_api_id", insertable = false, updatable = false)
+    private Long integratedApiId;  // For easier querying
 
-    @Column(name = "data_element_id", nullable = false, length = 50)
-    private String dataElementId;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "mapping_type", nullable = false, length = 50)
+    private MappingType mappingType;
 
-    @Column(name = "category_option_combo_id", nullable = false, length = 50)
-    private String categoryOptionComboId;
+    @Column(name = "data", columnDefinition = "TEXT")
+    private String data;  // Content depends on mappingType
+    /*
+     * DATA_ELEMENT => DE_UID
+     * DATA_ELEMENT_WITH_DISAGGREGATION => DE_UID.COC_UID
+     * INDICATOR => INDICATOR_UID
+     * META_OU_NAME => "ou.name"
+     */
 
-    @Column(name = "attribute_option_combo_id", length = 50)
-    private String attributeOptionComboId;
+    @Column(name = "attribute", length = 50)
+    private String attribute;  // Optional: AOC/Attribute for future use
 
     @Column(name = "external_key", nullable = false, length = 100)
-    private String externalKey;
+    private String externalKey;  // Final field name in output
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = true;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @Column(name = "notes", columnDefinition = "text")
+    @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 
-    // Constructors
-    public IntegrationMapping() {
-    }
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-    public IntegrationMapping(String apiName, String externalSystem,
-                              String datasetId, String dataElementId, String categoryOptionComboId,
-                              String externalKey) {
-        this.apiName = apiName;
-        this.externalSystem = externalSystem;
-        this.datasetId = datasetId;
-        this.dataElementId = dataElementId;
-        this.categoryOptionComboId = categoryOptionComboId;
-        this.externalKey = externalKey;
-    }
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
-    @PrePersist
+     @PrePersist
     protected void onCreate() {
         if (this.createdAt == null) {
             this.createdAt = LocalDateTime.now();
         }
+        if (this.updatedAt == null) {
+            this.updatedAt = LocalDateTime.now();
+        }
         if (this.isActive == null) {
             this.isActive = true;
         }
+        validateData();
     }
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+        validateData();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    /**
+     * Validates data field based on mapping type
+     */
+    private void validateData() {
+        if (mappingType != null && data != null) {
+            switch (mappingType) {
+                case DATA_ELEMENT_WITH_DISAGGREGATION:
+                    if (!data.contains(".")) {
+                        throw new IllegalArgumentException(
+                                "DATA_ELEMENT_WITH_DISAGGREGATION requires data in format DE_UID.COC_UID"
+                        );
+                    }
+                    break;
+                case DATA_ELEMENT:
+                    if (data.contains(".")) {
+                        throw new IllegalArgumentException(
+                                "DATA_ELEMENT should not contain disaggregation (no dots)"
+                        );
+                    }
+                    break;
+                case INDICATOR:
+                    // Indicator UIDs are simple strings
+                    break;
+                default:
+                    // Handle future types
+                    break;
+            }
+        }
     }
 
-    public String getApiName() {
-        return apiName;
-    }
-
-    public void setApiName(String apiName) {
-        this.apiName = apiName;
-    }
-
-    public String getExternalSystem() {
-        return externalSystem;
-    }
-
-    public void setExternalSystem(String externalSystem) {
-        this.externalSystem = externalSystem;
-    }
-
-    public String getDatasetId() {
-        return datasetId;
-    }
-
-    public void setDatasetId(String datasetId) {
-        this.datasetId = datasetId;
-    }
-
-    public String getDataElementId() {
-        return dataElementId;
-    }
-
-    public void setDataElementId(String dataElementId) {
-        this.dataElementId = dataElementId;
-    }
-
-    public String getCategoryOptionComboId() {
-        return categoryOptionComboId;
-    }
-
-    public void setCategoryOptionComboId(String categoryOptionComboId) {
-        this.categoryOptionComboId = categoryOptionComboId;
-    }
-
-    public String getAttributeOptionComboId() {
-        return attributeOptionComboId;
-    }
-
-    public void setAttributeOptionComboId(String attributeOptionComboId) {
-        this.attributeOptionComboId = attributeOptionComboId;
-    }
-
-    public String getExternalKey() {
-        return externalKey;
-    }
-
-    public void setExternalKey(String externalKey) {
-        this.externalKey = externalKey;
-    }
-
-    public Boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    @Override
-    public String toString() {
-        return "IntegrationMapping{" +
-                "id=" + id +
-                ", apiName='" + apiName + '\'' +
-                ", externalSystem='" + externalSystem + '\'' +
-                ", datasetId='" + datasetId + '\'' +
-                ", dataElementId='" + dataElementId + '\'' +
-                ", categoryOptionComboId='" + categoryOptionComboId + '\'' +
-                ", attributeOptionComboId='" + attributeOptionComboId + '\'' +
-                ", externalKey='" + externalKey + '\'' +
-                ", isActive=" + isActive +
-                '}';
+    /**
+     * Enum for mapping types
+     */
+    public enum MappingType {
+        DATA_ELEMENT,
+        DATA_ELEMENT_WITH_DISAGGREGATION,
+        DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE,
+        INDICATOR
     }
 }
