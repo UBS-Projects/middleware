@@ -23,15 +23,24 @@ public class MiddlewareProcessorService {
     private final Dhis2ClientService dhis2Client;
 
     /**
-     * Process middleware API request with period parameter
+     * Process middleware API request with period parameter and dynamic DHIS2 code
      */
     @Transactional(readOnly = true)
-    public MiddlewareResponseDto processMiddlewareRequest(String middlewareApiName, String periodParam) {
-        log.info("Processing middleware request for API: {} with period: {}", middlewareApiName, periodParam);
+    public MiddlewareResponseDto processMiddlewareRequest(
+            String middlewareApiName,
+            String periodParam,
+            String dhis2Code) {
+
+        log.info("Processing middleware request for API: {} with period: {} and DHIS2 code: {}",
+                middlewareApiName, periodParam, dhis2Code);
 
         // Validate period parameter
         if (periodParam == null || periodParam.trim().isEmpty()) {
             throw new IllegalArgumentException("Parameter 'pe' is required");
+        }
+
+        if (dhis2Code == null || dhis2Code.trim().isEmpty()) {
+            throw new IllegalArgumentException("DHIS2 code is required");
         }
 
         try {
@@ -50,9 +59,9 @@ public class MiddlewareProcessorService {
             Map<IntegratedApi, List<IntegrationMapping>> mappingsByApi =
                     groupMappingsByApi(mappings);
 
-            // Step 3: Execute DHIS2 calls and collect responses
+            // Step 3: Execute DHIS2 calls with dynamic code
             Map<IntegratedApi, Map<String, Object>> apiResponses =
-                    executeDhis2Calls(mappingsByApi.keySet(), periodParam);
+                    executeDhis2Calls(mappingsByApi.keySet(), periodParam, dhis2Code);
 
             // Step 4: Process responses and build result
             return buildMiddlewareResponse(mappingsByApi, apiResponses);
@@ -83,22 +92,24 @@ public class MiddlewareProcessorService {
     }
 
     /**
-     * Execute DHIS2 calls for all required APIs
+     * Execute DHIS2 calls for all required APIs using dynamic DHIS2 code
      */
     private Map<IntegratedApi, Map<String, Object>> executeDhis2Calls(
-            Set<IntegratedApi> apis, String periodParam) {
+            Set<IntegratedApi> apis, String periodParam, String dhis2Code) {
 
         Map<IntegratedApi, Map<String, Object>> responses = new HashMap<>();
 
         for (IntegratedApi api : apis) {
             try {
                 log.info("Executing call for API: {} ({})", api.getCode(), api.getType());
-                Map<String, Object> response = dhis2Client.executeApiCall(api, periodParam);
+
+                // Pass the dynamic dhis2Code to the client
+                Map<String, Object> response = dhis2Client.executeApiCall(api, periodParam, dhis2Code);
                 responses.put(api, response);
+
             } catch (Exception e) {
                 log.error("Failed to execute API call for {}: {}", api.getCode(), e.getMessage());
-                // Store empty response to continue processing
-                responses.put(api, new HashMap<>());
+                responses.put(api, new HashMap<>()); // store empty response to continue processing
             }
         }
 
@@ -114,31 +125,24 @@ public class MiddlewareProcessorService {
 
         Map<AggregationKey, MiddlewareRowDto> aggregatedRows = new LinkedHashMap<>();
 
-        // Process each API response
         for (Map.Entry<IntegratedApi, List<IntegrationMapping>> entry : mappingsByApi.entrySet()) {
             IntegratedApi api = entry.getKey();
             List<IntegrationMapping> apiMappings = entry.getValue();
             Map<String, Object> response = apiResponses.get(api);
 
-            if (response == null || response.isEmpty()) {
-                continue;
-            }
+            if (response == null || response.isEmpty()) continue;
 
-            // Only process ANALYTICS API (since it's the only one implemented)
             if (api.getType() == IntegratedApi.ApiType.ANALYTICS) {
                 AnalyticsResponseDto analytics = (AnalyticsResponseDto) response.get("data");
                 AnalyticsDataExtractor extractor = new AnalyticsDataExtractor(analytics);
 
-                // Process mappings for this API
                 for (IntegrationMapping mapping : apiMappings) {
                     processMapping(mapping, extractor, aggregatedRows);
                 }
             }
         }
 
-        // Build final response
         List<MiddlewareRowDto> rows = new ArrayList<>(aggregatedRows.values());
-
         log.info("Built middleware response with {} rows", rows.size());
 
         return MiddlewareResponseDto.builder()
@@ -146,35 +150,25 @@ public class MiddlewareProcessorService {
                 .build();
     }
 
-    /**
-     * Process a single mapping
-     */
     private void processMapping(IntegrationMapping mapping, AnalyticsDataExtractor extractor,
                                 Map<AggregationKey, MiddlewareRowDto> aggregatedRows) {
 
-        // Get all org units and periods from the extractor
         Set<String> orgUnits = extractor.getAllOrgUnits();
         Set<String> periods = extractor.getAllPeriods();
 
-        // Process each combination of org unit and period
         for (String ou : orgUnits) {
             for (String period : periods) {
                 AggregationKey key = new AggregationKey(ou, period);
 
-                // Get or create row
-                MiddlewareRowDto row = aggregatedRows.computeIfAbsent(key, k -> {
-                    return MiddlewareRowDto.builder()
-                            .ou(ou)
-                            .ouName(extractor.getOrgUnitName(ou))
-                            .period(extractor.getPeriodName(period))
-                            .attributes(new ArrayList<>())
-                            .build();
-                });
+                MiddlewareRowDto row = aggregatedRows.computeIfAbsent(key, k -> MiddlewareRowDto.builder()
+                        .ou(ou)
+                        .ouName(extractor.getOrgUnitName(ou))
+                        .period(extractor.getPeriodName(period))
+                        .attributes(new ArrayList<>())
+                        .build()
+                );
 
-                // Extract value based on mapping type
                 Object value = extractValue(mapping, extractor, ou, period);
-
-                // Add attribute if value exists
                 if (value != null) {
                     AttributeDto attribute = AttributeDto.builder()
                             .name(mapping.getExternalKey())
@@ -186,36 +180,26 @@ public class MiddlewareProcessorService {
         }
     }
 
-    /**
-     * Extract value based on mapping type
-     */
     private Object extractValue(IntegrationMapping mapping, AnalyticsDataExtractor extractor,
                                 String ou, String period) {
 
         switch (mapping.getMappingType()) {
             case DATA_ELEMENT:
                 return extractor.getDataElementValue(mapping.getData(), ou, period);
-
             case DATA_ELEMENT_WITH_DISAGGREGATION:
-                // Split DE.COC format
                 String[] parts = mapping.getData().split("\\.");
                 if (parts.length == 2) {
                     return extractor.getDisaggregatedValue(parts[0], parts[1], ou, period);
                 }
                 return null;
-
             case INDICATOR:
                 return extractor.getIndicatorValue(mapping.getData(), ou, period);
-
             default:
                 log.warn("Unsupported mapping type: {}", mapping.getMappingType());
                 return null;
         }
     }
 
-    /**
-     * Aggregation key for grouping rows
-     */
     private static class AggregationKey {
         private final String ou;
         private final String period;
@@ -240,9 +224,6 @@ public class MiddlewareProcessorService {
         }
     }
 
-    /**
-     * Analytics API data extractor
-     */
     private class AnalyticsDataExtractor {
         private final AnalyticsResponseDto analytics;
         private final Map<String, Integer> headerIndexes;
@@ -267,7 +248,6 @@ public class MiddlewareProcessorService {
 
         private Map<String, Map<String, Map<String, Object>>> buildValueIndex() {
             Map<String, Map<String, Map<String, Object>>> index = new HashMap<>();
-
             Integer dxIdx = headerIndexes.get("dx");
             Integer ouIdx = headerIndexes.get("ou");
             Integer peIdx = headerIndexes.get("pe");

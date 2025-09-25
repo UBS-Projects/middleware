@@ -1,8 +1,10 @@
 package com.middleware.backend.kaotocamel.service;
 
-import com.middleware.backend.kaotocamel.dto.*;
-import com.middleware.backend.kaotocamel.model.*;
-import com.middleware.backend.kaotocamel.repository.*;
+import com.middleware.backend.kaotocamel.dto.AnalyticsResponseDto;
+import com.middleware.backend.kaotocamel.dto.IntegratedApiDto;
+import com.middleware.backend.kaotocamel.dto.IntegratedApiRequestDto;
+import com.middleware.backend.kaotocamel.model.IntegratedApi;
+import com.middleware.backend.kaotocamel.repository.IntegratedApiRepository;
 import com.middleware.backend.kaotocamel.spec.IntegratedApiSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +19,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Enhanced Service for managing IntegratedApi entities with advanced filtering
+ * Enhanced Service for managing IntegratedApi entities with dynamic DHIS2 code support
  */
 @Service
 @RequiredArgsConstructor
@@ -31,7 +33,6 @@ public class IntegratedApiService {
     public IntegratedApiDto create(IntegratedApiRequestDto request) {
         log.info("Creating integrated API with code: {}", request.getCode());
 
-        // Check for duplicate code
         if (repository.existsByCode(request.getCode())) {
             throw new IllegalArgumentException("API with code '" + request.getCode() + "' already exists");
         }
@@ -52,7 +53,6 @@ public class IntegratedApiService {
         IntegratedApi entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Integrated API not found: " + id));
 
-        // Check for duplicate code if changed
         if (!entity.getCode().equals(request.getCode()) &&
                 repository.existsByCode(request.getCode())) {
             throw new IllegalArgumentException("API with code '" + request.getCode() + "' already exists");
@@ -90,21 +90,14 @@ public class IntegratedApiService {
                 .map(this::mapEntityToDto);
     }
 
-    /**
-     * Legacy method - maintained for backward compatibility
-     */
     @Transactional(readOnly = true)
     public Page<IntegratedApiDto> findWithFilters(String code, String name, String type,
                                                   String integratedSystem, Boolean isActive,
                                                   Pageable pageable) {
-
         return findWithAdvancedFilters(code, name, null, type, integratedSystem, isActive,
                 null, null, null, null, null, null, null, null, pageable);
     }
 
-    /**
-     * Enhanced method with comprehensive filtering support
-     */
     @Transactional(readOnly = true)
     public Page<IntegratedApiDto> findWithAdvancedFilters(
             String code, String name, String apiUrl, String type,
@@ -114,25 +107,16 @@ public class IntegratedApiService {
             String search, Long minId, Long maxId,
             Pageable pageable) {
 
-        log.debug("Searching with advanced filters - code: {}, name: {}, type: {}, system: {}, active: {}",
-                code, name, type, integratedSystem, isActive);
-
         Specification<IntegratedApi> spec = IntegratedApiSpecification.buildSpecification(
                 code, name, apiUrl, type, integratedSystem, isActive, description,
                 createdAfter, createdBefore, updatedAfter, updatedBefore,
                 search, minId, maxId
         );
 
-        Page<IntegratedApiDto> result = repository.findAll(spec, pageable)
+        return repository.findAll(spec, pageable)
                 .map(this::mapEntityToDto);
-
-        log.debug("Found {} results out of {} total", result.getNumberOfElements(), result.getTotalElements());
-        return result;
     }
 
-    /**
-     * Get distinct integrated systems for filter dropdown
-     */
     @Transactional(readOnly = true)
     public List<String> getDistinctIntegratedSystems() {
         return repository.findAll().stream()
@@ -142,8 +126,11 @@ public class IntegratedApiService {
                 .collect(Collectors.toList());
     }
 
-    public Map<String, Object> testApiConnection(Long id, String period) {
-        log.info("Testing API connection for ID: {} with period: {}", id, period);
+    /**
+     * Dynamic DHIS2 connection test supporting _dhis2Code
+     */
+    public Map<String, Object> testApiConnection(Long id, String period, String dhis2Code) {
+        log.info("Testing API connection for ID: {} with period: {} and DHIS2 code: {}", id, period, dhis2Code);
 
         IntegratedApi api = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Integrated API not found: " + id));
@@ -151,12 +138,12 @@ public class IntegratedApiService {
         Map<String, Object> result = new HashMap<>();
 
         try {
-            Map<String, Object> response = dhis2Client.executeApiCall(api, period);
+            Map<String, Object> response = dhis2Client.executeApiCall(api, period, dhis2Code);
+
             result.put("success", true);
             result.put("message", "Connection successful");
             result.put("responseType", response.get("type"));
 
-            // Add basic stats based on response type
             if ("ANALYTICS".equals(response.get("type"))) {
                 AnalyticsResponseDto analytics = (AnalyticsResponseDto) response.get("data");
                 result.put("rowCount", analytics.getRows().size());

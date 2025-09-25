@@ -12,7 +12,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,28 +34,34 @@ public class MiddlewareController {
     @Operation(summary = "Process Middleware API Request")
     public ResponseEntity<?> processMiddlewareRequest(
             @PathVariable String apiName,
-            @Parameter(description = "Period parameter (required). Examples: 202505, THIS_YEAR")
+            @Parameter(description = "Period parameter (required). Examples: 202505, THIS_YEAR)")
             @RequestParam(required = false) String pe,
+            @Parameter(description = "DHIS2 code parameter (required). Example: HMIS_DEV2)")
+            @RequestParam(name = "_dhis2Code", required = false) String dhis2Code,
             HttpServletRequest request) {
 
         long startTime = System.currentTimeMillis();
 
         try {
-            // Validate period parameter
+            // Validate required parameters
             if (pe == null || pe.trim().isEmpty()) {
-                log.warn("Missing required parameter 'pe' for API: {}", apiName);
                 return ResponseEntity
                         .status(HttpStatus.BAD_REQUEST)
                         .body(createErrorResponse("Parameter 'pe' is required"));
             }
+            if (dhis2Code == null || dhis2Code.trim().isEmpty()) {
+                return ResponseEntity
+                        .status(HttpStatus.BAD_REQUEST)
+                        .body(createErrorResponse("Parameter '_dhis2Code' is required"));
+            }
 
             // Construct full API name (with leading slash)
             String fullApiName = "/" + apiName;
+            log.info("Processing middleware request - API: {}, Period: {}, DHIS2 code: {}",
+                    fullApiName, pe, dhis2Code);
 
-            log.info("Processing middleware request - API: {}, Period: {}", fullApiName, pe);
-
-            // Process request
-            MiddlewareResponseDto response = processorService.processMiddlewareRequest(fullApiName, pe);
+            // Call service with dynamic DHIS2 code
+            MiddlewareResponseDto response = processorService.processMiddlewareRequest(fullApiName, pe, dhis2Code);
 
             // Log execution time
             long executionTime = System.currentTimeMillis() - startTime;

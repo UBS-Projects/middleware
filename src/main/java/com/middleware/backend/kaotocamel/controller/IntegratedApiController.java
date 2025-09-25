@@ -206,12 +206,13 @@ public class IntegratedApiController {
 
     @PostMapping("/{id}/test")
     @PreAuthorize("permitAll()")
-    @Operation(summary = "Test integrated API connectivity")
+    @Operation(summary = "Test integrated API connectivity with optional DHIS2 code")
     public ResponseEntity<Map<String, Object>> testApi(
             @PathVariable Long id,
-            @RequestParam String pe) {
+            @RequestParam String pe,
+            @RequestParam(required = false, name = "_dhis2Code") String dhis2Code) {
         try {
-            Map<String, Object> result = service.testApiConnection(id, pe);
+            Map<String, Object> result = service.testApiConnection(id, pe, dhis2Code);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             Map<String, Object> error = new HashMap<>();

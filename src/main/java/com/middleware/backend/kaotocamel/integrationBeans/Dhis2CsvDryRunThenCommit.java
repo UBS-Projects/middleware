@@ -31,7 +31,7 @@ import java.util.Map;
 public class Dhis2CsvDryRunThenCommit implements Processor {
 
     private static final Logger log = LoggerFactory.getLogger(Dhis2CsvDryRunThenCommit.class);
-    private final ConfigRepository configRepository; // inject repository
+    private final ConfigRepository configRepository;
     private volatile int lastResponseCode = 0;
     public Dhis2CsvDryRunThenCommit(ConfigRepository configRepository) {
         this.configRepository = configRepository;
