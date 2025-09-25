@@ -47,4 +47,10 @@ public class ChannelController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllReceivers(
+            @RequestParam(required = false) String search
+    ) {
+        return ResponseEntity.ok(service.getReceivers(search));
+    }
 }

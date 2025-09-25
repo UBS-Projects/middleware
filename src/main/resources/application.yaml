@@ -1,115 +1,3 @@
-#server:
-#  port: 8081
-#
-#spring:
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/middlewareDB
-##    url: jdbc:postgresql://localhost:5432/middlewareDB
-#    username: postgres
-#    password: 12345
-#    driver-class-name: org.postgresql.Driver
-#  main:
-#    allow-bean-definition-overriding=true:
-#  sql:
-#    init:
-#      mode: always
-#  jpa:
-#    database-platform: org.hibernate.dialect.PostgreSQLDialect
-#    hibernate:
-#      ddl-auto: update
-#    defer-datasource-initialization: true
-#    open-in-view: false
-#    properties:
-#      hibernate:
-#        show_sql: true
-#        format_sql: true
-#        use_sql_comments: true
-#        # Quartz properties
-#      quartz:
-#        properties:
-#          spring.quartz.job-store-type: jdbc
-#          spring.quartz.jdbc.initialize-schema: always
-##          spring.quartz.properties.org.quartz.jobStore.isClustered: false
-##          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
-#
-## JWT SECRET
-#jwt:
-#  secret: 1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p
-#
-#management:
-#  health:
-#    rabbit:
-#      enabled: false
-#  endpoints:
-#    web:
-#      exposure:
-#        include: health,info,metrics
-#
-#logging:
-#  level:
-#    org.springframework.web: DEBUG
-#    com.middleware.backend: DEBUG
-#    rg.apache.camel: DEBUG
-#    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
-#
-#camel:
-#  main:
-#    scripting: true
-#    stream-caching-enabled: true
-#    stream-caching-spool-enabled: true
-#    stream-caching-any-spool-rules: true
-#    stream-caching-spool-used-heap-memory-threshold: 70
-#  rest:
-#    component: servlet     # or netty-http, undertow, http, etc. depending on your setup
-#    host: localhost
-#    port: 8081
-#    context-path: /camel    # optional, base context path for your REST endpoints
-#  servlet:
-#    mapping:
-#      context-path: /camel/*
-#  component:
-#    http:
-#      follow-redirects: true
-#    https:
-#      follow-redirects: true
-#  ssl:
-#    config:
-#      trust-all: true
-##dhis2:
-##  base-url: play.im.dhis2.org/stable-2-41-5
-##  username: admin
-##  password: district
-##  timeout: 30000
-##  connect-timeout: 10000
-#dhis2:
-#  base-url: hmis-dev.moh.gov.jo/dwh
-#  username: supp_user
-#  password: "F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z"
-#  timeout: 30000
-#  connect-timeout: 10000
-#
-#springdoc:
-#  api-docs:
-#    path: /v3/api-docs
-#  swagger-ui:
-#    path: /swagger-ui.html
-#    tryItOutEnabled: true
-#    operationsSorter: alpha
-#    tagsSorter: alpha
-#
-#  # Cache Configuration
-#  cache:
-#    type: simple  # Use 'redis' for production
-#    cache-names:
-#      - dhis2-responses
-#      - metadata-cache
-#      - api-definitions
-#
-#
-#
-#
-##http://localhost:8081/swagger-ui/index.html
-##https://generate-uuid.com/?utm_source=chatgpt.com#
 server:
   port: 8081
 
@@ -135,6 +23,13 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
+        # Quartz properties
+      quartz:
+        properties:
+          spring.quartz.job-store-type: jdbc
+          spring.quartz.jdbc.initialize-schema: always
+#          spring.quartz.properties.org.quartz.jobStore.isClustered: false
+#          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
 
 # JWT SECRET
 jwt:
@@ -179,17 +74,23 @@ camel:
   ssl:
     config:
       trust-all: true
-
+      verify-hostname: false
+#dhis2:
+#  base-url: play.im.dhis2.org/stable-2-41-5
+#  username: admin
+#  password: district
+#  timeout: 30000
+#  connect-timeout: 10000
 dhis2:
   base-url: https://hmis-dev.moh.gov.jo/dwh
   username: supp_user
   password: "F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z"
   timeout: 30000
   connect-timeout: 10000
-
-  ssl:
-    trust-all: true
-    verify-hostname: false
+#
+#  ssl:
+#    trust-all: true
+#    verify-hostname: false
 
 springdoc:
   api-docs:
@@ -206,3 +107,8 @@ cache:
     - dhis2-responses
     - metadata-cache
     - api-definitions
+
+
+
+#http://localhost:8081/swagger-ui/index.html
+#https://generate-uuid.com/?utm_source=chatgpt.com#

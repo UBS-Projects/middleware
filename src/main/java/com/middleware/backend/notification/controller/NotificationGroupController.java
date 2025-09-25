@@ -44,7 +44,12 @@ public class NotificationGroupController {
         return ResponseEntity.ok(service.update(dto));
     }
 
-
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllReceivers(
+            @RequestParam(required = false) String search
+    ) {
+        return ResponseEntity.ok(service.getReceivers(search));
+    }
 
 
     @DeleteMapping("/{id}")

@@ -33,6 +33,14 @@ public class NotificationLog {
     @Column(columnDefinition = "TEXT")
     private String errorMessage;
 
+    @Column(name = "user_name")
+    private String userName;
+
+
+    @Column(name="created_at")
+    private Timestamp createdAt;
+
+
     @Column(name="sent_at")
     private Timestamp sentAt;
 }

@@ -123,23 +123,24 @@ WHERE id BETWEEN 1 AND 63
 
 
 
-INSERT INTO public.dhis2_settings (
+-- DHIS2 instance: HMIS_DEV
+INSERT INTO public.config (
     id,
-    base_url,
-    connect_timeout,
-    password,
-    timeout,
-    user_name
+    module,
+    key,
+    value,
+    type,
+    description
 )
-VALUES (
-           1,
-           'hmis-dev.moh.gov.jo/dwh',
-           10000,
-           'F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z',
-           30000,
-           'supp_user'
-       )
-    ON CONFLICT (id) DO NOTHING;
+VALUES
+    (gen_random_uuid(), 'dhis2', 'HMIS_DEV.code', 'HMIS_DEV', 'STRING', 'Unique DHIS2 code'),
+    (gen_random_uuid(), 'dhis2', 'HMIS_DEV.baseUrl', 'hmis-dev.moh.gov.jo/dwh', 'STRING', 'DHIS2 Base URL'),
+    (gen_random_uuid(), 'dhis2', 'HMIS_DEV.userName', 'supp_user', 'STRING', 'DHIS2 Username'),
+    (gen_random_uuid(), 'dhis2', 'HMIS_DEV.password', 'F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z', 'STRING', 'DHIS2 Password'),
+    (gen_random_uuid(), 'dhis2', 'HMIS_DEV.timeout', '30000', 'NUMBER', 'Request timeout in ms'),
+    (gen_random_uuid(), 'dhis2', 'HMIS_DEV.connectTimeout', '10000', 'NUMBER', 'Connection timeout in ms')
+    ON CONFLICT (key) DO NOTHING;
+
 
 INSERT INTO public.rate_limit_config (
     id,
