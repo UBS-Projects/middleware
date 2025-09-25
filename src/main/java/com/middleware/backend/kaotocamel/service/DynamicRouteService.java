@@ -1245,7 +1245,7 @@ public class DynamicRouteService {
 
     public String getRouteIdByPathAndMethod(String path, String method) {
         // Convenience lookup for active routeId by path and method
-        return routeRepository.findByPathAndHttpMethodAndActive(path, method.toLowerCase(), true).get().getRouteId();
+        return routeRepository.findByPathAndHttpMethodAndActive(path, method, true).get().getRouteId();
     }
 
     /**

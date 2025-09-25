@@ -16,18 +16,15 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class IntegrationMappingDto {
+public class IntegratedApiDto {
     private Long id;
-    private String middlewareApiName;
-    private Long integratedApiId;
-    private String integratedApiCode;  // For display purposes
-    private String integratedApiName;  // For display purposes
-    private String mappingType;  // String representation of MappingType enum
-    private String data;
-    private String attribute;
-    private String externalKey;
+    private String code;
+    private String name;
+    private String apiUrl;
+    private String type;  // String representation of ApiType enum
+    private String integratedSystem;
     private Boolean isActive;
-    private String notes;
+    private String description;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;

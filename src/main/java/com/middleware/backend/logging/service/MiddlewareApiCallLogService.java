@@ -214,43 +214,75 @@ public class MiddlewareApiCallLogService {
 //
 //        return new int[]{attemptNo, retryCount};
 //    }
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////
+//    private int[] calculateAttemptInfo(String sourceTransactionUUID, boolean isRetry, Exchange exchange) {
+//        String cleanUUID = sourceTransactionUUID.trim().toLowerCase();
+//        int attemptNo;
+//        int retryCount;
+//
+//        if (isRetry) {
+//            MiddlewareApiCallLog last = callLogRepository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(cleanUUID);
+//            if (last != null) {
+//                attemptNo = last.getAttemptNo() + 1;
+//                retryCount = attemptNo - 1;
+//            } else {
+//                log.warn("Retry attempt requested but no previous record found for UUID: {}", cleanUUID);
+//                attemptNo = 1;
+//                retryCount = 0;
+//            }
+//
+//            log.info("Retry attempt for UUID: {} - attemptNo: {}, retryCount: {}",
+//                    cleanUUID, attemptNo, retryCount);
+//        } else {
+//            if (callLogRepository.existsBySourceTransactionUUID(cleanUUID)) {
+//
+//                MiddlewareApiCallLog last = callLogRepository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(cleanUUID);
+//                attemptNo = (last == null) ? 1 : last.getAttemptNo() + 1;
+//                retryCount = Math.max(0, attemptNo - 1);
+//
+//                log.warn("UUID {} already exists but no retry header found. Treating as attempt {} (might be duplicate test)",
+//                        cleanUUID, attemptNo);
+//            } else {
+//                attemptNo = 1;
+//                retryCount = 0;
+//                log.debug("First attempt for new UUID: {}", cleanUUID);
+//            }
+//        }
+//
+//        return new int[]{attemptNo, retryCount};
+//    }
+private int[] calculateAttemptInfo(String sourceTransactionUUID, boolean isRetry, Exchange exchange) {
+    String cleanUUID = sourceTransactionUUID.trim().toLowerCase();
+    int attemptNo;
+    int retryCount;
 
-    private int[] calculateAttemptInfo(String sourceTransactionUUID, boolean isRetry, Exchange exchange) {
-        String cleanUUID = sourceTransactionUUID.trim().toLowerCase();
-        int attemptNo;
-        int retryCount;
-
-        if (isRetry) {
-            MiddlewareApiCallLog last = callLogRepository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(cleanUUID);
-            if (last != null) {
-                attemptNo = last.getAttemptNo() + 1;
-                retryCount = attemptNo - 1;
-            } else {
-                log.warn("Retry attempt requested but no previous record found for UUID: {}", cleanUUID);
-                attemptNo = 1;
-                retryCount = 0;
-            }
-
+    if (isRetry) {
+        MiddlewareApiCallLog last = callLogRepository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(cleanUUID);
+        if (last != null) {
+            attemptNo = last.getAttemptNo() + 1;
+            retryCount = attemptNo - 1;
             log.info("Retry attempt for UUID: {} - attemptNo: {}, retryCount: {}",
                     cleanUUID, attemptNo, retryCount);
         } else {
-            if (callLogRepository.existsBySourceTransactionUUID(cleanUUID)) {
-
-                MiddlewareApiCallLog last = callLogRepository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(cleanUUID);
-                attemptNo = (last == null) ? 1 : last.getAttemptNo() + 1;
-                retryCount = Math.max(0, attemptNo - 1);
-
-                log.warn("UUID {} already exists but no retry header found. Treating as attempt {} (might be duplicate test)",
-                        cleanUUID, attemptNo);
-            } else {
-                attemptNo = 1;
-                retryCount = 0;
-                log.debug("First attempt for new UUID: {}", cleanUUID);
-            }
+            log.warn("Retry attempt requested but no previous record found for UUID: {}", cleanUUID);
+            attemptNo = 1;
+            retryCount = 0;
+        }
+    } else {
+        if (callLogRepository.existsBySourceTransactionUUID(cleanUUID)) {
+            log.error("Duplicate UUID detected without retry header: {}", cleanUUID);
+            setError(exchange, 409,
+                    "{\"status\":\"CONFLICT\",\"message\":\"Duplicate transactionUUID. This request was already processed.\"}");
+            throw new IllegalArgumentException("Duplicate transactionUUID. This UUID has already been used.");
         }
 
-        return new int[]{attemptNo, retryCount};
+        attemptNo = 1;
+        retryCount = 0;
+        log.debug("First attempt for new UUID: {}", cleanUUID);
     }
+
+    return new int[]{attemptNo, retryCount};
+}
     private MiddlewareApiCallLog buildLogEntity(String routeId, Exchange exchange, String sourceTransactionUUID, int attemptNo, int retryCount) {
         String clientIp = extractClientIp(exchange);
         String userEmail = extractUserFromToken(exchange);
