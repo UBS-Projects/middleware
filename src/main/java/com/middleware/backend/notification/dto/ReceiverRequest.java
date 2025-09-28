@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class ReceiverRequest {
     private long id;
     private String name;
+    private String code;
 }

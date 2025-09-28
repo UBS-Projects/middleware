@@ -160,12 +160,14 @@ public class NotificationTemplateService {
                     .map(r->
                             ReceiverRequest.builder().id(r.getId())
                                     .name(r.getName())
+                                    .code(r.getCode())
                                     .build())
                     .toList();
         } else {
             return repo.findTop5ByNameContainingIgnoreCase(search).stream().map(r->
                     ReceiverRequest.builder().id(r.getId())
                             .name(r.getName())
+                            .code(r.getCode())
                             .build()).toList();
         }
     }

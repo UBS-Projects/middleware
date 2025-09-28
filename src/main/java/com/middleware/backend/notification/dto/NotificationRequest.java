@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class NotificationRequest {
-    private List<Long> groupId;
-    private Long templateId;
-    private Long channelId;
+    private List<String> groupCodes;
+    private String templateCode;
+    private String channelCode;
 }

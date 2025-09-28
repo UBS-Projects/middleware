@@ -43,11 +43,11 @@ public class NotificationServiceImpl implements NotificationService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void sendToGroup(List<Long> groupIds, Long templateId, Long channelId) {
+    public void sendToGroup(List<String> groupCodes, String templateCode, String channelCode) {
         // Fetch template and channel
-        NotificationTemplate template = templateRepository.findById(templateId)
+        NotificationTemplate template = templateRepository.findByCode(templateCode)
                 .orElseThrow(() -> new RuntimeException("Template not found"));
-        ChannelConfig channel = channelRepository.findById(channelId)
+        ChannelConfig channel = channelRepository.findByCode(channelCode)
                 .orElseThrow(() -> new RuntimeException("Channel not found"));
 
         // Parse channel config JSON
@@ -62,8 +62,8 @@ public class NotificationServiceImpl implements NotificationService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
 
-        for (Long groupId : groupIds) {
-            NotificationGroup group = groupRepository.findById(groupId)
+        for (String groupId : groupCodes) {
+            NotificationGroup group = groupRepository.findByCode(groupId)
                     .orElseThrow(() -> new RuntimeException("Group not found with id " + groupId));
 
             try {
@@ -240,9 +240,9 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void scheduleSend(List<Long> groupId, Long templateId, Long channelId, LocalDateTime sendTime) {
+    public void scheduleSend(List<String> groupCodes, String templateCode, String channelCode, LocalDateTime sendTime) {
         Date triggerDate = Date.from(sendTime.atZone(ZoneId.systemDefault()).toInstant());
-        taskScheduler.schedule(() -> sendToGroup(groupId, templateId, channelId), triggerDate);
+        taskScheduler.schedule(() -> sendToGroup(groupCodes, templateCode, channelCode), triggerDate);
     }
 
     @Override

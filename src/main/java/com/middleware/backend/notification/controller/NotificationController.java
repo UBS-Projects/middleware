@@ -20,7 +20,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/notifications")
@@ -32,7 +31,7 @@ public class NotificationController {
     @PostMapping("/send")
     public ResponseEntity<Map<String, String>> sendNow(@RequestBody NotificationRequest request) {
         try {
-            notificationService.sendToGroup(request.getGroupId(), request.getTemplateId(), request.getChannelId());
+            notificationService.sendToGroup(request.getGroupCodes(), request.getTemplateCode(), request.getChannelCode());
             return ResponseEntity.ok(Map.of("message", "Notification sent successfully"));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -42,12 +41,12 @@ public class NotificationController {
 
 
     @PostMapping("/schedule")
-    public String scheduleSend(@RequestParam List<Long> groupId,
-                               @RequestParam Long templateId,
-                               @RequestParam Long channelId,
+    public String scheduleSend(@RequestParam List<String> groupCodes,
+                               @RequestParam String templateCode,
+                               @RequestParam String channelCode,
                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime sendTime) {
 
-        notificationService.scheduleSend(groupId, templateId, channelId, sendTime);
+        notificationService.scheduleSend(groupCodes, templateCode, channelCode, sendTime);
         return "Notification scheduled for " + sendTime;
     }
 
