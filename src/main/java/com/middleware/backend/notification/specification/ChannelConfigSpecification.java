@@ -1,22 +1,22 @@
 package com.middleware.backend.notification.specification;
 
 import com.middleware.backend.notification.enums.ChannelType;
-import com.middleware.backend.notification.model.NotificationTemplate;
+import com.middleware.backend.notification.model.ChannelConfig;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 
-public class NotificationTemplateSpecification {
+public class ChannelConfigSpecification {
+
     public enum MatchMode {
         EXACT,
         CONTAINS
     }
 
-    public static Specification<NotificationTemplate> hasField(String field, String value, MatchMode matchMode) {
+    // Match string fields (name, code, config)
+    public static Specification<ChannelConfig> hasField(String field, String value, MatchMode matchMode) {
         return (root, query, cb) -> {
             if (value == null || value.isEmpty()) {
                 return cb.conjunction();
@@ -32,7 +32,8 @@ public class NotificationTemplateSpecification {
         };
     }
 
-    public static Specification<NotificationTemplate> hasType(ChannelType type) {
+    // Match the ChannelType enum
+    public static Specification<ChannelConfig> hasType(ChannelType type) {
         return (root, query, cb) -> {
             if (type == null) {
                 return cb.conjunction();
@@ -41,7 +42,8 @@ public class NotificationTemplateSpecification {
         };
     }
 
-    public static Specification<NotificationTemplate> dateAfter(String field, LocalDate date) {
+    // Filter records created after a certain date
+    public static Specification<ChannelConfig> dateAfter(String field, LocalDate date) {
         return (root, query, cb) -> {
             if (date == null) {
                 return cb.conjunction();
@@ -51,7 +53,8 @@ public class NotificationTemplateSpecification {
         };
     }
 
-    public static Specification<NotificationTemplate> dateBefore(String field, LocalDate date) {
+    // Filter records created before a certain date
+    public static Specification<ChannelConfig> dateBefore(String field, LocalDate date) {
         return (root, query, cb) -> {
             if (date == null) {
                 return cb.conjunction();

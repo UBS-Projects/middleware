@@ -3,6 +3,7 @@ package com.middleware.backend.notification.service;
 import com.middleware.backend.notification.dto.*;
 import com.middleware.backend.notification.mapper.GroupMapper;
 import com.middleware.backend.notification.mapper.ReceiverMapper;
+import com.middleware.backend.notification.model.NotificationActionsLogs;
 import com.middleware.backend.notification.model.NotificationGroup;
 import com.middleware.backend.notification.model.Receiver;
 import com.middleware.backend.notification.repository.NotificationGroupRepository;
@@ -26,14 +27,15 @@ import java.util.stream.Collectors;
 public class NotificationGroupService {
     private final NotificationGroupRepository repo;
     private final ReceiverRepository recRepo;
+    private final NotificationActionsLogsService loggingService;
 
     public NotificationGroupDto findById(Long id) {
         return repo.findById(id).map(GroupMapper::mapToDto)
                 .orElseThrow(() -> new RuntimeException("Group not found"));
     }
 
-    public Page<NotificationGroupDto> findAll(Pageable pageable) {
-        return repo.findAll(pageable).map(GroupMapper::mapToDto);
+    public Page<NotificationGroupDto> findAll(Specification<NotificationGroup> spec, Pageable pageable) {
+        return repo.findAll(spec, pageable).map(GroupMapper::mapToDto);
     }
 
     public NotificationGroupDto create(NotificationGroupDto dto) {
@@ -54,6 +56,15 @@ public class NotificationGroupService {
         NotificationGroup saved = GroupMapper.mapToEntity(dto);
         saved.setReceivers(null);
         saved = repo.save(saved);
+
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("POST")
+                .details("Created New Group "+dto.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+
+        );
         return GroupMapper.mapToDto(saved);
     }
 
@@ -67,12 +78,31 @@ public class NotificationGroupService {
         entity.setDescription(dto.getDescription());
         entity.setUpdatedBy(currentUser);
         entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("PUT")
+                .details("Updated Group "+dto.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+        );
         return GroupMapper.mapToDto(repo.save(entity));
     }
 
     public void delete(Long id) {
-        if (!repo.existsById(id)) throw new RuntimeException("Group not found");
+        NotificationGroup entity = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Template not found"));
+
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("DELETE")
+                .details("Deleted Group "+entity.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+
+        );
         repo.deleteById(id);
     }
 

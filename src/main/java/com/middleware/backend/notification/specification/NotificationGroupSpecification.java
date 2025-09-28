@@ -1,25 +1,22 @@
 package com.middleware.backend.notification.specification;
-
-import com.middleware.backend.notification.enums.ChannelType;
-import com.middleware.backend.notification.model.NotificationTemplate;
+import com.middleware.backend.notification.model.NotificationGroup;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 
-public class NotificationTemplateSpecification {
+public class NotificationGroupSpecification {
+
     public enum MatchMode {
         EXACT,
         CONTAINS
     }
 
-    public static Specification<NotificationTemplate> hasField(String field, String value, MatchMode matchMode) {
+    public static Specification<NotificationGroup> hasField(String field, String value, MatchMode matchMode) {
         return (root, query, cb) -> {
             if (value == null || value.isEmpty()) {
-                return cb.conjunction();
+                return cb.conjunction(); // ignore filter if value is null/empty
             }
             switch (matchMode) {
                 case EXACT:
@@ -32,16 +29,7 @@ public class NotificationTemplateSpecification {
         };
     }
 
-    public static Specification<NotificationTemplate> hasType(ChannelType type) {
-        return (root, query, cb) -> {
-            if (type == null) {
-                return cb.conjunction();
-            }
-            return cb.equal(root.get("type"), type);
-        };
-    }
-
-    public static Specification<NotificationTemplate> dateAfter(String field, LocalDate date) {
+    public static Specification<NotificationGroup> dateAfter(String field, LocalDate date) {
         return (root, query, cb) -> {
             if (date == null) {
                 return cb.conjunction();
@@ -51,7 +39,7 @@ public class NotificationTemplateSpecification {
         };
     }
 
-    public static Specification<NotificationTemplate> dateBefore(String field, LocalDate date) {
+    public static Specification<NotificationGroup> dateBefore(String field, LocalDate date) {
         return (root, query, cb) -> {
             if (date == null) {
                 return cb.conjunction();

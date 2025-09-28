@@ -2,6 +2,7 @@ package com.middleware.backend.notification.service;
 
 import com.middleware.backend.notification.dto.ReceiverDto;
 import com.middleware.backend.notification.mapper.ReceiverMapper;
+import com.middleware.backend.notification.model.NotificationActionsLogs;
 import com.middleware.backend.notification.model.Receiver;
 import com.middleware.backend.notification.repository.ReceiverRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +18,16 @@ import java.sql.Timestamp;
 @RequiredArgsConstructor
 public class ReceiverService {
     private final ReceiverRepository repo;
+    private final NotificationActionsLogsService loggingService;
+
 
     public ReceiverDto findById(Long id) {
         return repo.findById(id).map(ReceiverMapper::mapToDto)
                 .orElseThrow(() -> new RuntimeException("Receiver not found"));
     }
 
-    public Page<ReceiverDto> findAll(Pageable pageable) {
-        return repo.findAll(pageable).map(ReceiverMapper::mapToDto);
+    public Page<ReceiverDto> findAll(Specification<Receiver> spec, Pageable pageable) {
+        return repo.findAll(spec, pageable).map(ReceiverMapper::mapToDto);
     }
 
     public ReceiverDto create(ReceiverDto dto) {
@@ -44,6 +47,15 @@ public class ReceiverService {
         dto.setEmail(dto.getEmail().trim());
         dto.setEmail(dto.getEmail().trim());
         Receiver saved = repo.save(ReceiverMapper.mapToEntity(dto));
+
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("POST")
+                .details("Created New Receiver "+dto.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+
+        );
         return ReceiverMapper.mapToDto(saved);
     }
 
@@ -56,11 +68,29 @@ public class ReceiverService {
         entity.setUpdatedBy(currentUser);
         entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("PUT")
+                .details("Updated Receiver "+dto.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+
+        );
         return ReceiverMapper.mapToDto(repo.save(entity));
     }
 
     public void delete(Long id) {
-        if (!repo.existsById(id)) throw new RuntimeException("Receiver not found");
+        Receiver receiver = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Template not found"));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("DELETE")
+                .details("Deleted Receiver "+receiver.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+        );
         repo.deleteById(id);
     }
 }

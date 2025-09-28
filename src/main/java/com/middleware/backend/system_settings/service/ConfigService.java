@@ -4,9 +4,11 @@ import com.middleware.backend.system_settings.dto.ConfigDto;
 import com.middleware.backend.system_settings.mapper.ConfigMapper;
 import com.middleware.backend.system_settings.model.Config;
 import com.middleware.backend.system_settings.repository.ConfigRepository;
+import com.middleware.backend.users.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -72,11 +74,11 @@ public class ConfigService {
         return null;
     }
 
-    public ResponseEntity<Page<?>> findAll(Pageable pageable) {
-        Page page = configRepository.findAll(pageable).map(
+    public Page<?> findAll(Specification<Config> spec, Pageable pageable) {
+        Page<ConfigDto> page = configRepository.findAll(spec, pageable).map(
                 ConfigMapper::toDTO
         );
-        return ResponseEntity.ok(page);
+        return page;
     }
 
     public ConfigDto getModuleSpecificConfig(String module, UUID id) {
