@@ -8,13 +8,21 @@ import com.middleware.backend.kaotocamel.repository.IntegratedApiRepository;
 import com.middleware.backend.kaotocamel.spec.IntegratedApiSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -167,7 +175,110 @@ public class IntegratedApiService {
         entity.setIsActive(request.getIsActive() != null ? request.getIsActive() : true);
         entity.setDescription(request.getDescription());
     }
+    /**
+     * Exports integrated APIs to CSV or Excel bytes according to type.
+     */
+    public byte[] exportFile(Specification<IntegratedApi> spec, Pageable pageable, String type) {
+        List<IntegratedApi> data;
+        try {
+            Page<IntegratedApi> res = repository.findAll(spec, pageable);
+            data = res.getContent();
+        } catch (Exception e) {
+            log.error("Error fetching data for export", e);
+            data = Collections.emptyList();
+        }
 
+        try {
+            if ("CSV".equalsIgnoreCase(type)) {
+                return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
+            } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
+                return convertToExcel(data);
+            } else {
+                throw new IllegalArgumentException("Unsupported export type: " + type);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to export file", e);
+        }
+    }
+
+    // ================= CSV Export =================
+    private String convertToCSV(List<IntegratedApi> records) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID,Code,Name,API URL,Type,Integrated System,Active,Description,Created At,Updated At\n");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        for (IntegratedApi record : records) {
+            sb.append(record.getId()).append(",");
+            sb.append(escapeCsv(record.getCode())).append(",");
+            sb.append(escapeCsv(record.getName())).append(",");
+            sb.append(escapeCsv(record.getApiUrl())).append(",");
+            sb.append(record.getType() != null ? record.getType().toString() : "").append(",");
+            sb.append(escapeCsv(record.getIntegratedSystem())).append(",");
+            sb.append(record.getIsActive() ? "ACTIVE" : "INACTIVE").append(",");
+            sb.append(escapeCsv(record.getDescription())).append(",");
+            sb.append(record.getCreatedAt() != null ? record.getCreatedAt().format(formatter) : "").append(",");
+            sb.append(record.getUpdatedAt() != null ? record.getUpdatedAt().format(formatter) : "").append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    private String escapeCsv(String value) {
+        if (value == null) return "";
+        String escaped = value.replace("\"", "\"\"");
+        if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
+            return "\"" + escaped + "\"";
+        }
+        return escaped;
+    }
+
+    // ================= Excel Export =================
+    private byte[] convertToExcel(List<IntegratedApi> records) throws IOException {
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Integrated APIs");
+
+            // Header row
+            Row header = sheet.createRow(0);
+            header.createCell(0).setCellValue("ID");
+            header.createCell(1).setCellValue("Code");
+            header.createCell(2).setCellValue("Name");
+            header.createCell(3).setCellValue("API URL");
+            header.createCell(4).setCellValue("Type");
+            header.createCell(5).setCellValue("Integrated System");
+            header.createCell(6).setCellValue("Active");
+            header.createCell(7).setCellValue("Description");
+            header.createCell(8).setCellValue("Created At");
+            header.createCell(9).setCellValue("Updated At");
+
+            // Data rows
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            int rowIdx = 1;
+            for (IntegratedApi record : records) {
+                Row row = sheet.createRow(rowIdx++);
+                row.createCell(0).setCellValue(record.getId() != null ? record.getId() : 0);
+                row.createCell(1).setCellValue(record.getCode() != null ? record.getCode() : "");
+                row.createCell(2).setCellValue(record.getName() != null ? record.getName() : "");
+                row.createCell(3).setCellValue(record.getApiUrl() != null ? record.getApiUrl() : "");
+                row.createCell(4).setCellValue(record.getType() != null ? record.getType().toString() : "");
+                row.createCell(5).setCellValue(record.getIntegratedSystem() != null ? record.getIntegratedSystem() : "");
+                row.createCell(6).setCellValue(record.getIsActive() ? "ACTIVE" : "INACTIVE");
+                row.createCell(7).setCellValue(record.getDescription() != null ? record.getDescription() : "");
+                row.createCell(8).setCellValue(record.getCreatedAt() != null ? record.getCreatedAt().format(formatter) : "");
+                row.createCell(9).setCellValue(record.getUpdatedAt() != null ? record.getUpdatedAt().format(formatter) : "");
+            }
+
+            // Auto-size columns
+            for (int i = 0; i <= 9; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+                workbook.write(bos);
+                return bos.toByteArray();
+            }
+        }
+    }
     private IntegratedApiDto mapEntityToDto(IntegratedApi entity) {
         return IntegratedApiDto.builder()
                 .id(entity.getId())
