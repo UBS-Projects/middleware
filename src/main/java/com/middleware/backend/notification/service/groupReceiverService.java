@@ -2,6 +2,7 @@ package com.middleware.backend.notification.service;
 
 import com.middleware.backend.notification.dto.*;
 import com.middleware.backend.notification.mapper.GroupMapper;
+import com.middleware.backend.notification.model.NotificationActionsLogs;
 import com.middleware.backend.notification.model.NotificationGroup;
 import com.middleware.backend.notification.model.Receiver;
 import com.middleware.backend.notification.repository.NotificationGroupRepository;
@@ -27,7 +28,8 @@ import java.util.stream.Collectors;
 public class groupReceiverService {
     private final NotificationGroupRepository groupRepo;
     private final ReceiverRepository receiverRepo;
-    
+    private final NotificationActionsLogsService loggingService;
+
     public NotificationGroupDto addReceivers(GroupReceiversDto dto) {
         NotificationGroup entity = groupRepo.findById(dto.getId())
                 .orElseThrow(() -> new RuntimeException("Group not found"));
@@ -42,6 +44,17 @@ public class groupReceiverService {
             receivers.add(receiverRepo.findById(r).get());
         }
         entity.setReceivers(receivers);
+        String rec = receivers.stream()
+                .map(r -> r.getName())
+                .collect(Collectors.joining(","));
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("POST")
+                .details("Linked Receivers: "+rec+" Into Group "+ entity.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+
+        );
         return GroupMapper.mapToDto(groupRepo.save(entity));
     }
 
@@ -98,6 +111,17 @@ public class groupReceiverService {
             receivers.add(newReceiver.get());
         }
         exists.get().setReceivers(receivers);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("PUT")
+                .details("Updated Group Receivers for "+ exists.get().getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+
+        );
         return groupRepo.save(exists.get());
     }
 }

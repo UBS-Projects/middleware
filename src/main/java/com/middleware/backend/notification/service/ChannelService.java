@@ -5,6 +5,7 @@ import com.middleware.backend.notification.dto.ReceiverRequest;
 import com.middleware.backend.notification.enums.ChannelType;
 import com.middleware.backend.notification.mapper.ChannelMapper;
 import com.middleware.backend.notification.model.ChannelConfig;
+import com.middleware.backend.notification.model.NotificationActionsLogs;
 import com.middleware.backend.notification.repository.ChannelConfigRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChannelService {
     private final ChannelConfigRepository repo;
+    private final NotificationActionsLogsService loggingService;
 
     public ChannelConfigDto findById(Long id) {
         return repo.findById(id).map(ChannelMapper::mapToDto)
@@ -48,6 +50,15 @@ public class ChannelService {
         dto.setName(dto.getName().trim());
         dto.setCode(dto.getCode().trim());
         ChannelConfig saved = repo.save(ChannelMapper.mapToEntity(dto));
+
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("POST")
+                .details("Created Channel "+dto.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+
+        );
         return ChannelMapper.mapToDto(saved);
     }
 
@@ -63,11 +74,34 @@ public class ChannelService {
         entity.setConfig(dto.getConfig());
         entity.setType(ChannelType.valueOf(dto.getType()));
 
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("PUT")
+                .details("Updated Channel "+dto.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+
+        );
+
+
         return ChannelMapper.mapToDto(repo.save(entity));
     }
 
     public void delete(Long id) {
-        if (!repo.existsById(id)) throw new RuntimeException("Channel not found");
+        ChannelConfig entity = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Template not found"));
+
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("POST")
+                .details("Created Channel "+entity.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+
+        );
         repo.deleteById(id);
     }
 

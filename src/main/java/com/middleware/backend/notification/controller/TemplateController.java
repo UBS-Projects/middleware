@@ -1,14 +1,24 @@
 package com.middleware.backend.notification.controller;
 
 import com.middleware.backend.notification.dto.NotificationTemplateDto;
+import com.middleware.backend.notification.enums.ChannelType;
+import com.middleware.backend.notification.model.NotificationTemplate;
 import com.middleware.backend.notification.service.NotificationTemplateService;
+import com.middleware.backend.notification.specification.NotificationTemplateSpecification;
+import com.middleware.backend.system_settings.model.Config;
+import com.middleware.backend.system_settings.model.ConfigType;
+import com.middleware.backend.system_settings.specificaion.ConfigSpecification;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+
+import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -24,6 +34,11 @@ public class TemplateController {
 
     @GetMapping("")
     public ResponseEntity<?> getAll(
+            @RequestParam(required = false) String templateName,
+            @RequestParam(required = false) String code,
+            @RequestParam(required = false) String type, // string from request
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdAfter,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdBefore,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "updatedAt") String sortedBy,
@@ -32,7 +47,29 @@ public class TemplateController {
         Pageable pageable = PageRequest.of(page, size, sortDirection.equalsIgnoreCase("asc")
                 ? Sort.by(sortedBy).ascending()
                 : Sort.by(sortedBy).descending());
-        return ResponseEntity.ok(service.findAll(pageable));
+
+
+
+
+        ChannelType channelType = null;
+        if (type != null) {
+            try {
+                channelType = ChannelType.valueOf(type.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                // invalid type string, ignore
+            }
+        }
+
+        Specification<NotificationTemplate> spec = Specification
+                .where(NotificationTemplateSpecification.hasField("name", templateName, NotificationTemplateSpecification.MatchMode.CONTAINS))
+                .and(NotificationTemplateSpecification.hasField("code", code, NotificationTemplateSpecification.MatchMode.CONTAINS))
+                .and(NotificationTemplateSpecification.hasType(channelType))
+                .and(NotificationTemplateSpecification.dateAfter("createdAt", createdAfter))
+                .and(NotificationTemplateSpecification.dateBefore("createdAt", createdBefore));
+
+
+
+        return ResponseEntity.ok(service.findAll(spec, pageable));
     }
 
     @PostMapping("")

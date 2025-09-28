@@ -14,6 +14,7 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -245,8 +246,8 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public ResponseEntity<Page<?>> findAll(Pageable pageable) {
-        return ResponseEntity.ok(logRepository.findAll(pageable).map(r->
+    public ResponseEntity<Page<?>> findAll(Specification<NotificationLog> spec, Pageable pageable) {
+        return ResponseEntity.ok(logRepository.findAll(spec, pageable).map(r->
                 LogDto.builder()
                         .id(r.getId())
                         .groupName(r.getGroup().getName())

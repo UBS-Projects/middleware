@@ -3,20 +3,24 @@ package com.middleware.backend.system_settings.controller;
 import com.middleware.backend.system_settings.dto.ConfigDto;
 import com.middleware.backend.system_settings.mapper.ConfigMapper;
 import com.middleware.backend.system_settings.model.Config;
+import com.middleware.backend.system_settings.model.ConfigType;
 import com.middleware.backend.system_settings.service.ConfigService;
+import com.middleware.backend.system_settings.specificaion.ConfigSpecification;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/configs")
@@ -46,6 +50,11 @@ public class ConfigController {
 
     @GetMapping
     public ResponseEntity<Page<?>> getAllConfigs(
+            @RequestParam(required = false) String key,
+            @RequestParam(required = false) String value,
+            @RequestParam(required = false) String type, // string from request
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdAfter,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdBefore,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "updatedAt") String sortedBy,
@@ -54,8 +63,26 @@ public class ConfigController {
         Pageable pageable = PageRequest.of(page, size,
                 sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortedBy).ascending() : Sort.by(sortedBy).descending());
 
-        return configService.findAll(pageable);
+        // Convert string to enum if valid
+        ConfigType configType = null;
+        if (type != null) {
+            try {
+                configType = ConfigType.valueOf(type.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                // invalid type string, ignore
+            }
+        }
+
+        Specification<Config> spec = Specification
+                .where(ConfigSpecification.hasField("key", key, ConfigSpecification.MatchMode.CONTAINS))
+                .and(ConfigSpecification.hasField("value", value, ConfigSpecification.MatchMode.CONTAINS))
+                .and(ConfigSpecification.hasType(configType))
+                .and(ConfigSpecification.dateAfter("createdAt", createdAfter))
+                .and(ConfigSpecification.dateBefore("createdAt", createdBefore));
+
+        return ResponseEntity.ok(configService.findAll(spec, pageable));
     }
+
 
     @PostMapping
     public ResponseEntity<?> createConfig(@RequestBody ConfigDto dto) {

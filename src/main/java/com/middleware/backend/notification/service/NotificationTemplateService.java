@@ -2,6 +2,7 @@ package com.middleware.backend.notification.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.middleware.backend.notification.model.NotificationActionsLogs;
 import com.middleware.backend.notification.dto.NotificationTemplateDto;
 import com.middleware.backend.notification.dto.ReceiverRequest;
 import com.middleware.backend.notification.enums.ChannelType;
@@ -20,20 +21,20 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class NotificationTemplateService {
     private final TemplateRepository repo;
+    private final NotificationActionsLogsService loggingService;
 
     public NotificationTemplateDto findById(Long id) {
         return repo.findById(id).map(TemplateMapper::MapToDto)
                 .orElseThrow(() -> new RuntimeException("Template not found"));
     }
 
-    public Page<NotificationTemplateDto> findAll(Pageable pageable) {
-        return repo.findAll(pageable).map(TemplateMapper::MapToDto);
+    public Page<NotificationTemplateDto> findAll(Specification<NotificationTemplate> spec,Pageable pageable) {
+        return repo.findAll(spec,pageable).map(TemplateMapper::MapToDto);
     }
 
     public NotificationTemplateDto create(NotificationTemplateDto dto) {
@@ -53,6 +54,16 @@ public class NotificationTemplateService {
         dto.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
         NotificationTemplate saved = repo.save(TemplateMapper.MapToEntity(dto));
+
+
+        loggingService.save(NotificationActionsLogs.builder()
+                        .action("POST")
+                        .details("Created New Template "+dto.getName())
+                        .email(currentUser)
+                        .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+
+        );
         return TemplateMapper.MapToDto(saved);
     }
 
@@ -72,12 +83,34 @@ public class NotificationTemplateService {
         entity.setUpdatedBy(currentUser);
         entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("PUT")
+                .details("Updated Template "+dto.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+
+        );
+
         return TemplateMapper.MapToDto(repo.save(entity));
     }
 
     public void delete(long id) {
         NotificationTemplate entity = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Template not found"));
+
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
+        loggingService.save(NotificationActionsLogs.builder()
+                .action("DELETE")
+                .details("Deleted Template "+entity.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
+                .build()
+
+        );
         repo.delete(entity);
     }
 
