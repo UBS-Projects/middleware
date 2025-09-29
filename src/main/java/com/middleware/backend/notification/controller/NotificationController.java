@@ -40,17 +40,6 @@ public class NotificationController {
     }
 
 
-    @PostMapping("/schedule")
-    public String scheduleSend(@RequestParam List<String> groupCodes,
-                               @RequestParam String templateCode,
-                               @RequestParam String channelCode,
-                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime sendTime) {
-
-        notificationService.scheduleSend(groupCodes, templateCode, channelCode, sendTime);
-        return "Notification scheduled for " + sendTime;
-    }
-
-
 //Logs Endpoints
     @GetMapping("")
     public ResponseEntity<?> getAll(

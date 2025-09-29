@@ -13,7 +13,6 @@ import java.util.Map;
 
 public interface NotificationService {
     void sendToGroup(List<String> groupCodes, String templateCode, String channelCode);
-    void scheduleSend(List<String> groupCodes, String templateCode, String channelCode, LocalDateTime sendTime);
     ResponseEntity<Page<?>> findAll(Specification<NotificationLog> spec, Pageable pageable);
 
     ResponseEntity<?> getById(Long id);

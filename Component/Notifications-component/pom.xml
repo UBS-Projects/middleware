@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
 
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>com.middleware</groupId>
   <artifactId>Notifications-component</artifactId>
-  <packaging>jar</packaging>
   <version>1.0.0</version>
-
   <name>Notifications Component</name>
+  <description>Use and Send Notifications in Kaoto Designer</description>
+
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>17</java.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <camel.version>4.4.0</camel.version>
+    <lombok.version>1.18.38</lombok.version>
+    <jackson.version>2.16.1</jackson.version>
+    <slf4j.version>2.0.13</slf4j.version>
+    <junit.version>5.10.2</junit.version>
   </properties>
 
   <dependencyManagement>
@@ -21,40 +31,63 @@
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-bom</artifactId>
-        <version>4.4.0</version>
-        <scope>import</scope>
+        <version>${camel.version}</version>
         <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- JUnit BOM -->
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
-
-    <!-- camel -->
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-api</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-support</artifactId>
     </dependency>
-
-    <!-- logging -->
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j2-impl</artifactId>
-      <version>2.21.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>2.21.1</version>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- testing -->
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-test-junit5</artifactId>
+      <artifactId>camel-base</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-core-engine</artifactId>
+    </dependency>
+
+    <!-- For parsing JSON responses if the error details are in JSON format -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <!-- SLF4J for logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.12</version> <!-- Use a compatible SLF4J version -->
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>2.0.12</version> <!-- For simple console logging in tests/standalone -->
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+      <version>${lombok.version}</version>
     </dependency>
   </dependencies>
 
@@ -62,30 +95,31 @@
     <defaultGoal>install</defaultGoal>
 
     <plugins>
-
+      <!-- Maven Compiler Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.12.1</version>
         <configuration>
-          <release>17</release>
+          <release>${java.version}</release>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
         </configuration>
       </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>3.3.1</version>
-        <configuration>
-          <encoding>UTF-8</encoding>
-        </configuration>
-      </plugin>
-
-      <!-- generate camel meta-data -->
+      <!-- Camel Component Maven Plugin -->
       <plugin>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-component-maven-plugin</artifactId>
-        <version>4.4.0</version>
+        <version>${camel.version}</version>
+        <configuration>
+          <validate>false</validate>
+        </configuration>
         <executions>
           <execution>
             <id>generate</id>
@@ -96,6 +130,8 @@
           </execution>
         </executions>
       </plugin>
+
+      <!-- Build Helper Plugin -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
@@ -121,7 +157,30 @@
         </executions>
       </plugin>
 
+      <!-- Maven Resources Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+      </plugin>
+
+      <!-- Maven JAR Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Implementation-Title>${project.name}</Implementation-Title>
+              <Implementation-Version>${project.version}</Implementation-Version>
+              <Implementation-Vendor>Middleware Team</Implementation-Vendor>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
     </plugins>
+
     <pluginManagement>
       <plugins>
         <plugin>
@@ -131,5 +190,4 @@
       </plugins>
     </pluginManagement>
   </build>
-
 </project>
