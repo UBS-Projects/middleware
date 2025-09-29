@@ -1,7 +1,9 @@
 package com.middleware.backend.kaotocamel.controller;
 
 import com.middleware.backend.kaotocamel.dto.*;
+import com.middleware.backend.kaotocamel.model.IntegrationMapping;
 import com.middleware.backend.kaotocamel.service.*;
+import com.middleware.backend.kaotocamel.spec.IntegrationMappingSpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -11,8 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -279,7 +283,83 @@ public class IntegrationMappingAdminController {
             return ResponseEntity.badRequest().body(error);
         }
     }
+    /**
+     * Exports integration mappings to CSV or Excel file with current filters applied.
+     */
+    @GetMapping("/export/{type}")
+    @PreAuthorize("permitAll()")
+    @Operation(
+            summary = "Export integration mappings",
+            description = "Exports integration mappings to CSV or Excel format. Uses the same filters as the main listing API."
+    )
+    public ResponseEntity<byte[]> exportFile(
+             @RequestParam(required = false) String middlewareApiName,
+            @RequestParam(required = false) Long integratedApiId,
+            @RequestParam(required = false) String integratedApiCode,
+            @RequestParam(required = false) String mappingType,
+            @RequestParam(required = false) String data,
+            @RequestParam(required = false) String externalKey,
+            @RequestParam(required = false) String attribute,
+            @RequestParam(required = false) Boolean isActive,
+            @RequestParam(required = false) String notes,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedAfter,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedBefore,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) Long minId,
+            @RequestParam(required = false) Long maxId,
+            @RequestParam(required = false, defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDir,
+            @PathVariable("type") String type
+    ) {
+        try {
+            // Build sort exactly like in findAll()
+            Sort sortOrder = Sort.by("id").ascending();
+            if (sortBy != null && !sortBy.trim().isEmpty() && isValidSortField(sortBy)) {
+                if ("desc".equalsIgnoreCase(sortDir)) {
+                    sortOrder = Sort.by(sortBy).descending();
+                } else {
+                    sortOrder = Sort.by(sortBy).ascending();
+                }
+            }
 
+            // Use large page size to get all filtered results
+            Pageable pageable = PageRequest.of(0, 100000, sortOrder);
+
+            // Build specification with exact same filters as findAll()
+            Specification<IntegrationMapping> spec = IntegrationMappingSpecification.buildSpecification(
+                    middlewareApiName, integratedApiId, integratedApiCode, mappingType,
+                    data, externalKey, attribute, isActive, notes,
+                    createdAfter, createdBefore, updatedAfter, updatedBefore,
+                    search, minId, maxId
+            );
+
+            // Export the data
+            byte[] fileBytes = service.exportFile(spec, pageable, type);
+
+            // Set up response headers
+            String fileName = "integration_mappings_export." +
+                    (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+
+            String contentType = type.equalsIgnoreCase("CSV")
+                    ? "text/csv"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(fileBytes);
+
+        } catch (Exception e) {
+            log.error("Error exporting integration mappings to {}", type, e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
     /**
      * Validate sortable field names
      */

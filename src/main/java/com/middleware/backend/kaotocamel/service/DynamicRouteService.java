@@ -1277,11 +1277,7 @@ public class DynamicRouteService {
         return auditRepository.findAll(spec, pageable);
     }
 
-    public Page<DynamicRouteAudit> getLatestRoutesLogsWithFilters(Long id, String routeId, Integer version,
-                                                                  String action, String details, LocalDateTime timestamp, Pageable pageable) {
-        // Fetches paginated audit logs matching the optional filters
-        return auditRepository.findByFilters(id, routeId, version, action, details, timestamp, pageable);
-    }
+
 
     public byte[] exportToExcel(List<DynamicRouteEntity> routes) throws IOException {
         // Exports routes to XLSX with basic styling
@@ -1475,4 +1471,5 @@ public class DynamicRouteService {
 
         log.info("Completed route status sync");
     }
+
 }

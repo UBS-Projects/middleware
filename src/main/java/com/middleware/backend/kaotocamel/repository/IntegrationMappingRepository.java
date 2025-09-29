@@ -2,6 +2,8 @@ package com.middleware.backend.kaotocamel.repository;
 
 import com.middleware.backend.kaotocamel.model.IntegratedApi;
 import com.middleware.backend.kaotocamel.model.IntegrationMapping;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -42,7 +44,10 @@ public interface IntegrationMappingRepository
     boolean existsByMiddlewareApiNameAndExternalKeyAndIsActiveTrue(
             String middlewareApiName, String externalKey);
 
-
+    @Query("SELECT m FROM IntegrationMapping m " +
+            "JOIN FETCH m.integratedApi api " +
+            "WHERE (:spec IS NULL OR :spec = true)")
+    Page<IntegrationMapping> findAllWithIntegratedApiForExport(Pageable pageable);
     /**
      * Get distinct middleware API names
      */

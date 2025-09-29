@@ -17,6 +17,9 @@
     <packaging>jar</packaging>
     <name>middleware-backend</name>
     <description>Advanced Middleware Backend</description>
+<!--    <modules>-->
+<!--        <module>Notifications-component</module>-->
+<!--    </modules>-->
 
     <properties>
         <!-- Use Java LTS version 21 for better stability with Spring Boot 3 -->

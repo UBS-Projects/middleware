@@ -36,8 +36,7 @@ public class Dhis2ClientService {
      */
     public Map<String, Object> executeApiCall(IntegratedApi api, String periodParam, String dhis2Code) {
         try {
-            // ✅ Fetch DHIS2 config dynamically using the code
-            Map<String, String> dhis2Map = configService.getModuleConfig("dhis2", dhis2Code);
+             Map<String, String> dhis2Map = configService.getModuleConfig("dhis2", dhis2Code);
             if (dhis2Map.isEmpty()) {
                 throw new RuntimeException("No DHIS2 config found for code: " + dhis2Code);
             }
@@ -170,24 +169,5 @@ public class Dhis2ClientService {
             }
         } catch (Exception e) { log.error("Error getting period name: {}", e.getMessage()); }
         return peId;
-    }
-
-    public boolean testDhis2Connection() {
-        try {
-            Map<String, String> dhis2Map = configService.getModuleConfig("dhis2", "DHIS1");
-            if (dhis2Map.isEmpty()) return false;
-
-            String baseUrl = dhis2Map.get("baseUrl");
-            String username = dhis2Map.get("userName");
-            String password = dhis2Map.get("password");
-
-            String testUrl = "https://" + baseUrl + "/api/me";
-            HttpHeaders headers = createHeaders(username, password);
-            ResponseEntity<String> response = restTemplate.exchange(testUrl, HttpMethod.GET, new HttpEntity<>(headers), String.class);
-            return response.getStatusCode().is2xxSuccessful();
-        } catch (Exception e) {
-            log.error("DHIS2 connection test failed: {}", e.getMessage());
-            return false;
-        }
     }
 }

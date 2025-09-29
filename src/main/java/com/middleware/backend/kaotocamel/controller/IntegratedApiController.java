@@ -1,7 +1,9 @@
 package com.middleware.backend.kaotocamel.controller;
 
 import com.middleware.backend.kaotocamel.dto.*;
+import com.middleware.backend.kaotocamel.model.IntegratedApi;
 import com.middleware.backend.kaotocamel.service.*;
+import com.middleware.backend.kaotocamel.spec.IntegratedApiSpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -11,8 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -204,23 +208,6 @@ public class IntegratedApiController {
         return ResponseEntity.ok(systems);
     }
 
-    @PostMapping("/{id}/test")
-    @PreAuthorize("permitAll()")
-    @Operation(summary = "Test integrated API connectivity with optional DHIS2 code")
-    public ResponseEntity<Map<String, Object>> testApi(
-            @PathVariable Long id,
-            @RequestParam String pe,
-            @RequestParam(required = false, name = "_dhis2Code") String dhis2Code) {
-        try {
-            Map<String, Object> result = service.testApiConnection(id, pe, dhis2Code);
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            Map<String, Object> error = new HashMap<>();
-            error.put("success", false);
-            error.put("error", e.getMessage());
-            return ResponseEntity.ok(error);
-        }
-    }
     /**
      * Enhanced sort builder supporting multiple fields and directions
      */
@@ -234,8 +221,7 @@ public class IntegratedApiController {
 
         List<Sort.Order> orders = new ArrayList<>();
 
-        // إذا كان المعامل منفصل (id, asc) بدل من (id,asc)
-        if (sortParams.length == 2 && isValidSortField(sortParams[0])) {
+         if (sortParams.length == 2 && isValidSortField(sortParams[0])) {
             String field = sortParams[0].trim();
             String directionStr = sortParams[1].trim().toLowerCase();
 
@@ -249,8 +235,7 @@ public class IntegratedApiController {
             log.debug("Added separated sort order: {} {}", field, direction);
 
         } else {
-            // الطريقة التقليدية للمعاملات المفصولة بفاصلة
-            for (String sortParam : sortParams) {
+             for (String sortParam : sortParams) {
                 log.debug("Processing sort param: '{}'", sortParam);
 
                 if (sortParam == null || sortParam.trim().isEmpty()) {
@@ -292,6 +277,80 @@ public class IntegratedApiController {
         Sort finalSort = Sort.by(orders);
         log.debug("Final sort object: {}", finalSort);
         return finalSort;
+    }
+     /**
+     * Exports integrated APIs to CSV or Excel file with current filters applied.
+     */
+     @GetMapping("/export/{type}")
+     @PreAuthorize("permitAll()")
+     @Operation(
+             summary = "Export integrated APIs",
+             description = "Exports integrated APIs to CSV or Excel format. Uses the same filters as the main listing API."
+     )
+     public ResponseEntity<byte[]> exportFile(
+             @RequestParam(required = false) String code,
+             @RequestParam(required = false) String name,
+             @RequestParam(required = false) String apiUrl,
+             @RequestParam(required = false) String type,
+             @RequestParam(required = false) String integratedSystem,
+             @RequestParam(required = false) Boolean isActive,
+             @RequestParam(required = false) String description,
+             @RequestParam(required = false)
+             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
+             @RequestParam(required = false)
+             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
+             @RequestParam(required = false)
+             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedAfter,
+             @RequestParam(required = false)
+             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedBefore,
+             @RequestParam(required = false) String search,
+             @RequestParam(required = false) Long minId,
+             @RequestParam(required = false) Long maxId,
+             @RequestParam(required = false, defaultValue = "id") String sortBy,
+             @RequestParam(defaultValue = "desc") String sortDir,
+             @PathVariable("type") String exportType
+     ) {
+        try {
+            // Build sort exactly like in findAll()
+            Sort sortOrder = Sort.by("id").ascending();
+            if (sortBy != null && !sortBy.trim().isEmpty() && isValidSortField(sortBy)) {
+                if ("desc".equalsIgnoreCase(sortDir)) {
+                    sortOrder = Sort.by(sortBy).descending();
+                } else {
+                    sortOrder = Sort.by(sortBy).ascending();
+                }
+            }
+
+            // Use large page size to get all filtered results
+            Pageable pageable = PageRequest.of(0, 100000, sortOrder);
+
+            // Build specification with exact same filters as findAll()
+            Specification<IntegratedApi> spec = IntegratedApiSpecification.buildSpecification(
+                    code, name, apiUrl, type, integratedSystem, isActive, description,
+                    createdAfter, createdBefore, updatedAfter, updatedBefore,
+                    search, minId, maxId
+            );
+
+            // Export the data
+            byte[] fileBytes = service.exportFile(spec, pageable, exportType);
+
+            // Set up response headers
+            String fileName = "integrated_apis_export." +
+                    (exportType.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+
+            String contentType = exportType.equalsIgnoreCase("CSV")
+                    ? "text/csv"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(fileBytes);
+
+        } catch (Exception e) {
+            log.error("Error exporting integrated APIs to {}", exportType, e);
+            return ResponseEntity.internalServerError().build();
+        }
     }
     /**
      * Validate sortable field names

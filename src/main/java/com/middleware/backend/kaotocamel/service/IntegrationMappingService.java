@@ -1,18 +1,30 @@
 package com.middleware.backend.kaotocamel.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.middleware.backend.kaotocamel.dto.*;
 import com.middleware.backend.kaotocamel.model.*;
 import com.middleware.backend.kaotocamel.repository.*;
 import com.middleware.backend.kaotocamel.spec.IntegrationMappingSpecification;
+import jakarta.persistence.criteria.JoinType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -135,8 +147,7 @@ public class IntegrationMappingService {
                 .map(this::mapEntityToDto)
                 .collect(Collectors.toList());
     }
-    // أضف هذا الـ method للـ service
-    @Transactional(readOnly = true)
+     @Transactional(readOnly = true)
     public Page<IntegrationMappingDto> findWithAdvancedFilters(
             String middlewareApiName, Long integratedApiId, String integratedApiCode,
             String mappingType, String data, String externalKey, String attribute,
@@ -161,6 +172,134 @@ public class IntegrationMappingService {
 
         log.debug("Found {} results out of {} total", result.getNumberOfElements(), result.getTotalElements());
         return result;
+    }
+    /**
+     * Exports integration mappings to CSV or Excel bytes according to type.
+     */
+    public byte[] exportFile(Specification<IntegrationMapping> spec, Pageable pageable, String type) {
+        List<IntegrationMapping> data;
+        try {
+            // استخدم query مخصصة مع JOIN FETCH
+            data = findAllForExport(spec, pageable);
+        } catch (Exception e) {
+            log.error("Error fetching data for export", e);
+            data = Collections.emptyList();
+        }
+
+        try {
+            if ("CSV".equalsIgnoreCase(type)) {
+                return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
+            } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
+                return convertToExcel(data);
+            } else {
+                throw new IllegalArgumentException("Unsupported export type: " + type);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to export file", e);
+        }
+    }
+
+    /**
+     * Helper method to fetch data with JOIN FETCH for export
+     */
+    private List<IntegrationMapping> findAllForExport(Specification<IntegrationMapping> spec, Pageable pageable) {
+        return mappingRepository.findAll((root, query, criteriaBuilder) -> {
+            // Apply JOIN FETCH
+            root.fetch("integratedApi", JoinType.LEFT);
+            query.distinct(true);
+
+            // Apply the original specification
+            return spec != null ? spec.toPredicate(root, query, criteriaBuilder) : null;
+        }, pageable).getContent();
+    }
+
+    // ================= CSV Export =================
+    private String convertToCSV(List<IntegrationMapping> records) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID,Middleware API Name,Integrated API ID,Integrated API Code,Integrated API Name,");
+        sb.append("Mapping Type,Data,Attribute,External Key,Active,Notes,Created At,Updated At\n");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        for (IntegrationMapping record : records) {
+            sb.append(record.getId()).append(",");
+            sb.append(escapeCsv(record.getMiddlewareApiName())).append(",");
+            sb.append(record.getIntegratedApiId()).append(",");
+            sb.append(escapeCsv(record.getIntegratedApi() != null ? record.getIntegratedApi().getCode() : "")).append(",");
+            sb.append(escapeCsv(record.getIntegratedApi() != null ? record.getIntegratedApi().getName() : "")).append(",");
+            sb.append(record.getMappingType() != null ? record.getMappingType().toString() : "").append(",");
+            sb.append(escapeCsv(record.getData())).append(",");
+            sb.append(escapeCsv(record.getAttribute())).append(",");
+            sb.append(escapeCsv(record.getExternalKey())).append(",");
+            sb.append(record.getIsActive() ? "ACTIVE" : "INACTIVE").append(",");
+            sb.append(escapeCsv(record.getNotes())).append(",");
+            sb.append(record.getCreatedAt() != null ? record.getCreatedAt().format(formatter) : "").append(",");
+            sb.append(record.getUpdatedAt() != null ? record.getUpdatedAt().format(formatter) : "").append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    private String escapeCsv(String value) {
+        if (value == null) return "";
+        String escaped = value.replace("\"", "\"\"");
+        if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
+            return "\"" + escaped + "\"";
+        }
+        return escaped;
+    }
+
+    // ================= Excel Export =================
+    private byte[] convertToExcel(List<IntegrationMapping> records) throws IOException {
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Integration Mappings");
+
+            // Header row
+            Row header = sheet.createRow(0);
+            header.createCell(0).setCellValue("ID");
+            header.createCell(1).setCellValue("Middleware API Name");
+            header.createCell(2).setCellValue("Integrated API ID");
+            header.createCell(3).setCellValue("Integrated API Code");
+            header.createCell(4).setCellValue("Integrated API Name");
+            header.createCell(5).setCellValue("Mapping Type");
+            header.createCell(6).setCellValue("Data");
+            header.createCell(7).setCellValue("Attribute");
+            header.createCell(8).setCellValue("External Key");
+            header.createCell(9).setCellValue("Active");
+            header.createCell(10).setCellValue("Notes");
+            header.createCell(11).setCellValue("Created At");
+            header.createCell(12).setCellValue("Updated At");
+
+            // Data rows
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            int rowIdx = 1;
+            for (IntegrationMapping record : records) {
+                Row row = sheet.createRow(rowIdx++);
+                row.createCell(0).setCellValue(record.getId() != null ? record.getId() : 0);
+                row.createCell(1).setCellValue(record.getMiddlewareApiName() != null ? record.getMiddlewareApiName() : "");
+                row.createCell(2).setCellValue(record.getIntegratedApiId() != null ? record.getIntegratedApiId() : 0);
+                row.createCell(3).setCellValue(record.getIntegratedApi() != null ? record.getIntegratedApi().getCode() : "");
+                row.createCell(4).setCellValue(record.getIntegratedApi() != null ? record.getIntegratedApi().getName() : "");
+                row.createCell(5).setCellValue(record.getMappingType() != null ? record.getMappingType().toString() : "");
+                row.createCell(6).setCellValue(record.getData() != null ? record.getData() : "");
+                row.createCell(7).setCellValue(record.getAttribute() != null ? record.getAttribute() : "");
+                row.createCell(8).setCellValue(record.getExternalKey() != null ? record.getExternalKey() : "");
+                row.createCell(9).setCellValue(record.getIsActive() ? "ACTIVE" : "INACTIVE");
+                row.createCell(10).setCellValue(record.getNotes() != null ? record.getNotes() : "");
+                row.createCell(11).setCellValue(record.getCreatedAt() != null ? record.getCreatedAt().format(formatter) : "");
+                row.createCell(12).setCellValue(record.getUpdatedAt() != null ? record.getUpdatedAt().format(formatter) : "");
+            }
+
+            // Auto-size columns
+            for (int i = 0; i <= 12; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+                workbook.write(bos);
+                return bos.toByteArray();
+            }
+        }
     }
     @Transactional(readOnly = true)
     public List<IntegrationMappingDto> findAll() {
