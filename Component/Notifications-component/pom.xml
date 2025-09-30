@@ -117,9 +117,6 @@
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-component-maven-plugin</artifactId>
         <version>${camel.version}</version>
-        <configuration>
-          <validate>false</validate>
-        </configuration>
         <executions>
           <execution>
             <id>generate</id>

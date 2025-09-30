@@ -30,20 +30,9 @@ public class ScheduledJobs {
 
     private String description;
 
-//    @Column(name = "workflow_id")
-//    private Long workflowid;
-//
-//    @Column(name = "api_id")
-//    private Long apiEndpointId;
-
-//    @Column(name = "schedule_type", nullable = false)
-//    private ScheduleType scheduleType;
 
     @Column(name = "schedule_expression")
     private String scheduleExpression;
-
-//    @Column(name = "event_trigger")
-//    private String eventTrigger;
 
     @Column(name = "api_endpoint",nullable = false)
     private String apiEndpoint;
@@ -58,17 +47,13 @@ public class ScheduledJobs {
 
     private boolean enabled;
 
-//    @Column(name = "max_retry_count")
-//    private int maxRetryCount;
 
-//    @Column(name = "retry_innterval_ms")
-//    private int retryIntervalMs;
+    @Column(name = "token",length = 1000)
+    private String token;
 
     @Column(name = "last_execution_time")
     private Timestamp lastExecutionTime;
 
-//    @Column(name = "next_execution_time")
-//    private Timestamp nextExecutionTime;
 
     @Column(name = "created_by", nullable = false)
     private Long createdBy;

@@ -26,6 +26,8 @@ public class JobRequest {
 
     private String headers;
 
+    private String token;
+
     private String payload;
 
     private boolean enabled;

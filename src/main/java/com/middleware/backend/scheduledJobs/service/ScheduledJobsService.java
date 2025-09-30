@@ -68,23 +68,31 @@ public class ScheduledJobsService{
      */
     private void scheduleJob(JobRequest job) {
         try {
-            JobDetail jobDetail = JobBuilder.newJob(JobExecution.class)
+            JobBuilder jobBuilder = JobBuilder.newJob(JobExecution.class)
                     .withIdentity(job.getJobName(), "http-jobs")
                     .usingJobData("url", job.getApiEndpoint())
                     .usingJobData("method", job.getMethod())
                     .usingJobData("headers", job.getHeaders())
-                    .usingJobData("payload", job.getPayload())
-                    .build();
+                    .usingJobData("payload", job.getPayload());
+
+            // Add token if present
+            if (job.getToken() != null && !job.getToken().isEmpty()) {
+                jobBuilder.usingJobData("token", job.getToken());
+            }
+
+            JobDetail jobDetail = jobBuilder.build();
 
             Trigger trigger = TriggerBuilder.newTrigger()
                     .withIdentity(job.getJobName() + "-trigger", "http-triggers")
                     .withSchedule(CronScheduleBuilder.cronSchedule(job.getScheduleExpression()))
                     .build();
+
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
             throw new RuntimeException("Error scheduling job", e);
         }
     }
+
 
     /**
      * Persists a new job definition and schedules it.
@@ -179,6 +187,8 @@ public class ScheduledJobsService{
         if (job.getMethod() != null) existingJob.setMethod(job.getMethod());
         if (job.getHeaders() != null) existingJob.setHeaders(job.getHeaders());
         if (job.getPayload() != null) existingJob.setPayload(job.getPayload());
+        if (job.getToken() != null) existingJob.setToken(job.getToken());
+
         existingJob.setEnabled(job.isEnabled());
         Optional<User> user = userRepo.findByEmail(email.toLowerCase());
         job.setUpdatedBy(user.get().getId());
@@ -227,14 +237,17 @@ public class ScheduledJobsService{
         Map<String, String> headersMap = objectMapper.readValue(job.getHeaders(), new TypeReference<>() {});
         headersMap.forEach(headers::add);
 
-        // Extract transactionUUID from URL
-        String transactionUUID = extractTransactionUUIDFromUrl(job.getApiEndpoint());
+        // Add token if present
+        if (job.getToken() != null && !job.getToken().isEmpty()) {
+            headers.add("Authorization", "Bearer " + job.getToken());
+        }
 
-        // Add test-specific headers to simulate scheduled job behavior
+        // Add test-specific headers
         headers.add("X-Scheduled-Job", "true");
         headers.add("X-Job-Name", job.getJobName() != null ? job.getJobName() : "test-job");
 
         // Check if this is a retry attempt
+        String transactionUUID = extractTransactionUUIDFromUrl(job.getApiEndpoint());
         if (transactionUUID != null && hasBeenUsedBefore(transactionUUID)) {
             headers.add("X-Retry-Attempt", "true");
         }
@@ -250,6 +263,7 @@ public class ScheduledJobsService{
 
         return response.getStatusCode().is2xxSuccessful();
     }
+
 
     private String extractTransactionUUIDFromUrl(String url) {
         if (url == null) return null;
