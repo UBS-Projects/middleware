@@ -21,7 +21,8 @@ public class Dhis2EndpointUriFactory extends org.apache.camel.support.component.
     private static final Set<String> SECRET_PROPERTY_NAMES;
     private static final Set<String> MULTI_VALUE_PREFIXES;
     static {
-        Set<String> props = new HashSet<>(7);
+        Set<String> props = new HashSet<>(8);
+        props.add("code");
         props.add("connectionTimeout");
         props.add("dryRun");
         props.add("idScheme");
@@ -46,7 +47,7 @@ public class Dhis2EndpointUriFactory extends org.apache.camel.support.component.
 
         Map<String, Object> copy = new HashMap<>(properties);
 
-        uri = buildPathParameter(syntax, uri, "operation", null, true, copy);
+        uri = buildPathParameter(syntax, uri, "operation", "process", false, copy);
         uri = buildQueryParameters(uri, copy, encode);
         return uri;
     }

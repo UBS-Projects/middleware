@@ -21,6 +21,7 @@ public class Dhis2EndpointConfigurer extends PropertyConfigurerSupport implement
     public boolean configure(CamelContext camelContext, Object obj, String name, Object value, boolean ignoreCase) {
         Dhis2Endpoint target = (Dhis2Endpoint) obj;
         switch (ignoreCase ? name.toLowerCase() : name) {
+        case "code": target.setCode(property(camelContext, java.lang.String.class, value)); return true;
         case "connectiontimeout":
         case "connectionTimeout": target.setConnectionTimeout(property(camelContext, int.class, value)); return true;
         case "dryrun":
@@ -39,6 +40,7 @@ public class Dhis2EndpointConfigurer extends PropertyConfigurerSupport implement
     @Override
     public Class<?> getOptionType(String name, boolean ignoreCase) {
         switch (ignoreCase ? name.toLowerCase() : name) {
+        case "code": return java.lang.String.class;
         case "connectiontimeout":
         case "connectionTimeout": return int.class;
         case "dryrun":
@@ -58,6 +60,7 @@ public class Dhis2EndpointConfigurer extends PropertyConfigurerSupport implement
     public Object getOptionValue(Object obj, String name, boolean ignoreCase) {
         Dhis2Endpoint target = (Dhis2Endpoint) obj;
         switch (ignoreCase ? name.toLowerCase() : name) {
+        case "code": return target.getCode();
         case "connectiontimeout":
         case "connectionTimeout": return target.getConnectionTimeout();
         case "dryrun":
