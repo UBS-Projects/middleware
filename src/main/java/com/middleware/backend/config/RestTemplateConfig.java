@@ -92,8 +92,7 @@ public class RestTemplateConfig {
     public RestTemplate restTemplate() {
         log.info("Creating RestTemplate with SSL trust-all configuration");
 
-        // ✅ تعطيل فحص SSL للتطوير
-        disableSslVerification();
+         disableSslVerification();
 
         // Create RestTemplate with custom request factory
         RestTemplate restTemplate = new RestTemplate();
@@ -108,8 +107,7 @@ public class RestTemplateConfig {
                 connection.setConnectTimeout(dhis2ConnectTimeout);
                 connection.setReadTimeout(dhis2Timeout);
 
-                // ✅ للـHTTPS connections، طبق إعدادات SSL
-                if (connection instanceof HttpsURLConnection) {
+                 if (connection instanceof HttpsURLConnection) {
                     HttpsURLConnection httpsConnection = (HttpsURLConnection) connection;
                     httpsConnection.setHostnameVerifier((hostname, session) -> {
                         log.debug("Accepting hostname: {}", hostname);
@@ -140,13 +138,9 @@ public class RestTemplateConfig {
         return "http://" + host + ":" + port + contextPath;
     }
 
-    /**
-     * ✅ تعطيل فحص شهادات SSL للتطوير
-     * تحذير: لا تستخدم هذا في الإنتاج!
-     */
+
     private void disableSslVerification() {
         try {
-            log.warn("⚠️  DISABLING SSL VERIFICATION - FOR DEVELOPMENT ONLY!");
 
             // Create a trust manager that accepts all certificates
             TrustManager[] trustAllCerts = new TrustManager[] {
@@ -175,11 +169,9 @@ public class RestTemplateConfig {
             };
             HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
 
-            log.info("✅ SSL verification disabled successfully");
 
         } catch (Exception e) {
-            log.error("❌ Failed to disable SSL verification: {}", e.getMessage(), e);
-            throw new RuntimeException("Failed to configure SSL settings", e);
+             throw new RuntimeException("Failed to configure SSL settings", e);
         }
     }
 }

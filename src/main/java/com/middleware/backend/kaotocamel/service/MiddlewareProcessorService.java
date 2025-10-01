@@ -22,9 +22,6 @@ public class MiddlewareProcessorService {
     private final IntegrationMappingRepository mappingRepository;
     private final Dhis2ClientService dhis2Client;
 
-    /**
-     * Process middleware API request with period parameter and dynamic DHIS2 code
-     */
     @Transactional(readOnly = true)
     public MiddlewareResponseDto processMiddlewareRequest(
             String middlewareApiName,
@@ -34,7 +31,6 @@ public class MiddlewareProcessorService {
         log.info("Processing middleware request for API: {} with period: {} and DHIS2 code: {}",
                 middlewareApiName, periodParam, dhis2Code);
 
-        // Validate period parameter
         if (periodParam == null || periodParam.trim().isEmpty()) {
             throw new IllegalArgumentException("Parameter 'pe' is required");
         }
@@ -44,7 +40,7 @@ public class MiddlewareProcessorService {
         }
 
         try {
-            // Step 1: Load all active mappings for this middleware API
+            // Step 1: Load mappings
             List<IntegrationMapping> mappings = mappingRepository
                     .findActiveMiddlewareMappings(middlewareApiName);
 
@@ -55,25 +51,28 @@ public class MiddlewareProcessorService {
                         .build();
             }
 
-            // Step 2: Group mappings by integrated API for efficient processing
+            // Step 2: Fetch organisation units metadata (NEW)
+            Map<String, Map<String, Object>> orgUnitsMetadata =
+                    dhis2Client.fetchOrganisationUnitsMetadata(dhis2Code);
+
+            // Step 3: Group mappings by API
             Map<IntegratedApi, List<IntegrationMapping>> mappingsByApi =
                     groupMappingsByApi(mappings);
 
-            // Step 3: Execute DHIS2 calls with dynamic code
+            // Step 4: Execute DHIS2 calls
             Map<IntegratedApi, Map<String, Object>> apiResponses =
                     executeDhis2Calls(mappingsByApi.keySet(), periodParam, dhis2Code);
 
-            // Step 4: Process responses and build result
-            return buildMiddlewareResponse(mappingsByApi, apiResponses);
+            // Step 5: Build response with enriched orgUnit data
+            return buildMiddlewareResponse(mappingsByApi, apiResponses, orgUnitsMetadata);
 
         } catch (IllegalArgumentException e) {
-            throw e; // Re-throw validation errors
+            throw e;
         } catch (Exception e) {
             log.error("Error processing middleware request: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to process middleware request: " + e.getMessage());
         }
     }
-
     /**
      * Group mappings by integrated API
      */
@@ -121,7 +120,8 @@ public class MiddlewareProcessorService {
      */
     private MiddlewareResponseDto buildMiddlewareResponse(
             Map<IntegratedApi, List<IntegrationMapping>> mappingsByApi,
-            Map<IntegratedApi, Map<String, Object>> apiResponses) {
+            Map<IntegratedApi, Map<String, Object>> apiResponses,
+            Map<String, Map<String, Object>> orgUnitsMetadata) {
 
         Map<AggregationKey, MiddlewareRowDto> aggregatedRows = new LinkedHashMap<>();
 
@@ -137,7 +137,7 @@ public class MiddlewareProcessorService {
                 AnalyticsDataExtractor extractor = new AnalyticsDataExtractor(analytics);
 
                 for (IntegrationMapping mapping : apiMappings) {
-                    processMapping(mapping, extractor, aggregatedRows);
+                    processMapping(mapping, extractor, aggregatedRows, orgUnitsMetadata);
                 }
             }
         }
@@ -150,8 +150,10 @@ public class MiddlewareProcessorService {
                 .build();
     }
 
-    private void processMapping(IntegrationMapping mapping, AnalyticsDataExtractor extractor,
-                                Map<AggregationKey, MiddlewareRowDto> aggregatedRows) {
+    private void processMapping(IntegrationMapping mapping,
+                                AnalyticsDataExtractor extractor,
+                                Map<AggregationKey, MiddlewareRowDto> aggregatedRows,
+                                Map<String, Map<String, Object>> orgUnitsMetadata) {
 
         Set<String> orgUnits = extractor.getAllOrgUnits();
         Set<String> periods = extractor.getAllPeriods();
@@ -160,13 +162,18 @@ public class MiddlewareProcessorService {
             for (String period : periods) {
                 AggregationKey key = new AggregationKey(ou, period);
 
-                MiddlewareRowDto row = aggregatedRows.computeIfAbsent(key, k -> MiddlewareRowDto.builder()
-                        .ou(ou)
-                        .ouName(extractor.getOrgUnitName(ou))
-                        .period(extractor.getPeriodName(period))
-                        .attributes(new ArrayList<>())
-                        .build()
-                );
+                MiddlewareRowDto row = aggregatedRows.computeIfAbsent(key, k -> {
+                    // Get enriched orgUnit details
+                    Map<String, Object> ouDetails = orgUnitsMetadata.getOrDefault(ou, new HashMap<>());
+
+                    return MiddlewareRowDto.builder()
+                            .ou(ou)
+                            .ouName(extractor.getOrgUnitName(ou))
+                            .ouDetails(ouDetails)
+                            .period(extractor.getPeriodName(period))
+                            .attributes(new ArrayList<>())
+                            .build();
+                });
 
                 Object value = extractValue(mapping, extractor, ou, period);
                 if (value != null) {

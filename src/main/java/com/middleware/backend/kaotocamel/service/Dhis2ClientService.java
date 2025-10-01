@@ -170,4 +170,55 @@ public class Dhis2ClientService {
         } catch (Exception e) { log.error("Error getting period name: {}", e.getMessage()); }
         return peId;
     }
+    /**
+     * Fetch organisation units metadata from DHIS2
+     */
+    public Map<String, Map<String, Object>> fetchOrganisationUnitsMetadata(String dhis2Code) {
+        try {
+            Map<String, String> dhis2Map = configService.getModuleConfig("dhis2", dhis2Code);
+            if (dhis2Map.isEmpty()) {
+                throw new RuntimeException("No DHIS2 config found for code: " + dhis2Code);
+            }
+
+            String baseUrl = dhis2Map.get("baseUrl");
+            String username = dhis2Map.get("userName");
+            String password = dhis2Map.get("password");
+
+            // Build metadata URL
+            String metadataUrl = "https://" + baseUrl +
+                    "/api/metadata.json?organisationUnits=true&fields=id,code,name,displayName,shortName,description,openingDate,closedDate,level,phoneNumber,email,address,url,parent[id,code,name,displayName,level],ancestors[id,code,name,displayName,level],geometry[type,coordinates],translations,organisationUnitGroups[id,code,name],lastUpdated,lastUpdatedBy[id,displayName,username],attributeValues[value,attribute[id,code,name]]";//geometry
+
+            disableSSLVerification();
+            HttpHeaders headers = createHeaders(username, password);
+
+            ResponseEntity<String> response = restTemplate.exchange(
+                    metadataUrl,
+                    HttpMethod.GET,
+                    new HttpEntity<>(headers),
+                    String.class
+            );
+
+            // Parse response
+            Map<String, Object> metadata = objectMapper.readValue(response.getBody(), Map.class);
+            List<Map<String, Object>> orgUnits = (List<Map<String, Object>>) metadata.get("organisationUnits");
+
+            // Index by ID for fast lookup
+            Map<String, Map<String, Object>> indexed = new HashMap<>();
+            if (orgUnits != null) {
+                for (Map<String, Object> ou : orgUnits) {
+                    String id = (String) ou.get("id");
+                    if (id != null) {
+                        indexed.put(id, ou);
+                    }
+                }
+            }
+
+            log.info("Loaded {} organisation units metadata", indexed.size());
+            return indexed;
+
+        } catch (Exception e) {
+            log.error("Error fetching organisation units metadata: {}", e.getMessage());
+            return new HashMap<>();
+        }
+    }
 }
