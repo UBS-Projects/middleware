@@ -33,4 +33,5 @@ public interface ConfigRepository extends JpaRepository<Config, String> {
 
     Page<Config> findAll(Specification<Config> spec, Pageable pageable);
 
+    List<Config> findByKeyStartingWith(String s);
 }

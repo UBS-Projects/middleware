@@ -166,6 +166,10 @@ VALUES (
        )
     ON CONFLICT (id) DO NOTHING;
 
+
+ALTER TABLE public.dynamic_route_audit
+ALTER COLUMN details TYPE text;
+
 -- user
 -- INSERT INTO public.dynamic_routes
 -- (route_id, description, version, path, http_method, yaml_content, active, default_version, created_at, comment)

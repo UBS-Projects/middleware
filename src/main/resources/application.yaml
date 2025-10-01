@@ -3,10 +3,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/middlewareDB
+    url: jdbc:postgresql://localhost:5432/middleware2
 #    url: jdbc:postgresql://localhost:5432/middlewareDB
     username: postgres
-    password: 12345
+    password: root
     driver-class-name: org.postgresql.Driver
   main:
     allow-bean-definition-overriding=true:

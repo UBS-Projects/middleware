@@ -19,14 +19,10 @@ import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 
 import java.util.Map;
@@ -39,15 +35,14 @@ public class NotificationServiceImpl implements NotificationService {
     private final TemplateRepository templateRepository;
     private final ChannelConfigRepository channelRepository;
     private final NotificationLogRepository logRepository;
-    private final TaskScheduler taskScheduler = createScheduler();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void sendToGroup(List<Long> groupIds, Long templateId, Long channelId) {
+    public void sendToGroup(List<String> groupCodes, String templateCode, String channelCode) {
         // Fetch template and channel
-        NotificationTemplate template = templateRepository.findById(templateId)
+        NotificationTemplate template = templateRepository.findByCode(templateCode)
                 .orElseThrow(() -> new RuntimeException("Template not found"));
-        ChannelConfig channel = channelRepository.findById(channelId)
+        ChannelConfig channel = channelRepository.findByCode(channelCode)
                 .orElseThrow(() -> new RuntimeException("Channel not found"));
 
         // Parse channel config JSON
@@ -62,8 +57,8 @@ public class NotificationServiceImpl implements NotificationService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
 
-        for (Long groupId : groupIds) {
-            NotificationGroup group = groupRepository.findById(groupId)
+        for (String groupId : groupCodes) {
+            NotificationGroup group = groupRepository.findByCode(groupId)
                     .orElseThrow(() -> new RuntimeException("Group not found with id " + groupId));
 
             try {
@@ -232,18 +227,6 @@ public class NotificationServiceImpl implements NotificationService {
         return result;
     }
 
-    private TaskScheduler createScheduler() {
-        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-        scheduler.setPoolSize(5);
-        scheduler.initialize();
-        return scheduler;
-    }
-
-    @Override
-    public void scheduleSend(List<Long> groupId, Long templateId, Long channelId, LocalDateTime sendTime) {
-        Date triggerDate = Date.from(sendTime.atZone(ZoneId.systemDefault()).toInstant());
-        taskScheduler.schedule(() -> sendToGroup(groupId, templateId, channelId), triggerDate);
-    }
 
     @Override
     public ResponseEntity<Page<?>> findAll(Specification<NotificationLog> spec, Pageable pageable) {

@@ -101,21 +101,27 @@ public class JobExecution implements Job {
 
     private ProcessedRequest processRequestForExecution(String originalUrl, String originalHeaders, JobExecutionContext context) {
         ProcessedRequest result = new ProcessedRequest();
-
-        if (!isInternalCamelEndpoint(originalUrl)) {
-            result.url = originalUrl;
-            result.headers = originalHeaders;
-            return result;
-        }
-
         result.url = originalUrl;
 
-        result.headers = processHeadersForScheduledJob(originalHeaders, context);
+        // Fetch the ScheduledJobs entity to access the token
+        ScheduledJobs scheduledJob = null;
+        try {
+            scheduledJob = jobRepo.findByApiEndpointAndMethodAndHeadersAndPayloadAndActiveTrue(
+                    originalUrl,
+                    context.getJobDetail().getJobDataMap().getString("method"),
+                    originalHeaders,
+                    context.getJobDetail().getJobDataMap().getString("payload")
+            );
+        } catch (Exception e) {
+            System.err.println("Failed to fetch ScheduledJob for token: " + e.getMessage());
+        }
+
+        result.headers = processHeadersForScheduledJob(originalHeaders, context, scheduledJob);
 
         return result;
     }
 
-    private String processHeadersForScheduledJob(String originalHeaders, JobExecutionContext context) {
+    private String processHeadersForScheduledJob(String originalHeaders, JobExecutionContext context, ScheduledJobs scheduledJob) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, String> headerMap;
@@ -135,6 +141,11 @@ public class JobExecution implements Job {
                 headerMap.put("X-Retry-Attempt", "true");
             }
 
+            // Add token as Bearer if available
+            if (scheduledJob != null && scheduledJob.getToken() != null && !scheduledJob.getToken().isEmpty()) {
+                headerMap.put("Authorization", "Bearer " + scheduledJob.getToken());
+            }
+
             return objectMapper.writeValueAsString(headerMap);
 
         } catch (Exception e) {
@@ -142,6 +153,7 @@ public class JobExecution implements Job {
             return String.format("{\"X-Scheduled-Job\":\"true\",\"X-Job-Name\":\"%s\"}", jobName);
         }
     }
+
 
     private boolean isFirstExecution(JobExecutionContext context) {
         return context.getPreviousFireTime() == null;

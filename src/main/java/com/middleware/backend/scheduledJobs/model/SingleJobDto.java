@@ -23,6 +23,7 @@ public class SingleJobDto {
     private String apiEndpoint;
     private String method;
     private String headers;
+    private String token;
     private String payload;
     private boolean enabled;
     private Timestamp lastExecutionTime;
