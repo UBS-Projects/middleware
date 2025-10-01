@@ -84,4 +84,21 @@ public class ConfigService {
     public ConfigDto getModuleSpecificConfig(String module, UUID id) {
         return configRepository.findByModuleAndId(module,id).map(ConfigMapper::toDTO).get();
     }
+
+
+    public Map<String, String> getModuleConfig(String codePrefix) {
+        List<Config> configs;
+        configs = configRepository.findByKeyStartingWith(codePrefix + ".");
+
+
+        Map<String, String> map = new HashMap<>();
+        for (Config c : configs) {
+            String key = c.getKey();
+            if (codePrefix != null) {
+                key = key.substring((codePrefix + ".").length());
+            }
+            map.put(key, c.getValue());
+        }
+        return map;
+    }
 }
