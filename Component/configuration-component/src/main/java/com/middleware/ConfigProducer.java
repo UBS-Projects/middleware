@@ -11,24 +11,25 @@ public class ConfigProducer extends DefaultProducer {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfigProducer.class);
 
+    private final ConfigEndpoint endpoint;
     private final ConfigService configService;
-    private final String code;
 
-    public ConfigProducer(ConfigEndpoint endpoint, ConfigService configService, String code) {
+    public ConfigProducer(ConfigEndpoint endpoint, ConfigService configService) {
         super(endpoint);
+        this.endpoint = endpoint;
         this.configService = configService;
-        this.code = code;
     }
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        ConfigDetail detail = configService.getConfigs(code);
-        if (detail != null) {
-            LOG.info("Fetched config for code '{}': {}", code, detail.getConfigs());
-            exchange.getMessage().setBody(detail.getConfigs());
-        } else {
-            LOG.warn("No config found for code '{}'", code);
-            exchange.getMessage().setBody(null);
+        ConfigDetail detail = exchange.getIn().getBody(ConfigDetail.class);
+        if (detail == null) {
+            detail = new ConfigDetail();
+            detail.setCode(endpoint.getCode());
         }
+        ConfigDetail result = configService.getConfigs(detail.getCode());
+
+        // Set the fetched config as the response body
+        exchange.getMessage().setBody(result);
     }
 }

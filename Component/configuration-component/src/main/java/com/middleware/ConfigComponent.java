@@ -3,6 +3,7 @@ package com.middleware;
 import java.util.Map;
 
 import com.middleware.service.ConfigService;
+import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
 import org.apache.camel.support.DefaultComponent;
 import org.apache.camel.spi.Metadata;
@@ -15,12 +16,19 @@ public class ConfigComponent extends DefaultComponent {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfigComponent.class);
 
-    @Metadata(description = "The backend service used to retrieve configuration details.")
+    @Metadata(label = "internal")
     private ConfigService configService;
+
+    public ConfigComponent() {
+    }
+
+    public ConfigComponent(CamelContext context) {
+        super(context);
+    }
 
     @Override
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
-        ConfigEndpoint endpoint = new ConfigEndpoint(uri, this, remaining);
+        ConfigEndpoint endpoint = new ConfigEndpoint(uri, this);
         setProperties(endpoint, parameters);
 
         if (this.configService == null) {
@@ -35,13 +43,5 @@ public class ConfigComponent extends DefaultComponent {
         endpoint.setConfigService(configService);
         LOG.info("Created ConfigEndpoint for URI: {}", uri);
         return endpoint;
-    }
-
-    public void setConfigService(ConfigService configService) {
-        this.configService = configService;
-    }
-
-    public ConfigService getConfigService() {
-        return configService;
     }
 }
