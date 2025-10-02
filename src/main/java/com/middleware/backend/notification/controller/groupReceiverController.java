@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,15 +21,18 @@ public class groupReceiverController {
     private final groupReceiverService service;
 
     @GetMapping("")
+    @PreAuthorize("hasAuthority('group:view')")
     public ResponseEntity<?> getUnlinkedGroups(){
         return ResponseEntity.ok(service.getUnlinkedGroups());
 
     }
     @PostMapping("")
+    @PreAuthorize("hasAuthority('groupReceivers:create')")
     public ResponseEntity<?> addReceivers(@RequestBody GroupReceiversDto dto) {
         return ResponseEntity.ok(service.addReceivers(dto));
     }
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('receiver:view')")
     public ResponseEntity<?> getAllReceivers(
             @RequestParam(required = false) String search
     ) {

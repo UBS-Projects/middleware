@@ -105,7 +105,7 @@ public class ChannelService {
         repo.deleteById(id);
     }
 
-    public List<ReceiverRequest> getReceivers(String search) {
+    public List<ReceiverRequest> getChannels(String search) {
         if (search == null || search.isBlank()) {
             return repo.findAll(PageRequest.of(0, 3)) // fetch first 5 if no search term
                     .stream()

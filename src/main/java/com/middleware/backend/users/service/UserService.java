@@ -2,6 +2,7 @@ package com.middleware.backend.users.service;
 
 import com.middleware.backend.users.Roles.dto.RoleRequest;
 import com.middleware.backend.users.Roles.mapper.RoleMapper;
+import com.middleware.backend.users.Roles.model.Role;
 import com.middleware.backend.users.config.JwtUtil;
 import com.middleware.backend.users.dto.UserRequest;
 import com.middleware.backend.users.dto.UserResponse;
@@ -23,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -88,12 +90,31 @@ public class UserService {
      * @param user request payload
      * @return 201 with created entity or 400 if exists
      */
+
+    private boolean isRoleTypeUnified(List<RoleRequest> roles){
+        String type = "";
+        if(!roles.isEmpty()){
+            type = roles.get(0).getRoleType();
+        }
+        for(RoleRequest r : roles){
+            if(!r.getRoleType().equals(type)){
+                return false;
+            }
+        }
+        return true;
+    }
     public ResponseEntity<?> createNewUser(UserRequest user) {
 
         Optional<User> exists = repo.findByEmail(user.getEmail().toLowerCase());
         if(exists.isPresent())return ResponseEntity
                 .badRequest()
                 .body(Collections.singletonMap("message", "User Already Exists"));
+
+
+        if(!isRoleTypeUnified(user.getRoles()))
+            return ResponseEntity.badRequest().body("User Must not Hold USER and SYSTEM_SERVICE ROLES");
+
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String emailUser = authentication.getName();
         User req = userMapper.mapToEntity(user);
@@ -134,6 +155,10 @@ public class UserService {
     public ResponseEntity<?> editUser(Long id, UserRequest user) {
         Optional<User> exists = repo.findById(id);
         if(exists.isEmpty())return ResponseEntity.badRequest().body("User wasn't FOUND");
+
+        if(!isRoleTypeUnified(user.getRoles()))
+            return ResponseEntity.badRequest().body("User Must not Hold USER and SYSTEM_SERVICE ROLES");
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String emailUser = authentication.getName();
         exists.get().setUserName(!user.getUserName().isEmpty() ?

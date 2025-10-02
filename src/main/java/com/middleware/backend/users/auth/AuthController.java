@@ -210,6 +210,67 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponse(jwt));
     }
 
+    /**
+     * Authenticates a system user and generates a long-lived JWT token.
+     *
+     * <p>This endpoint is intended for internal or service accounts (system users).
+     * Regular users cannot obtain tokens through this API. The generated JWT token:
+     * <ul>
+     *   <li>Embeds the user's roles, permissions, allowed route identifiers, and status.</li>
+     *   <li>Defaults to a 5-year expiration period.</li>
+     *   <li>Is stored in the token database for validation and revocation.</li>
+     * </ul>
+     *
+     * @param request payload containing system user's email and password
+     * @return 200 OK with {@link AuthResponse} wrapping the JWT;
+     *         404 if the user is not a system user
+     */
+
+    @PostMapping("/system-user-token")
+    @Operation(
+            summary = "Generate a 5-year JWT token for a system user",
+            description = "Authenticates a system user (via email & password) and generates a JWT "
+                    + "that is valid for 5 years. "
+                    + "The token includes roles, permissions, and route access information. "
+                    + "This endpoint is restricted to system users only."
+    )
+    public ResponseEntity<AuthResponse> GenerateSystemUserToken(@RequestBody AuthRequest request) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail().toLowerCase(), request.getPassword())
+        );
+        // Expiration: 5 years
+        long expirationMillis = 1000L * 60 * 60 * 24 * 365 * 5;
+        Optional<User> user = userRepository.findActiveByEmail(request.getEmail().toLowerCase());
+        List<Role> roles = user.get().getRoles();
+
+        // Only system users allowed
+        if (!roles.isEmpty() && roles.get(0).getRoleType() == Role.RoleType.USER) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new AuthResponse("Can't Generate Token for this User"));
+        }
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail().toLowerCase());
+        String jwt = jwtUtil.generateToken(
+                userDetails.getUsername(),
+                user.get().getRoles().stream().map(Role::getRoleName).toList(),
+                user.get().getRoles().stream().flatMap(r -> r.getPermissions().stream())
+                        .map(Permission::getName).distinct().toList(),
+                user.get().getRoles().stream().flatMap(r -> r.getRoutesPermissions().stream())
+                        .map(RoutesPermissions::getRouteId).distinct().toList(),
+                user.get().getStatus().equals(Status.ACTIVE),
+                expirationMillis
+        );
+        tokenService.save(Token.builder()
+                .user(user.get())
+                .token(jwt)
+                .isValid(true)
+                .createdAt(new Timestamp(System.currentTimeMillis()))
+                .expiresAt(new Timestamp(System.currentTimeMillis() + expirationMillis))
+                .build()
+        );
+
+        return ResponseEntity.ok(new AuthResponse(jwt));
+    }
 
     /**
      * Login request payload containing user credentials.

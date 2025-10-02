@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
@@ -28,11 +29,13 @@ public class TemplateController {
     private final NotificationTemplateService service;
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('template:view')")
     public ResponseEntity<?> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @GetMapping("")
+    @PreAuthorize("hasAuthority('template:view')")
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String templateName,
             @RequestParam(required = false) String code,
@@ -73,30 +76,35 @@ public class TemplateController {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasAuthority('template:create')")
     public ResponseEntity<?> create(@Valid @RequestBody NotificationTemplateDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
     @PutMapping("")
+    @PreAuthorize("hasAuthority('template:edit')")
     public ResponseEntity<?> update(@Valid @RequestBody NotificationTemplateDto dto) {
         return ResponseEntity.ok(service.update(dto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('template:delete')")
     public ResponseEntity<?> delete(@PathVariable long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
      @PostMapping("/validate-json")
+     @PreAuthorize("hasAuthority('template:validate')")
     public ResponseEntity<?> validateJsonStructure(@RequestBody String jsonString) {
         return ResponseEntity.ok(service.validateJsonStructure(jsonString));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllReceivers(
+    @PreAuthorize("hasAuthority('template:view')")
+    public ResponseEntity<?> getAllTemplates(
             @RequestParam(required = false) String search
     ) {
-        return ResponseEntity.ok(service.getReceivers(search));
+        return ResponseEntity.ok(service.getAllTemplates(search));
     }
 }

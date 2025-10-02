@@ -28,8 +28,11 @@ public class ConfigProducer extends DefaultProducer {
             detail.setCode(endpoint.getCode());
         }
         ConfigDetail result = configService.getConfigs(detail.getCode());
+        LOG.info("Config Result Loaded: {}", result.getConfigs());
 
         // Set the fetched config as the response body
-        exchange.getMessage().setBody(result);
+        result.getConfigs().forEach((key, value) -> {
+            exchange.getMessage().setHeader(result.getCode() + "." + key, value);
+        });
     }
 }

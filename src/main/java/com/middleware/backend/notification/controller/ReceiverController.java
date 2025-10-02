@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -28,11 +29,13 @@ public class ReceiverController {
     private final ReceiverService service;
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('receiver:view')")
     public ResponseEntity<?> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @GetMapping("")
+    @PreAuthorize("hasAuthority('receiver:view')")
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String number,
@@ -61,16 +64,19 @@ public class ReceiverController {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasAuthority('receiver:create')")
     public ResponseEntity<?> create(@RequestBody ReceiverDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
     @PutMapping("")
+    @PreAuthorize("hasAuthority('receiver:edit')")
     public ResponseEntity<?> update(@RequestBody ReceiverDto dto) {
         return ResponseEntity.ok(service.update(dto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('receiver:delete')")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();

@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -25,6 +26,7 @@ public class ChannelController {
     private final ChannelService service;
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('channel:view')")
     public ResponseEntity<?> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
@@ -67,24 +69,29 @@ public class ChannelController {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasAuthority('channel:create')")
     public ResponseEntity<?> create(@RequestBody ChannelConfigDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
     @PutMapping("")
+    @PreAuthorize("hasAuthority('channel:edit')")
     public ResponseEntity<?> update(@RequestBody ChannelConfigDto dto) {
         return ResponseEntity.ok(service.update(dto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('channel:delete')")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PreAuthorize("hasAuthority('channel:view')")
     @GetMapping("/all")
-    public ResponseEntity<?> getAllReceivers(
+    public ResponseEntity<?> getChannels(
             @RequestParam(required = false) String search
     ) {
-        return ResponseEntity.ok(service.getReceivers(search));
+        return ResponseEntity.ok(service.getChannels(search));
     }
 }
