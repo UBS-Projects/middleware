@@ -193,20 +193,35 @@ public class MiddlewareProcessorService {
         switch (mapping.getMappingType()) {
             case DATA_ELEMENT:
                 return extractor.getDataElementValue(mapping.getData(), ou, period);
+
             case DATA_ELEMENT_WITH_DISAGGREGATION:
                 String[] parts = mapping.getData().split("\\.");
                 if (parts.length == 2) {
                     return extractor.getDisaggregatedValue(parts[0], parts[1], ou, period);
                 }
                 return null;
+
             case INDICATOR:
                 return extractor.getIndicatorValue(mapping.getData(), ou, period);
+
+            case DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE:
+                String[] attrParts = mapping.getData().split("\\.");
+                if (attrParts.length >= 2) {
+                    // Format can be: DE_UID.COC_UID.AOC_UID or DE_UID.AOC_UID
+                    // In DHIS2, when you have attribute dimension, the dx value is just DE_UID
+                    // and the attribute value appears in a separate column (e.g., UedUhlkhYWX)
+                    String deId = attrParts[0];
+                    String attributeValue = attrParts.length == 3 ? attrParts[2] : attrParts[1];
+
+                    return extractor.getAttributedValue(deId, attributeValue, ou, period);
+                }
+                return null;
+
             default:
                 log.warn("Unsupported mapping type: {}", mapping.getMappingType());
                 return null;
         }
     }
-
     private static class AggregationKey {
         private final String ou;
         private final String period;
@@ -230,7 +245,6 @@ public class MiddlewareProcessorService {
             return Objects.hash(ou, period);
         }
     }
-
     private class AnalyticsDataExtractor {
         private final AnalyticsResponseDto analytics;
         private final Map<String, Integer> headerIndexes;
@@ -315,6 +329,90 @@ public class MiddlewareProcessorService {
 
         public Object getIndicatorValue(String indicatorId, String ou, String period) {
             return getValueFromIndex(indicatorId, ou, period);
+        }
+
+        /**
+         * ✅ NEW METHOD: Extract value for DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE
+         * Handles cases where attribute dimension is involved (e.g., القسم/Department)
+         *
+         * @param deId Data Element UID
+         * @param attributeValue The attribute option combo value (e.g., "M0TzDNQdeju" for I.C.U)
+         * @param ou Organisation Unit UID
+         * @param period Period identifier
+         * @return The extracted value or null if not found
+         */
+        public Object getAttributedValue(String deId, String attributeValue, String ou, String period) {
+            log.debug("Extracting attributed value - DE: {}, Attribute: {}, OU: {}, Period: {}",
+                    deId, attributeValue, ou, period);
+
+            // When attributes are involved, DHIS2 returns rows with additional dimension columns
+            // Example: ["xvHA0fLRcyX", "202505", "M0TzDNQdeju", "CI1vsTW2OMP", "2211", ...]
+            //           dx            pe        attribute      ou           value
+
+            if (analytics.getRows() == null || analytics.getRows().isEmpty()) {
+                log.debug("No rows available for extraction");
+                return null;
+            }
+
+            Integer dxIdx = headerIndexes.get("dx");
+            Integer ouIdx = headerIndexes.get("ou");
+            Integer peIdx = headerIndexes.get("pe");
+            Integer valueIdx = headerIndexes.get("value");
+
+            // Find attribute dimension header (dynamic - could be UedUhlkhYWX or other)
+            // Skip standard DHIS2 dimensions to identify custom attribute dimensions
+            Integer attrIdx = null;
+            String attrHeaderName = null;
+
+            for (Map.Entry<String, Integer> entry : headerIndexes.entrySet()) {
+                String headerName = entry.getKey();
+                // Skip standard dimensions
+                if (!headerName.equals("dx") && !headerName.equals("ou") &&
+                        !headerName.equals("pe") && !headerName.equals("value") &&
+                        !headerName.equals("numerator") && !headerName.equals("denominator") &&
+                        !headerName.equals("factor") && !headerName.equals("multiplier") &&
+                        !headerName.equals("divisor")) {
+                    attrIdx = entry.getValue();
+                    attrHeaderName = headerName;
+                    log.debug("Detected attribute dimension header: {} at index {}", headerName, attrIdx);
+                    break; // Assume first non-standard dimension is the attribute
+                }
+            }
+
+            if (attrIdx == null) {
+                log.warn("No attribute dimension found in headers for attributed value extraction");
+                // Fallback: try normal disaggregated value extraction
+                return getValueFromIndex(deId, ou, period);
+            }
+
+            // Search through rows for matching dimensions
+            for (List<Object> row : analytics.getRows()) {
+                try {
+                    String rowDx = dxIdx != null && dxIdx < row.size() ? (String) row.get(dxIdx) : null;
+                    String rowOu = ouIdx != null && ouIdx < row.size() ? (String) row.get(ouIdx) : null;
+                    String rowPe = peIdx != null && peIdx < row.size() ? (String) row.get(peIdx) : null;
+                    String rowAttr = attrIdx < row.size() ? (String) row.get(attrIdx) : null;
+                    Object rowValue = valueIdx != null && valueIdx < row.size() ? row.get(valueIdx) : null;
+
+                    // Match all dimensions: dx, ou, period, and attribute
+                    boolean dxMatch = deId.equals(rowDx);
+                    boolean ouMatch = ou.equals(rowOu);
+                    boolean peMatch = period.equals(rowPe) || (rowPe == null && "default".equals(period));
+                    boolean attrMatch = attributeValue.equals(rowAttr);
+
+                    if (dxMatch && ouMatch && peMatch && attrMatch) {
+                        log.debug("Found matching row - Value: {}", rowValue);
+                        return rowValue;
+                    }
+
+                } catch (Exception e) {
+                    log.warn("Error processing row for attributed value: {}", e.getMessage());
+                    continue;
+                }
+            }
+
+            log.debug("No matching row found for attributed value extraction");
+            return null;
         }
 
         private Object getValueFromIndex(String dx, String ou, String period) {

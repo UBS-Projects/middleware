@@ -122,11 +122,18 @@ public class IntegrationMapping {
                         );
                     }
                     break;
+                case DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE:
+                    // ✅ NEW VALIDATION
+                    if (!data.contains(".") || data.split("\\.").length < 2) {
+                        throw new IllegalArgumentException(
+                                "DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE requires data in format DE_UID.COC_UID.AOC_UID or DE_UID.AOC_UID"
+                        );
+                    }
+                    break;
                 case INDICATOR:
                     // Indicator UIDs are simple strings
                     break;
                 default:
-                    // Handle future types
                     break;
             }
         }
