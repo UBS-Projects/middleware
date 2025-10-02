@@ -77,7 +77,35 @@ INSERT INTO public.permissions (id, name) VALUES
                                               (61, 'dhis2:edit'),
 
                                               (62, 'throttling:view'),
-                                              (63, 'throttling:edit')
+                                              (63, 'throttling:edit'),
+
+                                              (64, 'notification:view'),
+
+                                              (65, 'channel:view'),
+                                              (66, 'channel:create'),
+                                              (67, 'channel:edit'),
+                                              (68, 'channel:delete'),
+
+                                              (69, 'group:view'),
+                                              (70, 'group:create'),
+                                              (71, 'group:edit'),
+                                              (72, 'group:delete'),
+
+                                              (73, 'receiver:view'),
+                                              (74, 'receiver:create'),
+                                              (75, 'receiver:edit'),
+                                              (76, 'receiver:delete'),
+
+                                              (77, 'template:view'),
+                                              (78, 'template:create'),
+                                              (79, 'template:edit'),
+                                              (80, 'template:delete'),
+                                              (81, 'template:validate'),
+
+                                              (82, 'groupReceivers:create'),
+
+                                              (83, 'notificationLogs:view'),
+                                              (84, 'notificationLogs:export')
 ON CONFLICT DO NOTHING;
 
 
@@ -118,7 +146,7 @@ ALTER TABLE public.role_permissions
 INSERT INTO public.role_permissions (role_id, permission_id)
 SELECT 1, id
 FROM public.permissions
-WHERE id BETWEEN 1 AND 63
+WHERE id BETWEEN 1 AND 84
     ON CONFLICT(role_id, permission_id) DO NOTHING;
 
 

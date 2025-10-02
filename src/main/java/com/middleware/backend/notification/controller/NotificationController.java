@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -41,6 +42,7 @@ public class NotificationController {
 
 
 //Logs Endpoints
+    @PreAuthorize("hasAuthority('notification:view')")
     @GetMapping("")
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String groupName,
@@ -67,7 +69,9 @@ public class NotificationController {
 
         return ResponseEntity.ok(notificationService.findAll(spec, pageable));
     }
+
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('notification:view')")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         return notificationService.getById(id);
     }

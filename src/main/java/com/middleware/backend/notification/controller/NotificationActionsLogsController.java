@@ -30,6 +30,7 @@ public class NotificationActionsLogsController {
     private final NotificationActionsLogsService service;
 
     @GetMapping("")
+    @PreAuthorize("hasAuthority('notificationLogs:view')")
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String action,
             @RequestParam(required = false) String email,
@@ -56,6 +57,7 @@ public class NotificationActionsLogsController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('notificationLogs:view')")
     public ResponseEntity<?> get(@PathVariable long id){
         return ResponseEntity.ok(service.getById(id));
     }
@@ -64,6 +66,7 @@ public class NotificationActionsLogsController {
 
 
     @GetMapping("/export/{type}")
+    @PreAuthorize("hasAuthority('notificationLogs:export')")
     public ResponseEntity<byte[]> exportFile(
             @RequestParam(required = false) String action,
             @RequestParam(required = false) String email,

@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -25,11 +26,13 @@ public class NotificationGroupController {
     private final NotificationGroupService service;
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('group:view')")
     public ResponseEntity<?> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @GetMapping("")
+    @PreAuthorize("hasAuthority('group:view')")
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String code,
@@ -55,24 +58,28 @@ public class NotificationGroupController {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasAuthority('group:create')")
     public ResponseEntity<?> create(@RequestBody NotificationGroupDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
     @PutMapping("")
+    @PreAuthorize("hasAuthority('group:edit')")
     public ResponseEntity<?> update(@RequestBody NotificationGroupDto dto) {
         return ResponseEntity.ok(service.update(dto));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllReceivers(
+    @PreAuthorize("hasAuthority('group:view')")
+    public ResponseEntity<?> getAllGroups(
             @RequestParam(required = false) String search
     ) {
-        return ResponseEntity.ok(service.getReceivers(search));
+        return ResponseEntity.ok(service.getAllGroups(search));
     }
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('group:delete')")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();

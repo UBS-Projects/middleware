@@ -107,7 +107,7 @@ public class NotificationGroupService {
     }
 
 
-    public List<ReceiverRequest> getReceivers(String search) {
+    public List<ReceiverRequest> getAllGroups(String search) {
         if (search == null || search.isBlank()) {
             return repo.findAll(PageRequest.of(0, 3)) // fetch first 5 if no search term
                     .stream()
