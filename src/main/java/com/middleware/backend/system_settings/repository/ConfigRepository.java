@@ -18,20 +18,7 @@ import java.util.UUID;
  */
 @Repository
 public interface ConfigRepository extends JpaRepository<Config, String> {
-    List<Config> findByModule(String module);
-
-    List<Config> findByModuleAndKeyStartingWith(String module, String code);
-
-    Config findByModuleAndKey(String module, String key);
-
     Optional<Config> findByKey(String key);
-
-    @Query("SELECT DISTINCT c.module FROM Config c")
-    List<String> findDistinctModules();
-
-    Optional<Config> findByModuleAndId(String module, UUID id);
-
     Page<Config> findAll(Specification<Config> spec, Pageable pageable);
-
     List<Config> findByKeyStartingWith(String s);
 }

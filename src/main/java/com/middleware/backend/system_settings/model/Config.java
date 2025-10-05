@@ -25,9 +25,6 @@ public class Config {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
-    private String module; // e.g., dhis2, database, sms
-
     @Column(nullable = false,unique = true)
     private String key; // e.g., DHIS1.baseUrl
 

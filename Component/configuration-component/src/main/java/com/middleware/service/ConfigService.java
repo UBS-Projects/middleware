@@ -13,5 +13,5 @@ public interface ConfigService {
      * @param code The code identifying the configuration group.
      * @return The configuration detail.
      */
-    ConfigDetail getConfigs(String code);
+    ConfigDetail getConfig(String code);
 }

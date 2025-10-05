@@ -30,22 +30,12 @@ public class ConfigController {
     private final ConfigService configService;
 
 
-    @GetMapping("/module")
-    public ResponseEntity<List<String>> getAllModules(){
-        return ResponseEntity.ok(configService.getModules());
-    }
-    @GetMapping("/{module}")
-    public Map<String, String> getModuleConfigs(
-            @PathVariable String module,
-            @RequestParam(required = false) String codePrefix) {
-        return configService.getModuleConfig(module, codePrefix);
-    }
 
-    @GetMapping("/{module}/{id}")
-    public ResponseEntity<?> getModuleConfig(
-            @PathVariable String module,
-            @PathVariable UUID id){
-        return ResponseEntity.ok(configService.getModuleSpecificConfig(module, id));
+
+    @GetMapping("/{key}")
+    public ResponseEntity<?> getConfigDetails(
+            @PathVariable String key){
+        return ResponseEntity.ok(configService.getConfigDetails(key));
     }
 
     @GetMapping
@@ -92,13 +82,12 @@ public class ConfigController {
         return ResponseEntity.ok(ConfigMapper.toDTO(saved));
     }
 
-    @PutMapping("/{module}/{key}")
+    @PutMapping("/{key}")
     public ResponseEntity<?> updateConfig(
-            @PathVariable String module,
             @PathVariable String key,
             @RequestBody Map<String, String> body) {
         String value = body.get("value");
-        ConfigDto updated = configService.updateConfig(module, key, value);
+        ConfigDto updated = configService.updateConfig(key, value);
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.badRequest().body("Not Found");
     }
 }

@@ -22,7 +22,7 @@ public class BackendConfigBridge {
     public ConfigService configServiceImplementation() {
         return new ConfigService() {
             @Override
-            public ConfigDetail getConfigs(String code) {
+            public ConfigDetail getConfig(String code) {
                 Map<String, String> backendConfigs = backendConfigService.getModuleConfig(code);
                 ConfigDetail detail = new ConfigDetail();
                 detail.setCode(code);

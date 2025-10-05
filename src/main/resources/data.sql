@@ -154,19 +154,22 @@ WHERE id BETWEEN 1 AND 84
 -- DHIS2 instance: HMIS_DEV
 INSERT INTO public.config (
     id,
-    module,
     key,
     value,
     type,
-    description
+    description,
+    created_by,
+    created_at,
+    updated_by,
+    updated_at
 )
 VALUES
-    (gen_random_uuid(), 'dhis2', 'HMIS_DEV.code', 'HMIS_DEV', 'STRING', 'Unique DHIS2 code'),
-    (gen_random_uuid(), 'dhis2', 'HMIS_DEV.baseUrl', 'hmis-dev.moh.gov.jo/dwh', 'STRING', 'DHIS2 Base URL'),
-    (gen_random_uuid(), 'dhis2', 'HMIS_DEV.userName', 'supp_user', 'STRING', 'DHIS2 Username'),
-    (gen_random_uuid(), 'dhis2', 'HMIS_DEV.password', 'F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z', 'STRING', 'DHIS2 Password'),
-    (gen_random_uuid(), 'dhis2', 'HMIS_DEV.timeout', '30000', 'NUMBER', 'Request timeout in ms'),
-    (gen_random_uuid(), 'dhis2', 'HMIS_DEV.connectTimeout', '10000', 'NUMBER', 'Connection timeout in ms')
+    (gen_random_uuid(), 'HMIS_DEV.code', 'HMIS_DEV', 'STRING', 'Unique DHIS2 code', 'System', NOW(), 'System', NOW()),
+    (gen_random_uuid(), 'HMIS_DEV.baseUrl', 'hmis-dev.moh.gov.jo/dwh', 'STRING', 'DHIS2 Base URL', 'System', NOW(), 'System', NOW()),
+    (gen_random_uuid(), 'HMIS_DEV.userName', 'supp_user', 'STRING', 'DHIS2 Username', 'System', NOW(), 'System', NOW()),
+    (gen_random_uuid(), 'HMIS_DEV.password', 'F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z', 'STRING', 'DHIS2 Password', 'System', NOW(), 'System', NOW()),
+    (gen_random_uuid(), 'HMIS_DEV.timeout', '30000', 'NUMBER', 'Request timeout in ms', 'System', NOW(), 'System', NOW()),
+    (gen_random_uuid(), 'HMIS_DEV.connectTimeout', '10000', 'NUMBER', 'Connection timeout in ms', 'System', NOW(), 'System', NOW())
     ON CONFLICT (key) DO NOTHING;
 
 
