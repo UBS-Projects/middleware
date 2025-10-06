@@ -31,9 +31,11 @@ public class IntegratedSystemDto {
 
     private Protocol protocol;
 
-    private String additionalAttribute1;
+    private String additionalKey1;
+    private String additionalValue1;
 
-    private String additionalAttribute2;
+    private String additionalKey2;
+    private String additionalValue2;
 
     private AuthenticationType authenticationType;
 

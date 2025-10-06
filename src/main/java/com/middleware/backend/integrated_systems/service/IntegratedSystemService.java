@@ -46,7 +46,6 @@ public class IntegratedSystemService {
         Optional<IntegratedSystem> exists = repo.findByCode(body.getCode());
         if (exists.isEmpty())
             return null;
-        IntegratedSystem entity = IntegratedSystemMapper.toEntity(body);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String emailUser = authentication.getName();
         exists.get().setUpdatedBy(emailUser);
@@ -55,13 +54,15 @@ public class IntegratedSystemService {
         exists.get().setPort(body.getPort());
         exists.get().setDescription(body.getDescription());
         exists.get().setProtocol(body.getProtocol());
-        exists.get().setAdditionalAttribute1(body.getAdditionalAttribute1());
-        exists.get().setAdditionalAttribute2(body.getAdditionalAttribute2());
+        exists.get().setAdditionalValue1(body.getAdditionalValue1());
+        exists.get().setAdditionalKey1(body.getAdditionalKey1());
+        exists.get().setAdditionalValue2(body.getAdditionalValue2());
+        exists.get().setAdditionalKey2(body.getAdditionalKey2());
         exists.get().setAuthenticationType(body.getAuthenticationType());
         exists.get().setUsername(body.getUsername());
         exists.get().setPassword(body.getPassword());
         exists.get().setToken(body.getToken());
-        return IntegratedSystemMapper.toDto(repo.save(entity));
+        return IntegratedSystemMapper.toDto(repo.save(exists.get()));
     }
 
     public IntegratedSystemDto getById(String code ) {

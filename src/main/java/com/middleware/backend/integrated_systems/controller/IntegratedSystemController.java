@@ -2,6 +2,7 @@ package com.middleware.backend.integrated_systems.controller;
 
 import com.middleware.backend.integrated_systems.dto.IntegratedSystemDto;
 import com.middleware.backend.integrated_systems.model.IntegratedSystem;
+import com.middleware.backend.integrated_systems.model.Protocol;
 import com.middleware.backend.integrated_systems.service.IntegratedSystemService;
 import com.middleware.backend.integrated_systems.spec.IntegratedSystemSpecification;
 import com.middleware.backend.users.specification.UserSpecification;
@@ -43,15 +44,13 @@ public class IntegratedSystemController {
         Pageable pageable = PageRequest.of(page, size, sortDirection.equalsIgnoreCase("asc")
                 ? Sort.by(sortedBy).ascending()
                 : Sort.by(sortedBy).descending());
-
         Specification<IntegratedSystem> spec = Specification
                 .where(IntegratedSystemSpecification.hasField("code", code, IntegratedSystemSpecification.MatchMode.CONTAINS))
                 .and(IntegratedSystemSpecification.hasField("host", host, IntegratedSystemSpecification.MatchMode.CONTAINS))
                 .and(IntegratedSystemSpecification.hasField("description", description, IntegratedSystemSpecification.MatchMode.CONTAINS))
-                .and(IntegratedSystemSpecification.hasField("protocol", protocol, IntegratedSystemSpecification.MatchMode.CONTAINS))
+                .and(IntegratedSystemSpecification.hasField("protocol", protocol, IntegratedSystemSpecification.MatchMode.EXACT))
                 .and(IntegratedSystemSpecification.dateAfter("createdAt", createdAfter))
                 .and(IntegratedSystemSpecification.dateBefore("createdAt", createdBefore));
-
         return ResponseEntity.ok(service.getAll(spec,pageable));
     }
 
