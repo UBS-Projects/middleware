@@ -18,6 +18,7 @@ public class NotificationGroupDto {
     private String code;
     private String description;
     private List<ReceiverDto> receivers;
+    private boolean active;
     private String createdBy;
     private Timestamp createdAt;
     private String updatedBy;

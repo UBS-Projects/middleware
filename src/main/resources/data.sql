@@ -84,7 +84,6 @@ INSERT INTO public.permissions (id, name) VALUES
                                               (65, 'channel:view'),
                                               (66, 'channel:create'),
                                               (67, 'channel:edit'),
-                                              (68, 'channel:delete'),
 
                                               (69, 'group:view'),
                                               (70, 'group:create'),

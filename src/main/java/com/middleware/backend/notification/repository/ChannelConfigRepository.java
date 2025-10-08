@@ -1,6 +1,8 @@
 package com.middleware.backend.notification.repository;
+import com.middleware.backend.notification.dto.ReceiverRequest;
 import com.middleware.backend.notification.model.ChannelConfig;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +20,9 @@ public interface ChannelConfigRepository extends JpaRepository<ChannelConfig, Lo
 
     void removeById(Long id);
 
-    List<ChannelConfig> findTop5ByNameContainingIgnoreCase(String search);
+    List<ChannelConfig> findTop5ByNameContainingIgnoreCaseAndActiveTrue(String search);
 
     Optional<ChannelConfig> findByCode(String trim);
+
+    List<ChannelConfig> findAllByActiveTrue(PageRequest of);
 }
