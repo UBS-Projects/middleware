@@ -60,7 +60,7 @@ public class Dhis2ClientService {
             map.put(dto.getAdditionalKey1(), dto.getAdditionalValue1());
             map.put(dto.getAdditionalKey2(), dto.getAdditionalValue2());
 
-            String baseUrl = map.get("protocol") + "://" + map.get("host") + ":" + map.get("port");
+            String baseUrl = map.get("protocol") + "://" + map.get("host")  ;
             String authType = (String) map.get("authenticationType");
             HttpHeaders headers;
 
@@ -167,85 +167,116 @@ public class Dhis2ClientService {
      * @param businessApiCode Optional business API code to fetch specific metadata configuration
      * @return Map of organisation units indexed by ID
      */
+    /**
+     * Fetch organisation units metadata from DHIS2
+     * Uses IntegratedSystemService just like executeApiCall (same config/auth flow)
+     *
+     * @param dhis2Code        DHIS2 configuration code (IntegratedSystem id/code)
+     * @param businessApiCode  Optional business API code to fetch specific metadata configuration
+     * @return Map of organisation units indexed by ID
+     */
     public Map<String, Map<String, Object>> fetchOrganisationUnitsMetadata(String dhis2Code, String businessApiCode) {
+        Map<String, Map<String, Object>> indexed = new HashMap<>();
         try {
-            if (businessApiCode != null && !businessApiCode.isEmpty()) {
-                Optional<IntegratedApi> metadataApi = integratedApiRepository
-                        .findActiveMetadataByBoundCode(businessApiCode);
-
-                if (metadataApi.isPresent()) {
-                    log.info("Using configured metadata API for business code: {}", businessApiCode);
-                    IntegratedApi api = metadataApi.get();
-
-                    Map<String, String> dhis2Map = configService.getModuleConfig("dhis2", dhis2Code);
-                    if (dhis2Map.isEmpty()) {
-                        throw new RuntimeException("No DHIS2 config found for code: " + dhis2Code);
-                    }
-
-                    String baseUrl = dhis2Map.get("baseUrl");
-                    String username = dhis2Map.get("userName");
-                    String password = dhis2Map.get("password");
-
-                     String decodedApiUrl = decodeUrlIfNeeded(api.getApiUrl());
-
-                    // Check if period injection is needed
-                    String apiUrl = decodedApiUrl;
-                    if (apiUrl.contains("{{PERIOD}}")) {
-                        apiUrl = apiUrl.replace("{{PERIOD}}", "");
-                    }
-
-                    // Use the configured metadata URL
-                    String metadataUrl = buildFullUrl(api.getIntegratedSystem(), apiUrl, baseUrl);
-
-                    log.info("Fetching organisation units metadata from: {}", metadataUrl);
-
-                    disableSSLVerification();
-                    HttpHeaders headers = createHeaders(username, password);
-
-                    ResponseEntity<String> response = restTemplate.exchange(
-                            metadataUrl,
-                            HttpMethod.GET,
-                            new HttpEntity<>(headers),
-                            String.class
-                    );
-
-                    // Parse response
-                    Map<String, Object> metadata = objectMapper.readValue(response.getBody(), Map.class);
-                    List<Map<String, Object>> orgUnits = (List<Map<String, Object>>) metadata.get("organisationUnits");
-
-                    // Index by ID for fast lookup
-                    Map<String, Map<String, Object>> indexed = new HashMap<>();
-                    if (orgUnits != null) {
-                        for (Map<String, Object> ou : orgUnits) {
-                            String id = (String) ou.get("id");
-                            if (id != null) {
-                                indexed.put(id, ou);
-                            }
-                        }
-                    }
-
-                    log.info("Loaded {} organisation units metadata", indexed.size());
-                    return indexed;
-
-
-                } else {
-                    log.warn("No metadata API configured for business code: {}. Returning empty map.", businessApiCode);
-                    return new HashMap<>();
-                }
-            } else {
+            if (businessApiCode == null || businessApiCode.isEmpty()) {
                 log.warn("No business API code provided for metadata fetch. Returning empty map.");
-                return new HashMap<>();
+                return indexed;
             }
 
+            Optional<IntegratedApi> metadataApiOpt =
+                    integratedApiRepository.findActiveMetadataByBoundCode(businessApiCode);
+
+            if (metadataApiOpt.isEmpty()) {
+                log.warn("No metadata API configured for business code: {}. Returning empty map.", businessApiCode);
+                return indexed;
+            }
+
+            // === (1) Load DHIS2 connection config exactly like executeApiCall ===
+            IntegratedSystemDto dto = service.getById(dhis2Code);
+            if (dto == null) {
+                throw new RuntimeException("No DHIS2 config found for code: " + dhis2Code);
+            }
+
+            Map<String, String> map = new LinkedHashMap<>();
+            map.put("host", dto.getHost());
+            map.put("port", dto.getPort());
+            map.put("protocol", String.valueOf(dto.getProtocol()));
+            map.put("authenticationType", String.valueOf(dto.getAuthenticationType()));
+            map.put("username", dto.getUsername());
+            map.put("password", dto.getPassword());
+            map.put("token", dto.getToken());
+            map.put(dto.getAdditionalKey1(), dto.getAdditionalValue1());
+            map.put(dto.getAdditionalKey2(), dto.getAdditionalValue2());
+
+            String baseUrl = map.get("protocol") + "://" + map.get("host")  ;
+            String authType = map.get("authenticationType");
+
+            HttpHeaders headers;
+            if ("JWT".equalsIgnoreCase(authType)) {
+                String token = map.get("token");
+                if (token == null) {
+                    throw new RuntimeException("JWT token is missing for DHIS2 code: " + dhis2Code);
+                }
+                headers = new HttpHeaders();
+                headers.set("Authorization", "Bearer " + token);
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+                headers.set("User-Agent", "Middleware-DHIS2/1.0");
+                headers.set("Cache-Control", "no-cache");
+            } else {
+                headers = createHeaders(map.get("username"), map.get("password")); // Basic
+            }
+
+            log.info("Using DHIS2 settings: code={}, baseUrl={}, authType={}", dhis2Code, baseUrl, authType);
+
+            // === (2) Build metadata URL from IntegratedApi (decode + PERIOD handling) ===
+            IntegratedApi api = metadataApiOpt.get();
+            String decodedApiUrl = decodeUrlIfNeeded(api.getApiUrl());
+
+            // If metadata URL accidentally contains {{PERIOD}}, strip it (metadata usually doesn't need period)
+            String apiUrl = decodedApiUrl;
+            if (apiUrl.contains("{{PERIOD}}")) {
+                apiUrl = apiUrl.replace("{{PERIOD}}", "");
+            }
+
+            String metadataUrl = buildFullUrl(api.getIntegratedSystem(), apiUrl, baseUrl);
+            log.info("Fetching organisation units metadata from: {}", metadataUrl);
+
+            // === (3) Call + parse ===
+            disableSSLVerification();
+
+            ResponseEntity<String> response = restTemplate.exchange(
+                    metadataUrl,
+                    HttpMethod.GET,
+                    new HttpEntity<>(headers),
+                    String.class
+            );
+
+            Map<String, Object> metadata = objectMapper.readValue(response.getBody(), Map.class);
+            List<Map<String, Object>> orgUnits = (List<Map<String, Object>>) metadata.get("organisationUnits");
+
+            if (orgUnits != null) {
+                for (Map<String, Object> ou : orgUnits) {
+                    String id = (String) ou.get("id");
+                    if (id != null) {
+                        indexed.put(id, ou);
+                    }
+                }
+            }
+
+            log.info("Loaded {} organisation units metadata", indexed.size());
+            return indexed;
+
+        } catch (HttpClientErrorException e) {
+            log.error("DHIS2 API error while fetching org units metadata: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
+            return new HashMap<>();
         } catch (Exception e) {
             log.error("Error fetching organisation units metadata: {}", e.getMessage(), e);
             return new HashMap<>();
         }
     }
 
-    /**
-     * Overloaded method for backward compatibility
-     */
+    /** Backward compatibility overload */
     public Map<String, Map<String, Object>> fetchOrganisationUnitsMetadata(String dhis2Code) {
         return fetchOrganisationUnitsMetadata(dhis2Code, null);
     }
@@ -273,10 +304,10 @@ public class Dhis2ClientService {
      */
     private String buildFullUrl(String integratedSystem, String relativeUrl, String baseUrl) {
         // Handle various URL formats
-        if (relativeUrl.startsWith("http://") || relativeUrl.startsWith("https://")) {
-            // Already a full URL
-            return relativeUrl;
-        }
+//        if (relativeUrl.startsWith("http://") || relativeUrl.startsWith("https://")) {
+//            // Already a full URL
+//            return relativeUrl;
+//        }
 
         // Ensure proper URL construction
         if (!baseUrl.endsWith("/") && !relativeUrl.startsWith("/")) {
@@ -285,10 +316,12 @@ public class Dhis2ClientService {
             baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         }
 
-        // Prepend https:// if not present
-        if (!baseUrl.startsWith("http://") && !baseUrl.startsWith("https://")) {
-            return "https://" + baseUrl + relativeUrl;
-        }
+//        // Prepend https:// if not present
+//        if (!baseUrl.startsWith("http://") && !baseUrl.startsWith("https://")) {
+////            return "https://" + baseUrl + relativeUrl;
+//            return baseUrl + relativeUrl;
+//
+//        }
 
         return baseUrl + relativeUrl;
     }
