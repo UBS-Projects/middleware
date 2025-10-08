@@ -1,6 +1,7 @@
 package com.middleware.backend.kaotocamel.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -22,4 +23,6 @@ public class IntegratedApiRequestDto {
     private String integratedSystem;
     private Boolean isActive;
     private String description;
+    @Size(max = 100)
+    private String boundApiCode;
 }

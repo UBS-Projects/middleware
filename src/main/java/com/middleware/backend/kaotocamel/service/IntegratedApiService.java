@@ -174,6 +174,8 @@ public class IntegratedApiService {
         entity.setIntegratedSystem(request.getIntegratedSystem());
         entity.setIsActive(request.getIsActive() != null ? request.getIsActive() : true);
         entity.setDescription(request.getDescription());
+        entity.setBoundApiCode(request.getBoundApiCode());
+
     }
     /**
      * Exports integrated APIs to CSV or Excel bytes according to type.
@@ -291,6 +293,7 @@ public class IntegratedApiService {
                 .description(entity.getDescription())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
+                .boundApiCode(entity.getBoundApiCode())
                 .build();
     }
 }

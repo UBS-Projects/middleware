@@ -13,6 +13,7 @@ import java.util.*;
 /**
  * Main service for processing middleware API requests
  * Orchestrates data fetching, mapping, and aggregation
+ * Enhanced to use dynamic metadata URL based on business API code
  */
 @Service
 @RequiredArgsConstructor
@@ -51,9 +52,10 @@ public class MiddlewareProcessorService {
                         .build();
             }
 
-            // Step 2: Fetch organisation units metadata (NEW)
+            // Step 2: Fetch organisation units metadata
+            // Pass the business API name to potentially use configured metadata API
             Map<String, Map<String, Object>> orgUnitsMetadata =
-                    dhis2Client.fetchOrganisationUnitsMetadata(dhis2Code);
+                    dhis2Client.fetchOrganisationUnitsMetadata(dhis2Code, middlewareApiName);
 
             // Step 3: Group mappings by API
             Map<IntegratedApi, List<IntegrationMapping>> mappingsByApi =
@@ -73,6 +75,7 @@ public class MiddlewareProcessorService {
             throw new RuntimeException("Failed to process middleware request: " + e.getMessage());
         }
     }
+
     /**
      * Group mappings by integrated API
      */
@@ -207,12 +210,8 @@ public class MiddlewareProcessorService {
             case DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE:
                 String[] attrParts = mapping.getData().split("\\.");
                 if (attrParts.length >= 2) {
-                    // Format can be: DE_UID.COC_UID.AOC_UID or DE_UID.AOC_UID
-                    // In DHIS2, when you have attribute dimension, the dx value is just DE_UID
-                    // and the attribute value appears in a separate column (e.g., UedUhlkhYWX)
                     String deId = attrParts[0];
                     String attributeValue = attrParts.length == 3 ? attrParts[2] : attrParts[1];
-
                     return extractor.getAttributedValue(deId, attributeValue, ou, period);
                 }
                 return null;
@@ -222,6 +221,8 @@ public class MiddlewareProcessorService {
                 return null;
         }
     }
+
+    // Inner classes remain the same
     private static class AggregationKey {
         private final String ou;
         private final String period;
@@ -245,6 +246,7 @@ public class MiddlewareProcessorService {
             return Objects.hash(ou, period);
         }
     }
+
     private class AnalyticsDataExtractor {
         private final AnalyticsResponseDto analytics;
         private final Map<String, Integer> headerIndexes;
@@ -331,23 +333,9 @@ public class MiddlewareProcessorService {
             return getValueFromIndex(indicatorId, ou, period);
         }
 
-        /**
-         * ✅ NEW METHOD: Extract value for DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE
-         * Handles cases where attribute dimension is involved (e.g., القسم/Department)
-         *
-         * @param deId Data Element UID
-         * @param attributeValue The attribute option combo value (e.g., "M0TzDNQdeju" for I.C.U)
-         * @param ou Organisation Unit UID
-         * @param period Period identifier
-         * @return The extracted value or null if not found
-         */
         public Object getAttributedValue(String deId, String attributeValue, String ou, String period) {
             log.debug("Extracting attributed value - DE: {}, Attribute: {}, OU: {}, Period: {}",
                     deId, attributeValue, ou, period);
-
-            // When attributes are involved, DHIS2 returns rows with additional dimension columns
-            // Example: ["xvHA0fLRcyX", "202505", "M0TzDNQdeju", "CI1vsTW2OMP", "2211", ...]
-            //           dx            pe        attribute      ou           value
 
             if (analytics.getRows() == null || analytics.getRows().isEmpty()) {
                 log.debug("No rows available for extraction");
@@ -359,14 +347,11 @@ public class MiddlewareProcessorService {
             Integer peIdx = headerIndexes.get("pe");
             Integer valueIdx = headerIndexes.get("value");
 
-            // Find attribute dimension header (dynamic - could be UedUhlkhYWX or other)
-            // Skip standard DHIS2 dimensions to identify custom attribute dimensions
             Integer attrIdx = null;
             String attrHeaderName = null;
 
             for (Map.Entry<String, Integer> entry : headerIndexes.entrySet()) {
                 String headerName = entry.getKey();
-                // Skip standard dimensions
                 if (!headerName.equals("dx") && !headerName.equals("ou") &&
                         !headerName.equals("pe") && !headerName.equals("value") &&
                         !headerName.equals("numerator") && !headerName.equals("denominator") &&
@@ -375,17 +360,15 @@ public class MiddlewareProcessorService {
                     attrIdx = entry.getValue();
                     attrHeaderName = headerName;
                     log.debug("Detected attribute dimension header: {} at index {}", headerName, attrIdx);
-                    break; // Assume first non-standard dimension is the attribute
+                    break;
                 }
             }
 
             if (attrIdx == null) {
                 log.warn("No attribute dimension found in headers for attributed value extraction");
-                // Fallback: try normal disaggregated value extraction
                 return getValueFromIndex(deId, ou, period);
             }
 
-            // Search through rows for matching dimensions
             for (List<Object> row : analytics.getRows()) {
                 try {
                     String rowDx = dxIdx != null && dxIdx < row.size() ? (String) row.get(dxIdx) : null;
@@ -394,7 +377,6 @@ public class MiddlewareProcessorService {
                     String rowAttr = attrIdx < row.size() ? (String) row.get(attrIdx) : null;
                     Object rowValue = valueIdx != null && valueIdx < row.size() ? row.get(valueIdx) : null;
 
-                    // Match all dimensions: dx, ou, period, and attribute
                     boolean dxMatch = deId.equals(rowDx);
                     boolean ouMatch = ou.equals(rowOu);
                     boolean peMatch = period.equals(rowPe) || (rowPe == null && "default".equals(period));

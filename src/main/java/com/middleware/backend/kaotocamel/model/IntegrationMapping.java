@@ -53,14 +53,8 @@ public class IntegrationMapping {
     @Column(name = "mapping_type", nullable = false, length = 50)
     private MappingType mappingType;
 
-    @Column(name = "data", columnDefinition = "TEXT")
-    private String data;  // Content depends on mappingType
-    /*
-     * DATA_ELEMENT => DE_UID
-     * DATA_ELEMENT_WITH_DISAGGREGATION => DE_UID.COC_UID
-     * INDICATOR => INDICATOR_UID
-     * META_OU_NAME => "ou.name"
-     */
+    @Column(name = "data", columnDefinition = "TEXT", nullable = false)
+    private String data;
 
     @Column(name = "attribute", length = 50)
     private String attribute;  // Optional: AOC/Attribute for future use
@@ -93,52 +87,79 @@ public class IntegrationMapping {
         if (this.isActive == null) {
             this.isActive = true;
         }
+         if (this.data == null || this.data.trim().isEmpty()) {
+             throw new IllegalArgumentException("Data field is required and cannot be empty");
+         }
         validateData();
     }
 
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
+        if (this.data == null || this.data.trim().isEmpty()) {
+            throw new IllegalArgumentException("Data field is required and cannot be empty");
+        }
         validateData();
     }
 
     /**
      * Validates data field based on mapping type
      */
+    /**
+     * Validates data field based on mapping type
+     */
     private void validateData() {
-        if (mappingType != null && data != null) {
+        // Data is already validated in onCreate/onUpdate, but double-check here
+        if (data == null || data.trim().isEmpty()) {
+            throw new IllegalArgumentException("Data field is required and cannot be empty");
+        }
+
+        if (mappingType != null) {
             switch (mappingType) {
                 case DATA_ELEMENT_WITH_DISAGGREGATION:
                     if (!data.contains(".")) {
                         throw new IllegalArgumentException(
-                                "DATA_ELEMENT_WITH_DISAGGREGATION requires data in format DE_UID.COC_UID"
+                                "DATA_ELEMENT_WITH_DISAGGREGATION requires data in format DE_UID.COC_UID. Current value: '" + data + "'"
+                        );
+                    }
+                    String[] parts = data.split("\\.");
+                    if (parts.length != 2) {
+                        throw new IllegalArgumentException(
+                                "DATA_ELEMENT_WITH_DISAGGREGATION must have exactly 2 parts. Format: DE_UID.COC_UID. Current value: '" + data + "'"
                         );
                     }
                     break;
+
                 case DATA_ELEMENT:
                     if (data.contains(".")) {
                         throw new IllegalArgumentException(
-                                "DATA_ELEMENT should not contain disaggregation (no dots)"
+                                "DATA_ELEMENT should not contain disaggregation (no dots). Current value: '" + data + "'"
                         );
                     }
                     break;
+
                 case DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE:
-                    // ✅ NEW VALIDATION
                     if (!data.contains(".") || data.split("\\.").length < 2) {
                         throw new IllegalArgumentException(
-                                "DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE requires data in format DE_UID.COC_UID.AOC_UID or DE_UID.AOC_UID"
+                                "DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE requires data in format DE_UID.COC_UID.AOC_UID or DE_UID.AOC_UID. Current value: '" + data + "'"
                         );
                     }
                     break;
+
                 case INDICATOR:
-                    // Indicator UIDs are simple strings
+                    // Indicator UIDs are simple strings - no format validation needed
+                    if (data.length() < 3) {
+                        throw new IllegalArgumentException(
+                                "Indicator UID must be at least 3 characters. Current value: '" + data + "'"
+                        );
+                    }
                     break;
+
                 default:
                     break;
             }
         }
     }
-
     /**
      * Enum for mapping types
      */
