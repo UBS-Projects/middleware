@@ -4,12 +4,10 @@ import com.middleware.backend.integrated_systems.dto.IntegratedSystemDto;
 import com.middleware.backend.integrated_systems.mapper.IntegratedSystemMapper;
 import com.middleware.backend.integrated_systems.model.IntegratedSystem;
 import com.middleware.backend.integrated_systems.repository.IntegratedSystemRepository;
-import com.middleware.backend.users.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,55 +15,93 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Optional;
 
+/**
+ * Service class for managing {@link IntegratedSystem} entities.
+ * <p>
+ * Provides methods to create, update, retrieve, and list integrated systems.
+ */
 @Service
 @AllArgsConstructor
 public class IntegratedSystemService {
+
     private final IntegratedSystemRepository repo;
 
-    public Page<?> getAll(Specification<IntegratedSystem> spec, Pageable pageable) {
+    /**
+     * Retrieves a paginated list of integrated systems matching the given specification.
+     *
+     * @param spec     JPA specification for filtering
+     * @param pageable pagination and sorting information
+     * @return a page of {@link IntegratedSystemDto} matching the specification
+     */
+    public Page<IntegratedSystemDto> getAll(Specification<IntegratedSystem> spec, Pageable pageable) {
         Page<IntegratedSystem> page = repo.findAll(spec, pageable);
         return page.map(IntegratedSystemMapper::toDto);
     }
 
-
+    /**
+     * Creates a new integrated system if a system with the same code does not already exist.
+     *
+     * @param body the DTO containing details of the system to create
+     * @return the created {@link IntegratedSystemDto}, or null if a system with the same code already exists
+     */
     public IntegratedSystemDto create(IntegratedSystemDto body) {
         Optional<IntegratedSystem> exists = repo.findByCode(body.getCode());
-        if (exists.isPresent())
-            return null;
+        if (exists.isPresent()) return null;
+
         IntegratedSystem entity = IntegratedSystemMapper.toEntity(body);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String emailUser = authentication.getName();
+
+        Timestamp now = new Timestamp(System.currentTimeMillis());
         entity.setCreatedBy(emailUser);
-        entity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        entity.setCreatedAt(now);
         entity.setUpdatedBy(emailUser);
-        entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        entity.setUpdatedAt(now);
+
         return IntegratedSystemMapper.toDto(repo.save(entity));
     }
 
+    /**
+     * Updates an existing integrated system.
+     *
+     * @param body the DTO containing updated system details
+     * @return the updated {@link IntegratedSystemDto}, or null if the system with the given code does not exist
+     */
     public IntegratedSystemDto update(IntegratedSystemDto body) {
         Optional<IntegratedSystem> exists = repo.findByCode(body.getCode());
-        if (exists.isEmpty())
-            return null;
+        if (exists.isEmpty()) return null;
+
+        IntegratedSystem entity = exists.get();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String emailUser = authentication.getName();
-        exists.get().setUpdatedBy(emailUser);
-        exists.get().setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        exists.get().setHost(body.getHost());
-        exists.get().setPort(body.getPort());
-        exists.get().setDescription(body.getDescription());
-        exists.get().setProtocol(body.getProtocol());
-        exists.get().setAdditionalValue1(body.getAdditionalValue1());
-        exists.get().setAdditionalKey1(body.getAdditionalKey1());
-        exists.get().setAdditionalValue2(body.getAdditionalValue2());
-        exists.get().setAdditionalKey2(body.getAdditionalKey2());
-        exists.get().setAuthenticationType(body.getAuthenticationType());
-        exists.get().setUsername(body.getUsername());
-        exists.get().setPassword(body.getPassword());
-        exists.get().setToken(body.getToken());
-        return IntegratedSystemMapper.toDto(repo.save(exists.get()));
+
+        entity.setUpdatedBy(emailUser);
+        entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        entity.setHost(body.getHost());
+        entity.setPort(body.getPort());
+        entity.setDescription(body.getDescription());
+        entity.setProtocol(body.getProtocol());
+        entity.setAdditionalKey1(body.getAdditionalKey1());
+        entity.setAdditionalValue1(body.getAdditionalValue1());
+        entity.setAdditionalKey2(body.getAdditionalKey2());
+        entity.setAdditionalValue2(body.getAdditionalValue2());
+        entity.setAuthenticationType(body.getAuthenticationType());
+        entity.setUsername(body.getUsername());
+        entity.setPassword(body.getPassword());
+        entity.setToken(body.getToken());
+
+        return IntegratedSystemMapper.toDto(repo.save(entity));
     }
 
-    public IntegratedSystemDto getById(String code ) {
-        return repo.findByCode(code).map(IntegratedSystemMapper::toDto).orElse(null);
+    /**
+     * Retrieves a single integrated system by its unique code.
+     *
+     * @param code the unique code of the integrated system
+     * @return the corresponding {@link IntegratedSystemDto}, or null if not found
+     */
+    public IntegratedSystemDto getById(String code) {
+        return repo.findByCode(code)
+                .map(IntegratedSystemMapper::toDto)
+                .orElse(null);
     }
 }

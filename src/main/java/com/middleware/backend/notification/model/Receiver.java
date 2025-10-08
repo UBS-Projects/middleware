@@ -20,7 +20,6 @@ public class Receiver {
     private String name;
     private String email;
     private String phone;
-    private boolean active;
     @Column(name="created_by")
     private String createdBy;
     @Column(name = "created_at")

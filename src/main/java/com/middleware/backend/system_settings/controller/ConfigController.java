@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -33,12 +34,14 @@ public class ConfigController {
 
 
     @GetMapping("/{key}")
+    @PreAuthorize("hasAuthority('config:view')")
     public ResponseEntity<?> getConfigDetails(
             @PathVariable String key){
         return ResponseEntity.ok(configService.getConfigDetails(key));
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('config:view')")
     public ResponseEntity<Page<?>> getAllConfigs(
             @RequestParam(required = false) String key,
             @RequestParam(required = false) String value,
@@ -75,6 +78,7 @@ public class ConfigController {
 
 
     @PostMapping
+    @PreAuthorize("hasAuthority('config:create')")
     public ResponseEntity<?> createConfig(@RequestBody ConfigDto dto) {
         Config saved = configService.saveConfig(dto);
         if (saved==null)
@@ -83,6 +87,7 @@ public class ConfigController {
     }
 
     @PutMapping("/{key}")
+    @PreAuthorize("hasAuthority('config:edit')")
     public ResponseEntity<?> updateConfig(
             @PathVariable String key,
             @RequestBody Map<String, String> body) {

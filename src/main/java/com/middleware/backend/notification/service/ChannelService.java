@@ -96,12 +96,14 @@ public class ChannelService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
         loggingService.save(NotificationActionsLogs.builder()
-                .action(entity.isActive()?"Inactive Channel "+entity.getName() : "Activating Channel "+entity.getName())
-                .details("Deleted Channel "+entity.getName())
+                .action(entity.isActive()?"Inactivating Channel": "Activating Channel ")
+                .details(entity.isActive()?"Inactive Channel "+entity.getName() : "Activating Channel "+entity.getName())
                 .email(currentUser)
                 .eventTime(new Timestamp(System.currentTimeMillis()))
                 .build()
         );
+        entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        entity.setUpdatedBy(currentUser);
         entity.setActive(!entity.isActive());
         repo.save(entity);
     }

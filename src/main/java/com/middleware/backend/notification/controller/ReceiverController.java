@@ -74,11 +74,4 @@ public class ReceiverController {
     public ResponseEntity<?> update(@RequestBody ReceiverDto dto) {
         return ResponseEntity.ok(service.update(dto));
     }
-
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('receiver:delete')")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
 }

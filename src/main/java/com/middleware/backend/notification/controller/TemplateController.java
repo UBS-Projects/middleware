@@ -87,10 +87,10 @@ public class TemplateController {
         return ResponseEntity.ok(service.update(dto));
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('template:delete')")
-    public ResponseEntity<?> delete(@PathVariable long id) {
-        service.delete(id);
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasAuthority('template:edit')")
+    public ResponseEntity<?> changeStatus(@PathVariable long id) {
+        service.changeStatus(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -76,6 +76,7 @@ public class NotificationGroupService {
         String currentUser = authentication.getName();
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
+        entity.setActive(dto.isActive());
         entity.setUpdatedBy(currentUser);
         entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         loggingService.save(NotificationActionsLogs.builder()
@@ -88,7 +89,7 @@ public class NotificationGroupService {
         return GroupMapper.mapToDto(repo.save(entity));
     }
 
-    public void delete(Long id) {
+    public void changeStatus(Long id) {
         NotificationGroup entity = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Template not found"));
 
@@ -96,20 +97,23 @@ public class NotificationGroupService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
         loggingService.save(NotificationActionsLogs.builder()
-                .action("DELETE")
-                .details("Deleted Group "+entity.getName())
+                .action(entity.isActive()?"Inactivating Group": "Activating Group ")
+                .details(entity.isActive()?"Inactive Group "+entity.getName() : "Activating Group "+entity.getName())
                 .email(currentUser)
                 .eventTime(new Timestamp(System.currentTimeMillis()))
                 .build()
 
         );
-        repo.deleteById(id);
+        entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        entity.setUpdatedBy(currentUser);
+        entity.setActive(!entity.isActive());
+        repo.save(entity);
     }
 
 
     public List<ReceiverRequest> getAllGroups(String search) {
         if (search == null || search.isBlank()) {
-            return repo.findAll(PageRequest.of(0, 3)) // fetch first 5 if no search term
+            return repo.findAllByActiveTrue(PageRequest.of(0, 3)) // fetch first 5 if no search term
                     .stream()
                     .map(r->
                             ReceiverRequest.builder().id(r.getId())
@@ -118,7 +122,7 @@ public class NotificationGroupService {
                                     .build())
                     .toList();
         } else {
-            return repo.findTop5ByNameContainingIgnoreCase(search).stream().map(r->
+            return repo.findTop5ByNameContainingIgnoreCaseAndActiveTrue(search).stream().map(r->
                     ReceiverRequest.builder().id(r.getId())
                             .name(r.getName())
                             .code(r.getCode())

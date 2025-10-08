@@ -10,6 +10,7 @@ import com.middleware.backend.notification.mapper.TemplateMapper;
 import com.middleware.backend.notification.model.NotificationTemplate;
 import com.middleware.backend.notification.repository.TemplateRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -80,6 +81,7 @@ public class NotificationTemplateService {
         entity.setBody(dto.getBody());
         entity.setSubject(dto.getSubject());
         entity.setType(ChannelType.valueOf(dto.getType()));
+        entity.setActive(dto.isActive());
         entity.setUpdatedBy(currentUser);
         entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
@@ -95,7 +97,7 @@ public class NotificationTemplateService {
         return TemplateMapper.MapToDto(repo.save(entity));
     }
 
-    public void delete(long id) {
+    public void changeStatus(long id) {
         NotificationTemplate entity = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Template not found"));
 
@@ -104,14 +106,18 @@ public class NotificationTemplateService {
         String currentUser = authentication.getName();
 
         loggingService.save(NotificationActionsLogs.builder()
-                .action("DELETE")
-                .details("Deleted Template "+entity.getName())
+                .action(entity.isActive()?"Inactivating Template": "Activating Template ")
+                .details(entity.isActive()?"Inactive Template "+entity.getName() : "Activating Template "+entity.getName())
+
                 .email(currentUser)
                 .eventTime(new Timestamp(System.currentTimeMillis()))
                 .build()
 
         );
-        repo.delete(entity);
+        entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        entity.setUpdatedBy(currentUser);
+        entity.setActive(!entity.isActive());
+        repo.save(entity);
     }
 
      public Map<String, Object> validateJsonStructure(String jsonString) {
@@ -155,7 +161,7 @@ public class NotificationTemplateService {
 
     public List<ReceiverRequest> getAllTemplates(String search) {
         if (search == null || search.isBlank()) {
-            return repo.findAll(PageRequest.of(0, 3)) // fetch first 5 if no search term
+            return repo.findAllByActiveTrue(PageRequest.of(0, 3)) // fetch first 5 if no search term
                     .stream()
                     .map(r->
                             ReceiverRequest.builder().id(r.getId())
@@ -164,7 +170,7 @@ public class NotificationTemplateService {
                                     .build())
                     .toList();
         } else {
-            return repo.findTop5ByNameContainingIgnoreCase(search).stream().map(r->
+            return repo.findTop5ByNameContainingIgnoreCaseAndActiveTrue(search).stream().map(r->
                     ReceiverRequest.builder().id(r.getId())
                             .name(r.getName())
                             .code(r.getCode())

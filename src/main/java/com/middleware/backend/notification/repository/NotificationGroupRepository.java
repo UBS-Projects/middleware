@@ -4,6 +4,7 @@ import com.middleware.backend.notification.dto.NotificationGroupDto;
 import com.middleware.backend.notification.dto.ReceiverRequest;
 import com.middleware.backend.notification.model.NotificationGroup;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,7 +27,9 @@ public interface NotificationGroupRepository extends JpaRepository<NotificationG
     @Query("SELECT g FROM NotificationGroup g WHERE g.receivers IS EMPTY")
     List<NotificationGroup> findAllWithoutReceivers();
 
-    List<NotificationGroup> findTop5ByNameContainingIgnoreCase(String search);
+    List<NotificationGroup> findTop5ByNameContainingIgnoreCaseAndActiveTrue(String search);
 
     Optional<NotificationGroup> findByCode(String trim);
+
+    List<NotificationGroup> findAllByActiveTrue(PageRequest of);
 }

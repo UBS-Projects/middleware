@@ -67,7 +67,6 @@ public class ReceiverService {
         entity.setName(dto.getName().trim());
         entity.setUpdatedBy(currentUser);
         entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-
         loggingService.save(NotificationActionsLogs.builder()
                 .action("PUT")
                 .details("Updated Receiver "+dto.getName())
@@ -77,21 +76,6 @@ public class ReceiverService {
 
         );
         return ReceiverMapper.mapToDto(repo.save(entity));
-    }
-
-    public void delete(Long id) {
-        Receiver receiver = repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Template not found"));
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUser = authentication.getName();
-        loggingService.save(NotificationActionsLogs.builder()
-                .action("DELETE")
-                .details("Deleted Receiver "+receiver.getName())
-                .email(currentUser)
-                .eventTime(new Timestamp(System.currentTimeMillis()))
-                .build()
-        );
-        repo.deleteById(id);
     }
 }
 

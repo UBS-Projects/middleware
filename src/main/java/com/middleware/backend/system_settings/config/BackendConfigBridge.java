@@ -23,13 +23,24 @@ public class BackendConfigBridge {
         return new ConfigService() {
             @Override
             public ConfigDetail getConfig(String code) {
-                Map<String, String> backendConfigs = backendConfigService.getModuleConfig(code);
-                ConfigDetail detail = new ConfigDetail();
-                detail.setCode(code);
-                detail.setConfigs(backendConfigs);
-                log.info("Returning config for code={}: {}", code, backendConfigs);
-                return detail;
+                try {
+                    Map<String, String> backendConfigs = backendConfigService.getModuleConfig(code);
+                    if (backendConfigs == null || backendConfigs.isEmpty()) {
+                        log.warn("No config entries found for code: {}", code);
+                        return null;
+                    }
+
+                    ConfigDetail detail = new ConfigDetail();
+                    detail.setCode(code);
+                    detail.setConfigs(backendConfigs);
+                    log.info("Returning config for code={}: {}", code, backendConfigs);
+                    return detail;
+                } catch (RuntimeException e) {
+                    log.warn("No config found for code: {}", code);
+                    return null; // so the processor can handle it and return 404
+                }
             }
         };
     }
+
 }

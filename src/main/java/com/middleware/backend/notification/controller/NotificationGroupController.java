@@ -78,10 +78,10 @@ public class NotificationGroupController {
     }
 
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('group:delete')")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        service.delete(id);
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasAuthority('group:edit')")
+    public ResponseEntity<?> changeStatus(@PathVariable Long id) {
+        service.changeStatus(id);
         return ResponseEntity.noContent().build();
     }
 }
