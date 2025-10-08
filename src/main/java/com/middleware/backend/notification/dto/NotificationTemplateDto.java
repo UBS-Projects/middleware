@@ -35,6 +35,8 @@ public class NotificationTemplateDto {
     @NotBlank(message = "Body is required")
     private String body;
 
+    private boolean active;
+
     private String createdBy;
     private Timestamp createdAt;
     private String updatedBy;

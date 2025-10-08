@@ -26,28 +26,8 @@ public class ConfigService {
     @Autowired
     private ConfigRepository configRepository;
 
-    public List<String> getModules() {
-        return configRepository.findDistinctModules();
-    }
 
-    public Map<String, String> getModuleConfig(String module, String codePrefix) {
-        List<Config> configs;
-        if (codePrefix != null) {
-            configs = configRepository.findByModuleAndKeyStartingWith(module, codePrefix + ".");
-        } else {
-            configs = configRepository.findByModule(module);
-        }
 
-        Map<String, String> map = new HashMap<>();
-        for (Config c : configs) {
-            String key = c.getKey();
-            if (codePrefix != null) {
-                key = key.substring((codePrefix + ".").length());
-            }
-            map.put(key, c.getValue());
-        }
-        return map;
-    }
 
     public Config saveConfig(ConfigDto config) {
         Optional<Config> exists = configRepository.findByKey(config.getKey());
@@ -61,15 +41,15 @@ public class ConfigService {
         return configRepository.save(ConfigMapper.toEntity(config));
     }
 
-    public ConfigDto updateConfig(String module, String key, String value) {
-        Config config = configRepository.findByModuleAndKey(module, key);
+    public ConfigDto updateConfig(String key, String value) {
+        Optional<Config> config = configRepository.findByKey(key);
         if (config != null) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String currentUser = authentication.getName();
-            config.setValue(value);
-            config.setUpdatedBy(currentUser);
-            config.setUpdatedAt(LocalDateTime.now());
-            return ConfigMapper.toDTO(configRepository.save(config));
+            config.get().setValue(value);
+            config.get().setUpdatedBy(currentUser);
+            config.get().setUpdatedAt(LocalDateTime.now());
+            return ConfigMapper.toDTO(configRepository.save(config.get()));
         }
         return null;
     }
@@ -81,24 +61,34 @@ public class ConfigService {
         return page;
     }
 
-    public ConfigDto getModuleSpecificConfig(String module, UUID id) {
-        return configRepository.findByModuleAndId(module,id).map(ConfigMapper::toDTO).get();
+    public ConfigDto getConfigDetails(String key) {
+        return configRepository.findByKey(key).map(ConfigMapper::toDTO).get();
     }
 
 
-    public Map<String, String> getModuleConfig(String codePrefix) {
-        List<Config> configs;
-        configs = configRepository.findByKeyStartingWith(codePrefix + ".");
+    public Map<String, String> getModuleConfig(String code) {
+        System.out.println("Mohammad kadoumi");
 
+        Optional<Config> config = configRepository.findByKey(code);
+        if (config.isEmpty()) {
+            throw new RuntimeException("Config not found for code: " + code);
+        }
+
+        String fullKey = config.get().getKey();
+        System.out.println(fullKey);
+
+        // Extract part after the first dot
+        int dotIndex = fullKey.indexOf('.');
+        String key = (dotIndex != -1 && dotIndex < fullKey.length() - 1)
+                ? fullKey.substring(dotIndex + 1)
+                : fullKey;
 
         Map<String, String> map = new HashMap<>();
-        for (Config c : configs) {
-            String key = c.getKey();
-            if (codePrefix != null) {
-                key = key.substring((codePrefix + ".").length());
-            }
-            map.put(key, c.getValue());
-        }
+        map.put(key, config.get().getValue());
+
+        System.out.println("**************&&&&&&&&&&&&&&&");
+        System.out.println(key);
+
         return map;
     }
 }

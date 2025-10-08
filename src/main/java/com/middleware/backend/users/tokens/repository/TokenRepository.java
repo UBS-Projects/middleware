@@ -1,12 +1,17 @@
 package com.middleware.backend.users.tokens.repository;
 
+import com.middleware.backend.dashboard.dto.TokenListDto;
+import com.middleware.backend.users.Roles.model.Role;
 import com.middleware.backend.users.tokens.model.Token;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,4 +67,33 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
      * @return an optional containing the token if found
      */
     Optional<Token> findByUser_Email(String email);
+
+
+
+
+
+//    ****************************** Dashboard methods
+@Query("""
+    SELECT new com.middleware.backend.dashboard.dto.TokenListDto(
+        t.id,
+        t.user.userName,
+        t.user.id,
+        t.expiresAt
+    )
+    FROM Token t
+    JOIN t.user.roles r
+    WHERE ((t.expiresAt <= :now AND t.expiresAt >= :sevenDaysAgo)
+       OR (t.expiresAt > :now AND t.expiresAt <= :twoWeeksLater))
+      AND r.roleType = :roleType
+    ORDER BY t.expiresAt ASC
+""")
+List<TokenListDto> findExpiringOrRecentlyExpiredTokensByRole(
+        @Param("now") Timestamp now,
+        @Param("sevenDaysAgo") Timestamp sevenDaysAgo,
+        @Param("twoWeeksLater") Timestamp twoWeeksLater,
+        @Param("roleType") Role.RoleType roleType,
+        Pageable pageable
+);
+
+
 }

@@ -87,7 +87,8 @@ public class ChannelService {
         return ChannelMapper.mapToDto(repo.save(entity));
     }
 
-    public void delete(Long id) {
+    public void changeStatus(Long id) {
+
         ChannelConfig entity = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Template not found"));
 
@@ -95,19 +96,19 @@ public class ChannelService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
         loggingService.save(NotificationActionsLogs.builder()
-                .action("POST")
-                .details("Created Channel "+entity.getName())
+                .action(entity.isActive()?"Inactive Channel "+entity.getName() : "Activating Channel "+entity.getName())
+                .details("Deleted Channel "+entity.getName())
                 .email(currentUser)
                 .eventTime(new Timestamp(System.currentTimeMillis()))
                 .build()
-
         );
-        repo.deleteById(id);
+        entity.setActive(!entity.isActive());
+        repo.save(entity);
     }
 
     public List<ReceiverRequest> getChannels(String search) {
         if (search == null || search.isBlank()) {
-            return repo.findAll(PageRequest.of(0, 3)) // fetch first 5 if no search term
+            return repo.findAllByActiveTrue(PageRequest.of(0, 3)) // fetch first 5 if no search term
                     .stream()
                     .map(r->
                             ReceiverRequest.builder().id(r.getId())
@@ -116,7 +117,7 @@ public class ChannelService {
                                     .build())
                     .toList();
         } else {
-            return repo.findTop5ByNameContainingIgnoreCase(search).stream().map(r->
+            return repo.findTop5ByNameContainingIgnoreCaseAndActiveTrue(search).stream().map(r->
                     ReceiverRequest.builder().id(r.getId())
                             .name(r.getName())
                             .code(r.getCode())

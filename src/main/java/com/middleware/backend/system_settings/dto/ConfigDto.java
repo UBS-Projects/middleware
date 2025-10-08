@@ -17,7 +17,6 @@ import java.util.UUID;
 @Builder
 public class ConfigDto {
     private UUID id;
-    private String module;
     private String key;
     private String value;
     private String type;

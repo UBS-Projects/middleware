@@ -32,6 +32,7 @@ public class ChannelController {
     }
 
     @GetMapping("")
+    @PreAuthorize("hasAuthority('channel:view')")
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String code,
@@ -80,15 +81,15 @@ public class ChannelController {
         return ResponseEntity.ok(service.update(dto));
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('channel:delete')")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        service.delete(id);
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasAuthority('channel:edit')")
+    public ResponseEntity<?> changeStatus(@PathVariable Long id) {
+        service.changeStatus(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("hasAuthority('channel:view')")
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('channel:view')")
     public ResponseEntity<?> getChannels(
             @RequestParam(required = false) String search
     ) {

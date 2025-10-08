@@ -30,6 +30,8 @@ public class NotificationTemplate {
     @Column(columnDefinition = "TEXT")
     private String body;
 
+    private boolean active;
+
     @Column(name="created_by")
     private String createdBy;
     @Column(name = "created_at")

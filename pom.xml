@@ -222,6 +222,11 @@
             <artifactId>configuration-component</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.middleware</groupId>
+            <artifactId>integrated-system-component</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

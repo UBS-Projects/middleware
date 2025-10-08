@@ -28,6 +28,8 @@ public class NotificationGroup {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Receiver> receivers;
 
+    private boolean active;
+
     @Column(name="created_by")
     private String createdBy;
     @Column(name = "created_at")

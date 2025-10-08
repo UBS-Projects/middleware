@@ -1,5 +1,9 @@
 package com.middleware.backend.kaotocamel.service;
 
+import com.middleware.backend.integrated_systems.dto.IntegratedSystemDto;
+import com.middleware.backend.integrated_systems.mapper.IntegratedSystemMapper;
+import com.middleware.backend.integrated_systems.model.IntegratedSystem;
+import com.middleware.backend.integrated_systems.service.IntegratedSystemService;
 import com.middleware.backend.kaotocamel.dto.AnalyticsResponseDto;
 import com.middleware.backend.kaotocamel.dto.ItemDto;
 import com.middleware.backend.kaotocamel.model.IntegratedApi;
@@ -31,24 +35,51 @@ public class Dhis2ClientService {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
-    private final ConfigService configService;
-    private final IntegratedApiRepository integratedApiRepository;
+     private final IntegratedApiRepository integratedApiRepository;
+    private final IntegratedSystemService service;
 
     /**
      * Execute API call with period injection
      */
     public Map<String, Object> executeApiCall(IntegratedApi api, String periodParam, String dhis2Code) {
         try {
-            Map<String, String> dhis2Map = configService.getModuleConfig("dhis2", dhis2Code);
-            if (dhis2Map.isEmpty()) {
+            IntegratedSystemDto dto = service.getById(dhis2Code);
+
+            if (dto == null) {
                 throw new RuntimeException("No DHIS2 config found for code: " + dhis2Code);
             }
 
-            String baseUrl = dhis2Map.get("baseUrl");
-            String username = dhis2Map.get("userName");
-            String password = dhis2Map.get("password");
+            Map<String, String> map = new LinkedHashMap<>();
+            map.put("host", dto.getHost());
+            map.put("port", dto.getPort());
+            map.put("protocol", String.valueOf(dto.getProtocol()));
+            map.put("authenticationType", String.valueOf(dto.getAuthenticationType()));
+            map.put("username", dto.getUsername());
+            map.put("password", dto.getPassword());
+            map.put("token", dto.getToken());
+            map.put(dto.getAdditionalKey1(), dto.getAdditionalValue1());
+            map.put(dto.getAdditionalKey2(), dto.getAdditionalValue2());
 
-            log.info("Using DHIS2 settings: code={}, baseUrl={}, userName={}", dhis2Code, baseUrl, username);
+            String baseUrl = map.get("protocol") + "://" + map.get("host") + ":" + map.get("port");
+            String authType = (String) map.get("authenticationType");
+            HttpHeaders headers;
+
+            // Handle authentication type
+            if ("JWT".equalsIgnoreCase(authType)) {
+                String token = (String) map.get("token");
+                if (token == null) {
+                    throw new RuntimeException("JWT token is missing for DHIS2 code: " + dhis2Code);
+                }
+                headers = new HttpHeaders();
+                headers.set("Authorization", "Bearer " + token);
+            } else {
+                // Default to Basic Auth
+                String username = (String) map.get("username");
+                String password = (String) map.get("password");
+                headers = createHeaders(username, password);
+            }
+
+            log.info("Using DHIS2 settings: code={}, baseUrl={}, authType={}", dhis2Code, baseUrl, authType);
 
              String decodedUrl = decodeUrlIfNeeded(api.getApiUrl());
 
@@ -59,8 +90,6 @@ public class Dhis2ClientService {
             String fullUrl = buildFullUrl(api.getIntegratedSystem(), finalUrl, baseUrl);
 
             disableSSLVerification();
-
-            HttpHeaders headers = createHeaders(username, password);
 
             ResponseEntity<String> response = restTemplate.exchange(
                     fullUrl,
@@ -197,6 +226,7 @@ public class Dhis2ClientService {
 
                     log.info("Loaded {} organisation units metadata", indexed.size());
                     return indexed;
+
 
                 } else {
                     log.warn("No metadata API configured for business code: {}. Returning empty map.", businessApiCode);

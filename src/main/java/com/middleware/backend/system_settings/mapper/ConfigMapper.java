@@ -15,7 +15,6 @@ public class ConfigMapper {
     public static ConfigDto toDTO(Config config) {
         return ConfigDto.builder()
                 .id(config.getId())
-                .module(config.getModule())
                 .key(config.getKey())
                 .value(config.getValue())
                 .type(config.getType().name())
@@ -33,7 +32,6 @@ public class ConfigMapper {
     public static Config toEntity(ConfigDto dto) {
         return Config.builder()
                 .id(dto.getId())
-                .module(dto.getModule())
                 .key(dto.getKey())
                 .value(dto.getValue())
                 .type(dto.getType() != null ? ConfigType.valueOf(dto.getType()) : ConfigType.STRING)

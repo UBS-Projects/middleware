@@ -17,6 +17,7 @@ public class ReceiverDto {
     private String name;
     private String email;
     private String phone;
+    private boolean active;
     private String createdBy;
     private Timestamp createdAt;
     private String updatedBy;

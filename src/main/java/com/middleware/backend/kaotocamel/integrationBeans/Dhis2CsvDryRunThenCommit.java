@@ -1,5 +1,7 @@
 package com.middleware.backend.kaotocamel.integrationBeans;
 
+import com.middleware.backend.integrated_systems.dto.IntegratedSystemDto;
+import com.middleware.backend.integrated_systems.service.IntegratedSystemService;
 import com.middleware.backend.system_settings.model.Config;
 import com.middleware.backend.system_settings.repository.ConfigRepository;
 import org.apache.camel.Exchange;
@@ -31,10 +33,10 @@ import java.util.Map;
 public class Dhis2CsvDryRunThenCommit implements Processor {
 
     private static final Logger log = LoggerFactory.getLogger(Dhis2CsvDryRunThenCommit.class);
-    private final ConfigRepository configRepository;
+    private final IntegratedSystemService service;
     private volatile int lastResponseCode = 0;
-    public Dhis2CsvDryRunThenCommit(ConfigRepository configRepository) {
-        this.configRepository = configRepository;
+    public Dhis2CsvDryRunThenCommit(IntegratedSystemService service) {
+        this.service = service;
     }
 
     @Override
@@ -81,13 +83,34 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
     }
 
     private Map<String, String> getDhis2Config(String code) {
-        List<Config> configs = configRepository.findByModuleAndKeyStartingWith("dhis2", code + ".");
-        Map<String, String> map = new HashMap<>();
-        for (Config c : configs) {
-            map.put(c.getKey().substring((code + ".").length()), c.getValue());
+        IntegratedSystemDto dto = service.getById(code);
+
+        if (dto == null) {
+            throw new RuntimeException("No DHIS2 config found for code: " + code);
         }
+
+        Map<String, String> map = new HashMap<>();
+        map.put("host", dto.getHost());
+        map.put("port", String.valueOf(dto.getPort()));
+        map.put("protocol", String.valueOf(dto.getProtocol()));
+        map.put("authenticationType", String.valueOf(dto.getAuthenticationType()));
+        map.put("username", dto.getUsername());
+        map.put("password", dto.getPassword());
+        map.put("token", dto.getToken());
+
+        // Optional additional keys
+        if (dto.getAdditionalKey1() != null && dto.getAdditionalValue1() != null) {
+            map.put(dto.getAdditionalKey1(), dto.getAdditionalValue1());
+        }
+        if (dto.getAdditionalKey2() != null && dto.getAdditionalValue2() != null) {
+            map.put(dto.getAdditionalKey2(), dto.getAdditionalValue2());
+        }
+        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+        System.out.println(map);
+        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
         return map;
     }
+
     private void handleDryRun(Exchange exchange, byte[] csv, String qBase, Map<String, String> config) throws Exception {
         String dryResp = callDhis2(csv, qBase, true, config);
         int dryCode = getLastResponseCode();
@@ -111,6 +134,7 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
     }
 
     private void handleDirectCommit(Exchange exchange, byte[] csv, String qBase, Map<String, String> config) throws Exception {
+
         String resp = callDhis2(csv, qBase, false, config);
         int codeResp = getLastResponseCode();
         String status = (codeResp == 409) ? "CONFLICT" : (codeResp >= 200 && codeResp <= 202) ? "SUCCESS" : "ERROR";
@@ -123,38 +147,79 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
      * Returns the response body and stores the HTTP code internally.
      */
     private String callDhis2(byte[] csv, String qBase, boolean dryRun, Map<String, String> config) throws Exception {
-        String baseUrl = config.get("baseUrl");
-        String user = config.get("userName");
-        String pass = config.get("password");
+        System.out.println("*******************************");
+        System.out.println(config);
+        System.out.println("*******************************");
 
-        String fullUrl = "https://" + baseUrl + "/api/dataValueSets?dryRun=" + (dryRun ? "true" : "false") + "&" + qBase;
+        // Build base URL from protocol + host + optional port
+        String protocol = config.getOrDefault("protocol", "https").toLowerCase();
+        String host = config.get("host");
+        String port = config.get("port");
+
+        if (host == null || host.isEmpty()) {
+            throw new IllegalArgumentException("DHIS2 host not found in config map");
+        }
+
+        // Construct the base URL
+        String baseUrl;
+        if (host.startsWith("http")) {
+            baseUrl = host;
+        } else {
+            baseUrl = protocol + "://" + host;
+            if (port != null && !port.isEmpty() && !"80".equals(port) && !"443".equals(port)) {
+                baseUrl += ":" + port;
+            }
+        }
+
+        // Build the final DHIS2 endpoint
+        String fullUrl = baseUrl + "/api/dataValueSets?dryRun=" + (dryRun ? "true" : "false");
+        if (qBase != null && !qBase.isEmpty()) {
+            fullUrl += "&" + qBase;
+        }
+
+        // Retrieve credentials
+        String user = config.getOrDefault("username", "");
+        String pass = config.getOrDefault("password", "");
+
         log.info("Calling DHIS2 {}", fullUrl);
 
+        // Disable SSL validation (use only for testing)
         disableSSLVerification();
 
+        // Open connection
         URL url = new URL(fullUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setDoOutput(true);
 
-        String auth = "Basic " + Base64.getEncoder().encodeToString((user + ":" + pass).getBytes(StandardCharsets.UTF_8));
+        // Add headers
+        String auth = "Basic " + Base64.getEncoder()
+                .encodeToString((user + ":" + pass).getBytes(StandardCharsets.UTF_8));
         conn.setRequestProperty("Authorization", auth);
         conn.setRequestProperty("Content-Type", "application/csv");
         conn.setRequestProperty("Accept", "application/json");
         conn.setRequestProperty("User-Agent", "Middleware-DHIS2/1.0");
         conn.setRequestProperty("Cache-Control", "no-cache");
+
+        // Timeouts
         conn.setConnectTimeout(30000);
         conn.setReadTimeout(60000);
 
+        // Send CSV payload
         try (OutputStream os = conn.getOutputStream()) {
             os.write(csv);
             os.flush();
         }
 
+        // Read response
         lastResponseCode = conn.getResponseCode();
-        InputStream is = (lastResponseCode >= 200 && lastResponseCode < 300) ? conn.getInputStream() : conn.getErrorStream();
+        InputStream is = (lastResponseCode >= 200 && lastResponseCode < 300)
+                ? conn.getInputStream()
+                : conn.getErrorStream();
+
         return readAll(is);
     }
+
 
 
     private int getLastResponseCode() { return lastResponseCode; }

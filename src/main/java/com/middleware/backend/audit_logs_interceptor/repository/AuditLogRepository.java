@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
+
 /**
  * Spring Data JPA repository for {@link AuditLog} entities.
  * This interface provides the standard CRUD operations for {@link AuditLog} objects
@@ -22,4 +24,5 @@ public interface AuditLogRepository extends JpaRepository<AuditLog, Long> {
      * @return A {@link Page} of {@link AuditLog} entities.
      */
     Page<AuditLog> findAll(Specification<AuditLog> spec, Pageable pageable);
+    long countAuditLogsByStartTimeBetween(LocalDateTime startOfDay, LocalDateTime endOfDay);
 }
