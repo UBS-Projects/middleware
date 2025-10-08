@@ -22,6 +22,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -52,7 +54,34 @@ public class IntegrationMappingAdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+    @PostMapping("/import-excel")
+    @PreAuthorize("permitAll()")
+    @Operation(summary = "Import mappings from Excel file")
+    public ResponseEntity<Map<String, Object>> importFromExcel(
+            @RequestParam("file") MultipartFile file,
+            @Parameter(description = "Update existing mappings if found (default: false - ignore)")
+            @RequestParam(required = false, defaultValue = "true") boolean updateExisting) {
 
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("success", false, "error", "File is empty"));
+        }
+
+        String filename = file.getOriginalFilename();
+        if (filename == null || (!filename.endsWith(".xlsx") && !filename.endsWith(".xls"))) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("success", false, "error", "File must be Excel format (.xlsx or .xls)"));
+        }
+
+        try {
+            Map<String, Object> result = service.importFromExcel(file.getInputStream(), true);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error importing from Excel", e);
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("success", false, "error", e.getMessage()));
+        }
+    }
     @PutMapping("/{id}")
     @PreAuthorize("permitAll()")
     @Operation(summary = "Update integration mapping")

@@ -7,7 +7,7 @@ import com.middleware.backend.integrated_systems.service.IntegratedSystemService
 import com.middleware.backend.kaotocamel.dto.AnalyticsResponseDto;
 import com.middleware.backend.kaotocamel.dto.ItemDto;
 import com.middleware.backend.kaotocamel.model.IntegratedApi;
-import com.middleware.backend.system_settings.model.Config;
+import com.middleware.backend.kaotocamel.repository.IntegratedApiRepository;
 import com.middleware.backend.system_settings.service.ConfigService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +18,15 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.net.ssl.*;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.*;
 
 /**
- * Refactored service for DHIS2 APIs using ConfigService directly
+ * Service for DHIS2 API interactions with dynamic configuration support
+ * Enhanced with boundApiCode feature for metadata API binding
  */
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,7 @@ public class Dhis2ClientService {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+     private final IntegratedApiRepository integratedApiRepository;
     private final IntegratedSystemService service;
 
     /**
@@ -57,7 +60,7 @@ public class Dhis2ClientService {
             map.put(dto.getAdditionalKey1(), dto.getAdditionalValue1());
             map.put(dto.getAdditionalKey2(), dto.getAdditionalValue2());
 
-            String baseUrl = map.get("protocol") + "://" + map.get("host") + ":" + map.get("port");
+            String baseUrl = map.get("protocol") + "://" + map.get("host")  ;
             String authType = (String) map.get("authenticationType");
             HttpHeaders headers;
 
@@ -78,8 +81,10 @@ public class Dhis2ClientService {
 
             log.info("Using DHIS2 settings: code={}, baseUrl={}, authType={}", dhis2Code, baseUrl, authType);
 
-            // Inject period into URL
-            String finalUrl = injectPeriodInUrl(api.getApiUrl(), periodParam);
+             String decodedUrl = decodeUrlIfNeeded(api.getApiUrl());
+
+            // Inject period into URL if needed
+            String finalUrl = injectPeriodInUrl(decodedUrl, periodParam);
 
             // Build full URL
             String fullUrl = buildFullUrl(api.getIntegratedSystem(), finalUrl, baseUrl);
@@ -102,13 +107,191 @@ public class Dhis2ClientService {
             log.error("Error executing API call for {}: {}", api.getCode(), e.getMessage());
             throw new RuntimeException("Failed to execute API call: " + e.getMessage());
         }
+    }private String decodeUrlIfNeeded(String url) {
+        if (url == null || url.isEmpty()) {
+            return url;
+        }
+
+        try {
+            String processedUrl = url;
+
+            if (processedUrl.contains("%")) {
+                log.debug("Detected encoded URL, decoding...");
+                processedUrl = URLDecoder.decode(processedUrl, StandardCharsets.UTF_8.name());
+                log.debug("Decoded URL: {}", processedUrl);
+            }
+
+            processedUrl = replacePeriodWithPlaceholder(processedUrl);
+
+            return processedUrl;
+
+        } catch (Exception e) {
+            log.warn("Failed to process URL, using original: {}", e.getMessage());
+            return url;
+        }
+    }
+    private String replacePeriodWithPlaceholder(String url) {
+        if (url == null || url.isEmpty()) {
+            return url;
+        }
+
+
+        if (url.contains("{{PERIOD}}")) {
+            log.debug("URL already contains {{PERIOD}} placeholder");
+            return url;
+        }
+
+
+         String periodPattern = "(pe[=:])([^&;\\s]+)";
+
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(periodPattern);
+        java.util.regex.Matcher matcher = pattern.matcher(url);
+
+        if (matcher.find()) {
+            String originalPeriod = matcher.group(2);
+            log.debug("Found period '{}' in URL, replacing with {{PERIOD}}", originalPeriod);
+
+             String result = matcher.replaceFirst("$1{{PERIOD}}");
+            log.debug("Replaced URL: {}", result);
+            return result;
+        }
+
+        log.debug("No period found in URL to replace");
+        return url;
+    }
+    /**
+     * Fetch organisation units metadata from DHIS2
+     * Uses dynamic metadata URL from IntegratedApi configuration if available
+     *
+     * @param dhis2Code The DHIS2 configuration code
+     * @param businessApiCode Optional business API code to fetch specific metadata configuration
+     * @return Map of organisation units indexed by ID
+     */
+    /**
+     * Fetch organisation units metadata from DHIS2
+     * Uses IntegratedSystemService just like executeApiCall (same config/auth flow)
+     *
+     * @param dhis2Code        DHIS2 configuration code (IntegratedSystem id/code)
+     * @param businessApiCode  Optional business API code to fetch specific metadata configuration
+     * @return Map of organisation units indexed by ID
+     */
+    public Map<String, Map<String, Object>> fetchOrganisationUnitsMetadata(String dhis2Code, String businessApiCode) {
+        Map<String, Map<String, Object>> indexed = new HashMap<>();
+        try {
+            if (businessApiCode == null || businessApiCode.isEmpty()) {
+                log.warn("No business API code provided for metadata fetch. Returning empty map.");
+                return indexed;
+            }
+
+            Optional<IntegratedApi> metadataApiOpt =
+                    integratedApiRepository.findActiveMetadataByBoundCode(businessApiCode);
+
+            if (metadataApiOpt.isEmpty()) {
+                log.warn("No metadata API configured for business code: {}. Returning empty map.", businessApiCode);
+                return indexed;
+            }
+
+            // === (1) Load DHIS2 connection config exactly like executeApiCall ===
+            IntegratedSystemDto dto = service.getById(dhis2Code);
+            if (dto == null) {
+                throw new RuntimeException("No DHIS2 config found for code: " + dhis2Code);
+            }
+
+            Map<String, String> map = new LinkedHashMap<>();
+            map.put("host", dto.getHost());
+            map.put("port", dto.getPort());
+            map.put("protocol", String.valueOf(dto.getProtocol()));
+            map.put("authenticationType", String.valueOf(dto.getAuthenticationType()));
+            map.put("username", dto.getUsername());
+            map.put("password", dto.getPassword());
+            map.put("token", dto.getToken());
+            map.put(dto.getAdditionalKey1(), dto.getAdditionalValue1());
+            map.put(dto.getAdditionalKey2(), dto.getAdditionalValue2());
+
+            String baseUrl = map.get("protocol") + "://" + map.get("host")  ;
+            String authType = map.get("authenticationType");
+
+            HttpHeaders headers;
+            if ("JWT".equalsIgnoreCase(authType)) {
+                String token = map.get("token");
+                if (token == null) {
+                    throw new RuntimeException("JWT token is missing for DHIS2 code: " + dhis2Code);
+                }
+                headers = new HttpHeaders();
+                headers.set("Authorization", "Bearer " + token);
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+                headers.set("User-Agent", "Middleware-DHIS2/1.0");
+                headers.set("Cache-Control", "no-cache");
+            } else {
+                headers = createHeaders(map.get("username"), map.get("password")); // Basic
+            }
+
+            log.info("Using DHIS2 settings: code={}, baseUrl={}, authType={}", dhis2Code, baseUrl, authType);
+
+            // === (2) Build metadata URL from IntegratedApi (decode + PERIOD handling) ===
+            IntegratedApi api = metadataApiOpt.get();
+            String decodedApiUrl = decodeUrlIfNeeded(api.getApiUrl());
+
+            // If metadata URL accidentally contains {{PERIOD}}, strip it (metadata usually doesn't need period)
+            String apiUrl = decodedApiUrl;
+            if (apiUrl.contains("{{PERIOD}}")) {
+                apiUrl = apiUrl.replace("{{PERIOD}}", "");
+            }
+
+            String metadataUrl = buildFullUrl(api.getIntegratedSystem(), apiUrl, baseUrl);
+            log.info("Fetching organisation units metadata from: {}", metadataUrl);
+
+            // === (3) Call + parse ===
+            disableSSLVerification();
+
+            ResponseEntity<String> response = restTemplate.exchange(
+                    metadataUrl,
+                    HttpMethod.GET,
+                    new HttpEntity<>(headers),
+                    String.class
+            );
+
+            Map<String, Object> metadata = objectMapper.readValue(response.getBody(), Map.class);
+            List<Map<String, Object>> orgUnits = (List<Map<String, Object>>) metadata.get("organisationUnits");
+
+            if (orgUnits != null) {
+                for (Map<String, Object> ou : orgUnits) {
+                    String id = (String) ou.get("id");
+                    if (id != null) {
+                        indexed.put(id, ou);
+                    }
+                }
+            }
+
+            log.info("Loaded {} organisation units metadata", indexed.size());
+            return indexed;
+
+        } catch (HttpClientErrorException e) {
+            log.error("DHIS2 API error while fetching org units metadata: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
+            return new HashMap<>();
+        } catch (Exception e) {
+            log.error("Error fetching organisation units metadata: {}", e.getMessage(), e);
+            return new HashMap<>();
+        }
     }
 
+    /** Backward compatibility overload */
+    public Map<String, Map<String, Object>> fetchOrganisationUnitsMetadata(String dhis2Code) {
+        return fetchOrganisationUnitsMetadata(dhis2Code, null);
+    }
 
-
+    /**
+     * Inject period parameter into URL
+     */
     private String injectPeriodInUrl(String apiUrl, String periodParam) {
+        // If URL doesn't contain period placeholder, return as is
+        if (!apiUrl.contains("{{PERIOD}}")) {
+            return apiUrl;
+        }
+
         if (periodParam == null || periodParam.isEmpty()) {
-            throw new IllegalArgumentException("Period parameter is required");
+            throw new IllegalArgumentException("Period parameter is required for this API");
         }
 
         String cleaned = periodParam.replaceAll("[^a-zA-Z0-9_\\-.,;]", "");
@@ -116,13 +299,36 @@ public class Dhis2ClientService {
         return apiUrl.replace("{{PERIOD}}", formatted);
     }
 
+    /**
+     * Build full URL from components
+     */
     private String buildFullUrl(String integratedSystem, String relativeUrl, String baseUrl) {
+        // Handle various URL formats
+//        if (relativeUrl.startsWith("http://") || relativeUrl.startsWith("https://")) {
+//            // Already a full URL
+//            return relativeUrl;
+//        }
+
+        // Ensure proper URL construction
         if (!baseUrl.endsWith("/") && !relativeUrl.startsWith("/")) {
             baseUrl += "/";
+        } else if (baseUrl.endsWith("/") && relativeUrl.startsWith("/")) {
+            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         }
-        return "https://" + baseUrl + relativeUrl;
+
+//        // Prepend https:// if not present
+//        if (!baseUrl.startsWith("http://") && !baseUrl.startsWith("https://")) {
+////            return "https://" + baseUrl + relativeUrl;
+//            return baseUrl + relativeUrl;
+//
+//        }
+
+        return baseUrl + relativeUrl;
     }
 
+    /**
+     * Create HTTP headers with authentication
+     */
     private HttpHeaders createHeaders(String username, String password) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -137,6 +343,9 @@ public class Dhis2ClientService {
         return headers;
     }
 
+    /**
+     * Parse API response based on type
+     */
     private Map<String, Object> parseResponse(String responseBody, IntegratedApi.ApiType apiType) throws Exception {
         Map<String, Object> response = new HashMap<>();
 
@@ -145,11 +354,6 @@ public class Dhis2ClientService {
                 AnalyticsResponseDto analytics = objectMapper.readValue(responseBody, AnalyticsResponseDto.class);
                 response.put("type", "ANALYTICS");
                 response.put("data", analytics);
-                break;
-            case DATAVALUE:
-                Map<String, Object> dataValues = objectMapper.readValue(responseBody, Map.class);
-                response.put("type", "DATAVALUE");
-                response.put("data", dataValues);
                 break;
             case METADATA:
                 Map<String, Object> metadata = objectMapper.readValue(responseBody, Map.class);
@@ -163,15 +367,22 @@ public class Dhis2ClientService {
         return response;
     }
 
+    /**
+     * Disable SSL verification for development environments
+     * WARNING: Should not be used in production
+     */
     private void disableSSLVerification() {
         try {
             TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
-                        public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return new X509Certificate[0];
+                        }
                         public void checkClientTrusted(X509Certificate[] certs, String authType) {}
                         public void checkServerTrusted(X509Certificate[] certs, String authType) {}
                     }
             };
+
             SSLContext sc = SSLContext.getInstance("TLS");
             sc.init(null, trustAllCerts, new SecureRandom());
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
@@ -181,23 +392,33 @@ public class Dhis2ClientService {
         }
     }
 
+    /**
+     * Get organisation unit name from analytics metadata
+     */
     public String getOrgUnitName(AnalyticsResponseDto analytics, String ouId) {
         try {
             if (analytics.getMetaData() != null && analytics.getMetaData().getItems() != null) {
                 ItemDto item = analytics.getMetaData().getItems().get(ouId);
                 return item != null ? item.getName() : null;
             }
-        } catch (Exception e) { log.error("Error getting org unit name: {}", e.getMessage()); }
+        } catch (Exception e) {
+            log.error("Error getting org unit name: {}", e.getMessage());
+        }
         return null;
     }
 
+    /**
+     * Get period name from analytics metadata
+     */
     public String getPeriodName(AnalyticsResponseDto analytics, String peId) {
         try {
             if (analytics.getMetaData() != null && analytics.getMetaData().getItems() != null) {
                 ItemDto item = analytics.getMetaData().getItems().get(peId);
                 return item != null ? item.getName() : peId;
             }
-        } catch (Exception e) { log.error("Error getting period name: {}", e.getMessage()); }
+        } catch (Exception e) {
+            log.error("Error getting period name: {}", e.getMessage());
+        }
         return peId;
     }
 }

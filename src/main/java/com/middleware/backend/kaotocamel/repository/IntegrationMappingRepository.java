@@ -25,7 +25,11 @@ public interface IntegrationMappingRepository
      * Find all mappings for a middleware API
      */
     List<IntegrationMapping> findByMiddlewareApiNameAndIsActiveTrue(String middlewareApiName);
-
+    /**
+     * Find mapping by middleware API name and external key
+     */
+    Optional<IntegrationMapping> findByMiddlewareApiNameAndExternalKey(
+            String middlewareApiName, String externalKey);
     /**
      * Find all active mappings for a middleware API
      */

@@ -17,7 +17,8 @@ import java.util.List;
         indexes = {
                 @Index(name = "idx_api_type", columnList = "type"),
                 @Index(name = "idx_api_code", columnList = "code"),
-                @Index(name = "idx_system", columnList = "integrated_system")
+                @Index(name = "idx_system", columnList = "integrated_system"),
+                @Index(name = "idx_bound_api_code", columnList = "bound_api_code")
         },
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_api_code", columnNames = {"code"})
@@ -43,10 +44,18 @@ public class IntegratedApi {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false, length = 20)
-    private ApiType type;  // ANALYTICS, DATAVALUE, METADATA
+    private ApiType type;  // ANALYTICS, METADATA
 
     @Column(name = "integrated_system", nullable = false, length = 100)
     private String integratedSystem;  // e.g., HMIS-DWH, DHIS2-Play
+
+    /**
+     * Business API code that this metadata API is bound to
+     * Required only when type = METADATA
+     * Example: "HEALTHMAP_API" for health map metadata
+     */
+    @Column(name = "bound_api_code", length = 100)
+    private String boundApiCode;
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;
@@ -76,11 +85,25 @@ public class IntegratedApi {
         if (this.isActive == null) {
             this.isActive = true;
         }
+        validateBoundApiCode();
     }
 
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
+        validateBoundApiCode();
+    }
+
+    /**
+     * Validates that boundApiCode is provided when type is METADATA
+     */
+    private void validateBoundApiCode() {
+        if (this.type == ApiType.METADATA &&
+                (this.boundApiCode == null || this.boundApiCode.trim().isEmpty())) {
+            throw new IllegalArgumentException(
+                    "boundApiCode is required when type is METADATA"
+            );
+        }
     }
 
     /**
@@ -88,7 +111,6 @@ public class IntegratedApi {
      */
     public enum ApiType {
         ANALYTICS,
-        DATAVALUE,
         METADATA
     }
 }

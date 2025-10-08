@@ -10,6 +10,7 @@ import com.middleware.backend.kaotocamel.spec.IntegrationMappingSpecification;
 import jakarta.persistence.criteria.JoinType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -22,15 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Service for managing IntegrationMapping entities
- */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -42,45 +40,27 @@ public class IntegrationMappingService {
     @Transactional
     public IntegrationMappingDto create(IntegrationMappingRequestDto request) {
         log.info("Creating integration mapping for API: {}", request.getMiddlewareApiName());
-
-        // Validate integrated API exists
         IntegratedApi api = apiRepository.findById(request.getIntegratedApiId())
                 .orElseThrow(() -> new RuntimeException("Integrated API not found: " + request.getIntegratedApiId()));
-
-        // Check for duplicate external key
-        if (mappingRepository.existsByMiddlewareApiNameAndExternalKeyAndIsActiveTrue(
-                request.getMiddlewareApiName(), request.getExternalKey())) {
-            throw new IllegalArgumentException("External key '" + request.getExternalKey() +
-                    "' already exists for API: " + request.getMiddlewareApiName());
-        }
-
         IntegrationMapping entity = new IntegrationMapping();
         mapRequestToEntity(request, entity, api);
-
         IntegrationMapping saved = mappingRepository.save(entity);
-        log.info("Created integration mapping: {} -> {}",
-                saved.getMiddlewareApiName(), saved.getExternalKey());
-
+        log.info("Created integration mapping: {} -> {}", saved.getMiddlewareApiName(), saved.getExternalKey());
         return mapEntityToDto(saved);
     }
 
     @Transactional
     public IntegrationMappingDto update(Long id, IntegrationMappingRequestDto request) {
         log.info("Updating integration mapping: {}", id);
-
         IntegrationMapping entity = mappingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Integration mapping not found: " + id));
-
-        // Validate integrated API if changed
         IntegratedApi api = entity.getIntegratedApi();
         if (!entity.getIntegratedApiId().equals(request.getIntegratedApiId())) {
             api = apiRepository.findById(request.getIntegratedApiId())
                     .orElseThrow(() -> new RuntimeException("Integrated API not found: " + request.getIntegratedApiId()));
         }
-
         mapRequestToEntity(request, entity, api);
         IntegrationMapping saved = mappingRepository.save(entity);
-
         log.info("Updated integration mapping: {}", saved.getId());
         return mapEntityToDto(saved);
     }
@@ -88,13 +68,10 @@ public class IntegrationMappingService {
     @Transactional
     public void softDelete(Long id) {
         log.info("Soft deleting integration mapping: {}", id);
-
         IntegrationMapping entity = mappingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Integration mapping not found: " + id));
-
         entity.setIsActive(false);
         mappingRepository.save(entity);
-
         log.info("Soft deleted integration mapping: {}", id);
     }
 
@@ -108,34 +85,27 @@ public class IntegrationMappingService {
     public Page<IntegrationMappingDto> findWithFilters(String middlewareApiName, Long integratedApiId,
                                                        String mappingType, String externalKey,
                                                        Boolean isActive, Pageable pageable) {
-
         Specification<IntegrationMapping> spec = Specification.where(null);
-
         if (middlewareApiName != null && !middlewareApiName.isEmpty()) {
             spec = spec.and((root, query, cb) ->
                     cb.equal(root.get("middlewareApiName"), middlewareApiName));
         }
-
         if (integratedApiId != null) {
             spec = spec.and((root, query, cb) ->
                     cb.equal(root.get("integratedApiId"), integratedApiId));
         }
-
         if (mappingType != null && !mappingType.isEmpty()) {
             spec = spec.and((root, query, cb) ->
                     cb.equal(root.get("mappingType"), IntegrationMapping.MappingType.valueOf(mappingType)));
         }
-
         if (externalKey != null && !externalKey.isEmpty()) {
             spec = spec.and((root, query, cb) ->
                     cb.like(cb.lower(root.get("externalKey")), "%" + externalKey.toLowerCase() + "%"));
         }
-
         if (isActive != null) {
             spec = spec.and((root, query, cb) ->
                     cb.equal(root.get("isActive"), isActive));
         }
-
         return mappingRepository.findAll(spec, pageable)
                 .map(this::mapEntityToDto);
     }
@@ -147,7 +117,8 @@ public class IntegrationMappingService {
                 .map(this::mapEntityToDto)
                 .collect(Collectors.toList());
     }
-     @Transactional(readOnly = true)
+
+    @Transactional(readOnly = true)
     public Page<IntegrationMappingDto> findWithAdvancedFilters(
             String middlewareApiName, Long integratedApiId, String integratedApiCode,
             String mappingType, String data, String externalKey, String attribute,
@@ -156,36 +127,28 @@ public class IntegrationMappingService {
             LocalDateTime updatedAfter, LocalDateTime updatedBefore,
             String search, Long minId, Long maxId,
             Pageable pageable) {
-
         log.debug("Searching with advanced filters - middlewareApi: {}, integratedApiId: {}, mappingType: {}",
                 middlewareApiName, integratedApiId, mappingType);
-
         Specification<IntegrationMapping> spec = IntegrationMappingSpecification.buildSpecification(
                 middlewareApiName, integratedApiId, integratedApiCode, mappingType,
                 data, externalKey, attribute, isActive, notes,
                 createdAfter, createdBefore, updatedAfter, updatedBefore,
                 search, minId, maxId
         );
-
         Page<IntegrationMappingDto> result = mappingRepository.findAll(spec, pageable)
                 .map(this::mapEntityToDto);
-
         log.debug("Found {} results out of {} total", result.getNumberOfElements(), result.getTotalElements());
         return result;
     }
-    /**
-     * Exports integration mappings to CSV or Excel bytes according to type.
-     */
+
     public byte[] exportFile(Specification<IntegrationMapping> spec, Pageable pageable, String type) {
         List<IntegrationMapping> data;
         try {
-            // استخدم query مخصصة مع JOIN FETCH
             data = findAllForExport(spec, pageable);
         } catch (Exception e) {
             log.error("Error fetching data for export", e);
             data = Collections.emptyList();
         }
-
         try {
             if ("CSV".equalsIgnoreCase(type)) {
                 return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
@@ -199,30 +162,236 @@ public class IntegrationMappingService {
         }
     }
 
-    /**
-     * Helper method to fetch data with JOIN FETCH for export
-     */
+    @Transactional
+    public Map<String, Object> importFromExcel(InputStream inputStream, boolean updateExisting) throws IOException {
+        Map<String, Object> result = new HashMap<>();
+        List<IntegrationMappingDto> imported = new ArrayList<>();
+        List<IntegrationMappingDto> updated = new ArrayList<>();
+        List<Map<String, Object>> ignored = new ArrayList<>();
+        List<Map<String, Object>> errors = new ArrayList<>();
+        int totalRows = 0;
+        try (Workbook workbook = new XSSFWorkbook(inputStream)) {
+            Sheet sheet = workbook.getSheetAt(0);
+            int rowCount = sheet.getLastRowNum();
+            totalRows = rowCount;
+            log.info("Processing {} data rows from Excel (updateExisting={})", totalRows, updateExisting);
+            for (int i = 1; i <= rowCount; i++) {
+                Row row = sheet.getRow(i);
+                if (row == null) {
+                    log.debug("Row {} is null, skipping", i + 1);
+                    continue;
+                }
+                try {
+                    IntegrationMappingRequestDto request = parseRowToRequest(row);
+                    boolean isEmptyRow = (request.getMiddlewareApiName() == null || request.getMiddlewareApiName().trim().isEmpty()) &&
+                            (request.getExternalKey() == null || request.getExternalKey().trim().isEmpty()) &&
+                            (request.getData() == null || request.getData().trim().isEmpty());
+                    if (isEmptyRow) {
+                        log.debug("Row {} is empty, skipping", i + 1);
+                        continue;
+                    }
+                    Map<String, Object> validation = validateMappingForImport(request);
+                    if (!(boolean) validation.get("valid")) {
+                        Map<String, Object> error = new HashMap<>();
+                        error.put("row", i + 1);
+                        error.put("middlewareApiName", request.getMiddlewareApiName());
+                        error.put("externalKey", request.getExternalKey());
+                        error.put("integratedApiId", request.getIntegratedApiId());
+                        error.put("mappingType", request.getMappingType());
+                        error.put("data", request.getData());
+                        error.put("errors", validation.get("errors"));
+                        errors.add(error);
+                        log.warn("Row {} validation failed: {}", i + 1, validation.get("errors"));
+                        continue;
+                    }
+                    Optional<IntegrationMapping> existing = mappingRepository
+                            .findByMiddlewareApiNameAndExternalKey(
+                                    request.getMiddlewareApiName(), request.getExternalKey());
+                    if (existing.isPresent()) {
+                        if (updateExisting) {
+                            IntegrationMappingDto updatedDto = update(existing.get().getId(), request);
+                            updated.add(updatedDto);
+                            log.info("Row {}: Updated existing mapping - API: '{}', Key: '{}'",
+                                    i + 1, request.getMiddlewareApiName(), request.getExternalKey());
+                        } else {
+                            Map<String, Object> ignoredItem = new HashMap<>();
+                            ignoredItem.put("row", i + 1);
+                            ignoredItem.put("middlewareApiName", request.getMiddlewareApiName());
+                            ignoredItem.put("externalKey", request.getExternalKey());
+                            ignoredItem.put("reason", "Already exists and update is disabled");
+                            ignored.add(ignoredItem);
+                            log.info("Row {}: Ignored existing mapping - API: '{}', Key: '{}'",
+                                    i + 1, request.getMiddlewareApiName(), request.getExternalKey());
+                        }
+                    } else {
+                        IntegrationMappingDto created = create(request);
+                        imported.add(created);
+                        log.info("Row {}: Created new mapping - API: '{}', Key: '{}'",
+                                i + 1, request.getMiddlewareApiName(), request.getExternalKey());
+                    }
+                } catch (Exception e) {
+                    Map<String, Object> error = new HashMap<>();
+                    error.put("row", i + 1);
+                    error.put("error", "Unexpected error: " + e.getMessage());
+                    error.put("errorType", e.getClass().getSimpleName());
+                    errors.add(error);
+                    log.error("Unexpected error processing row {}: {}", i + 1, e.getMessage(), e);
+                }
+            }
+        }
+        result.put("success", errors.isEmpty());
+        result.put("totalRows", totalRows);
+        result.put("imported", imported.size());
+        result.put("updated", updated.size());
+        result.put("ignored", ignored.size());
+        result.put("failed", errors.size());
+        result.put("newMappings", imported);
+        result.put("updatedMappings", updated);
+        result.put("ignoredMappings", ignored);
+        result.put("errors", errors);
+        log.info("Import completed: {} total, {} new, {} updated, {} ignored, {} failed",
+                totalRows, imported.size(), updated.size(), ignored.size(), errors.size());
+        return result;
+    }
+
+    private Map<String, Object> validateMappingForImport(IntegrationMappingRequestDto request) {
+        Map<String, Object> validation = new HashMap<>();
+        List<String> errors = new ArrayList<>();
+        if (request.getMiddlewareApiName() == null || request.getMiddlewareApiName().trim().isEmpty()) {
+            errors.add("Middleware API Name is required and cannot be empty");
+        }
+        if (request.getExternalKey() == null || request.getExternalKey().trim().isEmpty()) {
+            errors.add("External Key is required and cannot be empty");
+        }
+        if (request.getIntegratedApiId() == null) {
+            errors.add("Integrated API ID is required");
+        } else {
+            if (!apiRepository.existsById(request.getIntegratedApiId())) {
+                errors.add("Integrated API not found with ID: " + request.getIntegratedApiId() +
+                        ". Please check if this API exists in the system");
+            }
+        }
+        if (request.getMappingType() == null || request.getMappingType().trim().isEmpty()) {
+            errors.add("Mapping Type is required. Valid values: DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE, INDICATOR");
+        } else {
+            try {
+                IntegrationMapping.MappingType type = IntegrationMapping.MappingType.valueOf(request.getMappingType());
+                if (request.getData() == null || request.getData().trim().isEmpty()) {
+                    errors.add("Data field is required and cannot be empty");
+                } else {
+                    switch (type) {
+                        case DATA_ELEMENT:
+                            if (request.getData().contains(".")) {
+                                errors.add("DATA_ELEMENT should not contain disaggregation. Format: DE_UID (without dots). Current value: '" + request.getData() + "'");
+                            }
+                            break;
+                        case DATA_ELEMENT_WITH_DISAGGREGATION:
+                            if (!request.getData().contains(".")) {
+                                errors.add("DATA_ELEMENT_WITH_DISAGGREGATION requires disaggregation. Format: DE_UID.COC_UID. Current value: '" + request.getData() + "'");
+                            } else {
+                                String[] parts = request.getData().split("\\.");
+                                if (parts.length != 2) {
+                                    errors.add("DATA_ELEMENT_WITH_DISAGGREGATION must have exactly 2 parts separated by dot. Format: DE_UID.COC_UID. Current value: '" + request.getData() + "'");
+                                }
+                            }
+                            break;
+                        case DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE:
+                            if (!request.getData().contains(".")) {
+                                errors.add("DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE requires disaggregation and attribute. Format: DE_UID.COC_UID.AOC_UID or DE_UID.AOC_UID. Current value: '" + request.getData() + "'");
+                            } else {
+                                String[] parts = request.getData().split("\\.");
+                                if (parts.length < 2) {
+                                    errors.add("DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE must have at least 2 parts separated by dots. Format: DE_UID.COC_UID.AOC_UID or DE_UID.AOC_UID. Current value: '" + request.getData() + "'");
+                                }
+                            }
+                            break;
+                        case INDICATOR:
+                            break;
+                        default:
+                            errors.add("Unknown mapping type: " + type);
+                            break;
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                errors.add("Invalid Mapping Type: '" + request.getMappingType() +
+                        "'. Valid values are: DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE, INDICATOR");
+            }
+        }
+        validation.put("valid", errors.isEmpty());
+        validation.put("errors", errors);
+        return validation;
+    }
+
+    private IntegrationMappingRequestDto parseRowToRequest(Row row) {
+        IntegrationMappingRequestDto request = new IntegrationMappingRequestDto();
+        request.setMiddlewareApiName(getCellValueAsString(row.getCell(0)));
+        Double apiId = getCellValueAsDouble(row.getCell(1));
+        if (apiId != null) {
+            request.setIntegratedApiId(apiId.longValue());
+        }
+        request.setMappingType(getCellValueAsString(row.getCell(4)));
+        request.setData(getCellValueAsString(row.getCell(5)));
+        request.setAttribute(getCellValueAsString(row.getCell(6)));
+        request.setExternalKey(getCellValueAsString(row.getCell(7)));
+        String activeStr = getCellValueAsString(row.getCell(8));
+        request.setIsActive(activeStr == null || activeStr.equalsIgnoreCase("ACTIVE"));
+        request.setNotes(getCellValueAsString(row.getCell(9)));
+        return request;
+    }
+
+    private String getCellValueAsString(Cell cell) {
+        if (cell == null) return null;
+        switch (cell.getCellType()) {
+            case STRING:
+                return cell.getStringCellValue().trim();
+            case NUMERIC:
+                double numValue = cell.getNumericCellValue();
+                if (numValue == (long) numValue) {
+                    return String.valueOf((long) numValue);
+                }
+                return String.valueOf(numValue);
+            case BOOLEAN:
+                return String.valueOf(cell.getBooleanCellValue());
+            case FORMULA:
+                try {
+                    return cell.getStringCellValue();
+                } catch (Exception e) {
+                    return String.valueOf(cell.getNumericCellValue());
+                }
+            default:
+                return null;
+        }
+    }
+
+    private Double getCellValueAsDouble(Cell cell) {
+        if (cell == null) return null;
+        switch (cell.getCellType()) {
+            case NUMERIC:
+                return cell.getNumericCellValue();
+            case STRING:
+                try {
+                    return Double.parseDouble(cell.getStringCellValue());
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            default:
+                return null;
+        }
+    }
+
     private List<IntegrationMapping> findAllForExport(Specification<IntegrationMapping> spec, Pageable pageable) {
         return mappingRepository.findAll((root, query, criteriaBuilder) -> {
-            // Apply JOIN FETCH
             root.fetch("integratedApi", JoinType.LEFT);
             query.distinct(true);
-
-            // Apply the original specification
             return spec != null ? spec.toPredicate(root, query, criteriaBuilder) : null;
         }, pageable).getContent();
     }
 
-    // ================= CSV Export =================
     private String convertToCSV(List<IntegrationMapping> records) {
         StringBuilder sb = new StringBuilder();
-        sb.append("ID,Middleware API Name,Integrated API ID,Integrated API Code,Integrated API Name,");
-        sb.append("Mapping Type,Data,Attribute,External Key,Active,Notes,Created At,Updated At\n");
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
+        sb.append("Middleware API Name,Integrated API ID,Integrated API Code,Integrated API Name,");
+        sb.append("Mapping Type,Data,Attribute,External Key,Active,Notes\n");
         for (IntegrationMapping record : records) {
-            sb.append(record.getId()).append(",");
             sb.append(escapeCsv(record.getMiddlewareApiName())).append(",");
             sb.append(record.getIntegratedApiId()).append(",");
             sb.append(escapeCsv(record.getIntegratedApi() != null ? record.getIntegratedApi().getCode() : "")).append(",");
@@ -232,11 +401,8 @@ public class IntegrationMappingService {
             sb.append(escapeCsv(record.getAttribute())).append(",");
             sb.append(escapeCsv(record.getExternalKey())).append(",");
             sb.append(record.getIsActive() ? "ACTIVE" : "INACTIVE").append(",");
-            sb.append(escapeCsv(record.getNotes())).append(",");
-            sb.append(record.getCreatedAt() != null ? record.getCreatedAt().format(formatter) : "").append(",");
-            sb.append(record.getUpdatedAt() != null ? record.getUpdatedAt().format(formatter) : "").append("\n");
+            sb.append(escapeCsv(record.getNotes())).append("\n");
         }
-
         return sb.toString();
     }
 
@@ -249,58 +415,44 @@ public class IntegrationMappingService {
         return escaped;
     }
 
-    // ================= Excel Export =================
     private byte[] convertToExcel(List<IntegrationMapping> records) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Integration Mappings");
-
-            // Header row
             Row header = sheet.createRow(0);
-            header.createCell(0).setCellValue("ID");
-            header.createCell(1).setCellValue("Middleware API Name");
-            header.createCell(2).setCellValue("Integrated API ID");
-            header.createCell(3).setCellValue("Integrated API Code");
-            header.createCell(4).setCellValue("Integrated API Name");
-            header.createCell(5).setCellValue("Mapping Type");
-            header.createCell(6).setCellValue("Data");
-            header.createCell(7).setCellValue("Attribute");
-            header.createCell(8).setCellValue("External Key");
-            header.createCell(9).setCellValue("Active");
-            header.createCell(10).setCellValue("Notes");
-            header.createCell(11).setCellValue("Created At");
-            header.createCell(12).setCellValue("Updated At");
-
-            // Data rows
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            header.createCell(0).setCellValue("Middleware API Name");
+            header.createCell(1).setCellValue("Integrated API ID");
+            header.createCell(2).setCellValue("Integrated API Code");
+            header.createCell(3).setCellValue("Integrated API Name");
+            header.createCell(4).setCellValue("Mapping Type");
+            header.createCell(5).setCellValue("Data");
+            header.createCell(6).setCellValue("Attribute");
+            header.createCell(7).setCellValue("External Key");
+            header.createCell(8).setCellValue("Active");
+            header.createCell(9).setCellValue("Notes");
             int rowIdx = 1;
             for (IntegrationMapping record : records) {
                 Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue(record.getId() != null ? record.getId() : 0);
-                row.createCell(1).setCellValue(record.getMiddlewareApiName() != null ? record.getMiddlewareApiName() : "");
-                row.createCell(2).setCellValue(record.getIntegratedApiId() != null ? record.getIntegratedApiId() : 0);
-                row.createCell(3).setCellValue(record.getIntegratedApi() != null ? record.getIntegratedApi().getCode() : "");
-                row.createCell(4).setCellValue(record.getIntegratedApi() != null ? record.getIntegratedApi().getName() : "");
-                row.createCell(5).setCellValue(record.getMappingType() != null ? record.getMappingType().toString() : "");
-                row.createCell(6).setCellValue(record.getData() != null ? record.getData() : "");
-                row.createCell(7).setCellValue(record.getAttribute() != null ? record.getAttribute() : "");
-                row.createCell(8).setCellValue(record.getExternalKey() != null ? record.getExternalKey() : "");
-                row.createCell(9).setCellValue(record.getIsActive() ? "ACTIVE" : "INACTIVE");
-                row.createCell(10).setCellValue(record.getNotes() != null ? record.getNotes() : "");
-                row.createCell(11).setCellValue(record.getCreatedAt() != null ? record.getCreatedAt().format(formatter) : "");
-                row.createCell(12).setCellValue(record.getUpdatedAt() != null ? record.getUpdatedAt().format(formatter) : "");
+                row.createCell(0).setCellValue(record.getMiddlewareApiName() != null ? record.getMiddlewareApiName() : "");
+                row.createCell(1).setCellValue(record.getIntegratedApiId() != null ? record.getIntegratedApiId() : 0);
+                row.createCell(2).setCellValue(record.getIntegratedApi() != null ? record.getIntegratedApi().getCode() : "");
+                row.createCell(3).setCellValue(record.getIntegratedApi() != null ? record.getIntegratedApi().getName() : "");
+                row.createCell(4).setCellValue(record.getMappingType() != null ? record.getMappingType().toString() : "");
+                row.createCell(5).setCellValue(record.getData() != null ? record.getData() : "");
+                row.createCell(6).setCellValue(record.getAttribute() != null ? record.getAttribute() : "");
+                row.createCell(7).setCellValue(record.getExternalKey() != null ? record.getExternalKey() : "");
+                row.createCell(8).setCellValue(record.getIsActive() ? "ACTIVE" : "INACTIVE");
+                row.createCell(9).setCellValue(record.getNotes() != null ? record.getNotes() : "");
             }
-
-            // Auto-size columns
-            for (int i = 0; i <= 12; i++) {
+            for (int i = 0; i <= 9; i++) {
                 sheet.autoSizeColumn(i);
             }
-
             try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
                 workbook.write(bos);
                 return bos.toByteArray();
             }
         }
     }
+
     @Transactional(readOnly = true)
     public List<IntegrationMappingDto> findAll() {
         return mappingRepository.findAll()
@@ -317,11 +469,8 @@ public class IntegrationMappingService {
     public Map<String, Object> validateMapping(IntegrationMappingRequestDto request) {
         Map<String, Object> validation = new HashMap<>();
         List<String> errors = new ArrayList<>();
-
-        // Validate mapping type and data format
         try {
             IntegrationMapping.MappingType type = IntegrationMapping.MappingType.valueOf(request.getMappingType());
-
             switch (type) {
                 case DATA_ELEMENT_WITH_DISAGGREGATION:
                     if (!request.getData().contains(".")) {
@@ -337,28 +486,21 @@ public class IntegrationMappingService {
         } catch (IllegalArgumentException e) {
             errors.add("Invalid mapping type: " + request.getMappingType());
         }
-
-        // Check if API exists
         if (!apiRepository.existsById(request.getIntegratedApiId())) {
             errors.add("Integrated API not found: " + request.getIntegratedApiId());
         }
-
-        // Check for duplicate external key
         if (mappingRepository.existsByMiddlewareApiNameAndExternalKeyAndIsActiveTrue(
                 request.getMiddlewareApiName(), request.getExternalKey())) {
             errors.add("External key already exists: " + request.getExternalKey());
         }
-
         validation.put("valid", errors.isEmpty());
         validation.put("errors", errors);
-
         return validation;
     }
 
     @Transactional
     public List<IntegrationMappingDto> createBatch(List<IntegrationMappingRequestDto> requests) {
         List<IntegrationMappingDto> created = new ArrayList<>();
-
         for (IntegrationMappingRequestDto request : requests) {
             try {
                 created.add(create(request));
@@ -367,7 +509,6 @@ public class IntegrationMappingService {
                 throw new RuntimeException("Batch creation failed at item " + created.size() + ": " + e.getMessage());
             }
         }
-
         return created;
     }
 
@@ -376,7 +517,6 @@ public class IntegrationMappingService {
         Map<String, Object> result = new HashMap<>();
         List<IntegrationMappingDto> imported = new ArrayList<>();
         List<Map<String, Object>> errors = new ArrayList<>();
-
         for (int i = 0; i < mappings.size(); i++) {
             IntegrationMappingRequestDto request = mappings.get(i);
             try {
@@ -389,11 +529,9 @@ public class IntegrationMappingService {
                 errors.add(error);
             }
         }
-
         result.put("success", errors.isEmpty());
         result.put("imported", imported.size());
         result.put("errors", errors);
-
         return result;
     }
 

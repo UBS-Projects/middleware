@@ -18,6 +18,7 @@ import java.util.Optional;
 public interface IntegratedApiRepository
         extends JpaRepository<IntegratedApi, Long>,
         JpaSpecificationExecutor<IntegratedApi> {
+
     /**
      * Find API by unique code
      */
@@ -28,4 +29,40 @@ public interface IntegratedApiRepository
      */
     boolean existsByCode(String code);
 
+    /**
+     * Find active METADATA API by bound API code
+     * Used to dynamically fetch metadata URL for business APIs
+     *
+     * @param boundApiCode The business API code (e.g., "HEALTHMAP_API")
+     * @return Optional containing the metadata API configuration if found
+     */
+    @Query("SELECT api FROM IntegratedApi api " +
+            "WHERE api.type = 'METADATA' " +
+            "AND api.boundApiCode = :boundApiCode " +
+            "AND api.isActive = true")
+    Optional<IntegratedApi> findActiveMetadataByBoundCode(@Param("boundApiCode") String boundApiCode);
+
+    /**
+     * Find all active METADATA APIs with their bound codes
+     * Useful for listing all available metadata configurations
+     *
+     * @return List of active metadata APIs
+     */
+    @Query("SELECT api FROM IntegratedApi api " +
+            "WHERE api.type = 'METADATA' " +
+            "AND api.isActive = true " +
+            "ORDER BY api.boundApiCode")
+    List<IntegratedApi> findAllActiveMetadataApis();
+
+    /**
+     * Check if a bound API code exists for active metadata APIs
+     *
+     * @param boundApiCode The business API code to check
+     * @return true if exists, false otherwise
+     */
+    @Query("SELECT COUNT(api) > 0 FROM IntegratedApi api " +
+            "WHERE api.type = 'METADATA' " +
+            "AND api.boundApiCode = :boundApiCode " +
+            "AND api.isActive = true")
+    boolean existsActiveMetadataByBoundCode(@Param("boundApiCode") String boundApiCode);
 }

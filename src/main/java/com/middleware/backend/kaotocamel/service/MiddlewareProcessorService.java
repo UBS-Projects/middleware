@@ -13,6 +13,7 @@ import java.util.*;
 /**
  * Main service for processing middleware API requests
  * Orchestrates data fetching, mapping, and aggregation
+ * Enhanced to use dynamic metadata URL based on business API code
  */
 @Service
 @RequiredArgsConstructor
@@ -22,9 +23,6 @@ public class MiddlewareProcessorService {
     private final IntegrationMappingRepository mappingRepository;
     private final Dhis2ClientService dhis2Client;
 
-    /**
-     * Process middleware API request with period parameter and dynamic DHIS2 code
-     */
     @Transactional(readOnly = true)
     public MiddlewareResponseDto processMiddlewareRequest(
             String middlewareApiName,
@@ -34,7 +32,6 @@ public class MiddlewareProcessorService {
         log.info("Processing middleware request for API: {} with period: {} and DHIS2 code: {}",
                 middlewareApiName, periodParam, dhis2Code);
 
-        // Validate period parameter
         if (periodParam == null || periodParam.trim().isEmpty()) {
             throw new IllegalArgumentException("Parameter 'pe' is required");
         }
@@ -44,7 +41,7 @@ public class MiddlewareProcessorService {
         }
 
         try {
-            // Step 1: Load all active mappings for this middleware API
+            // Step 1: Load mappings
             List<IntegrationMapping> mappings = mappingRepository
                     .findActiveMiddlewareMappings(middlewareApiName);
 
@@ -55,19 +52,24 @@ public class MiddlewareProcessorService {
                         .build();
             }
 
-            // Step 2: Group mappings by integrated API for efficient processing
+            // Step 2: Fetch organisation units metadata
+            // Pass the business API name to potentially use configured metadata API
+            Map<String, Map<String, Object>> orgUnitsMetadata =
+                    dhis2Client.fetchOrganisationUnitsMetadata(dhis2Code, middlewareApiName);
+
+            // Step 3: Group mappings by API
             Map<IntegratedApi, List<IntegrationMapping>> mappingsByApi =
                     groupMappingsByApi(mappings);
 
-            // Step 3: Execute DHIS2 calls with dynamic code
+            // Step 4: Execute DHIS2 calls
             Map<IntegratedApi, Map<String, Object>> apiResponses =
                     executeDhis2Calls(mappingsByApi.keySet(), periodParam, dhis2Code);
 
-            // Step 4: Process responses and build result
-            return buildMiddlewareResponse(mappingsByApi, apiResponses);
+            // Step 5: Build response with enriched orgUnit data
+            return buildMiddlewareResponse(mappingsByApi, apiResponses, orgUnitsMetadata);
 
         } catch (IllegalArgumentException e) {
-            throw e; // Re-throw validation errors
+            throw e;
         } catch (Exception e) {
             log.error("Error processing middleware request: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to process middleware request: " + e.getMessage());
@@ -121,7 +123,8 @@ public class MiddlewareProcessorService {
      */
     private MiddlewareResponseDto buildMiddlewareResponse(
             Map<IntegratedApi, List<IntegrationMapping>> mappingsByApi,
-            Map<IntegratedApi, Map<String, Object>> apiResponses) {
+            Map<IntegratedApi, Map<String, Object>> apiResponses,
+            Map<String, Map<String, Object>> orgUnitsMetadata) {
 
         Map<AggregationKey, MiddlewareRowDto> aggregatedRows = new LinkedHashMap<>();
 
@@ -137,7 +140,7 @@ public class MiddlewareProcessorService {
                 AnalyticsDataExtractor extractor = new AnalyticsDataExtractor(analytics);
 
                 for (IntegrationMapping mapping : apiMappings) {
-                    processMapping(mapping, extractor, aggregatedRows);
+                    processMapping(mapping, extractor, aggregatedRows, orgUnitsMetadata);
                 }
             }
         }
@@ -150,8 +153,10 @@ public class MiddlewareProcessorService {
                 .build();
     }
 
-    private void processMapping(IntegrationMapping mapping, AnalyticsDataExtractor extractor,
-                                Map<AggregationKey, MiddlewareRowDto> aggregatedRows) {
+    private void processMapping(IntegrationMapping mapping,
+                                AnalyticsDataExtractor extractor,
+                                Map<AggregationKey, MiddlewareRowDto> aggregatedRows,
+                                Map<String, Map<String, Object>> orgUnitsMetadata) {
 
         Set<String> orgUnits = extractor.getAllOrgUnits();
         Set<String> periods = extractor.getAllPeriods();
@@ -160,13 +165,18 @@ public class MiddlewareProcessorService {
             for (String period : periods) {
                 AggregationKey key = new AggregationKey(ou, period);
 
-                MiddlewareRowDto row = aggregatedRows.computeIfAbsent(key, k -> MiddlewareRowDto.builder()
-                        .ou(ou)
-                        .ouName(extractor.getOrgUnitName(ou))
-                        .period(extractor.getPeriodName(period))
-                        .attributes(new ArrayList<>())
-                        .build()
-                );
+                MiddlewareRowDto row = aggregatedRows.computeIfAbsent(key, k -> {
+                    // Get enriched orgUnit details
+                    Map<String, Object> ouDetails = orgUnitsMetadata.getOrDefault(ou, new HashMap<>());
+
+                    return MiddlewareRowDto.builder()
+                            .ou(ou)
+                            .ouName(extractor.getOrgUnitName(ou))
+                            .ouDetails(ouDetails)
+                            .period(extractor.getPeriodName(period))
+                            .attributes(new ArrayList<>())
+                            .build();
+                });
 
                 Object value = extractValue(mapping, extractor, ou, period);
                 if (value != null) {
@@ -186,20 +196,33 @@ public class MiddlewareProcessorService {
         switch (mapping.getMappingType()) {
             case DATA_ELEMENT:
                 return extractor.getDataElementValue(mapping.getData(), ou, period);
+
             case DATA_ELEMENT_WITH_DISAGGREGATION:
                 String[] parts = mapping.getData().split("\\.");
                 if (parts.length == 2) {
                     return extractor.getDisaggregatedValue(parts[0], parts[1], ou, period);
                 }
                 return null;
+
             case INDICATOR:
                 return extractor.getIndicatorValue(mapping.getData(), ou, period);
+
+            case DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE:
+                String[] attrParts = mapping.getData().split("\\.");
+                if (attrParts.length >= 2) {
+                    String deId = attrParts[0];
+                    String attributeValue = attrParts.length == 3 ? attrParts[2] : attrParts[1];
+                    return extractor.getAttributedValue(deId, attributeValue, ou, period);
+                }
+                return null;
+
             default:
                 log.warn("Unsupported mapping type: {}", mapping.getMappingType());
                 return null;
         }
     }
 
+    // Inner classes remain the same
     private static class AggregationKey {
         private final String ou;
         private final String period;
@@ -308,6 +331,70 @@ public class MiddlewareProcessorService {
 
         public Object getIndicatorValue(String indicatorId, String ou, String period) {
             return getValueFromIndex(indicatorId, ou, period);
+        }
+
+        public Object getAttributedValue(String deId, String attributeValue, String ou, String period) {
+            log.debug("Extracting attributed value - DE: {}, Attribute: {}, OU: {}, Period: {}",
+                    deId, attributeValue, ou, period);
+
+            if (analytics.getRows() == null || analytics.getRows().isEmpty()) {
+                log.debug("No rows available for extraction");
+                return null;
+            }
+
+            Integer dxIdx = headerIndexes.get("dx");
+            Integer ouIdx = headerIndexes.get("ou");
+            Integer peIdx = headerIndexes.get("pe");
+            Integer valueIdx = headerIndexes.get("value");
+
+            Integer attrIdx = null;
+            String attrHeaderName = null;
+
+            for (Map.Entry<String, Integer> entry : headerIndexes.entrySet()) {
+                String headerName = entry.getKey();
+                if (!headerName.equals("dx") && !headerName.equals("ou") &&
+                        !headerName.equals("pe") && !headerName.equals("value") &&
+                        !headerName.equals("numerator") && !headerName.equals("denominator") &&
+                        !headerName.equals("factor") && !headerName.equals("multiplier") &&
+                        !headerName.equals("divisor")) {
+                    attrIdx = entry.getValue();
+                    attrHeaderName = headerName;
+                    log.debug("Detected attribute dimension header: {} at index {}", headerName, attrIdx);
+                    break;
+                }
+            }
+
+            if (attrIdx == null) {
+                log.warn("No attribute dimension found in headers for attributed value extraction");
+                return getValueFromIndex(deId, ou, period);
+            }
+
+            for (List<Object> row : analytics.getRows()) {
+                try {
+                    String rowDx = dxIdx != null && dxIdx < row.size() ? (String) row.get(dxIdx) : null;
+                    String rowOu = ouIdx != null && ouIdx < row.size() ? (String) row.get(ouIdx) : null;
+                    String rowPe = peIdx != null && peIdx < row.size() ? (String) row.get(peIdx) : null;
+                    String rowAttr = attrIdx < row.size() ? (String) row.get(attrIdx) : null;
+                    Object rowValue = valueIdx != null && valueIdx < row.size() ? row.get(valueIdx) : null;
+
+                    boolean dxMatch = deId.equals(rowDx);
+                    boolean ouMatch = ou.equals(rowOu);
+                    boolean peMatch = period.equals(rowPe) || (rowPe == null && "default".equals(period));
+                    boolean attrMatch = attributeValue.equals(rowAttr);
+
+                    if (dxMatch && ouMatch && peMatch && attrMatch) {
+                        log.debug("Found matching row - Value: {}", rowValue);
+                        return rowValue;
+                    }
+
+                } catch (Exception e) {
+                    log.warn("Error processing row for attributed value: {}", e.getMessage());
+                    continue;
+                }
+            }
+
+            log.debug("No matching row found for attributed value extraction");
+            return null;
         }
 
         private Object getValueFromIndex(String dx, String ou, String period) {
