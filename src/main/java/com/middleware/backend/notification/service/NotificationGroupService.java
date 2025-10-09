@@ -140,7 +140,15 @@ public class NotificationGroupService {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
-
+        if(entity.isActive() && !entity.getReceivers().isEmpty()){
+            loggingService.save(NotificationActionsLogs.builder()
+                    .action("Failed Inactivating Group")
+                    .details("Group is Linked to Receivers, Cant Inactive it")
+                    .email(currentUser)
+                    .eventTime(new Timestamp(System.currentTimeMillis()))
+                    .build());
+            throw new RuntimeException("Group is Linked to Receivers, Cant Inactive it");
+        }
         loggingService.save(NotificationActionsLogs.builder()
                 .action(entity.isActive() ? "Inactivating Group" : "Activating Group")
                 .details(entity.isActive() ? "Inactive Group " + entity.getName()

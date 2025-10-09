@@ -59,6 +59,19 @@ public class NotificationServiceImpl implements NotificationService {
         ChannelConfig channel = channelRepository.findByCode(channelCode)
                 .orElseThrow(() -> new RuntimeException("Channel not found"));
 
+        if (!template.isActive()){
+            throw new RuntimeException("Template: "+template.getName()+" is Inactive");
+        }
+
+        if (!channel.isActive()){
+            throw new RuntimeException("Channel: "+channel.getName()+" is Inactive");
+        }
+
+        for(String code : groupCodes){
+            groupRepository.findByCodeAndActiveTrue(code)
+                    .orElseThrow(() -> new RuntimeException("Group: "+code+" is InActive or Not Present"));
+        }
+
         // Parse channel configuration JSON
         Map<String, String> config;
         try {
@@ -73,9 +86,9 @@ public class NotificationServiceImpl implements NotificationService {
 
         // Send notifications to each group
         for (String groupId : groupCodes) {
+
             NotificationGroup group = groupRepository.findByCode(groupId)
                     .orElseThrow(() -> new RuntimeException("Group not found with id " + groupId));
-
             try {
                 if (channel.getType() == ChannelType.EMAIL) {
                     sendEmail(group, template, config);

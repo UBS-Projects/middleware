@@ -4,6 +4,7 @@ import com.middleware.backend.notification.dto.ReceiverDto;
 import com.middleware.backend.notification.model.Receiver;
 import com.middleware.backend.notification.service.ReceiverService;
 import com.middleware.backend.notification.specification.ReceiverSpecification;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,16 +16,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+
 /**
  * REST controller for managing Receivers within the notification system.
+ * <p>
  * Provides endpoints to create, update, retrieve, and filter receiver entities.
- *
- * Endpoints:
- * - GET /api/receivers/{id} → Fetch receiver by ID.
- * - GET /api/receivers → Fetch all receivers (with filters, pagination, and sorting).
- * - POST /api/receivers → Create a new receiver.
- * - PUT /api/receivers → Update an existing receiver.
- *
  * All endpoints require appropriate authority permissions defined via Spring Security.
  */
 @RestController
@@ -34,6 +30,8 @@ public class ReceiverController {
 
     private final ReceiverService service;
 
+    // ===================== GET RECEIVER BY ID =====================
+
     /**
      * Retrieves a specific receiver by its unique ID.
      *
@@ -42,9 +40,15 @@ public class ReceiverController {
      */
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('receiver:view')")
+    @Operation(
+            summary = "Get receiver by ID",
+            description = "Retrieve details of a single receiver by its unique ID. Requires 'receiver:view' authority."
+    )
     public ResponseEntity<?> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
+
+    // ===================== GET ALL RECEIVERS =====================
 
     /**
      * Retrieves all receivers with optional filters, pagination, and sorting.
@@ -74,6 +78,11 @@ public class ReceiverController {
      */
     @GetMapping("")
     @PreAuthorize("hasAuthority('receiver:view')")
+    @Operation(
+            summary = "List receivers with filters",
+            description = "Retrieves a paginated list of receivers. Supports filtering by name, phone number, email, and creation date range. " +
+                    "Supports sorting and pagination. Requires 'receiver:view' authority."
+    )
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String number,
@@ -100,6 +109,8 @@ public class ReceiverController {
         return ResponseEntity.ok(service.findAll(spec, pageable));
     }
 
+    // ===================== CREATE RECEIVER =====================
+
     /**
      * Creates a new receiver entry in the system.
      *
@@ -108,9 +119,15 @@ public class ReceiverController {
      */
     @PostMapping("")
     @PreAuthorize("hasAuthority('receiver:create')")
+    @Operation(
+            summary = "Create a new receiver",
+            description = "Creates a new receiver entity. Requires 'receiver:create' authority."
+    )
     public ResponseEntity<?> create(@RequestBody ReceiverDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
+
+    // ===================== UPDATE RECEIVER =====================
 
     /**
      * Updates an existing receiver's details.
@@ -120,6 +137,10 @@ public class ReceiverController {
      */
     @PutMapping("")
     @PreAuthorize("hasAuthority('receiver:edit')")
+    @Operation(
+            summary = "Update an existing receiver",
+            description = "Updates an existing receiver entity. Requires 'receiver:edit' authority."
+    )
     public ResponseEntity<?> update(@RequestBody ReceiverDto dto) {
         return ResponseEntity.ok(service.update(dto));
     }

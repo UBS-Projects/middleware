@@ -6,6 +6,7 @@ import com.middleware.backend.system_settings.model.Config;
 import com.middleware.backend.system_settings.model.ConfigType;
 import com.middleware.backend.system_settings.service.ConfigService;
 import com.middleware.backend.system_settings.specificaion.ConfigSpecification;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,19 +19,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/configs")
 @AllArgsConstructor
 public class ConfigController {
 
-    /**
-     * Service layer handling Config entities.
-     */
     private final ConfigService configService;
 
     // ===================== GET SINGLE CONFIG =====================
@@ -43,30 +38,37 @@ public class ConfigController {
      */
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('config:view')")
+    @Operation(
+            summary = "Get configuration by key",
+            description = "Retrieve details of a single configuration by its key. Requires 'config:view' authority."
+    )
     public ResponseEntity<?> getConfigDetails(@PathVariable String key) {
         return ResponseEntity.ok(configService.getConfigDetails(key));
     }
 
-    // ===================== GET ALL CONFIGS WITH FILTERS =====================
+    // ===================== GET ALL CONFIGS =====================
 
     /**
      * Retrieve a paginated list of configurations with optional filters.
-     * Filters include key, value, type, createdAfter, and createdBefore.
-     * Sorting and paging are also supported.
      *
-     * @param key            optional key to filter configs (partial match)
-     * @param value          optional value to filter configs (partial match)
-     * @param type           optional config type (will be converted to ConfigType enum)
-     * @param createdAfter   optional start date filter
-     * @param createdBefore  optional end date filter
-     * @param page           page number (default 0)
-     * @param size           page size (default 10)
+     * @param key            optional key filter (contains)
+     * @param value          optional value filter (contains)
+     * @param type           optional config type filter (exact)
+     * @param createdAfter   optional lower bound for creation date (inclusive)
+     * @param createdBefore  optional upper bound for creation date (inclusive)
+     * @param page           zero-based page index
+     * @param size           page size
      * @param sortedBy       field to sort by (default "updatedAt")
      * @param sortDirection  sort direction ("asc" or "desc", default "desc")
-     * @return ResponseEntity containing a paginated list of configs matching the filters
+     * @return paginated list of configs matching the filters
      */
     @GetMapping
     @PreAuthorize("hasAuthority('config:view')")
+    @Operation(
+            summary = "List configurations with filters",
+            description = "Retrieves a paginated list of configurations with optional filters such as key, value, type, " +
+                    "and creation date range. Supports paging and sorting. Requires 'config:view' authority."
+    )
     public ResponseEntity<Page<?>> getAllConfigs(
             @RequestParam(required = false) String key,
             @RequestParam(required = false) String value,
@@ -81,17 +83,15 @@ public class ConfigController {
         Pageable pageable = PageRequest.of(page, size,
                 sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortedBy).ascending() : Sort.by(sortedBy).descending());
 
-        // Convert string to enum if valid
         ConfigType configType = null;
         if (type != null) {
             try {
                 configType = ConfigType.valueOf(type.toUpperCase());
             } catch (IllegalArgumentException e) {
-                // invalid type string, ignore
+                // ignore invalid type
             }
         }
 
-        // Build dynamic JPA Specification based on filters
         Specification<Config> spec = Specification
                 .where(ConfigSpecification.hasField("key", key, ConfigSpecification.MatchMode.CONTAINS))
                 .and(ConfigSpecification.hasField("value", value, ConfigSpecification.MatchMode.CONTAINS))
@@ -112,6 +112,11 @@ public class ConfigController {
      */
     @PostMapping
     @PreAuthorize("hasAuthority('config:create')")
+    @Operation(
+            summary = "Create a new configuration",
+            description = "Creates a new configuration with a unique key. Requires 'config:create' authority. " +
+                    "Returns bad request if the key already exists."
+    )
     public ResponseEntity<?> createConfig(@RequestBody ConfigDto dto) {
         Config saved = configService.saveConfig(dto);
         if (saved == null)
@@ -130,6 +135,11 @@ public class ConfigController {
      */
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('config:edit')")
+    @Operation(
+            summary = "Update a configuration",
+            description = "Updates the value of an existing configuration by key. Requires 'config:edit' authority. " +
+                    "Returns bad request if the key is not found."
+    )
     public ResponseEntity<?> updateConfig(
             @PathVariable String key,
             @RequestBody Map<String, String> body) {

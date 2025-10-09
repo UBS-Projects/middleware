@@ -4,6 +4,7 @@ import com.middleware.backend.integrated_systems.dto.IntegratedSystemDto;
 import com.middleware.backend.integrated_systems.model.IntegratedSystem;
 import com.middleware.backend.integrated_systems.service.IntegratedSystemService;
 import com.middleware.backend.integrated_systems.spec.IntegratedSystemSpecification;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
@@ -27,6 +28,8 @@ public class IntegratedSystemController {
 
     private final IntegratedSystemService service;
 
+    // ===================== GET ALL INTEGRATED SYSTEMS =====================
+
     /**
      * Retrieves a paginated list of integrated systems with optional filters.
      *
@@ -44,6 +47,11 @@ public class IntegratedSystemController {
      */
     @GetMapping("")
     @PreAuthorize("hasAuthority('integratedSystem:view')")
+    @Operation(
+            summary = "List integrated systems with filters",
+            description = "Retrieves a paginated list of integrated systems. Supports filtering by code, host, description, " +
+                    "protocol, and creation date range. Supports sorting and pagination. Requires 'integratedSystem:view' authority."
+    )
     public ResponseEntity<Page<?>> getAll(
             @RequestParam(required = false) String code,
             @RequestParam(required = false) String host,
@@ -59,7 +67,6 @@ public class IntegratedSystemController {
         Sort sort = sortDirection.equalsIgnoreCase("asc")
                 ? Sort.by(sortedBy).ascending()
                 : Sort.by(sortedBy).descending();
-
         Pageable pageable = PageRequest.of(page, size, sort);
 
         Specification<IntegratedSystem> spec = Specification
@@ -73,6 +80,8 @@ public class IntegratedSystemController {
         return ResponseEntity.ok(service.getAll(spec, pageable));
     }
 
+    // ===================== GET INTEGRATED SYSTEM BY CODE =====================
+
     /**
      * Retrieves a specific integrated system by its unique code.
      *
@@ -81,9 +90,15 @@ public class IntegratedSystemController {
      */
     @GetMapping("/{code}")
     @PreAuthorize("hasAuthority('integratedSystem:view')")
+    @Operation(
+            summary = "Get integrated system by code",
+            description = "Retrieve details of a single integrated system by its unique code. Requires 'integratedSystem:view' authority."
+    )
     public ResponseEntity<?> getById(@PathVariable String code) {
         return ResponseEntity.ok(service.getById(code));
     }
+
+    // ===================== CREATE INTEGRATED SYSTEM =====================
 
     /**
      * Creates a new integrated system.
@@ -93,6 +108,10 @@ public class IntegratedSystemController {
      */
     @PostMapping
     @PreAuthorize("hasAuthority('integratedSystem:create')")
+    @Operation(
+            summary = "Create a new integrated system",
+            description = "Creates a new integrated system. Requires 'integratedSystem:create' authority. Returns 400 if the key already exists."
+    )
     public ResponseEntity<?> integrateNewSystem(@RequestBody IntegratedSystemDto body) {
         IntegratedSystemDto response = service.create(body);
         if (response == null) {
@@ -100,6 +119,8 @@ public class IntegratedSystemController {
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    // ===================== UPDATE INTEGRATED SYSTEM =====================
 
     /**
      * Updates an existing integrated system.
@@ -109,6 +130,10 @@ public class IntegratedSystemController {
      */
     @PutMapping
     @PreAuthorize("hasAuthority('integratedSystem:edit')")
+    @Operation(
+            summary = "Update an existing integrated system",
+            description = "Updates an existing integrated system with the provided details. Requires 'integratedSystem:edit' authority. Returns 400 if the system key is not found."
+    )
     public ResponseEntity<?> update(@RequestBody IntegratedSystemDto body) {
         IntegratedSystemDto response = service.update(body);
         if (response == null) {

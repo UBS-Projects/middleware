@@ -5,6 +5,7 @@ import com.middleware.backend.notification.enums.ChannelType;
 import com.middleware.backend.notification.model.NotificationTemplate;
 import com.middleware.backend.notification.service.NotificationTemplateService;
 import com.middleware.backend.notification.specification.NotificationTemplateSpecification;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,25 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.time.LocalDate;
+
 /**
  * REST Controller for managing notification templates.
- *
- * <p>This controller handles all operations related to notification templates,
- * including creation, update, retrieval, validation, and filtering.
- * It supports pagination, sorting, and filtering based on template fields and metadata.</p>
- *
- * <p>Endpoints include:
- * <ul>
- *   <li>GET /api/templates/{id} - Retrieve a template by ID</li>
- *   <li>GET /api/templates - Retrieve all templates with filtering and pagination</li>
- *   <li>POST /api/templates - Create a new template</li>
- *   <li>PUT /api/templates - Update an existing template</li>
- *   <li>PATCH /api/templates/{id} - Toggle a template's active status</li>
- *   <li>POST /api/templates/validate-json - Validate the JSON structure of a template</li>
- *   <li>GET /api/templates/all - Retrieve all templates for dropdowns or lookups</li>
- * </ul></p>
- *
- * <p>All endpoints are secured using role-based permissions via Spring Security.</p>
  */
 @RestController
 @RequestMapping("/api/templates")
@@ -44,42 +29,25 @@ public class TemplateController {
 
     private final NotificationTemplateService service;
 
-    /**
-     * Retrieves a specific notification template by its unique ID.
-     *
-     * @param id The ID of the notification template.
-     * @return ResponseEntity containing the template details.
-     */
+    // ===================== GET TEMPLATE BY ID =====================
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('template:view')")
+    @Operation(
+            summary = "Get template by ID",
+            description = "Retrieve details of a single notification template by its unique ID. Requires 'template:view' authority."
+    )
     public ResponseEntity<?> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    /**
-     * Retrieves all templates with optional filters, pagination, and sorting.
-     *
-     * <p>Supported filters include:
-     * <ul>
-     *   <li><b>templateName</b> – partial match on template name</li>
-     *   <li><b>code</b> – partial match on template code</li>
-     *   <li><b>type</b> – filter by channel type (e.g., EMAIL, SMS, PUSH)</li>
-     *   <li><b>createdAfter</b> / <b>createdBefore</b> – filter by creation date range</li>
-     * </ul></p>
-     *
-     * @param templateName Optional filter for the template name.
-     * @param code Optional filter for the template code.
-     * @param type Optional filter for channel type (EMAIL, SMS, PUSH, etc.).
-     * @param createdAfter Filter for templates created after this date.
-     * @param createdBefore Filter for templates created before this date.
-     * @param page Page index for pagination (default 0).
-     * @param size Number of items per page (default 10).
-     * @param sortedBy Field to sort by (default "updatedAt").
-     * @param sortDirection Sort order ("asc" or "desc", default "desc").
-     * @return Paginated list of templates matching the criteria.
-     */
+    // ===================== GET ALL TEMPLATES =====================
     @GetMapping("")
     @PreAuthorize("hasAuthority('template:view')")
+    @Operation(
+            summary = "List templates with filters",
+            description = "Retrieves a paginated list of notification templates. Supports filtering by template name, code, channel type, and creation date range. " +
+                    "Supports sorting and pagination. Requires 'template:view' authority."
+    )
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String templateName,
             @RequestParam(required = false) String code,
@@ -96,17 +64,14 @@ public class TemplateController {
                         ? Sort.by(sortedBy).ascending()
                         : Sort.by(sortedBy).descending());
 
-        // Convert string 'type' to ChannelType enum safely (ignore invalid values)
         ChannelType channelType = null;
         if (type != null) {
             try {
                 channelType = ChannelType.valueOf(type.toUpperCase());
             } catch (IllegalArgumentException ignored) {
-                // invalid type string, ignored
             }
         }
 
-        // Build dynamic JPA specification for filtering
         Specification<NotificationTemplate> spec = Specification
                 .where(NotificationTemplateSpecification.hasField("name", templateName, NotificationTemplateSpecification.MatchMode.CONTAINS))
                 .and(NotificationTemplateSpecification.hasField("code", code, NotificationTemplateSpecification.MatchMode.CONTAINS))
@@ -117,63 +82,58 @@ public class TemplateController {
         return ResponseEntity.ok(service.findAll(spec, pageable));
     }
 
-    /**
-     * Creates a new notification template.
-     *
-     * @param dto The DTO object containing template data such as name, code, content, and type.
-     * @return ResponseEntity containing the created template.
-     */
+    // ===================== CREATE TEMPLATE =====================
     @PostMapping("")
     @PreAuthorize("hasAuthority('template:create')")
+    @Operation(
+            summary = "Create a new template",
+            description = "Creates a new notification template. Requires 'template:create' authority."
+    )
     public ResponseEntity<?> create(@Valid @RequestBody NotificationTemplateDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
 
-    /**
-     * Updates an existing notification template.
-     *
-     * @param dto The DTO object containing updated template information.
-     * @return ResponseEntity containing the updated template.
-     */
+    // ===================== UPDATE TEMPLATE =====================
     @PutMapping("")
     @PreAuthorize("hasAuthority('template:edit')")
+    @Operation(
+            summary = "Update an existing template",
+            description = "Updates an existing notification template. Requires 'template:edit' authority."
+    )
     public ResponseEntity<?> update(@Valid @RequestBody NotificationTemplateDto dto) {
         return ResponseEntity.ok(service.update(dto));
     }
 
-    /**
-     * Toggles the activation status of a template (e.g., active/inactive).
-     *
-     * @param id The template ID.
-     * @return HTTP 204 No Content on success.
-     */
+    // ===================== CHANGE STATUS =====================
     @PatchMapping("/{id}")
     @PreAuthorize("hasAuthority('template:edit')")
+    @Operation(
+            summary = "Toggle template status",
+            description = "Toggles the activation status (active/inactive) of a notification template. Requires 'template:edit' authority."
+    )
     public ResponseEntity<?> changeStatus(@PathVariable long id) {
         service.changeStatus(id);
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Validates the structure of a provided JSON string for template body format correctness.
-     *
-     * @param jsonString Raw JSON content to validate.
-     * @return ResponseEntity containing validation results.
-     */
+    // ===================== VALIDATE JSON =====================
     @PostMapping("/validate-json")
     @PreAuthorize("hasAuthority('template:validate')")
+    @Operation(
+            summary = "Validate JSON structure",
+            description = "Validates the structure of a given JSON string for a template body. Requires 'template:validate' authority."
+    )
     public ResponseEntity<?> validateJsonStructure(@RequestBody String jsonString) {
         return ResponseEntity.ok(service.validateJsonStructure(jsonString));
     }
 
-    /**
-     * Retrieves all templates for quick dropdown lists or search suggestions.
-     *
-     * @param search Optional text filter to search templates by name or code.
-     * @return List of all templates matching the search query.
-     */
+    // ===================== GET ALL TEMPLATES FOR DROPDOWNS =====================
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('template:view')")
+    @Operation(
+            summary = "Retrieve all templates for dropdowns",
+            description = "Fetches all templates for dropdown lists or search suggestions. Supports optional search by name or code. Requires 'template:view' authority."
+    )
     public ResponseEntity<?> getAllTemplates(@RequestParam(required = false) String search) {
         return ResponseEntity.ok(service.getAllTemplates(search));
     }
