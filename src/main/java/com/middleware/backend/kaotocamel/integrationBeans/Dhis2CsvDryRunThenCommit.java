@@ -105,9 +105,6 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
         if (dto.getAdditionalKey2() != null && dto.getAdditionalValue2() != null) {
             map.put(dto.getAdditionalKey2(), dto.getAdditionalValue2());
         }
-        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-        System.out.println(map);
-        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
         return map;
     }
 
@@ -147,10 +144,6 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
      * Returns the response body and stores the HTTP code internally.
      */
     private String callDhis2(byte[] csv, String qBase, boolean dryRun, Map<String, String> config) throws Exception {
-        System.out.println("*******************************");
-        System.out.println(config);
-        System.out.println("*******************************");
-
         // Build base URL from protocol + host + optional port
         String protocol = config.getOrDefault("protocol", "https").toLowerCase();
         String host = config.get("host");

@@ -28,24 +28,49 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ConfigController {
 
+    /**
+     * Service layer handling Config entities.
+     */
     private final ConfigService configService;
 
+    // ===================== GET SINGLE CONFIG =====================
 
-
-
+    /**
+     * Get details of a specific configuration by key.
+     *
+     * @param key the configuration key to look up
+     * @return ResponseEntity containing the configuration details or 404 if not found
+     */
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('config:view')")
-    public ResponseEntity<?> getConfigDetails(
-            @PathVariable String key){
+    public ResponseEntity<?> getConfigDetails(@PathVariable String key) {
         return ResponseEntity.ok(configService.getConfigDetails(key));
     }
 
+    // ===================== GET ALL CONFIGS WITH FILTERS =====================
+
+    /**
+     * Retrieve a paginated list of configurations with optional filters.
+     * Filters include key, value, type, createdAfter, and createdBefore.
+     * Sorting and paging are also supported.
+     *
+     * @param key            optional key to filter configs (partial match)
+     * @param value          optional value to filter configs (partial match)
+     * @param type           optional config type (will be converted to ConfigType enum)
+     * @param createdAfter   optional start date filter
+     * @param createdBefore  optional end date filter
+     * @param page           page number (default 0)
+     * @param size           page size (default 10)
+     * @param sortedBy       field to sort by (default "updatedAt")
+     * @param sortDirection  sort direction ("asc" or "desc", default "desc")
+     * @return ResponseEntity containing a paginated list of configs matching the filters
+     */
     @GetMapping
     @PreAuthorize("hasAuthority('config:view')")
     public ResponseEntity<Page<?>> getAllConfigs(
             @RequestParam(required = false) String key,
             @RequestParam(required = false) String value,
-            @RequestParam(required = false) String type, // string from request
+            @RequestParam(required = false) String type,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdAfter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdBefore,
             @RequestParam(defaultValue = "0") int page,
@@ -66,6 +91,7 @@ public class ConfigController {
             }
         }
 
+        // Build dynamic JPA Specification based on filters
         Specification<Config> spec = Specification
                 .where(ConfigSpecification.hasField("key", key, ConfigSpecification.MatchMode.CONTAINS))
                 .and(ConfigSpecification.hasField("value", value, ConfigSpecification.MatchMode.CONTAINS))
@@ -76,16 +102,32 @@ public class ConfigController {
         return ResponseEntity.ok(configService.findAll(spec, pageable));
     }
 
+    // ===================== CREATE CONFIG =====================
 
+    /**
+     * Create a new configuration.
+     *
+     * @param dto configuration data transfer object
+     * @return ResponseEntity with the created config, or bad request if key already exists
+     */
     @PostMapping
     @PreAuthorize("hasAuthority('config:create')")
     public ResponseEntity<?> createConfig(@RequestBody ConfigDto dto) {
         Config saved = configService.saveConfig(dto);
-        if (saved==null)
+        if (saved == null)
             return ResponseEntity.badRequest().body("Key Already Exists");
         return ResponseEntity.ok(ConfigMapper.toDTO(saved));
     }
 
+    // ===================== UPDATE CONFIG =====================
+
+    /**
+     * Update the value of an existing configuration.
+     *
+     * @param key  the key of the configuration to update
+     * @param body a map containing the new value {"value": "..."}
+     * @return ResponseEntity with the updated config, or bad request if not found
+     */
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('config:edit')")
     public ResponseEntity<?> updateConfig(

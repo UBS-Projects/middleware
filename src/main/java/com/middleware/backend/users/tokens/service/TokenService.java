@@ -46,7 +46,6 @@ public class TokenService {
      * @throws java.util.NoSuchElementException if no token is found for the email
      */
     public ResponseEntity<?> logout(String email) {
-        System.out.println(email);
         Optional<Token> tok = repo.findByUser_Email(email);
         tok.get().setValid(false);
         return ResponseEntity.ok(repo.save(tok.get()));

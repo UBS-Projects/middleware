@@ -27,6 +27,13 @@ import java.util.*;
 
 import java.util.Map;
 
+/**
+ * Service implementation for sending notifications and retrieving notification logs.
+ * <p>
+ * Handles sending notifications via email or SMS, applying placeholder replacements,
+ * and logging the notification status (SUCCESS/FAILED) to the database.
+ * </p>
+ */
 @Service
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
@@ -37,15 +44,22 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationLogRepository logRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Sends a notification to a list of groups using a specified template and channel.
+     *
+     * @param groupCodes   list of group codes to send the notification to
+     * @param templateCode the template code to use for the notification
+     * @param channelCode  the channel code (EMAIL or SMS) to send the notification through
+     * @throws RuntimeException if the template, channel, or group is not found, or sending fails
+     */
     @Override
     public void sendToGroup(List<String> groupCodes, String templateCode, String channelCode) {
-        // Fetch template and channel
         NotificationTemplate template = templateRepository.findByCode(templateCode)
                 .orElseThrow(() -> new RuntimeException("Template not found"));
         ChannelConfig channel = channelRepository.findByCode(channelCode)
                 .orElseThrow(() -> new RuntimeException("Channel not found"));
 
-        // Parse channel config JSON
+        // Parse channel configuration JSON
         Map<String, String> config;
         try {
             config = objectMapper.readValue(channel.getConfig(), new TypeReference<>() {});
@@ -53,16 +67,16 @@ public class NotificationServiceImpl implements NotificationService {
             throw new RuntimeException("Invalid channel config JSON", e);
         }
 
-        // Get current authenticated user
+        // Get currently authenticated user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
 
+        // Send notifications to each group
         for (String groupId : groupCodes) {
             NotificationGroup group = groupRepository.findByCode(groupId)
                     .orElseThrow(() -> new RuntimeException("Group not found with id " + groupId));
 
             try {
-                // Send message
                 if (channel.getType() == ChannelType.EMAIL) {
                     sendEmail(group, template, config);
                 } else if (channel.getType() == ChannelType.SMS) {
@@ -97,7 +111,6 @@ public class NotificationServiceImpl implements NotificationService {
                         .build();
                 logRepository.save(log);
 
-                // Propagate exception so controller can return 500
                 throw new RuntimeException(
                         "Failed to send notification for group " + groupId + ": " + ex.getMessage(), ex
                 );
@@ -105,11 +118,15 @@ public class NotificationServiceImpl implements NotificationService {
         }
     }
 
-
-
-    private void sendEmail(NotificationGroup group, NotificationTemplate template,
-                           Map<String, String> config) throws Exception {
-
+    /**
+     * Sends an email notification to all receivers in a group.
+     *
+     * @param group    the notification group
+     * @param template the notification template
+     * @param config   the channel configuration containing SMTP credentials
+     * @throws Exception if sending fails
+     */
+    private void sendEmail(NotificationGroup group, NotificationTemplate template, Map<String, String> config) throws Exception {
         String host = config.get("smtpHost");
         int port = Integer.parseInt(config.get("smtpPort"));
         String username = config.get("username");
@@ -145,9 +162,15 @@ public class NotificationServiceImpl implements NotificationService {
         }
     }
 
-    private void sendSms(NotificationGroup group, NotificationTemplate template,
-                         Map<String, String> config) throws Exception {
-
+    /**
+     * Sends an SMS notification to all receivers in a group.
+     *
+     * @param group    the notification group
+     * @param template the notification template
+     * @param config   the channel configuration containing API credentials
+     * @throws Exception if sending fails
+     */
+    private void sendSms(NotificationGroup group, NotificationTemplate template, Map<String, String> config) throws Exception {
         for (Receiver receiver : group.getReceivers()) {
             Map<String, String> placeholders = Map.of(
                     "name", receiver.getName(),
@@ -160,6 +183,13 @@ public class NotificationServiceImpl implements NotificationService {
         }
     }
 
+    /**
+     * Sends an HTTP request to an SMS API to deliver a message.
+     *
+     * @param config the channel configuration containing API URL and credentials
+     * @param to     the recipient phone number
+     * @param body   the message body
+     */
     private void sendSmsRequest(Map<String, String> config, String to, String body) {
         String url = config.get("ipUrl");
         String method = config.getOrDefault("method", "POST").toUpperCase();
@@ -167,31 +197,19 @@ public class NotificationServiceImpl implements NotificationService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        // --- Optional Auth ---
         if (config.containsKey("accountSid") && config.containsKey("authToken")) {
             String auth = Base64.getEncoder().encodeToString(
-                    (config.get("accountSid") + ":" + config.get("authToken"))
-                            .getBytes(StandardCharsets.UTF_8)
+                    (config.get("accountSid") + ":" + config.get("authToken")).getBytes(StandardCharsets.UTF_8)
             );
             headers.set("Authorization", "Basic " + auth);
         }
 
-        // --- Dynamic payload ---
         StringBuilder payload = new StringBuilder();
-        if (config.containsKey("apiKey")) {
-            payload.append("api_key=").append(config.get("apiKey")).append("&");
-        }
-        if (config.containsKey("apiSecret")) {
-            payload.append("api_secret=").append(config.get("apiSecret")).append("&");
-        }
-        if (config.containsKey("username")) {
-            payload.append("username=").append(config.get("username")).append("&");
-        }
-        if (config.containsKey("password")) {
-            payload.append("password=").append(config.get("password")).append("&");
-        }
+        if (config.containsKey("apiKey")) payload.append("api_key=").append(config.get("apiKey")).append("&");
+        if (config.containsKey("apiSecret")) payload.append("api_secret=").append(config.get("apiSecret")).append("&");
+        if (config.containsKey("username")) payload.append("username=").append(config.get("username")).append("&");
+        if (config.containsKey("password")) payload.append("password=").append(config.get("password")).append("&");
 
-        // Use dynamic keys
         String fromKey = config.getOrDefault("fromKey", "from");
         String toKey = config.getOrDefault("toKey", "to");
         String bodyKey = config.getOrDefault("bodyKey", "text");
@@ -204,21 +222,19 @@ public class NotificationServiceImpl implements NotificationService {
         RestTemplate rest = new RestTemplate();
 
         try {
-            ResponseEntity<String> response = rest.exchange(
-                    url,
-                    HttpMethod.valueOf(method),
-                    entity,
-                    String.class
-            );
-            System.out.println("SMS Response: " + response.getBody());
+            ResponseEntity<String> response = rest.exchange(url, HttpMethod.valueOf(method), entity, String.class);
         } catch (Exception e) {
             System.err.println("SMS failed for " + to + ": " + e.getMessage());
         }
     }
 
-
-
-
+    /**
+     * Replaces placeholders in a template with actual values.
+     *
+     * @param template     the template string
+     * @param placeholders the map of placeholders to values
+     * @return the template with placeholders replaced
+     */
     private String applyPlaceholders(String template, Map<String, String> placeholders) {
         String result = template;
         for (Map.Entry<String, String> entry : placeholders.entrySet()) {
@@ -227,10 +243,16 @@ public class NotificationServiceImpl implements NotificationService {
         return result;
     }
 
-
+    /**
+     * Retrieves a paginated list of notification logs with DTO mapping.
+     *
+     * @param spec     the filtering specification
+     * @param pageable the pagination information
+     * @return a page of {@link LogDto} mapped from {@link NotificationLog}
+     */
     @Override
     public ResponseEntity<Page<?>> findAll(Specification<NotificationLog> spec, Pageable pageable) {
-        return ResponseEntity.ok(logRepository.findAll(spec, pageable).map(r->
+        return ResponseEntity.ok(logRepository.findAll(spec, pageable).map(r ->
                 LogDto.builder()
                         .id(r.getId())
                         .groupName(r.getGroup().getName())
@@ -244,20 +266,26 @@ public class NotificationServiceImpl implements NotificationService {
                         .build()));
     }
 
+    /**
+     * Retrieves a single notification log by its ID with DTO mapping.
+     *
+     * @param id the ID of the notification log
+     * @return the {@link LogDto} corresponding to the log
+     */
     @Override
     public ResponseEntity<?> getById(Long id) {
-        return ResponseEntity.ok(logRepository.findById(id).map(
-                r->
-                        LogDto.builder()
-                                .id(r.getId())
-                                .groupName(r.getGroup().getName())
-                                .templateName(r.getTemplate().getName())
-                                .channelName(r.getChannel().getName())
-                                .status(r.getStatus())
-                                .errorMessage(r.getErrorMessage())
-                                .userName(r.getUserName())
-                                .sentAt(r.getSentAt())
-                                .createdAt(r.getCreatedAt())
-                                .build()));
+        return ResponseEntity.ok(logRepository.findById(id).map(r ->
+                LogDto.builder()
+                        .id(r.getId())
+                        .groupName(r.getGroup().getName())
+                        .templateName(r.getTemplate().getName())
+                        .channelName(r.getChannel().getName())
+                        .status(r.getStatus())
+                        .errorMessage(r.getErrorMessage())
+                        .userName(r.getUserName())
+                        .sentAt(r.getSentAt())
+                        .createdAt(r.getCreatedAt())
+                        .build()));
     }
 }
+

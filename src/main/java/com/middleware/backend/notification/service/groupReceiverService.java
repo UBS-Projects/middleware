@@ -23,13 +23,29 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Service for managing receivers within notification groups.
+ * <p>
+ * Handles adding receivers to groups, retrieving unlinked groups, listing group receivers,
+ * and updating group-receiver associations. Logs all actions using
+ * {@link NotificationActionsLogsService}.
+ * </p>
+ */
 @Service
 @AllArgsConstructor
 public class groupReceiverService {
+
     private final NotificationGroupRepository groupRepo;
     private final ReceiverRepository receiverRepo;
     private final NotificationActionsLogsService loggingService;
 
+    /**
+     * Adds receivers to a notification group.
+     *
+     * @param dto the {@link GroupReceiversDto} containing group ID and list of receiver IDs
+     * @return the updated {@link NotificationGroupDto} with receivers linked
+     * @throws RuntimeException if the group or any receiver is not found
+     */
     public NotificationGroupDto addReceivers(GroupReceiversDto dto) {
         NotificationGroup entity = groupRepo.findById(dto.getId())
                 .orElseThrow(() -> new RuntimeException("Group not found"));
@@ -40,88 +56,131 @@ public class groupReceiverService {
         entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
         List<Receiver> receivers = new ArrayList<>();
-        for(Long r : dto.getReceivers()){
-            receivers.add(receiverRepo.findById(r).get());
+        for (Long r : dto.getReceivers()) {
+            receivers.add(receiverRepo.findById(r).orElseThrow(() -> new RuntimeException("Receiver not found")));
         }
         entity.setReceivers(receivers);
-        String rec = receivers.stream()
-                .map(r -> r.getName())
+
+        String recNames = receivers.stream()
+                .map(Receiver::getName)
                 .collect(Collectors.joining(","));
+
+        // Log action
         loggingService.save(NotificationActionsLogs.builder()
                 .action("POST")
-                .details("Linked Receivers: "+rec+" Into Group "+ entity.getName())
+                .details("Linked Receivers: " + recNames + " Into Group " + entity.getName())
                 .email(currentUser)
                 .eventTime(new Timestamp(System.currentTimeMillis()))
                 .build()
-
         );
+
         return GroupMapper.mapToDto(groupRepo.save(entity));
     }
 
-
+    /**
+     * Retrieves a list of receivers for dropdown/search purposes.
+     *
+     * @param search optional search term
+     * @return a list of {@link ReceiverRequest} containing receiver IDs and names
+     */
     public List<ReceiverRequest> getReceivers(String search) {
         if (search == null || search.isBlank()) {
-            return receiverRepo.findAll(PageRequest.of(0, 3)) // fetch first 5 if no search term
+            return receiverRepo.findAll(PageRequest.of(0, 3))
                     .stream()
-                    .map(r->
-                            ReceiverRequest.builder().id(r.getId())
-                                    .name(r.getName())
-                                    .build())
+                    .map(r -> ReceiverRequest.builder()
+                            .id(r.getId())
+                            .name(r.getName())
+                            .build())
                     .toList();
         } else {
-            return receiverRepo.findTop5ByNameContainingIgnoreCase(search).stream().map(r->
-                    ReceiverRequest.builder().id(r.getId())
+            return receiverRepo.findTop5ByNameContainingIgnoreCase(search)
+                    .stream()
+                    .map(r -> ReceiverRequest.builder()
+                            .id(r.getId())
                             .name(r.getName())
-                            .build()).toList();
+                            .build())
+                    .toList();
         }
     }
 
+    /**
+     * Retrieves groups that do not have any receivers linked.
+     *
+     * @return a list of {@link GroupRequest} for unlinked groups
+     */
     public List<GroupRequest> getUnlinkedGroups() {
-        return groupRepo.findAllWithoutReceivers().stream().map(r ->
-                GroupRequest.builder().id(r.getId()).groupName(r.getName()).build()).toList();
+        return groupRepo.findAllWithoutReceivers()
+                .stream()
+                .map(r -> GroupRequest.builder()
+                        .id(r.getId())
+                        .groupName(r.getName())
+                        .build())
+                .toList();
     }
 
+    /**
+     * Retrieves a paginated list of groups with their linked receivers.
+     *
+     * @param pageable pagination information
+     * @return a page of {@link GroupReceiversDto2} containing group name and concatenated receiver names
+     */
     public Page<?> getGroupReceivers(Pageable pageable) {
-        Page<GroupReceiversDto2> page = groupRepo.findAllWithReceivers(pageable)
+        return groupRepo.findAllWithReceivers(pageable)
                 .map(p -> GroupReceiversDto2.builder()
                         .groupName(p.getName())
-                        .receiverName(
-                                p.getReceivers().stream()
-                                        .map(r -> r.getName())
-                                        .collect(Collectors.joining(", "))
-                        )
-                        .build()
-                );
-    return page;
+                        .receiverName(p.getReceivers().stream()
+                                .map(Receiver::getName)
+                                .collect(Collectors.joining(", ")))
+                        .build());
     }
 
+    /**
+     * Retrieves a notification group by its name.
+     *
+     * @param groupName the name of the group
+     * @return the {@link NotificationGroup} entity
+     * @throws NoSuchElementException if the group is not found
+     */
     public NotificationGroup getGroup(String groupName) {
-        return groupRepo.findByName(groupName).get();
+        return groupRepo.findByName(groupName).orElseThrow();
     }
 
+    /**
+     * Updates receivers for a notification group.
+     *
+     * @param body the {@link GroupReceiversDto} containing group ID and updated receiver IDs
+     * @return the updated {@link NotificationGroup} entity
+     * @throws ResponseStatusException if the group is not found
+     */
     public Object updateGroup(GroupReceiversDto body) {
         Optional<NotificationGroup> exists = groupRepo.findById(body.getId());
-        if(exists.isEmpty()){
+        if (exists.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+
         exists.get().setReceivers(null);
+
         List<Receiver> receivers = new ArrayList<>();
-        for(int i=0;i<body.getReceivers().size();i++){
-            Optional<Receiver> newReceiver = receiverRepo.findById(body.getReceivers().get(i));
-            receivers.add(newReceiver.get());
+        for (Long receiverId : body.getReceivers()) {
+            Receiver newReceiver = receiverRepo.findById(receiverId)
+                    .orElseThrow(() -> new RuntimeException("Receiver not found"));
+            receivers.add(newReceiver);
         }
+
         exists.get().setReceivers(receivers);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
+
+        // Log action
         loggingService.save(NotificationActionsLogs.builder()
                 .action("PUT")
-                .details("Updated Group Receivers for "+ exists.get().getName())
+                .details("Updated Group Receivers for " + exists.get().getName())
                 .email(currentUser)
                 .eventTime(new Timestamp(System.currentTimeMillis()))
                 .build()
-
         );
+
         return groupRepo.save(exists.get());
     }
 }

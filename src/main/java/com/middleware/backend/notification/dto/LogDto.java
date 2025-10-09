@@ -12,19 +12,61 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
+/**
+ * Data Transfer Object representing a notification log entry.
+ *
+ * <p>This DTO is used to transfer log information between the backend service and client,
+ * including details about the notification group, template, channel, status, and timestamps.</p>
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class LogDto {
-    private Long id;
-    private String groupName;
-    private String templateName;
-    private String channelName;
-    private String status;
-    private String errorMessage;
-    private String userName;
-    private Timestamp createdAt;
-    private Timestamp sentAt;
 
+    /**
+     * Unique identifier of the log entry.
+     */
+    private Long id;
+
+    /**
+     * Name of the notification group associated with this log.
+     */
+    private String groupName;
+
+    /**
+     * Name of the notification template used.
+     */
+    private String templateName;
+
+    /**
+     * Name of the notification channel used (e.g., EMAIL, SMS).
+     */
+    private String channelName;
+
+    /**
+     * Status of the notification (e.g., SENT, FAILED).
+     */
+    private String status;
+
+    /**
+     * Error message if the notification failed to send.
+     */
+    private String errorMessage;
+
+    /**
+     * Username of the user who triggered the notification.
+     */
+    private String userName;
+
+    /**
+     * Timestamp when the log entry was created.
+     */
+    private Timestamp createdAt;
+
+    /**
+     * Timestamp when the notification was sent.
+     */
+    private Timestamp sentAt;
 }
+
