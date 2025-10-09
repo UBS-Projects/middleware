@@ -28,6 +28,20 @@ public class ConfigProducer extends DefaultProducer {
             detail.setCode(endpoint.getCode());
         }
         ConfigDetail result = configService.getConfig (detail.getCode());
+        if (result == null) {
+            String code = exchange.getIn().getHeader("code", String.class);
+            String message = "No configuration found for code: " + (code != null ? code : "UNKNOWN");
+
+            exchange.getMessage().setBody(message);
+            exchange.getMessage().setHeader(Exchange.HTTP_RESPONSE_CODE, 404);
+            exchange.getMessage().setHeader("error", true);
+
+            // ✅ Mark the exchange as handled
+            exchange.setProperty(Exchange.ROUTE_STOP, true);
+            exchange.setProperty(Exchange.EXCEPTION_HANDLED, true);
+
+            return;
+        }
         LOG.info("Config Result Loaded: {}", result.getConfigs());
 
         // Set the fetched config as the response body

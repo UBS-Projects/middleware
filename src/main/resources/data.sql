@@ -85,27 +85,41 @@ INSERT INTO public.permissions (id, name) VALUES
                                               (66, 'channel:create'),
                                               (67, 'channel:edit'),
 
-                                              (69, 'group:view'),
-                                              (70, 'group:create'),
-                                              (71, 'group:edit'),
-                                              (72, 'group:delete'),
+                                              (68, 'group:view'),
+                                              (69, 'group:create'),
+                                              (70, 'group:edit'),
 
-                                              (73, 'receiver:view'),
-                                              (74, 'receiver:create'),
-                                              (75, 'receiver:edit'),
-                                              (76, 'receiver:delete'),
+                                              (71, 'receiver:view'),
+                                              (72, 'receiver:create'),
+                                              (73, 'receiver:edit'),
 
-                                              (77, 'template:view'),
-                                              (78, 'template:create'),
-                                              (79, 'template:edit'),
-                                              (80, 'template:delete'),
-                                              (81, 'template:validate'),
+                                              (74, 'template:view'),
+                                              (75, 'template:create'),
+                                              (76, 'template:edit'),
+                                              (77, 'template:validate'),
 
-                                              (82, 'groupReceivers:create'),
+                                              (78, 'groupReceivers:create'),
 
-                                              (83, 'notificationLogs:view'),
-                                              (84, 'notificationLogs:export')
-ON CONFLICT DO NOTHING;
+                                              (79, 'notificationLogs:view'),
+                                              (80, 'notificationLogs:export'),
+
+                                              (81, 'config:view'),
+                                              (82, 'config:create'),
+                                              (83, 'config:edit'),
+
+
+                                              (84, 'integratedSystem:view'),
+                                              (85, 'integratedSystem:create'),
+                                              (86, 'integratedSystem:edit'),
+
+                                              (87, 'dashboard:summary'),
+                                              (88, 'dashboard:transactionGraph'),
+                                              (89, 'dashboard:jobGraph'),
+                                              (90, 'dashboard:transactionList'),
+                                              (91, 'dashboard:jobList'),
+                                              (92, 'dashboard:tokenList')
+
+                                              ON CONFLICT DO NOTHING;
 
 
 INSERT INTO public.users
@@ -145,7 +159,7 @@ ALTER TABLE public.role_permissions
 INSERT INTO public.role_permissions (role_id, permission_id)
 SELECT 1, id
 FROM public.permissions
-WHERE id BETWEEN 1 AND 84
+WHERE id BETWEEN 1 AND 92
     ON CONFLICT(role_id, permission_id) DO NOTHING;
 
 
@@ -163,12 +177,7 @@ INSERT INTO public.config (
     updated_at
 )
 VALUES
-    (gen_random_uuid(), 'HMIS_DEV.code', 'HMIS_DEV', 'STRING', 'Unique DHIS2 code', 'System', NOW(), 'System', NOW()),
-    (gen_random_uuid(), 'HMIS_DEV.baseUrl', 'hmis-dev.moh.gov.jo/dwh', 'STRING', 'DHIS2 Base URL', 'System', NOW(), 'System', NOW()),
-    (gen_random_uuid(), 'HMIS_DEV.userName', 'supp_user', 'STRING', 'DHIS2 Username', 'System', NOW(), 'System', NOW()),
-    (gen_random_uuid(), 'HMIS_DEV.password', 'F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z', 'STRING', 'DHIS2 Password', 'System', NOW(), 'System', NOW()),
-    (gen_random_uuid(), 'HMIS_DEV.timeout', '30000', 'NUMBER', 'Request timeout in ms', 'System', NOW(), 'System', NOW()),
-    (gen_random_uuid(), 'HMIS_DEV.connectTimeout', '10000', 'NUMBER', 'Connection timeout in ms', 'System', NOW(), 'System', NOW())
+    (gen_random_uuid(), 'API_TIME_OUT', '3000', 'NUMBER', 'TIMEOUT FOR AN API', 'System', NOW(), 'System', NOW())
     ON CONFLICT (key) DO NOTHING;
 
 
@@ -199,6 +208,33 @@ VALUES (
 
 ALTER TABLE public.dynamic_route_audit
 ALTER COLUMN details TYPE text;
+
+
+INSERT INTO public.integrated_system (
+    id,
+    code,
+    host,
+    port,
+    description,
+    protocol,
+    additional_key1,
+    additional_value1,
+    additional_key2,
+    additional_value2,
+    authentication_type,
+    username,
+    password,
+    token,
+    created_by,
+    created_at,
+    updated_by,
+    updated_at
+)VALUES
+         (1,'DHIS2.1','play.im.dhis2.org/stable-2-41-5',443,'DHIS2 Instance one','HTTPS','timeout',30000,'connect-timeout',10000,'BASIC','admin','district','','SYSTEM',NOW(),'SYSTEM',NOW()),
+         (2,'DHIS2.2','hmis-dev.moh.gov.jo/dwh',443,'DHIS2 Instance two','HTTPS','timeout',30000,'connect-timeout',10000,'BASIC','supp_user','F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z','','SYSTEM',NOW(),'SYSTEM',NOW())
+        ON CONFLICT (code) DO NOTHING;
+
+
 
 -- user
 -- INSERT INTO public.dynamic_routes

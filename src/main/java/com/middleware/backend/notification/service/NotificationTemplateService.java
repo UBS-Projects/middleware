@@ -25,16 +25,18 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class NotificationTemplateService {
+
     private final TemplateRepository repo;
     private final NotificationActionsLogsService loggingService;
 
     public NotificationTemplateDto findById(Long id) {
-        return repo.findById(id).map(TemplateMapper::MapToDto)
+        return repo.findById(id)
+                .map(TemplateMapper::MapToDto)
                 .orElseThrow(() -> new RuntimeException("Template not found"));
     }
 
-    public Page<NotificationTemplateDto> findAll(Specification<NotificationTemplate> spec,Pageable pageable) {
-        return repo.findAll(spec,pageable).map(TemplateMapper::MapToDto);
+    public Page<NotificationTemplateDto> findAll(Specification<NotificationTemplate> spec, Pageable pageable) {
+        return repo.findAll(spec, pageable).map(TemplateMapper::MapToDto);
     }
 
     public NotificationTemplateDto create(NotificationTemplateDto dto) {
@@ -46,6 +48,7 @@ public class NotificationTemplateService {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
+
         dto.setName(dto.getName().trim());
         dto.setCode(dto.getCode().trim());
         dto.setCreatedBy(currentUser);
@@ -55,15 +58,14 @@ public class NotificationTemplateService {
 
         NotificationTemplate saved = repo.save(TemplateMapper.MapToEntity(dto));
 
-
         loggingService.save(NotificationActionsLogs.builder()
-                        .action("POST")
-                        .details("Created New Template "+dto.getName())
-                        .email(currentUser)
-                        .eventTime(new Timestamp(System.currentTimeMillis()))
+                .action("POST")
+                .details("Created New Template " + dto.getName())
+                .email(currentUser)
+                .eventTime(new Timestamp(System.currentTimeMillis()))
                 .build()
-
         );
+
         return TemplateMapper.MapToDto(saved);
     }
 
@@ -74,61 +76,62 @@ public class NotificationTemplateService {
         repo.findByName(dto.getName().trim())
                 .orElseThrow(() -> new RuntimeException("Template Name Exists"));
 
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
+
         entity.setBody(dto.getBody());
         entity.setSubject(dto.getSubject());
         entity.setType(ChannelType.valueOf(dto.getType()));
+        entity.setActive(dto.isActive());
         entity.setUpdatedBy(currentUser);
         entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
         loggingService.save(NotificationActionsLogs.builder()
                 .action("PUT")
-                .details("Updated Template "+dto.getName())
+                .details("Updated Template " + dto.getName())
                 .email(currentUser)
                 .eventTime(new Timestamp(System.currentTimeMillis()))
                 .build()
-
         );
 
         return TemplateMapper.MapToDto(repo.save(entity));
     }
 
-    public void delete(long id) {
+    public void changeStatus(long id) {
         NotificationTemplate entity = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Template not found"));
-
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
 
         loggingService.save(NotificationActionsLogs.builder()
-                .action("DELETE")
-                .details("Deleted Template "+entity.getName())
+                .action(entity.isActive() ? "Inactivating Template" : "Activating Template")
+                .details(entity.isActive() ? "Inactive Template " + entity.getName() : "Activating Template " + entity.getName())
                 .email(currentUser)
                 .eventTime(new Timestamp(System.currentTimeMillis()))
                 .build()
-
         );
-        repo.delete(entity);
+
+        entity.setActive(!entity.isActive());
+        entity.setUpdatedBy(currentUser);
+        entity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        repo.save(entity);
     }
 
-     public Map<String, Object> validateJsonStructure(String jsonString) {
+    public Map<String, Object> validateJsonStructure(String jsonString) {
         Map<String, Object> response = new HashMap<>();
-
         try {
-             ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(jsonString);
 
-             if (!jsonNode.has("subject") || jsonNode.get("subject").isNull() ||
+            if (!jsonNode.has("subject") || jsonNode.get("subject").isNull() ||
                     jsonNode.get("subject").asText().trim().isEmpty()) {
                 response.put("valid", false);
                 response.put("message", "JSON must contain 'subject' field");
                 return response;
             }
 
-             if (!jsonNode.has("body") || jsonNode.get("body").isNull() ||
+            if (!jsonNode.has("body") || jsonNode.get("body").isNull() ||
                     jsonNode.get("body").asText().trim().isEmpty()) {
                 response.put("valid", false);
                 response.put("message", "JSON must contain 'body' field");
@@ -149,26 +152,28 @@ public class NotificationTemplateService {
             response.put("message", "JSON processing error: " + e.getMessage());
             response.put("errorType", "General Error");
         }
-
         return response;
     }
 
     public List<ReceiverRequest> getAllTemplates(String search) {
         if (search == null || search.isBlank()) {
-            return repo.findAll(PageRequest.of(0, 3)) // fetch first 5 if no search term
+            return repo.findAllByActiveTrue(PageRequest.of(0, 3))
                     .stream()
-                    .map(r->
-                            ReceiverRequest.builder().id(r.getId())
-                                    .name(r.getName())
-                                    .code(r.getCode())
-                                    .build())
-                    .toList();
-        } else {
-            return repo.findTop5ByNameContainingIgnoreCase(search).stream().map(r->
-                    ReceiverRequest.builder().id(r.getId())
+                    .map(r -> ReceiverRequest.builder()
+                            .id(r.getId())
                             .name(r.getName())
                             .code(r.getCode())
-                            .build()).toList();
+                            .build())
+                    .toList();
+        } else {
+            return repo.findTop5ByNameContainingIgnoreCaseAndActiveTrue(search)
+                    .stream()
+                    .map(r -> ReceiverRequest.builder()
+                            .id(r.getId())
+                            .name(r.getName())
+                            .code(r.getCode())
+                            .build())
+                    .toList();
         }
     }
 }

@@ -1,15 +1,8 @@
 package com.middleware.backend.notification.controller;
 
-import com.middleware.backend.notification.enums.ChannelType;
-import com.middleware.backend.notification.model.ChannelConfig;
 import com.middleware.backend.notification.model.NotificationActionsLogs;
 import com.middleware.backend.notification.service.NotificationActionsLogsService;
-import com.middleware.backend.notification.specification.ChannelConfigSpecification;
 import com.middleware.backend.notification.specification.NotificationActionsLogsConfigSpecification;
-import com.middleware.backend.scheduledJobs.enums.Status;
-import com.middleware.backend.scheduledJobs.model.JobExecutionLogs;
-import com.middleware.backend.scheduledJobs.specification.JobExecutionLogsSpecification;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
 
 import java.time.LocalDate;
 
@@ -27,10 +21,29 @@ import java.time.LocalDate;
 @RequestMapping("/api/notification-logs")
 @AllArgsConstructor
 public class NotificationActionsLogsController {
+
     private final NotificationActionsLogsService service;
 
+    /**
+     * Retrieves a paginated list of notification action logs with optional filters.
+     *
+     * @param action contains match on notification action (e.g., SENT, FAILED)
+     * @param email contains match on user email address
+     * @param details contains match on log details
+     * @param createdAfter filter logs with event time on/after this date
+     * @param createdBefore filter logs with event time on/before this date
+     * @param page zero-based page index
+     * @param size page size
+     * @param sortedBy property to sort by (default "eventTime")
+     * @param sortDirection sort order: "asc" or "desc"
+     * @return 200 with a paginated list of notification logs matching criteria
+     */
     @GetMapping("")
     @PreAuthorize("hasAuthority('notificationLogs:view')")
+    @Operation(
+            summary = "List notification logs",
+            description = "Retrieves a paginated list of notification action logs with optional filters by action, email, details, and date range. Supports sorting and pagination."
+    )
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String action,
             @RequestParam(required = false) String email,
@@ -43,8 +56,9 @@ public class NotificationActionsLogsController {
             @RequestParam(defaultValue = "desc") String sortDirection
     ) {
         Pageable pageable = PageRequest.of(page, size,
-                sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortedBy).ascending() : Sort.by(sortedBy).descending());
-
+                sortDirection.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending());
 
         Specification<NotificationActionsLogs> spec = Specification
                 .where(NotificationActionsLogsConfigSpecification.hasField("action", action, NotificationActionsLogsConfigSpecification.MatchMode.CONTAINS))
@@ -56,17 +70,41 @@ public class NotificationActionsLogsController {
         return ResponseEntity.ok(service.findAll(spec, pageable));
     }
 
+    /**
+     * Retrieves a specific notification log entry by its ID.
+     *
+     * @param id unique notification log ID
+     * @return 200 with log details or 404 if not found
+     */
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('notificationLogs:view')")
-    public ResponseEntity<?> get(@PathVariable long id){
+    @Operation(
+            summary = "Get notification log by ID",
+            description = "Retrieves detailed information about a specific notification action log by its unique ID."
+    )
+    public ResponseEntity<?> get(@PathVariable long id) {
         return ResponseEntity.ok(service.getById(id));
     }
 
-
-
-
+    /**
+     * Exports filtered notification logs to a CSV or XLSX file.
+     *
+     * @param action contains match on notification action
+     * @param email contains match on user email
+     * @param details contains match on log details
+     * @param createdAfter filter logs with event time on/after this date
+     * @param createdBefore filter logs with event time on/before this date
+     * @param sortedBy property to sort by (default "eventTime")
+     * @param sortDirection sort order: "asc" or "desc"
+     * @param type export file type ("CSV" or "XLSX")
+     * @return 200 with downloadable file or 500 on server error
+     */
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('notificationLogs:export')")
+    @Operation(
+            summary = "Export notification logs",
+            description = "Exports notification action logs to a CSV or XLSX file with optional filters and sorting."
+    )
     public ResponseEntity<byte[]> exportFile(
             @RequestParam(required = false) String action,
             @RequestParam(required = false) String email,
@@ -79,8 +117,9 @@ public class NotificationActionsLogsController {
     ) {
         try {
             Pageable pageable = PageRequest.of(0, 100000,
-                    sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortedBy).ascending() : Sort.by(sortedBy).descending());
-
+                    sortDirection.equalsIgnoreCase("asc")
+                            ? Sort.by(sortedBy).ascending()
+                            : Sort.by(sortedBy).descending());
 
             Specification<NotificationActionsLogs> spec = Specification
                     .where(NotificationActionsLogsConfigSpecification.hasField("action", action, NotificationActionsLogsConfigSpecification.MatchMode.CONTAINS))
@@ -88,8 +127,6 @@ public class NotificationActionsLogsController {
                     .and(NotificationActionsLogsConfigSpecification.hasField("details", details, NotificationActionsLogsConfigSpecification.MatchMode.CONTAINS))
                     .and(NotificationActionsLogsConfigSpecification.dateAfter("eventTime", createdAfter))
                     .and(NotificationActionsLogsConfigSpecification.dateBefore("eventTime", createdBefore));
-
-
 
             byte[] fileBytes = service.exportFile(spec, pageable, type);
 

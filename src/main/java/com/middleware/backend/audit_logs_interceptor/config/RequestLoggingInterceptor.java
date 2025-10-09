@@ -23,7 +23,6 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        System.out.println("Incoming request: " + request.getMethod() + " " + request.getRequestURI());
         return true; // continue processing
     }
 }

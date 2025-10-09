@@ -17,8 +17,10 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.*;
 
+
 /**
- * Service for retrieving and persisting DHIS2 system settings.
+ * Service class for managing application configurations.
+ * Handles CRUD operations on Config entities and provides module-specific configuration retrieval.
  */
 @Service
 public class ConfigService {
@@ -26,12 +28,18 @@ public class ConfigService {
     @Autowired
     private ConfigRepository configRepository;
 
-
-
-
+    /**
+     * Saves a new configuration entry.
+     * Checks if a config with the same key already exists; if so, returns null.
+     * Sets auditing fields such as createdBy, updatedBy, createdAt, and updatedAt.
+     *
+     * @param config the ConfigDto object containing config details
+     * @return the saved Config entity, or null if the key already exists
+     */
     public Config saveConfig(ConfigDto config) {
         Optional<Config> exists = configRepository.findByKey(config.getKey());
-        if (exists.isPresent())return null;
+        if (exists.isPresent()) return null;
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
         config.setCreatedAt(LocalDateTime.now());
@@ -41,6 +49,14 @@ public class ConfigService {
         return configRepository.save(ConfigMapper.toEntity(config));
     }
 
+    /**
+     * Updates the value of an existing configuration identified by its key.
+     * Updates auditing fields updatedBy and updatedAt.
+     *
+     * @param key   the config key to update
+     * @param value the new value for the config
+     * @return the updated ConfigDto, or null if the config does not exist
+     */
     public ConfigDto updateConfig(String key, String value) {
         Optional<Config> config = configRepository.findByKey(key);
         if (config != null) {
@@ -54,28 +70,45 @@ public class ConfigService {
         return null;
     }
 
+    /**
+     * Retrieves all configurations matching the given specification and pagination.
+     *
+     * @param spec     the Specification for filtering configs
+     * @param pageable pagination and sorting information
+     * @return a page of ConfigDto objects
+     */
     public Page<?> findAll(Specification<Config> spec, Pageable pageable) {
-        Page<ConfigDto> page = configRepository.findAll(spec, pageable).map(
-                ConfigMapper::toDTO
-        );
+        Page<ConfigDto> page = configRepository.findAll(spec, pageable)
+                .map(ConfigMapper::toDTO);
         return page;
     }
 
+    /**
+     * Retrieves detailed information for a configuration by key.
+     *
+     * @param key the config key
+     * @return the corresponding ConfigDto
+     * @throws NoSuchElementException if the config does not exist
+     */
     public ConfigDto getConfigDetails(String key) {
         return configRepository.findByKey(key).map(ConfigMapper::toDTO).get();
     }
 
-
+    /**
+     * Retrieves a module configuration as a key-value map for a given code.
+     * If the config key contains a dot ('.'), returns the part after the first dot as the map key.
+     *
+     * @param code the config key to retrieve
+     * @return a map containing the config key and its value
+     * @throws RuntimeException if the config does not exist
+     */
     public Map<String, String> getModuleConfig(String code) {
-        System.out.println("Mohammad kadoumi");
-
         Optional<Config> config = configRepository.findByKey(code);
         if (config.isEmpty()) {
             throw new RuntimeException("Config not found for code: " + code);
         }
 
         String fullKey = config.get().getKey();
-        System.out.println(fullKey);
 
         // Extract part after the first dot
         int dotIndex = fullKey.indexOf('.');
@@ -85,9 +118,6 @@ public class ConfigService {
 
         Map<String, String> map = new HashMap<>();
         map.put(key, config.get().getValue());
-
-        System.out.println("**************&&&&&&&&&&&&&&&");
-        System.out.println(key);
 
         return map;
     }

@@ -23,30 +23,56 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Service for managing notification action logs.
+ * <p>
+ * Handles saving logs, retrieving logs with filtering and pagination,
+ * exporting logs to CSV or Excel, and fetching individual log entries.
+ * </p>
+ */
 @Service
 @AllArgsConstructor
 public class NotificationActionsLogsService {
+
     private final NotificationActionsLogsRepository repo;
 
+    /**
+     * Saves a notification action log entry.
+     *
+     * @param body the {@link NotificationActionsLogs} entity to save
+     */
     public void save(NotificationActionsLogs body){
         repo.save(body);
     }
 
+    /**
+     * Retrieves paginated logs according to a specification.
+     *
+     * @param spec the specification for filtering logs
+     * @param pageable the pagination information
+     * @return a {@link Page} of {@link NotificationActionsLogsDto}
+     */
     public Page<NotificationActionsLogsDto> findAll(Specification<NotificationActionsLogs> spec, Pageable pageable) {
-        return repo.findAll(spec, pageable).map(e->
-                        NotificationActionsLogsDto.builder()
-                                .id(e.getId())
-                                .action(e.getAction())
-                                .details(e.getDetails())
-                                .email(e.getEmail())
-                                .eventTime(e.getEventTime())
-                                .build()
-                );
+        return repo.findAll(spec, pageable).map(e ->
+                NotificationActionsLogsDto.builder()
+                        .id(e.getId())
+                        .action(e.getAction())
+                        .details(e.getDetails())
+                        .email(e.getEmail())
+                        .eventTime(e.getEventTime())
+                        .build()
+        );
     }
 
+    /**
+     * Retrieves a single log by its ID.
+     *
+     * @param id the log ID
+     * @return the corresponding {@link NotificationActionsLogsDto}, or null if not found
+     */
     public NotificationActionsLogsDto getById(long id) {
-        return repo.findById(id).map(
-                e-> NotificationActionsLogsDto.builder()
+        return repo.findById(id).map(e ->
+                NotificationActionsLogsDto.builder()
                         .id(e.getId())
                         .action(e.getAction())
                         .details(e.getDetails())
@@ -56,6 +82,15 @@ public class NotificationActionsLogsService {
         ).orElse(null);
     }
 
+    /**
+     * Exports logs according to the provided specification and pageable
+     * into CSV or Excel formats.
+     *
+     * @param spec the specification for filtering logs
+     * @param pageable the pagination information
+     * @param type the export type: CSV or Excel/XLSX
+     * @return a byte array containing the exported file
+     */
     public byte[] exportFile(Specification<NotificationActionsLogs> spec, Pageable pageable, String type) {
         List<NotificationActionsLogs> data;
         try {
@@ -80,6 +115,13 @@ public class NotificationActionsLogsService {
     }
 
     // ================= CSV Export =================
+
+    /**
+     * Converts a list of logs to CSV format.
+     *
+     * @param records the list of {@link NotificationActionsLogs}
+     * @return a CSV string
+     */
     private String convertToCSV(List<NotificationActionsLogs> records) {
         StringBuilder sb = new StringBuilder();
         sb.append("ID,Action,Details,Email,EventTime\n");
@@ -95,6 +137,12 @@ public class NotificationActionsLogsService {
         return sb.toString();
     }
 
+    /**
+     * Escapes a CSV value to properly handle commas, quotes, and newlines.
+     *
+     * @param value the original string
+     * @return the escaped string
+     */
     private String escapeCsv(String value) {
         if (value == null) return "";
         String escaped = value.replace("\"", "\"\"");
@@ -105,6 +153,14 @@ public class NotificationActionsLogsService {
     }
 
     // ================= Excel Export =================
+
+    /**
+     * Converts a list of logs to an Excel (XLSX) byte array.
+     *
+     * @param records the list of {@link NotificationActionsLogs}
+     * @return a byte array representing the Excel file
+     * @throws IOException if writing to the workbook fails
+     */
     private byte[] convertToExcel(List<NotificationActionsLogs> records) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Notification Logs");
@@ -139,5 +195,4 @@ public class NotificationActionsLogsService {
             }
         }
     }
-
 }

@@ -49,8 +49,6 @@ public class RoleService {
      * @return {@link ResponseEntity} containing a {@link Page} of roles that match the criteria.
      */
     public ResponseEntity<Page<?>> getAll(Specification<Role> spec, Pageable pageable) {
-        System.out.println("*****************************************8");
-        System.out.println("*****************************************8");
         return ResponseEntity.ok(
                 repo.findAll(spec,pageable));
 

@@ -79,12 +79,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                 // Map request path → routeId
                 String path = request.getRequestURI();
-                System.out.println("path: "+path);
                 String method = request.getMethod();
-                System.out.println("method: "+method);
                 AntPathMatcher matcher = new AntPathMatcher();
                 String normalizedPath = path.replaceFirst("^/camel", "");
-                System.out.println("normpath: "+normalizedPath);
                 List<DynamicRouteEntity> dbRoutes = routeService.getActiveRoutes();
                 boolean isAdmin = userDetails.getAuthorities().stream()
                         .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
@@ -92,23 +89,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                     String matchedRouteId = null;
                     for (DynamicRouteEntity dbRoute : dbRoutes) {
-                        System.out.println("dbRoute: "+dbRoute);
                         String routePath = dbRoute.getPath();
-                        System.out.println("routePath: "+routePath);
-
                         String routeMethod = dbRoute.getHttpMethod();
-                        System.out.println("routeMethod: "+routeMethod);
-
                         String pattern = routePath.replaceAll("\\{[^/]+\\}", "*") + "/**";
-                        System.out.println("pattern: "+pattern);
-                        System.out.println(matcher.match(pattern, normalizedPath));
-                        System.out.println(method.equalsIgnoreCase(routeMethod));
-
                         if (matcher.match(pattern, normalizedPath)&&
                                 method.equalsIgnoreCase(routeMethod)) {
                             matchedRouteId = routeService.getRouteIdByPathAndMethod(routePath,method);
-                            System.out.println("matchedRouteId: "+matchedRouteId);
-
                             break;
                         }
                     }

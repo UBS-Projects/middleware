@@ -72,7 +72,6 @@ public class ScheduledJobsController {
                                           @RequestParam("status") String status) throws SchedulerException {
         String action = status.equals("pause") ? "pause" : "resume";
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println("Authenticated user email: " + email);
 
         try {
             ScheduledJobs job = status.equals("pause") ? service.pauseJob(id,email) : service.resumeJob(id, email);
@@ -188,8 +187,6 @@ public class ScheduledJobsController {
                     : Sort.by(sortedBy).descending());
             Page<?> result = service.getAllRoutes(spec, pageable);
             String email = SecurityContextHolder.getContext().getAuthentication().getName();
-            System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-            System.out.println("Authenticated user email: " + email);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();

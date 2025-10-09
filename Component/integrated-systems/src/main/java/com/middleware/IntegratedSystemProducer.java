@@ -30,17 +30,30 @@ public class IntegratedSystemProducer extends DefaultProducer {
         }
 
         if (code == null || code.isEmpty()) {
-            throw new IllegalArgumentException("System code must be provided (either via URI or header 'systemCode').");
+            String message = "System code must be provided (via URI or header 'systemCode').";
+            exchange.getMessage().setBody(message);
+            exchange.getMessage().setHeader(Exchange.HTTP_RESPONSE_CODE, 400);
+            exchange.getMessage().setHeader("error", true);
+            LOG.warn(message);
+            return;
         }
 
         IntegratedSystemDetail detail = systemService.getSystemConfig(code);
+
         if (detail == null) {
-            throw new IllegalStateException("No configuration found for integrated system code: " + code);
+            String message = "No configuration found for integrated system code: " + code;
+            exchange.getMessage().setBody(message);
+            exchange.getMessage().setHeader(Exchange.HTTP_RESPONSE_CODE, 404);
+            exchange.getMessage().setHeader("error", true);
+            LOG.warn(message);
+            return;
         }
-        System.out.println(detail);
+
+        // Convert config map to JSON
         String jsonConfig = mapper.writeValueAsString(detail.getConfig());
         exchange.getMessage().setHeader(detail.getCode(), jsonConfig);
-        System.out.println(jsonConfig);
+        exchange.getMessage().setBody(jsonConfig);
+
         LOG.info("Integrated system config loaded for '{}': {}", detail.getCode(), jsonConfig);
     }
 }
