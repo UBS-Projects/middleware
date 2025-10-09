@@ -4183,3 +4183,454 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@5451c3a8
 2025-10-08 10:37:18 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
 2025-10-08 10:37:18 [SpringApplicationShutdownHook] DEBUG o.a.c.h.common.DefaultHttpRegistry - Unregistering CamelServlet with name CamelServlet
 2025-10-08 10:37:18 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-10-08 10:38:07 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-10-08 10:38:07 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 23-valhalla with PID 24748 (C:\Users\omard\Desktop\Work\back-end - Copy\target\classes started by omard in C:\Users\omard\Desktop\Work\back-end - Copy)
+2025-10-08 10:38:07 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-08 10:38:10 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-10-08 10:38:10 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-08 10:38:10 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-10-08 10:38:10 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-10-08 10:38:10 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-08 10:38:10 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-10-08 10:38:10 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-10-08 10:38:11 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-08 10:38:11 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@126d8659']
+	Database driver: undefined/unknown
+	Database version: 17.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-08 10:38:12 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-08 10:38:14 [main] DEBUG o.a.camel.spring.SpringCamelContext - Set the application context classloader to: TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+jdk.internal.loader.ClassLoaders$AppClassLoader@5451c3a8
+
+2025-10-08 10:38:14 [main] DEBUG o.a.camel.support.LRUCacheFactory - Creating DefaultLRUCacheFactory
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.e.DefaultCamelContextExtension - Setting up management with factory: org.apache.camel.impl.engine.DefaultManagementStrategyFactory@2a09e0d4
+2025-10-08 10:38:14 [main] DEBUG o.a.camel.support.ResolverHelper - Found HealthCheckRegistry: org.apache.camel.impl.health.DefaultHealthCheckRegistry via: META-INF/services/org/apache/camel/health-check/default-registry
+2025-10-08 10:38:14 [main] DEBUG o.a.camel.support.ResolverHelper - Detected and using HealthCheckRegistry: org.apache.camel.impl.health.DefaultHealthCheckRegistry@13d57fd0
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id registry-health-check-repository successfully registered
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-spring/4.4.0/camel-spring-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-xml-jaxp/4.4.0/camel-xml-jaxp-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-http/4.4.0/camel-http-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-http-common/4.4.0/camel-http-common-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-attachments/4.4.0/camel-attachments-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-jackson/4.4.0/camel-jackson-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-support/4.4.0/camel-support-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-file/4.4.0/camel-file-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-base/4.4.0/camel-base-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-spring/4.4.0/camel-spring-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-xml-jaxp/4.4.0/camel-xml-jaxp-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-http/4.4.0/camel-http-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-http-common/4.4.0/camel-http-common-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-attachments/4.4.0/camel-attachments-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-jackson/4.4.0/camel-jackson-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-support/4.4.0/camel-support-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-file/4.4.0/camel-file-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/omard/.m2/repository/org/apache/camel/camel-base/4.4.0/camel-base-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.spring.converter.ResourceConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.spring.converter.ResourceConverterLoader loading converters
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.converter.jaxp.CamelXmlJaxpBulkConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.converter.jaxp.CamelXmlJaxpBulkConverterLoader loading converters
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.http.HttpConvertersLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.http.HttpConvertersLoader loading converters
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.http.HttpEntityConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.http.HttpEntityConverterLoader loading converters
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.http.common.HttpConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.http.common.HttpConverterLoader loading converters
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.attachment.AttachmentConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.attachment.AttachmentConverterLoader loading converters
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.jackson.converter.JacksonTypeConvertersLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.jackson.converter.JacksonTypeConvertersLoader loading converters
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.converter.stream.StreamCacheBulkConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.converter.stream.StreamCacheBulkConverterLoader loading converters
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.file.GenericFileConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.file.GenericFileConverterLoader loading converters
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.converter.CamelBaseBulkConverterLoader
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.converter.CamelBaseBulkConverterLoader loading converters
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.c.DefaultTypeConverter - Loaded 259 type converters in 45ms
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) built in 80ms
+2025-10-08 10:38:14 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.e.BaseExecutorServiceManager - Created new ScheduledThreadPool for source: ErrorHandlerRedeliveryThreadPool with name: ErrorHandlerRedeliveryTask -> org.apache.camel.util.concurrent.SizedScheduledExecutorService@3f77cd24[ErrorHandlerRedeliveryTask]
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: spring-event-component via type: org.apache.camel.component.event.EventComponentConfigurer via: META-INF/services/org/apache/camel/configurer/spring-event-component
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: spring-event-endpoint via type: org.apache.camel.component.event.EventEndpointConfigurer via: META-INF/services/org/apache/camel/configurer/spring-event-endpoint
+2025-10-08 10:38:14 [main] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: spring-event-component via type: org.apache.camel.component.event.EventComponentConfigurer via: META-INF/services/org/apache/camel/configurer/spring-event-component
+2025-10-08 10:38:14 [main] DEBUG o.a.camel.spring.SpringCamelContext - Set the application context classloader to: TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+jdk.internal.loader.ClassLoaders$AppClassLoader@5451c3a8
+
+2025-10-08 10:38:16 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-10-08 10:38:16 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2025-10-08 10:38:16 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-10-08 10:38:16 [main] INFO  c.m.b.config.RestTemplateConfig - Creating RestTemplate with SSL trust-all configuration
+2025-10-08 10:38:16 [main] INFO  c.m.b.config.RestTemplateConfig - RestTemplate configured with connect-timeout: 10000ms, read-timeout: 30000ms
+2025-10-08 10:38:17 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-10-08 10:38:17 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-10-08 10:38:17 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-10-08 10:38:17 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-10-08 10:38:17 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-10-08 10:38:17 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-10-08 10:38:17 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-10-08 10:38:17 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@36e92f95
+2025-10-08 10:38:17 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-10-08 10:38:17 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-10-08 10:38:18 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 163 mappings in 'requestMappingHandlerMapping'
+2025-10-08 10:38:18 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-10-08 10:38:18 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheck with id context successfully registered
+2025-10-08 10:38:18 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id routes successfully registered
+2025-10-08 10:38:18 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id producers successfully registered
+2025-10-08 10:38:18 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id consumers successfully registered
+2025-10-08 10:38:19 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-10-08 10:38:19 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-10-08 10:38:21 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-10-08 10:38:21 [main] DEBUG o.a.c.h.common.DefaultHttpRegistry - Registering CamelServlet with name CamelServlet consumers present: 0
+2025-10-08 10:38:21 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-10-08 10:38:21 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent[source=org.springframework.boot.web.embedded.tomcat.TomcatWebServer@54d3fb75]
+2025-10-08 10:38:21 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-10-08 10:38:21 [main] DEBUG o.a.c.s.b.CamelSpringBootApplicationListener - Post-processing CamelContext bean: camel-1
+2025-10-08 10:38:21 [main] DEBUG o.apache.camel.main.RoutesConfigurer - RoutesCollectorEnabled: org.apache.camel.spring.boot.CamelSpringBootRoutesCollector@6dd80c6
+2025-10-08 10:38:21 [main] DEBUG o.a.c.s.b.CamelSpringBootRoutesCollector - Finding additional routes from: classpath:camel/*
+2025-10-08 10:38:21 [main] DEBUG o.a.c.s.b.CamelSpringBootRoutesCollector - Finding additional routes from: classpath:camel-template/*
+2025-10-08 10:38:21 [main] DEBUG o.a.c.s.b.CamelSpringBootRoutesCollector - Finding additional routes from: classpath:camel-rest/*
+2025-10-08 10:38:21 [main] DEBUG o.a.c.s.b.CamelSpringBootRoutesCollector - No additional RoutesBuilder discovered from: classpath:camel/*,classpath:camel-template/*,classpath:camel-rest/*
+2025-10-08 10:38:21 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.context.event.ContextRefreshedEvent[source=org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@4bef0fe3, started on Wed Oct 08 10:38:07 EEST 2025]
+2025-10-08 10:38:21 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: simple
+2025-10-08 10:38:21 [main] DEBUG o.a.camel.support.ResolverHelper - Lookup Language with name simple in registry. Found: null
+2025-10-08 10:38:21 [main] DEBUG o.a.camel.support.ResolverHelper - Lookup Language with name simple-language in registry. Found: null
+2025-10-08 10:38:21 [main] DEBUG o.a.c.language.simple.SimpleLanguage - Simple language predicate/expression cache size: 1000
+2025-10-08 10:38:21 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) initialized in 122ms
+2025-10-08 10:38:21 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-10-08 10:38:21 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ClassResolver=org.apache.camel.impl.engine.DefaultClassResolver@cdbace2, PackageScanClassResolver=org.apache.camel.spring.boot.FatJarPackageScanClassResolver@77505c0e, ApplicationContextClassLoader=TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+jdk.internal.loader.ClassLoaders$AppClassLoader@5451c3a8
+, RouteController=org.apache.camel.impl.engine.DefaultRouteController@1be9d5f1
+2025-10-08 10:38:21 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - StreamCaching is disabled on CamelContext: camel-1
+2025-10-08 10:38:21 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using HeadersMapFactory: org.apache.camel.impl.engine.DefaultHeadersMapFactory@e85f30c
+2025-10-08 10:38:21 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ReactiveExecutor: org.apache.camel.impl.engine.DefaultReactiveExecutor@4f88bf80
+2025-10-08 10:38:21 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ThreadPoolFactory: org.apache.camel.support.DefaultThreadPoolFactory@7cd9be59
+2025-10-08 10:38:21 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using HealthCheck: camel-spring-boot
+2025-10-08 10:38:21 [main] DEBUG o.a.c.i.e.DefaultStreamCachingStrategy - StreamCaching configuration DefaultStreamCachingStrategy[spoolDirectoryEnabled=false, spoolDirectory=null, spoolCipher=null, spoolThreshold=131072, spoolUsedHeapMemoryThreshold=0, bufferSize=0, anySpoolRules=false]
+2025-10-08 10:38:21 [main] DEBUG o.a.c.i.e.DefaultStreamCachingStrategy - StreamCaching in use
+2025-10-08 10:38:21 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Clearing BeanIntrospection cache with 1 objects using during starting Camel
+2025-10-08 10:38:21 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - BeanIntrospection invoked 4 times during starting Camel
+2025-10-08 10:38:21 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-10-08 10:38:21 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 232ms (build:80ms init:122ms start:30ms)
+2025-10-08 10:38:21 [main] DEBUG o.a.camel.support.ResolverHelper - Found ProcessorFactory: org.apache.camel.processor.DefaultProcessorFactory via: META-INF/services/org/apache/camel/processor-factory
+2025-10-08 10:38:21 [main] DEBUG o.a.camel.support.ResolverHelper - Detected and using ProcessorFactory: org.apache.camel.processor.DefaultProcessorFactory@21c3b7fc
+2025-10-08 10:38:21 [main] DEBUG o.a.camel.impl.DefaultCamelContext - start() took 164 millis
+2025-10-08 10:38:21 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 14.664 seconds (process running for 15.933)
+2025-10-08 10:38:21 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.context.event.ApplicationStartedEvent[source=org.springframework.boot.SpringApplication@71522fb7]
+2025-10-08 10:38:21 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.availability.AvailabilityChangeEvent[source=org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@4bef0fe3, started on Wed Oct 08 10:38:07 EEST 2025]
+2025-10-08 10:38:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-08 10:38:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-08 10:38:22 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.context.event.ApplicationReadyEvent[source=org.springframework.boot.SpringApplication@71522fb7]
+2025-10-08 10:38:22 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-10-08 10:38:22 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq synced to 8. setval returned 8
+2025-10-08 10:38:22 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-10-08 10:38:22 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.availability.AvailabilityChangeEvent[source=org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@4bef0fe3, started on Wed Oct 08 10:38:07 EEST 2025]
+2025-10-08 10:38:22 [RMI TCP Connection(2)-172.24.4.130] DEBUG o.a.c.i.health.AbstractHealthCheck - Invoke health-check (LIVENESS) camel/context
+2025-10-08 10:38:22 [RMI TCP Connection(1)-172.24.4.130] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-08 10:38:22 [RMI TCP Connection(1)-172.24.4.130] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-10-08 10:38:22 [RMI TCP Connection(1)-172.24.4.130] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-10-08 10:38:22 [RMI TCP Connection(1)-172.24.4.130] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-10-08 10:38:22 [RMI TCP Connection(1)-172.24.4.130] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-10-08 10:38:22 [RMI TCP Connection(2)-172.24.4.130] DEBUG o.a.c.i.health.AbstractHealthCheck - Invoke health-check (READINESS) camel/context
+2025-10-08 10:38:22 [RMI TCP Connection(2)-172.24.4.130] DEBUG o.a.c.i.health.AbstractHealthCheck - Invoke health-check (ALL) camel/context
+2025-10-08 10:38:22 [RMI TCP Connection(1)-172.24.4.130] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@68f1dc98
+2025-10-08 10:38:22 [RMI TCP Connection(1)-172.24.4.130] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@7e1d3c6e
+2025-10-08 10:38:22 [RMI TCP Connection(1)-172.24.4.130] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-10-08 10:38:22 [RMI TCP Connection(1)-172.24.4.130] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 8 ms
+2025-10-08 10:38:27 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:27 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:27 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/logs?page=0&size=10&sort=receivedAt%2Cdesc", parameters={masked}
+2025-10-08 10:38:27 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.logging.controller.MiddlewareApiCallLogController#getAll(Map, int, int, String)
+2025-10-08 10:38:27 [http-nio-8081-exec-3] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-10-08 10:38:27 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:27 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
+2025-10-08 10:38:27 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:27 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/logs]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[178ms]
+2025-10-08 10:38:27 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:28 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:28 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:28 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/logs?page=0&size=10&sort=receivedAt%2Cdesc", parameters={masked}
+2025-10-08 10:38:28 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.logging.controller.MiddlewareApiCallLogController#getAll(Map, int, int, String)
+2025-10-08 10:38:28 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:28 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 0 containing UNKNOWN instances]
+2025-10-08 10:38:28 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:28 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/logs]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[99ms]
+2025-10-08 10:38:28 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/logs?page=0&size=10&sort=receivedAt%2Cdesc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:29 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:29 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:29 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:29 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:29 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:29 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:29 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dashboard/transaction, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:29 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dashboard/job/2025-10-08, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:29 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/transaction", parameters={}
+2025-10-08 10:38:29 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/job/2025-10-08", parameters={}
+2025-10-08 10:38:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.dashboard.controller.DashboardController#getTransactionList()
+2025-10-08 10:38:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.dashboard.controller.DashboardController#getJobsGraphCoordinates(LocalDate)
+2025-10-08 10:38:29 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dashboard/job, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:29 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/job", parameters={}
+2025-10-08 10:38:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.dashboard.controller.DashboardController#getJobsList()
+2025-10-08 10:38:29 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dashboard/transaction/2025-10-08, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:29 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/transaction/2025-10-08", parameters={}
+2025-10-08 10:38:29 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.dashboard.controller.DashboardController#getTransactionGraphCoordinates(LocalDate)
+2025-10-08 10:38:29 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dashboard/token, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:29 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/token", parameters={}
+2025-10-08 10:38:29 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.dashboard.controller.DashboardController#getTokenList()
+2025-10-08 10:38:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:29 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[]]
+2025-10-08 10:38:29 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:29 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/dashboard/transaction]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[130ms]
+2025-10-08 10:38:29 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dashboard/transaction, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:29 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dashboard, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:29 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard", parameters={}
+2025-10-08 10:38:29 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.dashboard.controller.DashboardController#getStatuses()
+2025-10-08 10:38:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[]]
+2025-10-08 10:38:29 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:29 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/dashboard/job]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[137ms]
+2025-10-08 10:38:29 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dashboard/job, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:29 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:29 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[]]
+2025-10-08 10:38:29 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:29 [http-nio-8081-exec-9] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/dashboard/token]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[136ms]
+2025-10-08 10:38:29 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dashboard/token, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [SummaryDto(summary={Failed Executed Jobs=0, Succeeded Executed Jobs=0, Total Executed Scheduled Jobs (truncated)...]
+2025-10-08 10:38:29 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:29 [http-nio-8081-exec-7] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/dashboard/job/2025-10-08]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[357ms]
+2025-10-08 10:38:29 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dashboard/job/2025-10-08, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:29 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:29 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [SummaryDto(summary={Succeeded Transactions=0, In Progress Transactions=0, Failed Transactions=0, Tot (truncated)...]
+2025-10-08 10:38:29 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:29 [http-nio-8081-exec-6] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/dashboard/transaction/2025-10-08]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[353ms]
+2025-10-08 10:38:29 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dashboard/transaction/2025-10-08, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:30 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:30 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [SummaryDto(summary={allJobs=0, failedTransactions=0, allTransactions=0, succeededTransactions=0, use (truncated)...]
+2025-10-08 10:38:30 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:30 [http-nio-8081-exec-5] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/dashboard]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[431ms]
+2025-10-08 10:38:30 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dashboard, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:46 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:46 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:46 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:46 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:46 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:46 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:38:46 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dashboard/job/2025-10-08, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:46 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/job/2025-10-08", parameters={}
+2025-10-08 10:38:46 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.dashboard.controller.DashboardController#getJobsGraphCoordinates(LocalDate)
+2025-10-08 10:38:46 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dashboard/job, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:46 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/job", parameters={}
+2025-10-08 10:38:46 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.dashboard.controller.DashboardController#getJobsList()
+2025-10-08 10:38:46 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dashboard/transaction, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:46 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/transaction", parameters={}
+2025-10-08 10:38:46 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.dashboard.controller.DashboardController#getTransactionList()
+2025-10-08 10:38:46 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dashboard/token, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:46 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/token", parameters={}
+2025-10-08 10:38:46 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.dashboard.controller.DashboardController#getTokenList()
+2025-10-08 10:38:46 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dashboard/transaction/2025-10-08, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:46 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard/transaction/2025-10-08", parameters={}
+2025-10-08 10:38:46 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.dashboard.controller.DashboardController#getTransactionGraphCoordinates(LocalDate)
+2025-10-08 10:38:46 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:46 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[]]
+2025-10-08 10:38:46 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:46 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:46 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/dashboard/job]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[114ms]
+2025-10-08 10:38:46 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[]]
+2025-10-08 10:38:46 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dashboard/job, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:46 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:46 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/dashboard/transaction]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[110ms]
+2025-10-08 10:38:46 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dashboard/transaction, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:46 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:46 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[]]
+2025-10-08 10:38:46 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:46 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/dashboard/token]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[102ms]
+2025-10-08 10:38:46 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dashboard/token, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:46 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/dashboard, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:46 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/dashboard", parameters={}
+2025-10-08 10:38:46 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.dashboard.controller.DashboardController#getStatuses()
+2025-10-08 10:38:46 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:46 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [SummaryDto(summary={Failed Executed Jobs=0, Succeeded Executed Jobs=0, Total Executed Scheduled Jobs (truncated)...]
+2025-10-08 10:38:46 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:46 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/dashboard/job/2025-10-08]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[259ms]
+2025-10-08 10:38:46 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dashboard/job/2025-10-08, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:47 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:47 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [SummaryDto(summary={Succeeded Transactions=0, In Progress Transactions=0, Failed Transactions=0, Tot (truncated)...]
+2025-10-08 10:38:47 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:47 [http-nio-8081-exec-2] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/dashboard/transaction/2025-10-08]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[442ms]
+2025-10-08 10:38:47 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dashboard/transaction/2025-10-08, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:47 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:38:47 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [SummaryDto(summary={allJobs=0, failedTransactions=0, allTransactions=0, succeededTransactions=0, use (truncated)...]
+2025-10-08 10:38:47 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:38:47 [http-nio-8081-exec-1] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/dashboard]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[494ms]
+2025-10-08 10:38:47 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/dashboard, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:38:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-08 10:38:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-08 10:39:01 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:39:01 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:39:01 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/admin/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:39:01 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/integrated-apis?page=0&size=10", parameters={masked}
+2025-10-08 10:39:01 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-10-08 10:39:01 [http-nio-8081-exec-9] INFO  c.m.b.k.c.IntegratedApiController - === SORTING DEBUG ===
+2025-10-08 10:39:01 [http-nio-8081-exec-9] INFO  c.m.b.k.c.IntegratedApiController - Received sort array: [id, desc]
+2025-10-08 10:39:01 [http-nio-8081-exec-9] INFO  c.m.b.k.c.IntegratedApiController - Sort array length: 2
+2025-10-08 10:39:01 [http-nio-8081-exec-9] INFO  c.m.b.k.c.IntegratedApiController - sort[0] = 'id'
+2025-10-08 10:39:01 [http-nio-8081-exec-9] INFO  c.m.b.k.c.IntegratedApiController - sort[1] = 'desc'
+2025-10-08 10:39:01 [http-nio-8081-exec-9] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
+2025-10-08 10:39:01 [http-nio-8081-exec-9] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
+2025-10-08 10:39:01 [http-nio-8081-exec-9] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
+2025-10-08 10:39:01 [http-nio-8081-exec-9] DEBUG c.m.b.k.c.IntegratedApiController - Final sort object: id: DESC
+2025-10-08 10:39:01 [http-nio-8081-exec-9] INFO  c.m.b.k.c.IntegratedApiController - Final Sort object: id: DESC
+2025-10-08 10:39:01 [http-nio-8081-exec-9] INFO  c.m.b.k.c.IntegratedApiController - === END SORTING DEBUG ===
+2025-10-08 10:39:01 [http-nio-8081-exec-9] INFO  c.m.b.k.c.IntegratedApiController - Pageable: Page request [number: 0, size 10, sort: id: DESC]
+2025-10-08 10:39:01 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:39:01 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-10-08 10:39:01 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:39:01 [http-nio-8081-exec-9] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/admin/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[100ms]
+2025-10-08 10:39:01 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/admin/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:39:01 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/admin/integrated-apis/systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:39:01 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/integrated-apis/systems", parameters={}
+2025-10-08 10:39:01 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#getIntegratedSystems()
+2025-10-08 10:39:01 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:39:01 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[HMIS-DWH, test]]
+2025-10-08 10:39:01 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:39:01 [http-nio-8081-exec-7] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/admin/integrated-apis/systems]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[203ms]
+2025-10-08 10:39:01 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/admin/integrated-apis/systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:39:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-08 10:39:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-08 10:39:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-08 10:39:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-08 10:40:07 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:40:07 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:40:07 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:40:07 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:40:07 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/admin/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:40:07 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/integrated-apis?size=1000&isActive=true", parameters={masked}
+2025-10-08 10:40:07 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-10-08 10:40:07 [http-nio-8081-exec-2] INFO  c.m.b.k.c.IntegratedApiController - === SORTING DEBUG ===
+2025-10-08 10:40:07 [http-nio-8081-exec-2] INFO  c.m.b.k.c.IntegratedApiController - Received sort array: [id, desc]
+2025-10-08 10:40:07 [http-nio-8081-exec-2] INFO  c.m.b.k.c.IntegratedApiController - Sort array length: 2
+2025-10-08 10:40:07 [http-nio-8081-exec-2] INFO  c.m.b.k.c.IntegratedApiController - sort[0] = 'id'
+2025-10-08 10:40:07 [http-nio-8081-exec-2] INFO  c.m.b.k.c.IntegratedApiController - sort[1] = 'desc'
+2025-10-08 10:40:07 [http-nio-8081-exec-2] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
+2025-10-08 10:40:07 [http-nio-8081-exec-2] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
+2025-10-08 10:40:07 [http-nio-8081-exec-2] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
+2025-10-08 10:40:07 [http-nio-8081-exec-2] DEBUG c.m.b.k.c.IntegratedApiController - Final sort object: id: DESC
+2025-10-08 10:40:07 [http-nio-8081-exec-2] INFO  c.m.b.k.c.IntegratedApiController - Final Sort object: id: DESC
+2025-10-08 10:40:07 [http-nio-8081-exec-2] INFO  c.m.b.k.c.IntegratedApiController - === END SORTING DEBUG ===
+2025-10-08 10:40:07 [http-nio-8081-exec-2] INFO  c.m.b.k.c.IntegratedApiController - Pageable: Page request [number: 0, size 1000, sort: id: DESC]
+2025-10-08 10:40:07 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/admin/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:40:07 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/integration-mappings/mapping-types", parameters={}
+2025-10-08 10:40:07 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMappingTypes()
+2025-10-08 10:40:07 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:40:07 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE, IND (truncated)...]
+2025-10-08 10:40:07 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:40:07 [http-nio-8081-exec-9] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/admin/integration-mappings/mapping-types]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[6ms]
+2025-10-08 10:40:07 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/admin/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:40:07 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/admin/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:40:07 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/integration-mappings?page=0&size=10", parameters={masked}
+2025-10-08 10:40:07 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-10-08 10:40:07 [http-nio-8081-exec-7] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
+2025-10-08 10:40:07 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:40:07 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-10-08 10:40:07 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:40:07 [http-nio-8081-exec-2] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/admin/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[92ms]
+2025-10-08 10:40:07 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/admin/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:40:07 [http-nio-8081-exec-7] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - middlewareApi: null, integratedApiId: null, mappingType: null
+2025-10-08 10:40:07 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/admin/integration-mappings/middleware-apis, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:40:07 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/integration-mappings/middleware-apis", parameters={}
+2025-10-08 10:40:07 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMiddlewareApis()
+2025-10-08 10:40:07 [http-nio-8081-exec-7] DEBUG c.m.b.k.s.IntegrationMappingService - Found 8 results out of 8 total
+2025-10-08 10:40:07 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:40:07 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-10-08 10:40:07 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:40:07 [http-nio-8081-exec-7] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/admin/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[130ms]
+2025-10-08 10:40:07 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/admin/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:40:08 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:40:08 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[/healthmap]]
+2025-10-08 10:40:08 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:40:08 [http-nio-8081-exec-1] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/admin/integration-mappings/middleware-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[192ms]
+2025-10-08 10:40:08 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/admin/integration-mappings/middleware-apis, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:40:13 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:40:13 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
+2025-10-08 10:40:13 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/admin/integrated-apis/systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:40:13 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/integrated-apis/systems", parameters={}
+2025-10-08 10:40:13 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#getIntegratedSystems()
+2025-10-08 10:40:13 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:40:13 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[HMIS-DWH, test]]
+2025-10-08 10:40:13 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:40:13 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/admin/integrated-apis/systems]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[70ms]
+2025-10-08 10:40:13 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/admin/integrated-apis/systems, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:40:13 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/admin/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:40:13 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/integrated-apis?page=0&size=10", parameters={masked}
+2025-10-08 10:40:13 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-10-08 10:40:13 [http-nio-8081-exec-4] INFO  c.m.b.k.c.IntegratedApiController - === SORTING DEBUG ===
+2025-10-08 10:40:13 [http-nio-8081-exec-4] INFO  c.m.b.k.c.IntegratedApiController - Received sort array: [id, desc]
+2025-10-08 10:40:13 [http-nio-8081-exec-4] INFO  c.m.b.k.c.IntegratedApiController - Sort array length: 2
+2025-10-08 10:40:13 [http-nio-8081-exec-4] INFO  c.m.b.k.c.IntegratedApiController - sort[0] = 'id'
+2025-10-08 10:40:13 [http-nio-8081-exec-4] INFO  c.m.b.k.c.IntegratedApiController - sort[1] = 'desc'
+2025-10-08 10:40:13 [http-nio-8081-exec-4] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
+2025-10-08 10:40:13 [http-nio-8081-exec-4] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
+2025-10-08 10:40:13 [http-nio-8081-exec-4] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
+2025-10-08 10:40:13 [http-nio-8081-exec-4] DEBUG c.m.b.k.c.IntegratedApiController - Final sort object: id: DESC
+2025-10-08 10:40:13 [http-nio-8081-exec-4] INFO  c.m.b.k.c.IntegratedApiController - Final Sort object: id: DESC
+2025-10-08 10:40:13 [http-nio-8081-exec-4] INFO  c.m.b.k.c.IntegratedApiController - === END SORTING DEBUG ===
+2025-10-08 10:40:13 [http-nio-8081-exec-4] INFO  c.m.b.k.c.IntegratedApiController - Pageable: Page request [number: 0, size 10, sort: id: DESC]
+2025-10-08 10:40:13 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
+2025-10-08 10:40:13 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-10-08 10:40:13 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-10-08 10:40:13 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/admin/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[84ms]
+2025-10-08 10:40:13 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/admin/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
+2025-10-08 10:40:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-08 10:40:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-08 10:40:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-08 10:40:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-08 10:41:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-08 10:41:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-08 10:41:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-08 10:41:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-08 10:42:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-08 10:42:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-08 10:42:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-08 10:42:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-08 10:43:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-08 10:43:21 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-08 10:43:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-08 10:43:51 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.availability.AvailabilityChangeEvent[source=org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@4bef0fe3, started on Wed Oct 08 10:38:07 EEST 2025]
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.context.event.ContextClosedEvent[source=org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@4bef0fe3, started on Wed Oct 08 10:38:07 EEST 2025]
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] DEBUG o.a.c.i.e.DefaultAsyncProcessorAwaitManager - Shutting down with no inflight threads.
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:0)
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] DEBUG o.a.c.i.e.BaseExecutorServiceManager - Forcing shutdown of ExecutorService: org.apache.camel.util.concurrent.SizedScheduledExecutorService@3f77cd24[ErrorHandlerRedeliveryTask]
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] DEBUG o.a.c.i.e.DefaultInflightRepository - Shutting down with no inflight exchanges.
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] DEBUG o.a.c.i.e.DefaultBeanIntrospection - Stopping BeanIntrospection which was invoked: 4 times
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 6ms (uptime:5m43s)
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] DEBUG o.a.c.m.SimpleMainShutdownStrategy - Shutdown called
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] DEBUG o.a.c.h.common.DefaultHttpRegistry - Unregistering CamelServlet with name CamelServlet
+2025-10-08 10:44:04 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
