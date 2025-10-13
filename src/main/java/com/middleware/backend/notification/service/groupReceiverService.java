@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -124,11 +125,12 @@ public class groupReceiverService {
      * @param pageable pagination information
      * @return a page of {@link GroupReceiversDto2} containing group name and concatenated receiver names
      */
-    public Page<?> getGroupReceivers(Pageable pageable) {
-        return groupRepo.findAllWithReceivers(pageable)
-                .map(p -> GroupReceiversDto2.builder()
-                        .groupName(p.getName())
-                        .receiverName(p.getReceivers().stream()
+    public Page<GroupReceiversDto2> getGroupReceivers(Specification<NotificationGroup> spec, Pageable pageable) {
+        return groupRepo.findAll(spec, pageable)  // use spec directly
+                .map(g -> GroupReceiversDto2.builder()
+                        .groupId(g.getId())
+                        .groupName(g.getName())
+                        .receiverName(g.getReceivers().stream()
                                 .map(Receiver::getName)
                                 .collect(Collectors.joining(", ")))
                         .build());
@@ -152,14 +154,16 @@ public class groupReceiverService {
      * @return the updated {@link NotificationGroup} entity
      * @throws ResponseStatusException if the group is not found
      */
-    public Object updateGroup(GroupReceiversDto body) {
+    public ResponseEntity<?> updateGroup(GroupReceiversDto body) {
         Optional<NotificationGroup> exists = groupRepo.findById(body.getId());
         if (exists.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         exists.get().setReceivers(null);
-
+        if(body.getReceivers().isEmpty()){
+            return ResponseEntity.ok(groupRepo.save(exists.get()));
+        }
         List<Receiver> receivers = new ArrayList<>();
         for (Long receiverId : body.getReceivers()) {
             Receiver newReceiver = receiverRepo.findById(receiverId)
@@ -181,6 +185,6 @@ public class groupReceiverService {
                 .build()
         );
 
-        return groupRepo.save(exists.get());
+        return ResponseEntity.ok(groupRepo.save(exists.get()));
     }
 }

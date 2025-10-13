@@ -37,20 +37,18 @@ public class NotificationLog {
     /**
      * The notification group associated with this log entry.
      */
-    @ManyToOne
-    private NotificationGroup group;
+    @Column(name = "notification_group")
+    private String group;
 
     /**
      * The notification template used for this notification.
      */
-    @ManyToOne
-    private NotificationTemplate template;
+    private String template;
 
     /**
      * The channel through which the notification was sent.
      */
-    @ManyToOne
-    private ChannelConfig channel;
+    private String channel;
 
     /**
      * Status of the notification (e.g., PENDING, SUCCESS, FAILED).
@@ -68,6 +66,40 @@ public class NotificationLog {
      */
     @Column(name = "user_name")
     private String userName;
+
+
+
+
+    /**
+     * The body content of the notification request.
+     */
+    @Column(name = "request_body",columnDefinition = "TEXT")
+    private String requestBody;
+
+    /**
+     * The headers included in the notification request.
+     */
+    @Column(name = "request_header",columnDefinition = "TEXT")
+    private String requestHeader;
+
+    /**
+     * The body content received in the notification response.
+     */
+    @Column(name = "response_body",columnDefinition = "TEXT")
+    private String responseBody;
+
+    /**
+     * The headers received in the notification response.
+     */
+    @Column(name = "response_header",columnDefinition = "TEXT")
+    private String responseHeader;
+
+    /**
+     * The HTTP status code returned in the notification response.
+     */
+    @Column(name = "response_code",columnDefinition = "TEXT")
+    private String responseCode;
+
 
     /**
      * Timestamp when the notification log entry was created.

@@ -21,6 +21,8 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -124,24 +126,44 @@ public class NotificationTemplateService {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(jsonString);
 
+            // Check required fields
             if (!jsonNode.has("subject") || jsonNode.get("subject").isNull() ||
                     jsonNode.get("subject").asText().trim().isEmpty()) {
                 response.put("valid", false);
-                response.put("message", "JSON must contain 'subject' field");
+                response.put("message", "JSON must contain a non-empty 'subject' field");
                 return response;
             }
 
             if (!jsonNode.has("body") || jsonNode.get("body").isNull() ||
                     jsonNode.get("body").asText().trim().isEmpty()) {
                 response.put("valid", false);
-                response.put("message", "JSON must contain 'body' field");
+                response.put("message", "JSON must contain a non-empty 'body' field");
                 return response;
             }
 
+            String subject = jsonNode.get("subject").asText();
+            String body = jsonNode.get("body").asText();
+
+            // Validate placeholders
+            String placeholderError = validatePlaceholders(subject, "subject");
+            if (placeholderError != null) {
+                response.put("valid", false);
+                response.put("message", placeholderError);
+                return response;
+            }
+
+            placeholderError = validatePlaceholders(body, "body");
+            if (placeholderError != null) {
+                response.put("valid", false);
+                response.put("message", placeholderError);
+                return response;
+            }
+
+            // ✅ Everything passed
             response.put("valid", true);
-            response.put("message", "JSON is valid and contains required fields");
-            response.put("subject", jsonNode.get("subject").asText());
-            response.put("body", jsonNode.get("body").asText());
+            response.put("message", "JSON is valid and contains required fields with correct placeholders");
+            response.put("subject", subject);
+            response.put("body", body);
 
         } catch (com.fasterxml.jackson.core.JsonParseException e) {
             response.put("valid", false);
@@ -154,6 +176,43 @@ public class NotificationTemplateService {
         }
         return response;
     }
+
+    private String validatePlaceholders(String text, String fieldName) {
+        // Match all double-curly placeholders
+        Pattern doubleBracePattern = Pattern.compile("\\{\\{([^{}]+)\\}\\}");
+        Matcher matcher = doubleBracePattern.matcher(text);
+
+        // Check for malformed double-brace placeholders
+        while (matcher.find()) {
+            String inside = matcher.group(1).trim();
+            if (inside.isEmpty()) {
+                return String.format(
+                        "Empty placeholder detected in '%s'. Use {{name}} format.",
+                        fieldName
+                );
+            }
+            // Optional: add character validation if needed
+            if (!inside.matches("[a-zA-Z0-9_.]+")) {
+                return String.format(
+                        "Invalid characters in placeholder '%s' in '%s'. Use letters, numbers, underscore or dot only.",
+                        inside, fieldName
+                );
+            }
+        }
+
+        // Now check for any unmatched '{{' or '}}' (e.g., '{{name' or 'name}}')
+        int openBraces = text.length() - text.replace("{{", "").length();
+        int closeBraces = text.length() - text.replace("}}", "").length();
+        if (openBraces != closeBraces) {
+            return String.format(
+                    "Unbalanced double braces in '%s'. Ensure all '{{' have matching '}}'.",
+                    fieldName
+            );
+        }
+
+        return null; // All good
+    }
+
 
     public List<ReceiverRequest> getAllTemplates(String search) {
         if (search == null || search.isBlank()) {

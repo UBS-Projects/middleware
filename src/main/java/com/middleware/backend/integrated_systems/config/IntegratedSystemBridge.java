@@ -1,6 +1,7 @@
 package com.middleware.backend.integrated_systems.config;
 
 import com.middleware.backend.integrated_systems.dto.IntegratedSystemDto;
+import com.middleware.backend.integrated_systems.model.Protocol;
 import com.middleware.backend.integrated_systems.service.IntegratedSystemService;
 import com.middleware.model.IntegratedSystemDetail;
 import com.middleware.service.IntegratedSystemBridgeService;
@@ -49,7 +50,7 @@ public class IntegratedSystemBridge {
 
                 Map<String, Object> map = new LinkedHashMap<>();
                 map.put("host", dto.getHost());
-                map.put("port", dto.getPort());
+                map.put("port", dto.getPort().isEmpty()?(dto.getProtocol() == Protocol.HTTP ? 80 : 443):dto.getProtocol());
                 map.put("protocol", dto.getProtocol());
                 map.put("authenticationType", dto.getAuthenticationType());
                 map.put("username", dto.getUsername());

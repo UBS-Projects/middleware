@@ -1,7 +1,5 @@
 package com.middleware.backend.notification.repository;
 
-import com.middleware.backend.notification.dto.NotificationGroupDto;
-import com.middleware.backend.notification.dto.ReceiverRequest;
 import com.middleware.backend.notification.model.NotificationGroup;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,11 +42,12 @@ public interface NotificationGroupRepository extends JpaRepository<NotificationG
     /**
      * Retrieves paginated notification groups that have at least one associated receiver.
      *
+     * @param spec
      * @param pageable the pagination information
      * @return a page of {@link NotificationGroup} entities with receivers
      */
-    @Query("SELECT g FROM NotificationGroup g WHERE g.receivers IS NOT EMPTY")
-    Page<NotificationGroup> findAllWithReceivers(Pageable pageable);
+//    @Query("SELECT g FROM NotificationGroup g WHERE g.receivers IS NOT EMPTY")
+//    Page<NotificationGroup> findAllWithReceivers(Specification<NotificationGroup> spec, Pageable pageable);
 
     /**
      * Retrieves notification groups that have no associated receivers.
