@@ -43,25 +43,20 @@ public class NotificationSpecification {
                 return cb.conjunction(); // ignore filter if value is null/empty
             }
 
+            String lowerValue = "%" + value.toLowerCase() + "%";
+
             switch (matchMode) {
                 case EXACT:
-                    return cb.equal(root.get(field), value);
+                    return cb.equal(cb.lower(root.get(field)), value.toLowerCase());
                 case CONTAINS:
-                    // For associated entities like group, template, channel, handle nested fields
-                    if ("groupName".equals(field)) {
-                        return cb.like(cb.lower(root.get("group").get("name")), "%" + value.toLowerCase() + "%");
-                    } else if ("templateName".equals(field)) {
-                        return cb.like(cb.lower(root.get("template").get("name")), "%" + value.toLowerCase() + "%");
-                    } else if ("channelName".equals(field)) {
-                        return cb.like(cb.lower(root.get("channel").get("name")), "%" + value.toLowerCase() + "%");
-                    } else {
-                        return cb.like(cb.lower(root.get(field)), "%" + value.toLowerCase() + "%");
-                    }
+                    // All fields are direct columns (not nested entities)
+                    return cb.like(cb.lower(root.get(field)), lowerValue);
                 default:
                     return cb.conjunction();
             }
         };
     }
+
 
     /**
      * Returns a Specification to filter NotificationLog records created on or after a given date.
