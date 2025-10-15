@@ -30,18 +30,17 @@ public interface IntegratedApiRepository
     boolean existsByCode(String code);
 
     /**
-     * Find active METADATA API by bound API code
-     * Used to dynamically fetch metadata URL for business APIs
+     * Find active METADATA API by bound dynamic route ID
+     * Used to automatically fetch metadata for dynamic routes
      *
-     * @param boundApiCode The business API code (e.g., "HEALTHMAP_API")
+     * @param boundRouteId The dynamic route ID (e.g., "integration-mapping-test")
      * @return Optional containing the metadata API configuration if found
      */
     @Query("SELECT api FROM IntegratedApi api " +
             "WHERE api.type = 'METADATA' " +
-            "AND api.boundApiCode = :boundApiCode " +
+            "AND api.boundApiCode = :boundRouteId " +
             "AND api.isActive = true")
-    Optional<IntegratedApi> findActiveMetadataByBoundCode(@Param("boundApiCode") String boundApiCode);
-
+    Optional<IntegratedApi> findActiveMetadataByBoundCode(@Param("boundRouteId") String boundRouteId);
     /**
      * Find all active METADATA APIs with their bound codes
      * Useful for listing all available metadata configurations

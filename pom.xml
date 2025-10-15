@@ -17,9 +17,9 @@
     <packaging>jar</packaging>
     <name>middleware-backend</name>
     <description>Advanced Middleware Backend</description>
-<!--    <modules>-->
-<!--        <module>Notifications-component</module>-->
-<!--    </modules>-->
+    <!--    <modules>-->
+    <!--        <module>Notifications-component</module>-->
+    <!--    </modules>-->
 
     <properties>
         <!-- Use Java LTS version 21 for better stability with Spring Boot 3 -->
@@ -216,7 +216,11 @@
             <artifactId>Notifications-component</artifactId>
             <version>1.0.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.middleware</groupId>
+            <artifactId>Integration_Mapping</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <dependency>
             <groupId>com.middleware</groupId>
             <artifactId>configuration-component</artifactId>

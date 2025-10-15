@@ -1,6 +1,7 @@
 package com.middleware.backend.kaotocamel.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,15 +15,30 @@ import java.util.ArrayList;/**
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class IntegratedApiRequestDto {
+
+    @NotBlank(message = "Code is required")
     private String code;
+
+    @NotBlank(message = "Name is required")
     private String name;
+
+    @NotBlank(message = "API URL is required")
     private String apiUrl;
+
+    @NotBlank(message = "Type is required")
     private String type;
+
+    @NotBlank(message = "Integrated System is required")
     private String integratedSystem;
-    private Boolean isActive;
-    private String description;
-    @Size(max = 100)
+
     private String boundApiCode;
+
+    private Boolean useOuFromRequest;
+
+    private Boolean usePeFromRequest;
+
+    private Boolean isActive;
+
+    private String description;
 }

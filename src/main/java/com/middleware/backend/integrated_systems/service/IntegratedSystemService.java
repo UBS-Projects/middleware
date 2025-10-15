@@ -13,7 +13,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Service class for managing {@link IntegratedSystem} entities.
@@ -37,7 +39,18 @@ public class IntegratedSystemService {
         Page<IntegratedSystem> page = repo.findAll(spec, pageable);
         return page.map(IntegratedSystemMapper::toDto);
     }
-
+    /**
+     * Retrieves a list of all integrated system codes for dropdown usage.
+     * Returns only codes sorted alphabetically.
+     *
+     * @return list of system codes
+     */
+    public List<String> getAllCodes() {
+        return repo.findAll().stream()
+                .map(IntegratedSystem::getCode)
+                .sorted()
+                .collect(Collectors.toList());
+    }
     /**
      * Creates a new integrated system if a system with the same code does not already exist.
      *

@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.middleware.backend.kaotocamel.spec.DynamicRouteLogsSpecification;
@@ -287,7 +289,39 @@ public class DynamicRouteController {
             }
         }
     }
+    /**
+     * Get list of all dynamic routes (routeId + path) for dropdowns
+     * Same format as error-mappings/routes endpoint
+     */
+    @GetMapping("/routes")
+    @PreAuthorize("hasAnyAuthority('dynamicRoutes:view')")
+    @Operation(
+            summary = "Get list of dynamic routes for dropdowns",
+            description = "Returns list of all dynamic routes with routeId and path. Used for integration mapping and error configuration dropdowns."
+    )
+    public ResponseEntity<List<Map<String, String>>> getRoutesForDropdown() {
+        try {
+            // Get latest active routes
+            List<DynamicRouteEntity> routes = routeService.getLatestActiveRoutesForDropdown();
 
+            // Map to simple format: { routeId, path }
+            List<Map<String, String>> routesList = routes.stream()
+                    .map(route -> {
+                        Map<String, String> routeMap = new HashMap<>();
+                        routeMap.put("routeId", route.getRouteId());
+                        routeMap.put("path", route.getPath());
+                        return routeMap;
+                    })
+                    .collect(Collectors.toList());
+
+            log.info("Returning {} routes for dropdown", routesList.size());
+            return ResponseEntity.ok(routesList);
+
+        } catch (Exception e) {
+            log.error("Error fetching routes for dropdown", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
      private String mapColumnToField(String column) {
         switch (column.toLowerCase()) {
             case "routeid":

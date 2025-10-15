@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 
 /**
  * Entity representing field mapping configuration for middleware APIs
- * Defines how to extract data from DHIS2 responses and map to output fields
+ * Now linked to Dynamic Routes instead of middleware API names
  */
 @Entity
 @Table(name = "integration_mapping",
         indexes = {
-                @Index(name = "idx_middleware_api", columnList = "middleware_api_name"),
+                @Index(name = "idx_dynamic_route", columnList = "dynamic_route_id"),
                 @Index(name = "idx_integrated_api", columnList = "integrated_api_id"),
                 @Index(name = "idx_mapping_type", columnList = "mapping_type"),
                 @Index(name = "idx_external_key", columnList = "external_key")
@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "uk_mapping_unique",
-                        columnNames = {"middleware_api_name", "integrated_api_id",
+                        columnNames = {"dynamic_route_id", "integrated_api_id",
                                 "mapping_type", "data", "external_key"}
                 )
         }
@@ -37,8 +37,12 @@ public class IntegrationMapping {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "middleware_api_name", nullable = false, length = 100)
-    private String middlewareApiName;
+    /**
+     * Dynamic Route ID that this mapping is bound to
+     * References the routeId from DynamicRouteEntity
+     */
+    @Column(name = "dynamic_route_id", nullable = false, length = 100)
+    private String dynamicRouteId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "integrated_api_id", nullable = false,
@@ -47,7 +51,7 @@ public class IntegrationMapping {
     private IntegratedApi integratedApi;
 
     @Column(name = "integrated_api_id", insertable = false, updatable = false)
-    private Long integratedApiId;  // For easier querying
+    private Long integratedApiId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "mapping_type", nullable = false, length = 50)
@@ -57,10 +61,10 @@ public class IntegrationMapping {
     private String data;
 
     @Column(name = "attribute", length = 50)
-    private String attribute;  // Optional: AOC/Attribute for future use
+    private String attribute;
 
     @Column(name = "external_key", nullable = false, length = 100)
-    private String externalKey;  // Final field name in output
+    private String externalKey;
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;
@@ -76,7 +80,7 @@ public class IntegrationMapping {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-     @PrePersist
+    @PrePersist
     protected void onCreate() {
         if (this.createdAt == null) {
             this.createdAt = LocalDateTime.now();
@@ -87,9 +91,9 @@ public class IntegrationMapping {
         if (this.isActive == null) {
             this.isActive = true;
         }
-         if (this.data == null || this.data.trim().isEmpty()) {
-             throw new IllegalArgumentException("Data field is required and cannot be empty");
-         }
+        if (this.data == null || this.data.trim().isEmpty()) {
+            throw new IllegalArgumentException("Data field is required and cannot be empty");
+        }
         validateData();
     }
 
@@ -102,14 +106,7 @@ public class IntegrationMapping {
         validateData();
     }
 
-    /**
-     * Validates data field based on mapping type
-     */
-    /**
-     * Validates data field based on mapping type
-     */
     private void validateData() {
-        // Data is already validated in onCreate/onUpdate, but double-check here
         if (data == null || data.trim().isEmpty()) {
             throw new IllegalArgumentException("Data field is required and cannot be empty");
         }
@@ -138,16 +135,7 @@ public class IntegrationMapping {
                     }
                     break;
 
-                case DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE:
-                    if (!data.contains(".") || data.split("\\.").length < 2) {
-                        throw new IllegalArgumentException(
-                                "DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE requires data in format DE_UID.COC_UID.AOC_UID or DE_UID.AOC_UID. Current value: '" + data + "'"
-                        );
-                    }
-                    break;
-
                 case INDICATOR:
-                    // Indicator UIDs are simple strings - no format validation needed
                     if (data.length() < 3) {
                         throw new IllegalArgumentException(
                                 "Indicator UID must be at least 3 characters. Current value: '" + data + "'"
@@ -160,13 +148,10 @@ public class IntegrationMapping {
             }
         }
     }
-    /**
-     * Enum for mapping types
-     */
+
     public enum MappingType {
         DATA_ELEMENT,
         DATA_ELEMENT_WITH_DISAGGREGATION,
-        DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE,
         INDICATOR
     }
 }

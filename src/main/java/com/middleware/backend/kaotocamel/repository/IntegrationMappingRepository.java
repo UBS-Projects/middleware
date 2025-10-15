@@ -1,9 +1,6 @@
 package com.middleware.backend.kaotocamel.repository;
 
-import com.middleware.backend.kaotocamel.model.IntegratedApi;
 import com.middleware.backend.kaotocamel.model.IntegrationMapping;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -13,51 +10,48 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Repository for IntegrationMapping entity
- */
 @Repository
 public interface IntegrationMappingRepository
         extends JpaRepository<IntegrationMapping, Long>,
         JpaSpecificationExecutor<IntegrationMapping> {
 
     /**
-     * Find all mappings for a middleware API
+     * Find all mappings for a dynamic route
      */
-    List<IntegrationMapping> findByMiddlewareApiNameAndIsActiveTrue(String middlewareApiName);
+    List<IntegrationMapping> findByDynamicRouteIdAndIsActiveTrue(String dynamicRouteId);
+
     /**
-     * Find mapping by middleware API name and external key
+     * Find mapping by dynamic route ID and external key
      */
-    Optional<IntegrationMapping> findByMiddlewareApiNameAndExternalKey(
-            String middlewareApiName, String externalKey);
+    Optional<IntegrationMapping> findByDynamicRouteIdAndExternalKey(
+            String dynamicRouteId, String externalKey);
+
     /**
-     * Find all active mappings for a middleware API
+     * Find all active mappings for a dynamic route with integrated API
      */
     @Query("SELECT m FROM IntegrationMapping m " +
             "JOIN FETCH m.integratedApi api " +
-            "WHERE m.middlewareApiName = :apiName " +
+            "WHERE m.dynamicRouteId = :routeId " +  // ← صح
             "AND m.isActive = true " +
             "AND api.isActive = true " +
             "ORDER BY m.integratedApiId, m.mappingType, m.data")
-    List<IntegrationMapping> findActiveMiddlewareMappings(@Param("apiName") String apiName);
-
+    List<IntegrationMapping> findActiveRouteMappings(@Param("routeId") String routeId);
 
     /**
-     * Check if external key exists for a middleware API
+     * Check if external key exists for a dynamic route
      */
-    boolean existsByMiddlewareApiNameAndExternalKeyAndIsActiveTrue(
-            String middlewareApiName, String externalKey);
+    boolean existsByDynamicRouteIdAndExternalKeyAndIsActiveTrue(
+            String dynamicRouteId, String externalKey);
 
-    @Query("SELECT m FROM IntegrationMapping m " +
-            "JOIN FETCH m.integratedApi api " +
-            "WHERE (:spec IS NULL OR :spec = true)")
-    Page<IntegrationMapping> findAllWithIntegratedApiForExport(Pageable pageable);
     /**
-     * Get distinct middleware API names
+     * Get distinct dynamic route IDs
      */
-    @Query("SELECT DISTINCT m.middlewareApiName FROM IntegrationMapping m " +
+    @Query("SELECT DISTINCT m.dynamicRouteId FROM IntegrationMapping m " +
             "WHERE m.isActive = true")
-    List<String> findDistinctMiddlewareApiNames();
+    List<String> findDistinctDynamicRouteIds();
 
-
+    /**
+     * Count mappings for a dynamic route
+     */
+    long countByDynamicRouteIdAndIsActiveTrue(String dynamicRouteId);
 }

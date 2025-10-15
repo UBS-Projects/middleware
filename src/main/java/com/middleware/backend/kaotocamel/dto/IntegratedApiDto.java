@@ -33,7 +33,8 @@ public class IntegratedApiDto {
 
     @JsonProperty("boundApiCode")
     private String boundApiCode;
-
+    private Boolean useOuFromRequest;
+    private Boolean usePeFromRequest;
     private Boolean isActive;
 
     private String description;

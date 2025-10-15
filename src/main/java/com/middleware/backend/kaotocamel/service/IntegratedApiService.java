@@ -165,7 +165,71 @@ public class IntegratedApiService {
 
         return result;
     }
+    /**
+     * Toggle active status of an integrated API (activate/deactivate)
+     *
+     * @param id The API ID
+     * @return Updated API DTO
+     */
+    @Transactional
+    public IntegratedApiDto toggleActiveStatus(Long id) {
+        log.info("Toggling active status for integrated API: {}", id);
 
+        IntegratedApi entity = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Integrated API not found: " + id));
+
+        // Toggle status
+        boolean newStatus = !entity.getIsActive();
+        entity.setIsActive(newStatus);
+
+        IntegratedApi saved = repository.save(entity);
+
+        log.info("Toggled integrated API {} status to: {}", id, newStatus ? "ACTIVE" : "INACTIVE");
+
+        return mapEntityToDto(saved);
+    }
+
+    /**
+     * Activate an integrated API
+     *
+     * @param id The API ID
+     * @return Updated API DTO
+     */
+    @Transactional
+    public IntegratedApiDto activate(Long id) {
+        log.info("Activating integrated API: {}", id);
+
+        IntegratedApi entity = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Integrated API not found: " + id));
+
+        entity.setIsActive(true);
+        IntegratedApi saved = repository.save(entity);
+
+        log.info("Activated integrated API: {}", id);
+
+        return mapEntityToDto(saved);
+    }
+
+    /**
+     * Deactivate an integrated API (alternative to soft delete)
+     *
+     * @param id The API ID
+     * @return Updated API DTO
+     */
+    @Transactional
+    public IntegratedApiDto deactivate(Long id) {
+        log.info("Deactivating integrated API: {}", id);
+
+        IntegratedApi entity = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Integrated API not found: " + id));
+
+        entity.setIsActive(false);
+        IntegratedApi saved = repository.save(entity);
+
+        log.info("Deactivated integrated API: {}", id);
+
+        return mapEntityToDto(saved);
+    }
     private void mapRequestToEntity(IntegratedApiRequestDto request, IntegratedApi entity) {
         entity.setCode(request.getCode());
         entity.setName(request.getName());
@@ -176,6 +240,8 @@ public class IntegratedApiService {
         entity.setDescription(request.getDescription());
         entity.setBoundApiCode(request.getBoundApiCode());
 
+        entity.setUseOuFromRequest(request.getUseOuFromRequest() != null ? request.getUseOuFromRequest() : false);
+        entity.setUsePeFromRequest(request.getUsePeFromRequest() != null ? request.getUsePeFromRequest() : false);
     }
     /**
      * Exports integrated APIs to CSV or Excel bytes according to type.
@@ -294,6 +360,8 @@ public class IntegratedApiService {
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .boundApiCode(entity.getBoundApiCode())
+                .useOuFromRequest(entity.getUseOuFromRequest())  // NEW
+                .usePeFromRequest(entity.getUsePeFromRequest())  // NEW
                 .build();
     }
 }

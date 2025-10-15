@@ -9,36 +9,38 @@ import java.util.List;
 
 /**
  * Comprehensive specification for filtering IntegrationMapping entities
- * Supports filtering on all fields with powerful search capabilities
+ * Updated to work with Dynamic Route IDs with EXACT MATCH support
  */
 public class IntegrationMappingSpecification {
 
     /**
-     * Filter by middleware API name (partial match, case-insensitive)
+     * Filter by Dynamic Route ID (partial match, case-insensitive)
+     * Use for search/autocomplete functionality
      */
-    public static Specification<IntegrationMapping> middlewareApiNameContains(String middlewareApiName) {
+    public static Specification<IntegrationMapping> dynamicRouteIdContains(String dynamicRouteId) {
         return (root, query, criteriaBuilder) -> {
-            if (middlewareApiName == null || middlewareApiName.trim().isEmpty()) {
+            if (dynamicRouteId == null || dynamicRouteId.trim().isEmpty()) {
                 return null;
             }
             return criteriaBuilder.like(
-                    criteriaBuilder.lower(root.get("middlewareApiName")),
-                    "%" + middlewareApiName.toLowerCase().trim() + "%"
+                    criteriaBuilder.lower(root.get("dynamicRouteId")),
+                    "%" + dynamicRouteId.toLowerCase().trim() + "%"
             );
         };
     }
 
     /**
-     * Filter by exact middleware API name match
+     * Filter by exact Dynamic Route ID match (recommended for filtering)
+     * Use when you want exact route matches only
      */
-    public static Specification<IntegrationMapping> middlewareApiNameEquals(String middlewareApiName) {
+    public static Specification<IntegrationMapping> dynamicRouteIdEquals(String dynamicRouteId) {
         return (root, query, criteriaBuilder) -> {
-            if (middlewareApiName == null || middlewareApiName.trim().isEmpty()) {
+            if (dynamicRouteId == null || dynamicRouteId.trim().isEmpty()) {
                 return null;
             }
             return criteriaBuilder.equal(
-                    criteriaBuilder.lower(root.get("middlewareApiName")),
-                    middlewareApiName.toLowerCase().trim()
+                    criteriaBuilder.lower(root.get("dynamicRouteId")),
+                    dynamicRouteId.toLowerCase().trim()
             );
         };
     }
@@ -56,7 +58,7 @@ public class IntegrationMappingSpecification {
     }
 
     /**
-     * Filter by integrated API code
+     * Filter by integrated API code (partial match)
      */
     public static Specification<IntegrationMapping> integratedApiCodeContains(String integratedApiCode) {
         return (root, query, criteriaBuilder) -> {
@@ -79,7 +81,9 @@ public class IntegrationMappingSpecification {
                 return null;
             }
             try {
-                IntegrationMapping.MappingType type = IntegrationMapping.MappingType.valueOf(mappingType.toUpperCase().trim());
+                IntegrationMapping.MappingType type = IntegrationMapping.MappingType.valueOf(
+                        mappingType.toUpperCase().trim()
+                );
                 return criteriaBuilder.equal(root.get("mappingType"), type);
             } catch (IllegalArgumentException e) {
                 return criteriaBuilder.disjunction(); // Return false condition
@@ -99,7 +103,9 @@ public class IntegrationMappingSpecification {
             List<IntegrationMapping.MappingType> types = new ArrayList<>();
             for (String type : mappingTypes) {
                 try {
-                    types.add(IntegrationMapping.MappingType.valueOf(type.toUpperCase().trim()));
+                    IntegrationMapping.MappingType mappingType =
+                            IntegrationMapping.MappingType.valueOf(type.toUpperCase().trim());
+                    types.add(mappingType);
                 } catch (IllegalArgumentException e) {
                     // Skip invalid types
                 }
@@ -201,25 +207,6 @@ public class IntegrationMappingSpecification {
     }
 
     /**
-     * Filter by creation date range
-     */
-    public static Specification<IntegrationMapping> createdBetween(LocalDateTime startDate, LocalDateTime endDate) {
-        return (root, query, criteriaBuilder) -> {
-            if (startDate == null && endDate == null) {
-                return null;
-            }
-
-            if (startDate != null && endDate != null) {
-                return criteriaBuilder.between(root.get("createdAt"), startDate, endDate);
-            } else if (startDate != null) {
-                return criteriaBuilder.greaterThanOrEqualTo(root.get("createdAt"), startDate);
-            } else {
-                return criteriaBuilder.lessThanOrEqualTo(root.get("createdAt"), endDate);
-            }
-        };
-    }
-
-    /**
      * Filter by creation date after
      */
     public static Specification<IntegrationMapping> createdAfter(LocalDateTime createdAfter) {
@@ -246,7 +233,8 @@ public class IntegrationMappingSpecification {
     /**
      * Filter by update date range
      */
-    public static Specification<IntegrationMapping> updatedBetween(LocalDateTime startDate, LocalDateTime endDate) {
+    public static Specification<IntegrationMapping> updatedBetween(
+            LocalDateTime startDate, LocalDateTime endDate) {
         return (root, query, criteriaBuilder) -> {
             if (startDate == null && endDate == null) {
                 return null;
@@ -274,7 +262,7 @@ public class IntegrationMappingSpecification {
             String searchPattern = "%" + searchTerm.toLowerCase().trim() + "%";
 
             return criteriaBuilder.or(
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("middlewareApiName")), searchPattern),
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("dynamicRouteId")), searchPattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("data")), searchPattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("externalKey")), searchPattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("attribute")), searchPattern),
@@ -306,9 +294,10 @@ public class IntegrationMappingSpecification {
 
     /**
      * Complex combined specification builder
+     * USES EXACT MATCH for dynamicRouteId to prevent overlapping results
      */
     public static Specification<IntegrationMapping> buildSpecification(
-            String middlewareApiName,
+            String dynamicRouteId,
             Long integratedApiId,
             String integratedApiCode,
             String mappingType,
@@ -325,7 +314,7 @@ public class IntegrationMappingSpecification {
             Long minId,
             Long maxId
     ) {
-        return Specification.where(middlewareApiNameContains(middlewareApiName))
+        return Specification.where(dynamicRouteIdEquals(dynamicRouteId))  // ← EXACT MATCH!
                 .and(integratedApiIdEquals(integratedApiId))
                 .and(integratedApiCodeContains(integratedApiCode))
                 .and(mappingTypeEquals(mappingType))

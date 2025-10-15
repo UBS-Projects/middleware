@@ -1,26 +1,31 @@
 package com.middleware.backend.kaotocamel.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.ArrayList;/**
- * Request DTO for creating/updating IntegrationMapping
+
+/**
+ * Request DTO for creating/updating Integration Mappings
+ * Now uses dynamicRouteId instead of middlewareApiName
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class IntegrationMappingRequestDto {
-    private String middlewareApiName;
-    private Long integratedApiId;
-    private String mappingType;
-    private String data;
-    private String attribute;
-    private String externalKey;
-    private Boolean isActive;
-    private String notes;
+   @NotNull(message = "Dynamic Route ID is required")
+   private String dynamicRouteId;
+
+   @NotNull(message = "Integrated API ID is required")
+   private Long integratedApiId;
+
+   @NotNull(message = "Mapping type is required")
+   private String mappingType;
+
+   @NotNull(message = "Data is required")
+   private String data;
+
+   private String attribute;
+
+   @NotNull(message = "External key is required")
+   private String externalKey;
+
+   private Boolean isActive;
+   private String notes;
 }

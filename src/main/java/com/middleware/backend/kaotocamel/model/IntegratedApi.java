@@ -34,28 +34,47 @@ public class IntegratedApi {
     private Long id;
 
     @Column(name = "code", nullable = false, unique = true, length = 100)
-    private String code;  // Technical code (unique identifier)
+    private String code;
 
     @Column(name = "name", nullable = false, length = 255)
-    private String name;  // Descriptive name
+    private String name;
 
     @Column(name = "api_url", nullable = false, columnDefinition = "TEXT")
-    private String apiUrl;  // Relative URI (may include filters like pe:...)
+    private String apiUrl;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false, length = 20)
-    private ApiType type;  // ANALYTICS, METADATA
+    private ApiType type;
 
     @Column(name = "integrated_system", nullable = false, length = 100)
-    private String integratedSystem;  // e.g., HMIS-DWH, DHIS2-Play
+    private String integratedSystem;
 
     /**
-     * Business API code that this metadata API is bound to
+     * Dynamic Route ID that this metadata API is bound to.
+     * When type = METADATA, this field stores the routeId from dynamic_routes table.
+     * The metadata API will automatically be used when this route is executed.
+     * Example values: "integration-mapping-test", "health-data-api"
+     *
      * Required only when type = METADATA
-     * Example: "HEALTHMAP_API" for health map metadata
      */
     @Column(name = "bound_api_code", length = 100)
     private String boundApiCode;
+
+    /**
+     * Flag to indicate if Organization Unit (ou) should be taken from request
+     * When true: ou will be taken from API request parameters
+     * When false: ou will be taken from apiUrl configuration
+     */
+    @Column(name = "use_ou_from_request", nullable = false)
+    private Boolean useOuFromRequest = false;
+
+    /**
+     * Flag to indicate if Period (pe) should be taken from request
+     * When true: pe will be taken from API request parameters
+     * When false: pe will be taken from apiUrl configuration
+     */
+    @Column(name = "use_pe_from_request", nullable = false)
+    private Boolean usePeFromRequest = false;
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;
@@ -85,6 +104,12 @@ public class IntegratedApi {
         if (this.isActive == null) {
             this.isActive = true;
         }
+        if (this.useOuFromRequest == null) {
+            this.useOuFromRequest = false;
+        }
+        if (this.usePeFromRequest == null) {
+            this.usePeFromRequest = false;
+        }
         validateBoundApiCode();
     }
 
@@ -94,21 +119,16 @@ public class IntegratedApi {
         validateBoundApiCode();
     }
 
-    /**
-     * Validates that boundApiCode is provided when type is METADATA
-     */
     private void validateBoundApiCode() {
         if (this.type == ApiType.METADATA &&
                 (this.boundApiCode == null || this.boundApiCode.trim().isEmpty())) {
             throw new IllegalArgumentException(
-                    "boundApiCode is required when type is METADATA"
+                    "boundApiCode (Route ID) is required when type is METADATA. " +
+                            "Please specify which dynamic route this metadata API should be bound to."
             );
         }
     }
 
-    /**
-     * Enum for API types
-     */
     public enum ApiType {
         ANALYTICS,
         METADATA

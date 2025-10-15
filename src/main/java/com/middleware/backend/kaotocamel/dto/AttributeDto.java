@@ -1,21 +1,28 @@
 package com.middleware.backend.kaotocamel.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.ArrayList;
-/**
- * Attribute DTO for field values in middleware output
- */
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
+
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class AttributeDto {
-    private String name;       // External key
-    private Object value;      // Can be number, string, or null
+ public class AttributeDto {
+    private String name;
+    private Object value;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)  // لا تعرض هذا الحقل إذا كان null
+    private String attName;
+
+    // Constructor بدون attName (للحالات العادية)
+    public AttributeDto(String name, Object value) {
+        this.name = name;
+        this.value = value;
+        this.attName = null;
+    }
+
+    // Constructor مع attName (للحالات مع attribute)
+    public AttributeDto(String name, Object value, String attName) {
+        this.name = name;
+        this.value = value;
+        this.attName = attName;
+    }
 }

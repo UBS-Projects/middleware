@@ -1,8 +1,5 @@
 package com.middleware.backend.kaotocamel.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.middleware.backend.kaotocamel.dto.*;
 import com.middleware.backend.kaotocamel.model.*;
 import com.middleware.backend.kaotocamel.repository.*;
@@ -36,31 +33,46 @@ public class IntegrationMappingService {
 
     private final IntegrationMappingRepository mappingRepository;
     private final IntegratedApiRepository apiRepository;
+    private final DynamicRouteRepository dynamicRouteRepository;
 
     @Transactional
     public IntegrationMappingDto create(IntegrationMappingRequestDto request) {
-        log.info("Creating integration mapping for API: {}", request.getMiddlewareApiName());
+        log.info("Creating integration mapping for Dynamic Route: {}", request.getDynamicRouteId());
+
+        // Validate that Dynamic Route exists
+        validateDynamicRouteExists(request.getDynamicRouteId());
+
         IntegratedApi api = apiRepository.findById(request.getIntegratedApiId())
                 .orElseThrow(() -> new RuntimeException("Integrated API not found: " + request.getIntegratedApiId()));
+
         IntegrationMapping entity = new IntegrationMapping();
         mapRequestToEntity(request, entity, api);
+
         IntegrationMapping saved = mappingRepository.save(entity);
-        log.info("Created integration mapping: {} -> {}", saved.getMiddlewareApiName(), saved.getExternalKey());
+        log.info("Created integration mapping: {} -> {}", saved.getDynamicRouteId(), saved.getExternalKey());
+
         return mapEntityToDto(saved);
     }
 
     @Transactional
     public IntegrationMappingDto update(Long id, IntegrationMappingRequestDto request) {
         log.info("Updating integration mapping: {}", id);
+
         IntegrationMapping entity = mappingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Integration mapping not found: " + id));
+
+        // Validate that Dynamic Route exists
+        validateDynamicRouteExists(request.getDynamicRouteId());
+
         IntegratedApi api = entity.getIntegratedApi();
         if (!entity.getIntegratedApiId().equals(request.getIntegratedApiId())) {
             api = apiRepository.findById(request.getIntegratedApiId())
                     .orElseThrow(() -> new RuntimeException("Integrated API not found: " + request.getIntegratedApiId()));
         }
+
         mapRequestToEntity(request, entity, api);
         IntegrationMapping saved = mappingRepository.save(entity);
+
         log.info("Updated integration mapping: {}", saved.getId());
         return mapEntityToDto(saved);
     }
@@ -82,37 +94,8 @@ public class IntegrationMappingService {
     }
 
     @Transactional(readOnly = true)
-    public Page<IntegrationMappingDto> findWithFilters(String middlewareApiName, Long integratedApiId,
-                                                       String mappingType, String externalKey,
-                                                       Boolean isActive, Pageable pageable) {
-        Specification<IntegrationMapping> spec = Specification.where(null);
-        if (middlewareApiName != null && !middlewareApiName.isEmpty()) {
-            spec = spec.and((root, query, cb) ->
-                    cb.equal(root.get("middlewareApiName"), middlewareApiName));
-        }
-        if (integratedApiId != null) {
-            spec = spec.and((root, query, cb) ->
-                    cb.equal(root.get("integratedApiId"), integratedApiId));
-        }
-        if (mappingType != null && !mappingType.isEmpty()) {
-            spec = spec.and((root, query, cb) ->
-                    cb.equal(root.get("mappingType"), IntegrationMapping.MappingType.valueOf(mappingType)));
-        }
-        if (externalKey != null && !externalKey.isEmpty()) {
-            spec = spec.and((root, query, cb) ->
-                    cb.like(cb.lower(root.get("externalKey")), "%" + externalKey.toLowerCase() + "%"));
-        }
-        if (isActive != null) {
-            spec = spec.and((root, query, cb) ->
-                    cb.equal(root.get("isActive"), isActive));
-        }
-        return mappingRepository.findAll(spec, pageable)
-                .map(this::mapEntityToDto);
-    }
-
-    @Transactional(readOnly = true)
-    public List<IntegrationMappingDto> findByMiddlewareApi(String middlewareApiName) {
-        return mappingRepository.findByMiddlewareApiNameAndIsActiveTrue(middlewareApiName)
+    public List<IntegrationMappingDto> findByDynamicRoute(String dynamicRouteId) {
+        return mappingRepository.findByDynamicRouteIdAndIsActiveTrue(dynamicRouteId)
                 .stream()
                 .map(this::mapEntityToDto)
                 .collect(Collectors.toList());
@@ -120,23 +103,27 @@ public class IntegrationMappingService {
 
     @Transactional(readOnly = true)
     public Page<IntegrationMappingDto> findWithAdvancedFilters(
-            String middlewareApiName, Long integratedApiId, String integratedApiCode,
+            String dynamicRouteId, Long integratedApiId, String integratedApiCode,
             String mappingType, String data, String externalKey, String attribute,
             Boolean isActive, String notes,
             LocalDateTime createdAfter, LocalDateTime createdBefore,
             LocalDateTime updatedAfter, LocalDateTime updatedBefore,
             String search, Long minId, Long maxId,
             Pageable pageable) {
-        log.debug("Searching with advanced filters - middlewareApi: {}, integratedApiId: {}, mappingType: {}",
-                middlewareApiName, integratedApiId, mappingType);
+
+        log.debug("Searching with advanced filters - dynamicRouteId: {}, integratedApiId: {}, mappingType: {}",
+                dynamicRouteId, integratedApiId, mappingType);
+
         Specification<IntegrationMapping> spec = IntegrationMappingSpecification.buildSpecification(
-                middlewareApiName, integratedApiId, integratedApiCode, mappingType,
+                dynamicRouteId, integratedApiId, integratedApiCode, mappingType,
                 data, externalKey, attribute, isActive, notes,
                 createdAfter, createdBefore, updatedAfter, updatedBefore,
                 search, minId, maxId
         );
+
         Page<IntegrationMappingDto> result = mappingRepository.findAll(spec, pageable)
                 .map(this::mapEntityToDto);
+
         log.debug("Found {} results out of {} total", result.getNumberOfElements(), result.getTotalElements());
         return result;
     }
@@ -170,31 +157,37 @@ public class IntegrationMappingService {
         List<Map<String, Object>> ignored = new ArrayList<>();
         List<Map<String, Object>> errors = new ArrayList<>();
         int totalRows = 0;
+
         try (Workbook workbook = new XSSFWorkbook(inputStream)) {
             Sheet sheet = workbook.getSheetAt(0);
             int rowCount = sheet.getLastRowNum();
             totalRows = rowCount;
             log.info("Processing {} data rows from Excel (updateExisting={})", totalRows, updateExisting);
+
             for (int i = 1; i <= rowCount; i++) {
                 Row row = sheet.getRow(i);
                 if (row == null) {
                     log.debug("Row {} is null, skipping", i + 1);
                     continue;
                 }
+
                 try {
                     IntegrationMappingRequestDto request = parseRowToRequest(row);
-                    boolean isEmptyRow = (request.getMiddlewareApiName() == null || request.getMiddlewareApiName().trim().isEmpty()) &&
+
+                    boolean isEmptyRow = (request.getDynamicRouteId() == null || request.getDynamicRouteId().trim().isEmpty()) &&
                             (request.getExternalKey() == null || request.getExternalKey().trim().isEmpty()) &&
                             (request.getData() == null || request.getData().trim().isEmpty());
+
                     if (isEmptyRow) {
                         log.debug("Row {} is empty, skipping", i + 1);
                         continue;
                     }
+
                     Map<String, Object> validation = validateMappingForImport(request);
                     if (!(boolean) validation.get("valid")) {
                         Map<String, Object> error = new HashMap<>();
                         error.put("row", i + 1);
-                        error.put("middlewareApiName", request.getMiddlewareApiName());
+                        error.put("dynamicRouteId", request.getDynamicRouteId());
                         error.put("externalKey", request.getExternalKey());
                         error.put("integratedApiId", request.getIntegratedApiId());
                         error.put("mappingType", request.getMappingType());
@@ -204,30 +197,32 @@ public class IntegrationMappingService {
                         log.warn("Row {} validation failed: {}", i + 1, validation.get("errors"));
                         continue;
                     }
+
                     Optional<IntegrationMapping> existing = mappingRepository
-                            .findByMiddlewareApiNameAndExternalKey(
-                                    request.getMiddlewareApiName(), request.getExternalKey());
+                            .findByDynamicRouteIdAndExternalKey(
+                                    request.getDynamicRouteId(), request.getExternalKey());
+
                     if (existing.isPresent()) {
                         if (updateExisting) {
                             IntegrationMappingDto updatedDto = update(existing.get().getId(), request);
                             updated.add(updatedDto);
-                            log.info("Row {}: Updated existing mapping - API: '{}', Key: '{}'",
-                                    i + 1, request.getMiddlewareApiName(), request.getExternalKey());
+                            log.info("Row {}: Updated existing mapping - Route: '{}', Key: '{}'",
+                                    i + 1, request.getDynamicRouteId(), request.getExternalKey());
                         } else {
                             Map<String, Object> ignoredItem = new HashMap<>();
                             ignoredItem.put("row", i + 1);
-                            ignoredItem.put("middlewareApiName", request.getMiddlewareApiName());
+                            ignoredItem.put("dynamicRouteId", request.getDynamicRouteId());
                             ignoredItem.put("externalKey", request.getExternalKey());
                             ignoredItem.put("reason", "Already exists and update is disabled");
                             ignored.add(ignoredItem);
-                            log.info("Row {}: Ignored existing mapping - API: '{}', Key: '{}'",
-                                    i + 1, request.getMiddlewareApiName(), request.getExternalKey());
+                            log.info("Row {}: Ignored existing mapping - Route: '{}', Key: '{}'",
+                                    i + 1, request.getDynamicRouteId(), request.getExternalKey());
                         }
                     } else {
                         IntegrationMappingDto created = create(request);
                         imported.add(created);
-                        log.info("Row {}: Created new mapping - API: '{}', Key: '{}'",
-                                i + 1, request.getMiddlewareApiName(), request.getExternalKey());
+                        log.info("Row {}: Created new mapping - Route: '{}', Key: '{}'",
+                                i + 1, request.getDynamicRouteId(), request.getExternalKey());
                     }
                 } catch (Exception e) {
                     Map<String, Object> error = new HashMap<>();
@@ -239,6 +234,7 @@ public class IntegrationMappingService {
                 }
             }
         }
+
         result.put("success", errors.isEmpty());
         result.put("totalRows", totalRows);
         result.put("imported", imported.size());
@@ -249,20 +245,31 @@ public class IntegrationMappingService {
         result.put("updatedMappings", updated);
         result.put("ignoredMappings", ignored);
         result.put("errors", errors);
+
         log.info("Import completed: {} total, {} new, {} updated, {} ignored, {} failed",
                 totalRows, imported.size(), updated.size(), ignored.size(), errors.size());
+
         return result;
     }
 
     private Map<String, Object> validateMappingForImport(IntegrationMappingRequestDto request) {
         Map<String, Object> validation = new HashMap<>();
         List<String> errors = new ArrayList<>();
-        if (request.getMiddlewareApiName() == null || request.getMiddlewareApiName().trim().isEmpty()) {
-            errors.add("Middleware API Name is required and cannot be empty");
+
+        // Validate Dynamic Route ID
+        if (request.getDynamicRouteId() == null || request.getDynamicRouteId().trim().isEmpty()) {
+            errors.add("Dynamic Route ID is required and cannot be empty");
+        } else {
+            if (!dynamicRouteRepository.existsByRouteId(request.getDynamicRouteId())) {
+                errors.add("Dynamic Route not found with ID: " + request.getDynamicRouteId() +
+                        ". Please check if this route exists in the system");
+            }
         }
+
         if (request.getExternalKey() == null || request.getExternalKey().trim().isEmpty()) {
             errors.add("External Key is required and cannot be empty");
         }
+
         if (request.getIntegratedApiId() == null) {
             errors.add("Integrated API ID is required");
         } else {
@@ -271,11 +278,13 @@ public class IntegrationMappingService {
                         ". Please check if this API exists in the system");
             }
         }
+
         if (request.getMappingType() == null || request.getMappingType().trim().isEmpty()) {
-            errors.add("Mapping Type is required. Valid values: DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE, INDICATOR");
+            errors.add("Mapping Type is required. Valid values: DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, INDICATOR");
         } else {
             try {
                 IntegrationMapping.MappingType type = IntegrationMapping.MappingType.valueOf(request.getMappingType());
+
                 if (request.getData() == null || request.getData().trim().isEmpty()) {
                     errors.add("Data field is required and cannot be empty");
                 } else {
@@ -285,6 +294,7 @@ public class IntegrationMappingService {
                                 errors.add("DATA_ELEMENT should not contain disaggregation. Format: DE_UID (without dots). Current value: '" + request.getData() + "'");
                             }
                             break;
+
                         case DATA_ELEMENT_WITH_DISAGGREGATION:
                             if (!request.getData().contains(".")) {
                                 errors.add("DATA_ELEMENT_WITH_DISAGGREGATION requires disaggregation. Format: DE_UID.COC_UID. Current value: '" + request.getData() + "'");
@@ -295,18 +305,11 @@ public class IntegrationMappingService {
                                 }
                             }
                             break;
-                        case DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE:
-                            if (!request.getData().contains(".")) {
-                                errors.add("DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE requires disaggregation and attribute. Format: DE_UID.COC_UID.AOC_UID or DE_UID.AOC_UID. Current value: '" + request.getData() + "'");
-                            } else {
-                                String[] parts = request.getData().split("\\.");
-                                if (parts.length < 2) {
-                                    errors.add("DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE must have at least 2 parts separated by dots. Format: DE_UID.COC_UID.AOC_UID or DE_UID.AOC_UID. Current value: '" + request.getData() + "'");
-                                }
-                            }
-                            break;
+
                         case INDICATOR:
+                            // No specific validation for INDICATOR
                             break;
+
                         default:
                             errors.add("Unknown mapping type: " + type);
                             break;
@@ -314,9 +317,10 @@ public class IntegrationMappingService {
                 }
             } catch (IllegalArgumentException e) {
                 errors.add("Invalid Mapping Type: '" + request.getMappingType() +
-                        "'. Valid values are: DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE, INDICATOR");
+                        "'. Valid values are: DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, INDICATOR");
             }
         }
+
         validation.put("valid", errors.isEmpty());
         validation.put("errors", errors);
         return validation;
@@ -324,7 +328,7 @@ public class IntegrationMappingService {
 
     private IntegrationMappingRequestDto parseRowToRequest(Row row) {
         IntegrationMappingRequestDto request = new IntegrationMappingRequestDto();
-        request.setMiddlewareApiName(getCellValueAsString(row.getCell(0)));
+        request.setDynamicRouteId(getCellValueAsString(row.getCell(0)));
         Double apiId = getCellValueAsDouble(row.getCell(1));
         if (apiId != null) {
             request.setIntegratedApiId(apiId.longValue());
@@ -389,10 +393,11 @@ public class IntegrationMappingService {
 
     private String convertToCSV(List<IntegrationMapping> records) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Middleware API Name,Integrated API ID,Integrated API Code,Integrated API Name,");
+        sb.append("Dynamic Route ID,Integrated API ID,Integrated API Code,Integrated API Name,");
         sb.append("Mapping Type,Data,Attribute,External Key,Active,Notes\n");
+
         for (IntegrationMapping record : records) {
-            sb.append(escapeCsv(record.getMiddlewareApiName())).append(",");
+            sb.append(escapeCsv(record.getDynamicRouteId())).append(",");
             sb.append(record.getIntegratedApiId()).append(",");
             sb.append(escapeCsv(record.getIntegratedApi() != null ? record.getIntegratedApi().getCode() : "")).append(",");
             sb.append(escapeCsv(record.getIntegratedApi() != null ? record.getIntegratedApi().getName() : "")).append(",");
@@ -419,7 +424,7 @@ public class IntegrationMappingService {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Integration Mappings");
             Row header = sheet.createRow(0);
-            header.createCell(0).setCellValue("Middleware API Name");
+            header.createCell(0).setCellValue("Dynamic Route ID");
             header.createCell(1).setCellValue("Integrated API ID");
             header.createCell(2).setCellValue("Integrated API Code");
             header.createCell(3).setCellValue("Integrated API Name");
@@ -429,10 +434,11 @@ public class IntegrationMappingService {
             header.createCell(7).setCellValue("External Key");
             header.createCell(8).setCellValue("Active");
             header.createCell(9).setCellValue("Notes");
+
             int rowIdx = 1;
             for (IntegrationMapping record : records) {
                 Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue(record.getMiddlewareApiName() != null ? record.getMiddlewareApiName() : "");
+                row.createCell(0).setCellValue(record.getDynamicRouteId() != null ? record.getDynamicRouteId() : "");
                 row.createCell(1).setCellValue(record.getIntegratedApiId() != null ? record.getIntegratedApiId() : 0);
                 row.createCell(2).setCellValue(record.getIntegratedApi() != null ? record.getIntegratedApi().getCode() : "");
                 row.createCell(3).setCellValue(record.getIntegratedApi() != null ? record.getIntegratedApi().getName() : "");
@@ -443,9 +449,11 @@ public class IntegrationMappingService {
                 row.createCell(8).setCellValue(record.getIsActive() ? "ACTIVE" : "INACTIVE");
                 row.createCell(9).setCellValue(record.getNotes() != null ? record.getNotes() : "");
             }
+
             for (int i = 0; i <= 9; i++) {
                 sheet.autoSizeColumn(i);
             }
+
             try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
                 workbook.write(bos);
                 return bos.toByteArray();
@@ -462,13 +470,19 @@ public class IntegrationMappingService {
     }
 
     @Transactional(readOnly = true)
-    public List<String> getDistinctMiddlewareApis() {
-        return mappingRepository.findDistinctMiddlewareApiNames();
+    public List<String> getDistinctDynamicRoutes() {
+        return mappingRepository.findDistinctDynamicRouteIds();
     }
 
     public Map<String, Object> validateMapping(IntegrationMappingRequestDto request) {
         Map<String, Object> validation = new HashMap<>();
         List<String> errors = new ArrayList<>();
+
+        // Validate Dynamic Route exists
+        if (!dynamicRouteRepository.existsByRouteId(request.getDynamicRouteId())) {
+            errors.add("Dynamic Route not found: " + request.getDynamicRouteId());
+        }
+
         try {
             IntegrationMapping.MappingType type = IntegrationMapping.MappingType.valueOf(request.getMappingType());
             switch (type) {
@@ -486,13 +500,16 @@ public class IntegrationMappingService {
         } catch (IllegalArgumentException e) {
             errors.add("Invalid mapping type: " + request.getMappingType());
         }
+
         if (!apiRepository.existsById(request.getIntegratedApiId())) {
             errors.add("Integrated API not found: " + request.getIntegratedApiId());
         }
-        if (mappingRepository.existsByMiddlewareApiNameAndExternalKeyAndIsActiveTrue(
-                request.getMiddlewareApiName(), request.getExternalKey())) {
+
+        if (mappingRepository.existsByDynamicRouteIdAndExternalKeyAndIsActiveTrue(
+                request.getDynamicRouteId(), request.getExternalKey())) {
             errors.add("External key already exists: " + request.getExternalKey());
         }
+
         validation.put("valid", errors.isEmpty());
         validation.put("errors", errors);
         return validation;
@@ -517,6 +534,7 @@ public class IntegrationMappingService {
         Map<String, Object> result = new HashMap<>();
         List<IntegrationMappingDto> imported = new ArrayList<>();
         List<Map<String, Object>> errors = new ArrayList<>();
+
         for (int i = 0; i < mappings.size(); i++) {
             IntegrationMappingRequestDto request = mappings.get(i);
             try {
@@ -529,14 +547,85 @@ public class IntegrationMappingService {
                 errors.add(error);
             }
         }
+
         result.put("success", errors.isEmpty());
         result.put("imported", imported.size());
         result.put("errors", errors);
         return result;
     }
 
+    private void validateDynamicRouteExists(String dynamicRouteId) {
+        if (!dynamicRouteRepository.existsByRouteId(dynamicRouteId)) {
+            throw new IllegalArgumentException("Dynamic Route not found: " + dynamicRouteId);
+        }
+    }
+    /**
+     * Toggle active status of a mapping (activate/deactivate)
+     *
+     * @param id The mapping ID
+     * @return Updated mapping DTO
+     */
+    @Transactional
+    public IntegrationMappingDto toggleActiveStatus(Long id) {
+        log.info("Toggling active status for integration mapping: {}", id);
+
+        IntegrationMapping entity = mappingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Integration mapping not found: " + id));
+
+        // Toggle status
+        boolean newStatus = !entity.getIsActive();
+        entity.setIsActive(newStatus);
+
+        IntegrationMapping saved = mappingRepository.save(entity);
+
+        log.info("Toggled integration mapping {} status to: {}", id, newStatus ? "ACTIVE" : "INACTIVE");
+
+        return mapEntityToDto(saved);
+    }
+
+    /**
+     * Activate a mapping
+     *
+     * @param id The mapping ID
+     * @return Updated mapping DTO
+     */
+    @Transactional
+    public IntegrationMappingDto activate(Long id) {
+        log.info("Activating integration mapping: {}", id);
+
+        IntegrationMapping entity = mappingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Integration mapping not found: " + id));
+
+        entity.setIsActive(true);
+        IntegrationMapping saved = mappingRepository.save(entity);
+
+        log.info("Activated integration mapping: {}", id);
+
+        return mapEntityToDto(saved);
+    }
+
+    /**
+     * Deactivate a mapping (soft delete alternative)
+     *
+     * @param id The mapping ID
+     * @return Updated mapping DTO
+     */
+    @Transactional
+    public IntegrationMappingDto deactivate(Long id) {
+        log.info("Deactivating integration mapping: {}", id);
+
+        IntegrationMapping entity = mappingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Integration mapping not found: " + id));
+
+        entity.setIsActive(false);
+        IntegrationMapping saved = mappingRepository.save(entity);
+
+        log.info("Deactivated integration mapping: {}", id);
+
+        return mapEntityToDto(saved);
+    }
     private void mapRequestToEntity(IntegrationMappingRequestDto request, IntegrationMapping entity, IntegratedApi api) {
-        entity.setMiddlewareApiName(request.getMiddlewareApiName());
+        entity.setDynamicRouteId(request.getDynamicRouteId());
         entity.setIntegratedApi(api);
         entity.setMappingType(IntegrationMapping.MappingType.valueOf(request.getMappingType()));
         entity.setData(request.getData());
@@ -549,7 +638,7 @@ public class IntegrationMappingService {
     private IntegrationMappingDto mapEntityToDto(IntegrationMapping entity) {
         return IntegrationMappingDto.builder()
                 .id(entity.getId())
-                .middlewareApiName(entity.getMiddlewareApiName())
+                .dynamicRouteId(entity.getDynamicRouteId())
                 .integratedApiId(entity.getIntegratedApiId())
                 .integratedApiCode(entity.getIntegratedApi() != null ? entity.getIntegratedApi().getCode() : null)
                 .integratedApiName(entity.getIntegratedApi() != null ? entity.getIntegratedApi().getName() : null)

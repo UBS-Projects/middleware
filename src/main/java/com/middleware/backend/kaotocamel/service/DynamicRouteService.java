@@ -89,6 +89,7 @@ public class DynamicRouteService {
      * @return a human-readable status message
      * @throws RuntimeException if validation fails or the route cannot be loaded
      */
+
     @Transactional
     public String updateRoute(String yamlContent, String comment, String operation) {
         String routeId = null;
@@ -186,7 +187,34 @@ public class DynamicRouteService {
             throw ex; // rethrow to trigger transaction rollback
         }
     }
+// في DynamicRouteService.java
 
+    /**
+     * Get latest active routes for dropdown usage
+     * Returns only latest/default version per routeId
+     */
+    public List<DynamicRouteEntity> getLatestActiveRoutesForDropdown() {
+        log.info("Fetching latest active routes for dropdown");
+
+        // Get all routes
+        List<DynamicRouteEntity> allRoutes = routeRepository.findAllOrderByCreatedAtDesc();
+
+        // Get latest version per routeId
+        Map<String, DynamicRouteEntity> latestRoutes = allRoutes.stream()
+                .collect(Collectors.groupingBy(
+                        DynamicRouteEntity::getRouteId,
+                        Collectors.reducing(null, this::selectLatestRoute)
+                ));
+
+        // Filter active only and sort by routeId
+        List<DynamicRouteEntity> result = latestRoutes.values().stream()
+                .filter(route -> route != null && route.isActive())
+                .sorted(Comparator.comparing(DynamicRouteEntity::getRouteId))
+                .collect(Collectors.toList());
+
+        log.info("Found {} active routes", result.size());
+        return result;
+    }
     /**
      * Validates a YAML route by modifying it to a unique test form and attempting
      * to load and start it in the Camel context. Always cleans up the temporary route.

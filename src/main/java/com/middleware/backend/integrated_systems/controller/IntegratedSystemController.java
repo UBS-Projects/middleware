@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * REST controller for managing Integrated Systems.
@@ -81,7 +82,22 @@ public class IntegratedSystemController {
     }
 
     // ===================== GET INTEGRATED SYSTEM BY CODE =====================
-
+    /**
+     * Retrieves a simple list of all integrated system codes.
+     * Useful for populating dropdown menus in the frontend.
+     *
+     * @return list of system codes
+     */
+    @GetMapping("/codes")
+    @PreAuthorize("permitAll()")
+    @Operation(
+            summary = "Get all system codes for dropdown",
+            description = "Retrieves a simple list of all integrated system codes sorted alphabetically. " +
+                    "Returns only the codes without any additional details."
+    )
+    public ResponseEntity<List<String>> getAllCodes() {
+        return ResponseEntity.ok(service.getAllCodes());
+    }
     /**
      * Retrieves a specific integrated system by its unique code.
      *

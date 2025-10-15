@@ -29,7 +29,7 @@ import java.util.*;
  * Enhanced Controller for managing IntegratedApi configurations with powerful filtering
  */
 @RestController
-@RequestMapping("/api/admin/integrated-apis")
+@RequestMapping("/api/integrated-apis")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Integrated APIs", description = "Manage DHIS2 API definitions with advanced filtering")
@@ -113,7 +113,7 @@ public class IntegratedApiController {
             @Parameter(description = "Filter by API URL (partial match)")
             @RequestParam(required = false) String apiUrl,
 
-            @Parameter(description = "Filter by API type (ANALYTICS, DATAVALUE, METADATA)")
+            @Parameter(description = "Filter by API type (ANALYTICS, METADATA)")
             @RequestParam(required = false) String type,
 
             @Parameter(description = "Filter by integrated system (partial match)")
@@ -192,12 +192,32 @@ public class IntegratedApiController {
                 .header("X-Page-Size", String.valueOf(result.getSize()))
                 .body(result);
     }
+    /**
+     * Toggle active status of an integrated API
+     */
+    @PatchMapping("/{id}/toggle-status")
+    @PreAuthorize("permitAll()")
+    @Operation(
+            summary = "Toggle API active status",
+            description = "Toggles the active status of an integrated API (active ↔ inactive)"
+    )
+    public ResponseEntity<IntegratedApiDto> toggleStatus(@PathVariable Long id) {
+        try {
+            IntegratedApiDto result = service.toggleActiveStatus(id);
+            log.info("Toggled status for API {}: now {}", id,
+                    result.getIsActive() ? "ACTIVE" : "INACTIVE");
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Failed to toggle status for API {}: {}", id, e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @GetMapping("/types")
     @PreAuthorize("permitAll()")
     @Operation(summary = "Get available API types")
     public ResponseEntity<List<String>> getApiTypes() {
-        return ResponseEntity.ok(Arrays.asList("ANALYTICS", "DATAVALUE", "METADATA"));
+        return ResponseEntity.ok(Arrays.asList("ANALYTICS", "METADATA"));
     }
 
     @GetMapping("/systems")

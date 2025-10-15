@@ -19,7 +19,10 @@ import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
  */
 public interface DynamicRouteRepository
         extends JpaRepository<DynamicRouteEntity, Long>, JpaSpecificationExecutor<DynamicRouteEntity> {
-
+        /**
+         * Check if a route ID exists (for validation)
+         */
+        boolean existsByRouteId(String routeId);
         /**
          * Lists all versions for a given route identifier ordered by version descending.
          * @param routeId the logical route identifier

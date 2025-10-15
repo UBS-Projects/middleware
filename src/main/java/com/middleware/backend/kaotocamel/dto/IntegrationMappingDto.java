@@ -6,11 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
- * DTO for IntegratedApi entity
+ * DTO for Integration Mapping entity
+ * Now includes dynamicRouteId instead of middlewareApiName
  */
 @Data
 @NoArgsConstructor
@@ -18,11 +17,11 @@ import java.util.ArrayList;
 @Builder
 public class IntegrationMappingDto {
     private Long id;
-    private String middlewareApiName;
+    private String dynamicRouteId;
     private Long integratedApiId;
-    private String integratedApiCode;  // For display purposes
-    private String integratedApiName;  // For display purposes
-    private String mappingType;  // String representation of MappingType enum
+    private String integratedApiCode;
+    private String integratedApiName;
+    private String mappingType;
     private String data;
     private String attribute;
     private String externalKey;

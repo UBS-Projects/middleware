@@ -28,13 +28,13 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 /**
- * Enhanced Controller for managing Integration Mappings with advanced filtering and sorting
+ * Enhanced Controller for managing Integration Mappings linked to Dynamic Routes
  */
 @RestController
-@RequestMapping("/api/admin/integration-mappings")
+@RequestMapping("/api/integration-mappings")
 @RequiredArgsConstructor
 @Slf4j
-@Tag(name = "Integration Mappings", description = "Manage field mappings for middleware APIs with advanced filtering")
+@Tag(name = "Integration Mappings", description = "Manage field mappings for Dynamic Routes with advanced filtering")
 public class IntegrationMappingAdminController {
 
     private final IntegrationMappingService service;
@@ -47,19 +47,20 @@ public class IntegrationMappingAdminController {
         try {
             IntegrationMappingDto result = service.create(request);
             log.info("Created integration mapping: {} -> {}",
-                    request.getMiddlewareApiName(), request.getExternalKey());
+                    request.getDynamicRouteId(), request.getExternalKey());
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
         } catch (Exception e) {
             log.error("Failed to create integration mapping: {}", e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
+
     @PostMapping("/import-excel")
     @PreAuthorize("permitAll()")
     @Operation(summary = "Import mappings from Excel file")
     public ResponseEntity<Map<String, Object>> importFromExcel(
             @RequestParam("file") MultipartFile file,
-            @Parameter(description = "Update existing mappings if found (default: false - ignore)")
+            @Parameter(description = "Update existing mappings if found (default: true)")
             @RequestParam(required = false, defaultValue = "true") boolean updateExisting) {
 
         if (file.isEmpty()) {
@@ -74,7 +75,7 @@ public class IntegrationMappingAdminController {
         }
 
         try {
-            Map<String, Object> result = service.importFromExcel(file.getInputStream(), true);
+            Map<String, Object> result = service.importFromExcel(file.getInputStream(), updateExisting);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             log.error("Error importing from Excel", e);
@@ -82,6 +83,7 @@ public class IntegrationMappingAdminController {
                     .body(Map.of("success", false, "error", e.getMessage()));
         }
     }
+
     @PutMapping("/{id}")
     @PreAuthorize("permitAll()")
     @Operation(summary = "Update integration mapping")
@@ -126,8 +128,8 @@ public class IntegrationMappingAdminController {
     @Operation(summary = "List integration mappings with advanced filtering, pagination and sorting")
     public ResponseEntity<Page<IntegrationMappingDto>> findAll(
             // Basic filters
-            @Parameter(description = "Filter by middleware API name (partial match)")
-            @RequestParam(required = false) String middlewareApiName,
+            @Parameter(description = "Filter by Dynamic Route ID (exact match)")
+            @RequestParam(required = false) String dynamicRouteId,
 
             @Parameter(description = "Filter by integrated API ID")
             @RequestParam(required = false) Long integratedApiId,
@@ -171,7 +173,7 @@ public class IntegrationMappingAdminController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedBefore,
 
             // Advanced filters
-            @Parameter(description = "Global search across multiple fields")
+            @Parameter(description = "Global search across multiple fields (partial match)")
             @RequestParam(required = false) String search,
 
             @Parameter(description = "Filter by minimum ID")
@@ -180,7 +182,7 @@ public class IntegrationMappingAdminController {
             @Parameter(description = "Filter by maximum ID")
             @RequestParam(required = false) Long maxId,
 
-            // Sorting parameters (separate approach like we solved for IntegratedApi)
+            // Sorting parameters
             @Parameter(description = "Sort field")
             @RequestParam(required = false) String sortBy,
 
@@ -194,7 +196,7 @@ public class IntegrationMappingAdminController {
             @Parameter(description = "Page size")
             @RequestParam(defaultValue = "10") int size) {
 
-        // Build sort simply (avoiding the array parsing issue)
+        // Build sort
         Sort sortOrder = Sort.by("id").ascending(); // default
 
         if (sortBy != null && !sortBy.trim().isEmpty() && isValidSortField(sortBy)) {
@@ -210,12 +212,25 @@ public class IntegrationMappingAdminController {
         log.info("Final sort: {}", sortOrder);
         Pageable pageable = PageRequest.of(page, size, sortOrder);
 
-        // Use enhanced service method
+        // Use enhanced service method with EXACT MATCH for dynamicRouteId
         Page<IntegrationMappingDto> result = service.findWithAdvancedFilters(
-                middlewareApiName, integratedApiId, integratedApiCode, mappingType,
-                data, externalKey, attribute, isActive, notes,
-                createdAfter, createdBefore, updatedAfter, updatedBefore,
-                search, minId, maxId, pageable);
+                dynamicRouteId,      // ← Exact match
+                integratedApiId,
+                integratedApiCode,   // ← Partial match
+                mappingType,
+                data,                // ← Partial match
+                externalKey,         // ← Partial match
+                attribute,           // ← Partial match
+                isActive,
+                notes,               // ← Partial match
+                createdAfter,
+                createdBefore,
+                updatedAfter,
+                updatedBefore,
+                search,              // ← Global search (partial)
+                minId,
+                maxId,
+                pageable);
 
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(result.getTotalElements()))
@@ -224,13 +239,12 @@ public class IntegrationMappingAdminController {
                 .header("X-Page-Size", String.valueOf(result.getSize()))
                 .body(result);
     }
-
-    @GetMapping("/by-middleware/{apiName}")
+    @GetMapping("/by-route/{routeId}")
     @PreAuthorize("permitAll()")
-    @Operation(summary = "Get all mappings for a middleware API")
-    public ResponseEntity<List<IntegrationMappingDto>> findByMiddlewareApi(
-            @PathVariable String apiName) {
-        List<IntegrationMappingDto> result = service.findByMiddlewareApi("/" + apiName);
+    @Operation(summary = "Get all mappings for a Dynamic Route")
+    public ResponseEntity<List<IntegrationMappingDto>> findByDynamicRoute(
+            @PathVariable String routeId) {
+        List<IntegrationMappingDto> result = service.findByDynamicRoute(routeId);
         return ResponseEntity.ok(result);
     }
 
@@ -241,17 +255,25 @@ public class IntegrationMappingAdminController {
         return ResponseEntity.ok(Arrays.asList(
                 "DATA_ELEMENT",
                 "DATA_ELEMENT_WITH_DISAGGREGATION",
-                "DATA_ELEMENT_WITH_DISAGGREGATION_AND_ATTRIBUTE",
                 "INDICATOR"
         ));
     }
 
-    @GetMapping("/middleware-apis")
+    @GetMapping("/dynamic-routes")
     @PreAuthorize("permitAll()")
-    @Operation(summary = "Get list of configured middleware APIs")
-    public ResponseEntity<List<String>> getMiddlewareApis() {
-        List<String> apis = service.getDistinctMiddlewareApis();
-        return ResponseEntity.ok(apis);
+    @Operation(
+            summary = "Get list of all configured Dynamic Route IDs",
+            description = "Returns a distinct list of all Dynamic Route IDs that have active mappings"
+    )
+    public ResponseEntity<List<String>> getDynamicRoutes() {
+        try {
+            List<String> routes = service.getDistinctDynamicRoutes();
+            log.info("Found {} distinct dynamic routes", routes.size());
+            return ResponseEntity.ok(routes);
+        } catch (Exception e) {
+            log.error("Error fetching dynamic routes: {}", e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping("/validate")
@@ -287,10 +309,10 @@ public class IntegrationMappingAdminController {
     @PreAuthorize("permitAll()")
     @Operation(summary = "Export mappings configuration")
     public ResponseEntity<List<IntegrationMappingDto>> exportMappings(
-            @RequestParam(required = false) String middlewareApiName) {
+            @RequestParam(required = false) String dynamicRouteId) {
         List<IntegrationMappingDto> mappings;
-        if (middlewareApiName != null) {
-            mappings = service.findByMiddlewareApi(middlewareApiName);
+        if (dynamicRouteId != null) {
+            mappings = service.findByDynamicRoute(dynamicRouteId);
         } else {
             mappings = service.findAll();
         }
@@ -313,6 +335,26 @@ public class IntegrationMappingAdminController {
         }
     }
     /**
+     * Toggle active status of a mapping
+     */
+    @PatchMapping("/{id}/toggle-status")
+    @PreAuthorize("permitAll()")
+    @Operation(
+            summary = "Toggle mapping active status",
+            description = "Toggles the active status of a mapping (active ↔ inactive)"
+    )
+    public ResponseEntity<IntegrationMappingDto> toggleStatus(@PathVariable Long id) {
+        try {
+            IntegrationMappingDto result = service.toggleActiveStatus(id);
+            log.info("Toggled status for mapping {}: now {}", id,
+                    result.getIsActive() ? "ACTIVE" : "INACTIVE");
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Failed to toggle status for mapping {}: {}", id, e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+    /**
      * Exports integration mappings to CSV or Excel file with current filters applied.
      */
     @GetMapping("/export/{type}")
@@ -322,7 +364,7 @@ public class IntegrationMappingAdminController {
             description = "Exports integration mappings to CSV or Excel format. Uses the same filters as the main listing API."
     )
     public ResponseEntity<byte[]> exportFile(
-             @RequestParam(required = false) String middlewareApiName,
+            @RequestParam(required = false) String dynamicRouteId,
             @RequestParam(required = false) Long integratedApiId,
             @RequestParam(required = false) String integratedApiCode,
             @RequestParam(required = false) String mappingType,
@@ -362,7 +404,7 @@ public class IntegrationMappingAdminController {
 
             // Build specification with exact same filters as findAll()
             Specification<IntegrationMapping> spec = IntegrationMappingSpecification.buildSpecification(
-                    middlewareApiName, integratedApiId, integratedApiCode, mappingType,
+                    dynamicRouteId, integratedApiId, integratedApiCode, mappingType,
                     data, externalKey, attribute, isActive, notes,
                     createdAfter, createdBefore, updatedAfter, updatedBefore,
                     search, minId, maxId
@@ -389,12 +431,13 @@ public class IntegrationMappingAdminController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
     /**
      * Validate sortable field names
      */
     private boolean isValidSortField(String field) {
         Set<String> validFields = Set.of(
-                "id", "middlewareApiName", "integratedApiId", "mappingType",
+                "id", "dynamicRouteId", "integratedApiId", "mappingType",
                 "data", "attribute", "externalKey", "isActive", "notes",
                 "createdAt", "updatedAt"
         );

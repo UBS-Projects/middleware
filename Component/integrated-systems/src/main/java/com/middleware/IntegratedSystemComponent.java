@@ -11,21 +11,45 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
+/**
+ * Camel component for integrating with external systems.
+ * It creates endpoints and manages the bridge service for system configurations.
+ */
 @Component("integratedSystem")
 public class IntegratedSystemComponent extends DefaultComponent {
 
     private static final Logger LOG = LoggerFactory.getLogger(IntegratedSystemComponent.class);
 
+    /**
+     * Bridge service for fetching integrated system configuration.
+     */
     @Metadata(label = "internal")
     private IntegratedSystemBridgeService systemService;
 
+    /**
+     * Default constructor.
+     */
     public IntegratedSystemComponent() {
     }
 
+    /**
+     * Constructor with Camel context.
+     *
+     * @param context the CamelContext
+     */
     public IntegratedSystemComponent(CamelContext context) {
         super(context);
     }
 
+    /**
+     * Creates an endpoint for the integrated system component.
+     *
+     * @param uri        the endpoint URI
+     * @param remaining  the remaining part of the URI
+     * @param parameters endpoint parameters
+     * @return the created Endpoint
+     * @throws Exception if the system service is not found or an error occurs
+     */
     @Override
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
         IntegratedSystemEndpoint endpoint = new IntegratedSystemEndpoint(uri, this);
