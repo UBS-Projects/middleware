@@ -7,6 +7,7 @@ import com.middleware.backend.scheduledJobs.service.JobLogsService;
 import com.middleware.backend.scheduledJobs.specification.JobLogsSpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -51,7 +52,7 @@ public class JobLogsController {
                     "including actions like create, pause, resume, update, and deactivate. " +
                     "Supports filtering by job name, user email, API endpoint, status, and date range. Requires 'scheduledJobsLogs:view' authority."
     )
-    public ResponseEntity<?> getAll(
+    public ResponseEntity<Page<?>> getAll(
             @RequestParam(required = false) String jobName,
             @RequestParam(required = false) String userEmail,
             @RequestParam(required = false) String apiEndpoint,

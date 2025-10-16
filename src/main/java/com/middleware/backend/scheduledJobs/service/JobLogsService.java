@@ -40,7 +40,7 @@ public class JobLogsService {
     /**
      * Retrieves a page of audit entries matching filters.
      */
-    public ResponseEntity<?> getAll(Specification<ExecutionHistory> spec, Pageable pageable) {
+    public ResponseEntity<Page<?>> getAll(Specification<ExecutionHistory> spec, Pageable pageable) {
         Page<ExecutionHistory> page = repo.findAll(spec, pageable);
         return ResponseEntity.ok(page);
     }
