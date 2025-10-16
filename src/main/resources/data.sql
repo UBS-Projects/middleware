@@ -127,7 +127,7 @@ INSERT INTO public.users
 (created_by, created_at, updated_by, updated_at, email, password, status, user_name)
 VALUES
     ('SYSTEM',NOW(),'SYSTEM',NOW(), 'admin@mail.com',
-     '$2a$10$mc8VR2mvx1FLnwLfbcWrSuJBnlRQMJbCz4R/.rVDakUs6LSuLgx3G',
+     '$2a$10$xBgaTDblE6qOZAAuJsMVWeWfuqifp8TyNGmxKeKp6JB3zDxh6gdIe',
      'ACTIVE',
      'admin')
     ON CONFLICT (email) DO NOTHING;

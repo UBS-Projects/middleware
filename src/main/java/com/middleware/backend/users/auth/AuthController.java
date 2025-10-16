@@ -70,7 +70,7 @@ public class AuthController {
             description = "Authenticates a user using email and password and returns a JWT token. " +
                     "The token includes user roles, permissions, and route access information."
     )
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
+    public ResponseEntity<AuthResponse2> login(@RequestBody AuthRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail().toLowerCase(), request.getPassword())
         );
@@ -80,7 +80,7 @@ public class AuthController {
 
         if (!roles.isEmpty() && roles.get(0).getRoleType() == Role.RoleType.SYSTEM_USER) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new AuthResponse("Not a User"));
+                    .body(new AuthResponse2(null,"Not a User"));
         }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail().toLowerCase());
@@ -104,7 +104,7 @@ public class AuthController {
                 .build()
         );
 
-        return ResponseEntity.ok(new AuthResponse(jwt));
+        return ResponseEntity.ok(new AuthResponse2(user.get().getUserName(), jwt));
     }
     /**
      * Logs out a user by invalidating the provided JWT in the token store.
@@ -300,6 +300,14 @@ public class AuthController {
     @Data
     @AllArgsConstructor
     static class AuthResponse {
+        /** issued JWT token or a message in error scenarios. */
+        private String token;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class AuthResponse2 {
+        private String userName;
         /** issued JWT token or a message in error scenarios. */
         private String token;
     }

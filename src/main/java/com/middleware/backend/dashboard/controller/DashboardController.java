@@ -44,14 +44,14 @@ public class DashboardController {
      * @param day the date for which to retrieve transaction graph data (format: YYYY-MM-DD)
      * @return 200 with graph coordinate data representing transaction activity
      */
-    @GetMapping("/transaction/{day}")
+    @GetMapping("/transaction/last-30-days")
     @PreAuthorize("hasAuthority('dashboard:transactionGraph')")
     @Operation(
             summary = "Get transaction graph data",
             description = "Retrieves coordinate points representing transaction activity on a specific day."
     )
-    public ResponseEntity<?> getTransactionGraphCoordinates(@PathVariable LocalDate day) {
-        return ResponseEntity.ok(service.getTransactionGraphCoordinates(day));
+    public ResponseEntity<?> getTransactionGraphCoordinates() {
+        return ResponseEntity.ok(service.getTransactionGraphCoordinatesLast30Days());
     }
 
     /**
@@ -60,14 +60,14 @@ public class DashboardController {
      * @param day the date for which to retrieve job execution graph data (format: YYYY-MM-DD)
      * @return 200 with graph coordinate data representing job activity
      */
-    @GetMapping("/job/{day}")
+    @GetMapping("/job/last-30-days")
     @PreAuthorize("hasAuthority('dashboard:jobGraph')")
     @Operation(
             summary = "Get job graph data",
             description = "Retrieves coordinate points representing scheduled job executions for a specific day."
     )
-    public ResponseEntity<?> getJobsGraphCoordinates(@PathVariable LocalDate day) {
-        return ResponseEntity.ok(service.getJobsGraphCoordinates(day));
+    public ResponseEntity<?> getJobsGraphCoordinates() {
+        return ResponseEntity.ok(service.getJobsGraphCoordinatesLast30Days());
     }
 
     /**

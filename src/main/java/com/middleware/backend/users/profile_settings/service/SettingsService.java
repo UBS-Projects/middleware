@@ -38,32 +38,47 @@ public class SettingsService {
     }
 
     public ProfileResponse updateInfo(ProfileRequest profile) {
+        System.out.println(profile.toString());
+        System.out.println("PRofileeeeeeeeeeeeeee");
+        if (profile.getCurrentPassword().isEmpty())
+            return null;
+        System.out.println("PRofileeeeeeeeeeeeeee");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String emailUser = authentication.getName();
         Optional<User> user = userRepo.findByEmail(emailUser);
-        if(user.isEmpty())
+        if (user.isEmpty())
             return null;
-        if(!profile.getUserName().equals(""))
-            user.get().setUserName(profile.getUserName());
-        if(!profile.getPassword().equals(""))
-            user.get().setPassword(passwordEncoder.encode(profile.getPassword()));
+        System.out.println("PRofileeeeeeeeeeeeeee");
+        System.out.println(passwordEncoder.encode(profile.getCurrentPassword()));
+        System.out.println(user.get().getPassword());
+        System.out.println(passwordEncoder.matches(profile.getCurrentPassword(), user.get().getPassword()));
+        if (passwordEncoder.matches(profile.getCurrentPassword(), user.get().getPassword())) {
+            System.out.println("PRofileeeeeeeeeeeeeee");
 
-        user.get().setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        user.get().setUpdatedBy(emailUser);
+            if (!profile.getUserName().equals(""))
+                user.get().setUserName(profile.getUserName());
+            if (!profile.getPassword().equals(""))
+                user.get().setPassword(passwordEncoder.encode(profile.getPassword()));
 
-        userRepo.save(user.get());
+            user.get().setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+            user.get().setUpdatedBy(emailUser);
 
-        return userRepo.findByEmail(emailUser).map(
-                u->
-                        ProfileResponse.builder()
-                                .userName(u.getUserName())
-                                .email(u.getEmail())
-                                .roles(u.getRoles().stream().map(r -> r.getRoleName()).collect(Collectors.joining(",")))
-                                .createdBy(u.getCreatedBy())
-                                .createdAt(u.getCreatedAt())
-                                .updatedBy(u.getUpdatedBy())
-                                .updatedAt(u.getUpdatedAt())
-                                .build()
-        ).get();
+            userRepo.save(user.get());
+
+            return userRepo.findByEmail(emailUser).map(
+                    u ->
+                            ProfileResponse.builder()
+                                    .userName(u.getUserName())
+                                    .email(u.getEmail())
+                                    .roles(u.getRoles().stream().map(r -> r.getRoleName()).collect(Collectors.joining(",")))
+                                    .createdBy(u.getCreatedBy())
+                                    .createdAt(u.getCreatedAt())
+                                    .updatedBy(u.getUpdatedBy())
+                                    .updatedAt(u.getUpdatedAt())
+                                    .build()
+            ).get();
+        }
+        return null;
     }
+
 }
