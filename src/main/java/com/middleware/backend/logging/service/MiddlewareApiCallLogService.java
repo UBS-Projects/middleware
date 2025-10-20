@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.middleware.backend.logging.dto.MiddlewareApiCallLogDto;
@@ -35,23 +34,12 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-/**
- * Service handling persistence and lifecycle tracking of middleware API call logs,
- * including attempt sequencing, retry correlation, and async completion updates.
- */
 public class MiddlewareApiCallLogService {
 
     private final MiddlewareApiCallLogRepository callLogRepository;
     private final MiddlewareApiCallLogMapper mapper;
     private final JwtUtil jwtUtil;
 
-//    private static final Pattern UUID_PATTERN = Pattern.compile(
-//            "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
-//    );
-
-    /**
-     * Retrieves logs with pagination, filtering, and multi-field sorting.
-     */
     public Page<?> getAllLogs(Map<String, String> filters, int page, int size, String sortParam) {
         Specification<MiddlewareApiCallLog> spec = MiddlewareApiCallLogSpecification.fromFilters(filters);
 
@@ -61,9 +49,6 @@ public class MiddlewareApiCallLogService {
         return callLogRepository.findAll(spec, pageable).map(mapper::toDto);
     }
 
-    /**
-     * Returns all attempts for a specific client-provided transaction UUID.
-     */
     public ResponseEntity<?> getAllAttempts(String sourceUUID) {
         try {
             List<MiddlewareApiCallLog> attempts = callLogRepository.findBySourceTransactionUUIDOrderByAttemptNoAsc(sourceUUID.toLowerCase());
@@ -92,16 +77,15 @@ public class MiddlewareApiCallLogService {
     }
 
     @Transactional
-    /**
-     * Creates a new transaction log row at request ingress and stores ID on exchange.
-     * Determines attempt sequencing and validates the correlation UUID.
-     */
     public Long createTransactionSync(String routeId, Exchange exchange) {
         log.debug("createTransactionSync... creating log for Route [{}] - Exchange content: {}", routeId,
                 exchange.getAllProperties());
 
-        String sourceTransactionUUID = extractTransactionUUID(exchange);
-        validateTransactionUUID(sourceTransactionUUID, exchange);
+         boolean isScheduledJob = isScheduledJob(exchange);
+
+         String sourceTransactionUUID = extractOrGenerateTransactionUUID(exchange, isScheduledJob);
+
+         validateTransactionUUID(sourceTransactionUUID, exchange, isScheduledJob);
 
         boolean isRetry = "true".equalsIgnoreCase(exchange.getIn().getHeader("X-Retry-Attempt", String.class));
         int[] attemptInfo = calculateAttemptInfo(sourceTransactionUUID, isRetry, exchange);
@@ -118,11 +102,157 @@ public class MiddlewareApiCallLogService {
         return saved.getId();
     }
 
+
+    private boolean isScheduledJob(Exchange exchange) {
+         String scheduledJobHeader = exchange.getIn().getHeader("X-Scheduled-Job", String.class);
+        if ("true".equalsIgnoreCase(scheduledJobHeader)) {
+            return true;
+        }
+
+         String jobNameHeader = exchange.getIn().getHeader("X-Job-Name", String.class);
+        return jobNameHeader != null && !jobNameHeader.trim().isEmpty();
+    }
+
+
+    private String extractOrGenerateTransactionUUID(Exchange exchange, boolean isScheduledJob) {
+        String sourceTransactionUUID = extractTransactionUUID(exchange);
+
+         if (sourceTransactionUUID != null && !isUUIDPlaceholder(sourceTransactionUUID)) {
+            return sourceTransactionUUID;
+        }
+
+         if (isScheduledJob) {
+            if (sourceTransactionUUID == null || isUUIDPlaceholder(sourceTransactionUUID)) {
+                String generatedUUID = UUID.randomUUID().toString();
+                log.info("Generated transactionUUID for scheduled job: {}", generatedUUID);
+                return generatedUUID;
+            }
+        }
+
+         return sourceTransactionUUID;
+    }
+
+    private boolean isUUIDPlaceholder(String value) {
+        if (value == null) return false;
+
+        String trimmed = value.trim();
+
+         if ("{{UUID}}".equals(trimmed)) {
+            return true;
+        }
+
+         if ("%7B%7BUUID%7D%7D".equalsIgnoreCase(trimmed)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private String extractTransactionUUID(Exchange exchange) {
+        String sourceTransactionUUID = exchange.getIn().getHeader("transactionUUID", String.class);
+        if (sourceTransactionUUID == null) {
+            sourceTransactionUUID = exchange.getIn().getHeader("X-Transaction-UUID", String.class);
+        }
+        if (sourceTransactionUUID == null) {
+            sourceTransactionUUID = exchange.getProperty("transactionUUID", String.class);
+        }
+        return sourceTransactionUUID;
+    }
+
+    private void validateTransactionUUID(String sourceTransactionUUID, Exchange exchange, boolean isScheduledJob) {
+         if (sourceTransactionUUID == null || sourceTransactionUUID.trim().isEmpty()) {
+            if (isScheduledJob) {
+                 log.warn("Scheduled job missing UUID - this should not happen");
+            } else {
+                 setError(exchange, 400, "{\"status\":\"ERROR\",\"message\":\"Missing required query parameter: transactionUUID\"}");
+                throw new IllegalArgumentException("Missing required query parameter: transactionUUID");
+            }
+        }
+
+         if (isUUIDPlaceholder(sourceTransactionUUID)) {
+            if (isScheduledJob) {
+                 log.warn("Scheduled job still has placeholder UUID - this should not happen");
+            } else {
+                 setError(exchange, 400,
+                        "{\"status\":\"ERROR\",\"message\":\"Invalid transactionUUID format. Placeholder {{UUID}} is only allowed in Scheduled Jobs. Please provide a valid UUID.\"}");
+                throw new IllegalArgumentException("Placeholder {{UUID}} not allowed in HTTP requests");
+            }
+        }
+
+         try {
+            UUID.fromString(sourceTransactionUUID.trim());
+            log.debug("UUID validation passed for: {}", sourceTransactionUUID);
+        } catch (IllegalArgumentException e) {
+            log.error("UUID validation failed for: {}", sourceTransactionUUID);
+            setError(exchange, 400,
+                    "{\"status\":\"ERROR\",\"message\":\"Invalid transactionUUID format. Expect RFC4122 (e.g., 550e8400-e29b-41d4-a716-446655440000)\"}");
+            throw new IllegalArgumentException("Invalid transactionUUID format");
+        }
+    }
+
+    private int[] calculateAttemptInfo(String sourceTransactionUUID, boolean isRetry, Exchange exchange) {
+        String cleanUUID = sourceTransactionUUID.trim().toLowerCase();
+        int attemptNo;
+        int retryCount;
+
+        if (isRetry) {
+            MiddlewareApiCallLog last = callLogRepository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(cleanUUID);
+            if (last != null) {
+                attemptNo = last.getAttemptNo() + 1;
+                retryCount = attemptNo - 1;
+                log.info("Retry attempt for UUID: {} - attemptNo: {}, retryCount: {}",
+                        cleanUUID, attemptNo, retryCount);
+            } else {
+                log.warn("Retry attempt requested but no previous record found for UUID: {}", cleanUUID);
+                attemptNo = 1;
+                retryCount = 0;
+            }
+        } else {
+            if (callLogRepository.existsBySourceTransactionUUID(cleanUUID)) {
+                log.error("Duplicate UUID detected without retry header: {}", cleanUUID);
+                setError(exchange, 409,
+                        "{\"status\":\"CONFLICT\",\"message\":\"Duplicate transactionUUID. This request was already processed.\"}");
+                throw new IllegalArgumentException("Duplicate transactionUUID. This UUID has already been used.");
+            }
+
+            attemptNo = 1;
+            retryCount = 0;
+            log.debug("First attempt for new UUID: {}", cleanUUID);
+        }
+
+        return new int[]{attemptNo, retryCount};
+    }
+
+    private MiddlewareApiCallLog buildLogEntity(String routeId, Exchange exchange, String sourceTransactionUUID, int attemptNo, int retryCount) {
+        String clientIp = extractClientIp(exchange);
+        String userEmail = extractUserFromToken(exchange);
+        String requestBody = readBodyAsString(exchange.getIn());
+        String requestUrl = header(exchange, "CamelHttpUrl", String.class);
+        String requestPath = header(exchange, "CamelHttpPath", String.class);
+        String requestQuery = header(exchange, "CamelHttpQuery", String.class);
+
+        return MiddlewareApiCallLog.builder()
+                .routeId(routeId)
+                .apiEndpoint(exchange.getFromEndpoint() != null ? exchange.getFromEndpoint().getEndpointUri() : null)
+                .requestMethod(exchange.getIn().getHeader(Exchange.HTTP_METHOD, String.class))
+                .requestUrl(requestUrl)
+                .requestPath(requestPath)
+                .requestQuery(requestQuery)
+                .requestHeaders(exchange.getIn().getHeaders() != null ? exchange.getIn().getHeaders().toString() : null)
+                .requestBody(requestBody)
+                .receivedAt(java.time.LocalDateTime.now())
+                .transactionId(UUID.randomUUID().toString())
+                .sourceTransactionUUID(sourceTransactionUUID.trim().toLowerCase())
+                .attemptNo(attemptNo)
+                .retryCount(retryCount)
+                .status("IN_PROGRESS")
+                .clientIp(clientIp)
+                .userId(userEmail)
+                .build();
+    }
+
     @Async
     @Transactional
-    /**
-     * Finalizes a transaction by recording response details and duration asynchronously.
-     */
     public CompletableFuture<Void> updateTransaction(Exchange exchange) {
         log.debug("updateTransaction... updating Route [{}] - Exchange content: {}",
                 exchange.getFromEndpoint().getEndpointUri(), exchange.getAllProperties());
@@ -151,7 +281,7 @@ public class MiddlewareApiCallLogService {
         return CompletableFuture.completedFuture(null);
     }
 
-    // Private helper methods
+    // Keep all other private helper methods as they are...
     private List<Sort.Order> parseSortParam(String sortParam) {
         String[] sortFields = sortParam.split(";");
         List<Sort.Order> orders = new java.util.ArrayList<>();
@@ -165,150 +295,6 @@ public class MiddlewareApiCallLogService {
             }
         }
         return orders;
-    }
-
-    private String extractTransactionUUID(Exchange exchange) {
-        String sourceTransactionUUID = exchange.getIn().getHeader("transactionUUID", String.class);
-        if (sourceTransactionUUID == null) {
-            sourceTransactionUUID = exchange.getIn().getHeader("X-Transaction-UUID", String.class);
-        }
-        if (sourceTransactionUUID == null) {
-            sourceTransactionUUID = exchange.getProperty("transactionUUID", String.class);
-        }
-        return sourceTransactionUUID;
-    }
-
-    private void validateTransactionUUID(String sourceTransactionUUID, Exchange exchange) {
-        if (sourceTransactionUUID == null || sourceTransactionUUID.trim().isEmpty()) {
-            setError(exchange, 400, "{\"status\":\"ERROR\",\"message\":\"Missing required query parameter: transactionUUID\"}");
-            throw new IllegalArgumentException("Missing required query parameter: transactionUUID");
-        }
-
-        try {
-            // استخدام Java built-in validation بدل من regex
-            UUID.fromString(sourceTransactionUUID.trim());
-            log.debug("UUID validation passed for: {}", sourceTransactionUUID);
-        } catch (IllegalArgumentException e) {
-            log.error("UUID validation failed for: {}", sourceTransactionUUID);
-            setError(exchange, 400, "{\"status\":\"ERROR\",\"message\":\"Invalid transactionUUID format. Expect RFC4122 (e.g., 550e8400-e29b-41d4-a716-446655440000)\"}");
-            throw new IllegalArgumentException("Invalid transactionUUID format");
-        }
-    }
-//    private int[] calculateAttemptInfo(String sourceTransactionUUID, boolean isRetry, Exchange exchange) {
-//        String cleanUUID = sourceTransactionUUID.trim().toLowerCase();
-//        int attemptNo;
-//        int retryCount;
-//
-//        if (isRetry) {
-//            MiddlewareApiCallLog last = callLogRepository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(cleanUUID);
-//            attemptNo = (last == null) ? 1 : last.getAttemptNo() + 1;
-//            retryCount = Math.max(0, attemptNo - 1);
-//        } else {
-//            if (callLogRepository.existsBySourceTransactionUUID(cleanUUID)) {
-//                setError(exchange, 409, "{\"status\":\"CONFLICT\",\"message\":\"Duplicate transactionUUID. This request was already processed.\"}");
-//                throw new IllegalArgumentException("Duplicate transactionUUID. This UUID has already been used.");
-//            }
-//            attemptNo = 1;
-//            retryCount = 0;
-//        }
-//
-//        return new int[]{attemptNo, retryCount};
-//    }
-/// //////////////////////////////////////////////////////////////////////////////////////////////////////
-//    private int[] calculateAttemptInfo(String sourceTransactionUUID, boolean isRetry, Exchange exchange) {
-//        String cleanUUID = sourceTransactionUUID.trim().toLowerCase();
-//        int attemptNo;
-//        int retryCount;
-//
-//        if (isRetry) {
-//            MiddlewareApiCallLog last = callLogRepository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(cleanUUID);
-//            if (last != null) {
-//                attemptNo = last.getAttemptNo() + 1;
-//                retryCount = attemptNo - 1;
-//            } else {
-//                log.warn("Retry attempt requested but no previous record found for UUID: {}", cleanUUID);
-//                attemptNo = 1;
-//                retryCount = 0;
-//            }
-//
-//            log.info("Retry attempt for UUID: {} - attemptNo: {}, retryCount: {}",
-//                    cleanUUID, attemptNo, retryCount);
-//        } else {
-//            if (callLogRepository.existsBySourceTransactionUUID(cleanUUID)) {
-//
-//                MiddlewareApiCallLog last = callLogRepository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(cleanUUID);
-//                attemptNo = (last == null) ? 1 : last.getAttemptNo() + 1;
-//                retryCount = Math.max(0, attemptNo - 1);
-//
-//                log.warn("UUID {} already exists but no retry header found. Treating as attempt {} (might be duplicate test)",
-//                        cleanUUID, attemptNo);
-//            } else {
-//                attemptNo = 1;
-//                retryCount = 0;
-//                log.debug("First attempt for new UUID: {}", cleanUUID);
-//            }
-//        }
-//
-//        return new int[]{attemptNo, retryCount};
-//    }
-private int[] calculateAttemptInfo(String sourceTransactionUUID, boolean isRetry, Exchange exchange) {
-    String cleanUUID = sourceTransactionUUID.trim().toLowerCase();
-    int attemptNo;
-    int retryCount;
-
-    if (isRetry) {
-        MiddlewareApiCallLog last = callLogRepository.findTopBySourceTransactionUUIDOrderByAttemptNoDesc(cleanUUID);
-        if (last != null) {
-            attemptNo = last.getAttemptNo() + 1;
-            retryCount = attemptNo - 1;
-            log.info("Retry attempt for UUID: {} - attemptNo: {}, retryCount: {}",
-                    cleanUUID, attemptNo, retryCount);
-        } else {
-            log.warn("Retry attempt requested but no previous record found for UUID: {}", cleanUUID);
-            attemptNo = 1;
-            retryCount = 0;
-        }
-    } else {
-        if (callLogRepository.existsBySourceTransactionUUID(cleanUUID)) {
-            log.error("Duplicate UUID detected without retry header: {}", cleanUUID);
-            setError(exchange, 409,
-                    "{\"status\":\"CONFLICT\",\"message\":\"Duplicate transactionUUID. This request was already processed.\"}");
-            throw new IllegalArgumentException("Duplicate transactionUUID. This UUID has already been used.");
-        }
-
-        attemptNo = 1;
-        retryCount = 0;
-        log.debug("First attempt for new UUID: {}", cleanUUID);
-    }
-
-    return new int[]{attemptNo, retryCount};
-}
-    private MiddlewareApiCallLog buildLogEntity(String routeId, Exchange exchange, String sourceTransactionUUID, int attemptNo, int retryCount) {
-        String clientIp = extractClientIp(exchange);
-        String userEmail = extractUserFromToken(exchange);
-        String requestBody = readBodyAsString(exchange.getIn());
-        String requestUrl = header(exchange, "CamelHttpUrl", String.class);
-        String requestPath = header(exchange, "CamelHttpPath", String.class);
-        String requestQuery = header(exchange, "CamelHttpQuery", String.class);
-
-        return MiddlewareApiCallLog.builder()
-                .routeId(routeId)
-                .apiEndpoint(exchange.getFromEndpoint() != null ? exchange.getFromEndpoint().getEndpointUri() : null)
-                .requestMethod(exchange.getIn().getHeader(Exchange.HTTP_METHOD, String.class))
-                .requestUrl(requestUrl)
-                .requestPath(requestPath)
-                .requestQuery(requestQuery)
-                .requestHeaders(exchange.getIn().getHeaders() != null ? exchange.getIn().getHeaders().toString() : null)
-                .requestBody(requestBody)
-                .receivedAt(java.time.LocalDateTime.now())
-                .transactionId(UUID.randomUUID().toString())
-                .sourceTransactionUUID(sourceTransactionUUID.trim().toLowerCase())
-                .attemptNo(attemptNo)
-                .retryCount(retryCount)
-                .status("IN_PROGRESS")
-                .clientIp(clientIp)
-                .userId(userEmail)
-                .build();
     }
 
     private void updateLogWithResponse(MiddlewareApiCallLog existing, Exchange exchange) {
@@ -377,6 +363,7 @@ private int[] calculateAttemptInfo(String sourceTransactionUUID, boolean isRetry
             return null;
         }
     }
+
     private boolean isSpecialIntegrateApi(MiddlewareApiCallLog log) {
         String url = log.getRequestUrl();
         String path = log.getRequestPath();
@@ -490,8 +477,7 @@ private int[] calculateAttemptInfo(String sourceTransactionUUID, boolean isRetry
         try {
             String contentType = msg.getHeader(Exchange.CONTENT_TYPE, String.class);
             Charset cs = StandardCharsets.UTF_8;
-            if (contentType != null) {
-                String lower = contentType.toLowerCase();
+            if (contentType != null) {String lower = contentType.toLowerCase();
                 int i = lower.indexOf("charset=");
                 if (i >= 0) {
                     String enc = lower.substring(i + "charset=".length()).trim();

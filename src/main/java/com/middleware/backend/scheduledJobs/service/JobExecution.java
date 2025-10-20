@@ -21,7 +21,8 @@ import java.util.UUID;
  * <p>
  * Responsibilities:
  * - Build the HTTP request from persisted job details and Quartz job data.
- * - Add tracking headers (X-Scheduled-Job, X-Job-Name, optional X-Retry-Attempt).
+ * - Generate a unique UUID for each execution if the URL contains {{UUID}} placeholder.
+ * - Add tracking headers (X-Scheduled-Job, X-Job-Name).
  * - Perform the HTTP call via {@link RestTemplate}.
  * - Persist a {@link JobExecutionLogs} record with request/response and timing.
  * - Update the job's last execution timestamp.
@@ -63,7 +64,7 @@ public class JobExecution implements Job {
             log.setRequestHeaders(processedRequest.headers);
             log.setRequestBody(payload);
 
-            // Prepare headers
+            // Prepare HTTP headers
             HttpHeaders httpHeaders = new HttpHeaders();
             if (processedRequest.headers != null && !processedRequest.headers.isEmpty()) {
                 Map<String, String> headerMap = new ObjectMapper().readValue(processedRequest.headers, Map.class);
@@ -72,6 +73,7 @@ public class JobExecution implements Job {
 
             HttpEntity<String> entity = new HttpEntity<>(payload, httpHeaders);
 
+            // Execute HTTP request with the processed URL (UUID replaced if needed)
             ResponseEntity<String> response = restTemplate.exchange(
                     processedRequest.url,
                     HttpMethod.valueOf(method.toUpperCase()),
@@ -99,9 +101,14 @@ public class JobExecution implements Job {
         }
     }
 
+    /**
+     * Process the request by replacing {{UUID}} placeholder and preparing headers.
+     */
     private ProcessedRequest processRequestForExecution(String originalUrl, String originalHeaders, JobExecutionContext context) {
         ProcessedRequest result = new ProcessedRequest();
-        result.url = originalUrl;
+
+        // Generate new UUID and replace {{UUID}} placeholder if present
+        result.url = replaceUUIDPlaceholder(originalUrl);
 
         // Fetch the ScheduledJobs entity to access the token
         ScheduledJobs scheduledJob = null;
@@ -121,6 +128,42 @@ public class JobExecution implements Job {
         return result;
     }
 
+    /**
+     * Replace {{UUID}} placeholder with a new UUID.
+     * Supports both regular and URL-encoded placeholders:
+     * - transactionUUID={{UUID}}
+     * - transactionUUID=%7B%7BUUID%7D%7D (URL encoded)
+     *
+     * @param url the original URL that may contain {{UUID}} placeholder
+     * @return URL with {{UUID}} replaced by a new UUID, or original URL if no placeholder found
+     */
+    private String replaceUUIDPlaceholder(String url) {
+        if (url == null) return null;
+
+        // Check if placeholder exists
+        if (!url.contains("{{UUID}}") && !url.contains("%7B%7BUUID%7D%7D")) {
+            return url;
+        }
+
+        // Generate new UUID for this execution
+        String newUUID = UUID.randomUUID().toString();
+        System.out.println("Generated UUID for scheduled job: " + newUUID);
+
+        // Replace regular placeholder
+        String finalUrl = url.replace("{{UUID}}", newUUID);
+
+        // Replace URL-encoded placeholder
+        finalUrl = finalUrl.replace("%7B%7BUUID%7D%7D", newUUID);
+
+        return finalUrl;
+    }
+
+    /**
+     * Process headers by adding scheduled job tracking headers and authentication token.
+     *
+     * NOTE: X-Retry-Attempt header is NOT added for scheduled jobs because each execution
+     * generates a new UUID, making every execution unique (not a retry).
+     */
     private String processHeadersForScheduledJob(String originalHeaders, JobExecutionContext context, ScheduledJobs scheduledJob) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -133,15 +176,12 @@ public class JobExecution implements Job {
             }
 
             String jobName = context.getJobDetail().getKey().getName();
+
+            // Add scheduled job identification headers
             headerMap.put("X-Scheduled-Job", "true");
             headerMap.put("X-Job-Name", jobName);
 
-            boolean isFirstExecution = isFirstExecution(context);
-            if (!isFirstExecution) {
-                headerMap.put("X-Retry-Attempt", "true");
-            }
-
-            // Add token as Bearer if available
+            // Add authentication token if available
             if (scheduledJob != null && scheduledJob.getToken() != null && !scheduledJob.getToken().isEmpty()) {
                 headerMap.put("Authorization", "Bearer " + scheduledJob.getToken());
             }
@@ -154,20 +194,9 @@ public class JobExecution implements Job {
         }
     }
 
-
-    private boolean isFirstExecution(JobExecutionContext context) {
-        return context.getPreviousFireTime() == null;
-    }
-
-    private boolean isInternalCamelEndpoint(String url) {
-        if (url == null) return false;
-
-        return url.contains("/camel/") ||
-                url.contains("transactionUUID=") ||
-                url.contains("/v1/datasets") ||
-                url.contains("/v1/integrate");
-    }
-
+    /**
+     * Update the last execution time for the scheduled job.
+     */
     private void updateLastExecutionTime(String url, String method, String headers,
                                          String payload, Timestamp executionTime) {
         try {
@@ -178,7 +207,6 @@ public class JobExecution implements Job {
                 jobRepo.save(job);
             }
         } catch (Exception e) {
-            // Log error but don't fail the job execution
             System.err.println("Failed to update last execution time: " + e.getMessage());
         }
     }

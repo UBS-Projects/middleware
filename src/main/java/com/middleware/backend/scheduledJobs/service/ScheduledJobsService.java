@@ -2,9 +2,7 @@ package com.middleware.backend.scheduledJobs.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.middleware.backend.scheduledJobs.DTO.JobExecutionDTO;
 import com.middleware.backend.scheduledJobs.DTO.JobRequest;
-import com.middleware.backend.scheduledJobs.enums.Status;
 import com.middleware.backend.scheduledJobs.mapper.Mapper;
 import com.middleware.backend.scheduledJobs.model.ScheduledJobs;
 import com.middleware.backend.scheduledJobs.model.SingleJobDto;
@@ -33,16 +31,13 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-/**
- * Service orchestrating lifecycle of scheduled jobs: create, edit, pause/resume, deactivate, test, list, and export.
- * Integrates with Quartz to schedule jobs and with repositories for persistence.
- */
 @Service
 @AllArgsConstructor
 public class ScheduledJobsService{
@@ -50,11 +45,8 @@ public class ScheduledJobsService{
     private Scheduler scheduler;
     private final RestTemplate restTemplate;
     private final UserRepository userRepo;
-    private final MiddlewareApiCallLogRepository middlewareApiCallLogRepository; // Add this dependency
+    private final MiddlewareApiCallLogRepository middlewareApiCallLogRepository;
 
-    /**
-     * Loads all enabled jobs from DB and schedules them with Quartz.
-     */
     public void scheduleAllActiveJobs() {
         List<ScheduledJobs> jobs = repo.findByEnabledTrue();
         List<JobRequest> jobDTOs = jobs.stream()
@@ -63,9 +55,6 @@ public class ScheduledJobsService{
         jobDTOs.forEach(this::scheduleJob);
     }
 
-    /**
-     * Creates Quartz job + trigger for the given job definition.
-     */
     private void scheduleJob(JobRequest job) {
         try {
             JobBuilder jobBuilder = JobBuilder.newJob(JobExecution.class)
@@ -75,7 +64,6 @@ public class ScheduledJobsService{
                     .usingJobData("headers", job.getHeaders())
                     .usingJobData("payload", job.getPayload());
 
-            // Add token if present
             if (job.getToken() != null && !job.getToken().isEmpty()) {
                 jobBuilder.usingJobData("token", job.getToken());
             }
@@ -93,14 +81,6 @@ public class ScheduledJobsService{
         }
     }
 
-
-    /**
-     * Persists a new job definition and schedules it.
-     *
-     * @param job job request payload
-     * @param email user email performing the operation
-     * @return saved job
-     */
     public ScheduledJobs createNewJob(JobRequest job, String email) {
         Optional<ScheduledJobs> sc = repo.findByJobNameAndActiveTrue(job.getJobName());
         if(sc.isPresent()){
@@ -130,9 +110,6 @@ public class ScheduledJobsService{
         return savedJob;
     }
 
-    /**
-     * Disables a job and pauses its Quartz schedule.
-     */
     public ScheduledJobs pauseJob(Long id, String email) throws SchedulerException {
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
@@ -145,9 +122,6 @@ public class ScheduledJobsService{
         return job;
     }
 
-    /**
-     * Enables a job and resumes or creates its Quartz schedule if missing.
-     */
     public ScheduledJobs resumeJob(Long id, String email) throws SchedulerException {
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
@@ -166,9 +140,6 @@ public class ScheduledJobsService{
         return job;
     }
 
-    /**
-     * Updates a job definition and re-schedules it.
-     */
     public ScheduledJobs editJob(JobRequest job, String email) throws SchedulerException {
         ScheduledJobs existingJob = repo.findById(job.getId())
                 .orElseThrow(() -> new RuntimeException("Job not found"));
@@ -203,17 +174,11 @@ public class ScheduledJobsService{
         return updatedJob;
     }
 
-    /**
-     * Returns active jobs matching the given specification.
-     */
     public Page<ScheduledJobs> getAllRoutes(Specification<ScheduledJobs> spec, Pageable pageable) {
         Specification<ScheduledJobs> activeSpec = (root, query, cb) -> cb.isTrue(root.get("active"));
         return repo.findAll(spec.and(activeSpec), pageable);
     }
 
-    /**
-     * Soft-deletes a job (active=false), disables it, and pauses scheduling.
-     */
     public ScheduledJobs deactivateJob(Long id, String email) throws SchedulerException {
         ScheduledJobs job = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
@@ -226,9 +191,7 @@ public class ScheduledJobsService{
         return job;
     }
 
-    /**
-     * Executes a test HTTP call simulating scheduled job behavior, without persisting or scheduling.
-     */
+
     public boolean test(JobRequest job) throws Exception {
         HttpHeaders headers = new HttpHeaders();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -242,12 +205,12 @@ public class ScheduledJobsService{
             headers.add("Authorization", "Bearer " + job.getToken());
         }
 
-        // Add test-specific headers
-        headers.add("X-Scheduled-Job", "true");
+         headers.add("X-Scheduled-Job", "true");
         headers.add("X-Job-Name", job.getJobName() != null ? job.getJobName() : "test-job");
 
-        // Check if this is a retry attempt
-        String transactionUUID = extractTransactionUUIDFromUrl(job.getApiEndpoint());
+         String finalUrl = replaceUUIDPlaceholderForTest(job.getApiEndpoint());
+
+         String transactionUUID = extractTransactionUUIDFromUrl(finalUrl);
         if (transactionUUID != null && hasBeenUsedBefore(transactionUUID)) {
             headers.add("X-Retry-Attempt", "true");
         }
@@ -255,7 +218,7 @@ public class ScheduledJobsService{
         HttpEntity<String> entity = new HttpEntity<>(job.getPayload(), headers);
 
         ResponseEntity<String> response = restTemplate.exchange(
-                job.getApiEndpoint(),
+                finalUrl,
                 HttpMethod.valueOf(job.getMethod().toUpperCase()),
                 entity,
                 String.class
@@ -265,10 +228,26 @@ public class ScheduledJobsService{
     }
 
 
+    private String replaceUUIDPlaceholderForTest(String url) {
+        if (url == null) return null;
+
+         if (url.contains("{{UUID}}") || url.contains("%7B%7BUUID%7D%7D")) {
+            String newUUID = UUID.randomUUID().toString();
+
+             String finalUrl = url.replace("{{UUID}}", newUUID);
+
+             finalUrl = finalUrl.replace("%7B%7BUUID%7D%7D", newUUID);
+
+            System.out.println("Test: Generated UUID " + newUUID + " for placeholder");
+            return finalUrl;
+        }
+
+        return url;
+    }
+
     private String extractTransactionUUIDFromUrl(String url) {
         if (url == null) return null;
 
-        // Extract transactionUUID from URL parameters
         Pattern pattern = Pattern.compile("transactionUUID=([a-fA-F0-9-]+)");
         Matcher matcher = pattern.matcher(url);
         return matcher.find() ? matcher.group(1) : null;
@@ -278,15 +257,11 @@ public class ScheduledJobsService{
         try {
             return middlewareApiCallLogRepository.existsBySourceTransactionUUID(transactionUUID.toLowerCase());
         } catch (Exception e) {
-            // Log error but don't fail the test
             System.err.println("Error checking UUID existence: " + e.getMessage());
             return false;
         }
     }
 
-    /**
-     * Exports jobs matching spec to CSV or Excel bytes.
-     */
     public byte[] exportFile(Specification<ScheduledJobs> spec, Pageable pageable, String type) throws IOException {
         Specification<ScheduledJobs> activeSpec = (root, query, cb) -> cb.isTrue(root.get("active"));
         Page<ScheduledJobs> res = repo.findAll(spec.and(activeSpec), pageable);
@@ -300,10 +275,8 @@ public class ScheduledJobsService{
         }
     }
 
-    // Helper method to convert List<ScheduledJobs> to CSV String
     private String convertToCSV(List<ScheduledJobs> jobs) {
         StringBuilder sb = new StringBuilder();
-        // Add CSV headers
         sb.append("JobName,ApiEndpoint,Method,Enabled,Active,UpdatedAt\n");
 
         for (ScheduledJobs job : jobs) {
@@ -318,7 +291,6 @@ public class ScheduledJobsService{
         return sb.toString();
     }
 
-    // Basic CSV escaping for commas, quotes
     private String escapeCsv(String value) {
         if (value == null) return "";
         String escaped = value.replace("\"", "\"\"");
@@ -328,12 +300,10 @@ public class ScheduledJobsService{
         return escaped;
     }
 
-    // Helper method to convert List<ScheduledJobs> to Excel bytes
     private byte[] convertToExcel(List<ScheduledJobs> jobs) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Scheduled Jobs");
 
-            // Create header row
             Row header = sheet.createRow(0);
             header.createCell(0).setCellValue("JobName");
             header.createCell(1).setCellValue("ApiEndpoint");
@@ -342,7 +312,6 @@ public class ScheduledJobsService{
             header.createCell(4).setCellValue("Active");
             header.createCell(5).setCellValue("UpdatedAt");
 
-            // Fill data rows
             int rowIdx = 1;
             for (ScheduledJobs job : jobs) {
                 Row row = sheet.createRow(rowIdx++);
@@ -355,12 +324,10 @@ public class ScheduledJobsService{
                     row.createCell(5).setCellValue(job.getUpdatedAt().toString());
             }
 
-            // Autosize columns for better readability
             for (int i = 0; i < 6; i++) {
                 sheet.autoSizeColumn(i);
             }
 
-            // Write workbook to byte array
             try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
                 workbook.write(bos);
                 return bos.toByteArray();
@@ -368,9 +335,6 @@ public class ScheduledJobsService{
         }
     }
 
-    /**
-     * Returns a view-model of a job including creator/updater emails.
-     */
     public ResponseEntity<?> getById(long id) {
         Optional<ScheduledJobs> job = repo.findById(id);
         if(job.isEmpty())
