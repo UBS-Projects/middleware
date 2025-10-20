@@ -16,10 +16,13 @@ import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.quartz.*;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.List;
@@ -287,36 +292,60 @@ public class ScheduledJobsService{
     /**
      * Exports jobs matching spec to CSV or Excel bytes.
      */
-    public byte[] exportFile(Specification<ScheduledJobs> spec, Pageable pageable, String type) throws IOException {
+    public byte[] exportFile(Specification<ScheduledJobs> spec, String type, String sortedBy, String sortDirection) throws IOException {
         Specification<ScheduledJobs> activeSpec = (root, query, cb) -> cb.isTrue(root.get("active"));
-        Page<ScheduledJobs> res = repo.findAll(spec.and(activeSpec), pageable);
-        List<ScheduledJobs> data = res.getContent();
+        spec = spec.and(activeSpec);
+
         if ("CSV".equalsIgnoreCase(type)) {
-            return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
+            return convertToCSVStreamed(spec, sortedBy,sortDirection);
         } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
-            return convertToExcel(data);
+            return convertToExcelStreamed(spec, sortedBy,sortDirection);
         } else {
             throw new IllegalArgumentException("Unsupported export type: " + type);
         }
     }
 
-    // Helper method to convert List<ScheduledJobs> to CSV String
-    private String convertToCSV(List<ScheduledJobs> jobs) {
-        StringBuilder sb = new StringBuilder();
-        // Add CSV headers
-        sb.append("JobName,ApiEndpoint,Method,Enabled,Active,UpdatedAt\n");
 
-        for (ScheduledJobs job : jobs) {
-            sb.append(escapeCsv(job.getJobName())).append(",");
-            sb.append(escapeCsv(job.getApiEndpoint())).append(",");
-            sb.append(escapeCsv(job.getMethod())).append(",");
-            sb.append(job.isEnabled()).append(",");
-            sb.append(job.isActive()).append(",");
-            sb.append(job.getUpdatedAt()).append("\n");
+    // Helper method to convert List<ScheduledJobs> to CSV String
+    private byte[] convertToCSVStreamed(Specification<ScheduledJobs> spec, String sortedBy, String sortDirection) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(bos, StandardCharsets.UTF_8))) {
+            // Write CSV headers
+            writer.println("JobName,ApiEndpoint,Method,Enabled,Active,UpdatedAt");
+            writer.flush();
+
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+
+            while (hasMore) {
+                Sort sort = sortDirection.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<ScheduledJobs> page = repo.findAll(spec, pageable);
+
+                for (ScheduledJobs job : page.getContent()) {
+                    writer.append(escapeCsv(job.getJobName())).append(",");
+                    writer.append(escapeCsv(job.getApiEndpoint())).append(",");
+                    writer.append(escapeCsv(job.getMethod())).append(",");
+                    writer.append(String.valueOf(job.isEnabled())).append(",");
+                    writer.append(String.valueOf(job.isActive())).append(",");
+                    writer.append(job.getUpdatedAt() != null ? job.getUpdatedAt().toString() : "").append("\n");
+                }
+
+                writer.flush();
+                hasMore = page.hasNext();
+                pageNumber++;
+            }
+
+            writer.flush();
         }
 
-        return sb.toString();
+        return bos.toByteArray();
     }
+
 
     // Basic CSV escaping for commas, quotes
     private String escapeCsv(String value) {
@@ -328,45 +357,64 @@ public class ScheduledJobsService{
         return escaped;
     }
 
+    private String safeString(String value) {
+        return value != null ? value : "";
+    }
+
+
     // Helper method to convert List<ScheduledJobs> to Excel bytes
-    private byte[] convertToExcel(List<ScheduledJobs> jobs) throws IOException {
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Scheduled Jobs");
+    private byte[] convertToExcelStreamed(Specification<ScheduledJobs> spec, String sortedBy, String sortDirection) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        SXSSFWorkbook workbook = new SXSSFWorkbook(100); // Keep 100 rows in memory
+        Sheet sheet = workbook.createSheet("Scheduled Jobs");
 
-            // Create header row
+        try {
+            // Header row
             Row header = sheet.createRow(0);
-            header.createCell(0).setCellValue("JobName");
-            header.createCell(1).setCellValue("ApiEndpoint");
-            header.createCell(2).setCellValue("Method");
-            header.createCell(3).setCellValue("Enabled");
-            header.createCell(4).setCellValue("Active");
-            header.createCell(5).setCellValue("UpdatedAt");
+            String[] headers = {"JobName", "ApiEndpoint", "Method", "Enabled", "Active", "UpdatedAt"};
+            for (int i = 0; i < headers.length; i++) {
+                header.createCell(i).setCellValue(headers[i]);
+            }
 
-            // Fill data rows
+            int[] widths = {25, 40, 15, 10, 10, 25};
+            for (int i = 0; i < widths.length; i++) {
+                sheet.setColumnWidth(i, widths[i] * 256);
+            }
+
             int rowIdx = 1;
-            for (ScheduledJobs job : jobs) {
-                Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue(job.getJobName());
-                row.createCell(1).setCellValue(job.getApiEndpoint());
-                row.createCell(2).setCellValue(job.getMethod());
-                row.createCell(3).setCellValue(job.isEnabled());
-                row.createCell(4).setCellValue(job.isActive());
-                if (job.getUpdatedAt() != null)
-                    row.createCell(5).setCellValue(job.getUpdatedAt().toString());
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+
+            while (hasMore) {
+                Sort sort = sortDirection.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<ScheduledJobs> page = repo.findAll(spec, pageable);
+
+                for (ScheduledJobs job : page.getContent()) {
+                    Row row = sheet.createRow(rowIdx++);
+                    row.createCell(0).setCellValue(safeString(job.getJobName()));
+                    row.createCell(1).setCellValue(safeString(job.getApiEndpoint()));
+                    row.createCell(2).setCellValue(safeString(job.getMethod()));
+                    row.createCell(3).setCellValue(job.isEnabled());
+                    row.createCell(4).setCellValue(job.isActive());
+                    row.createCell(5).setCellValue(job.getUpdatedAt() != null ? job.getUpdatedAt().toString() : "");
+                }
+
+                hasMore = page.hasNext();
+                pageNumber++;
             }
 
-            // Autosize columns for better readability
-            for (int i = 0; i < 6; i++) {
-                sheet.autoSizeColumn(i);
-            }
+            workbook.write(bos);
+            return bos.toByteArray();
 
-            // Write workbook to byte array
-            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-                workbook.write(bos);
-                return bos.toByteArray();
-            }
+        } finally {
+            workbook.dispose();
         }
     }
+
 
     /**
      * Returns a view-model of a job including creator/updater emails.

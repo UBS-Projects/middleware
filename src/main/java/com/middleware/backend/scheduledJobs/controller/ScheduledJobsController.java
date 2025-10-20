@@ -278,11 +278,8 @@ public class ScheduledJobsController {
                     .and(ScheduledJobsSpecification.hasField("apiEndpoint", apiEndpoint, MatchMode.CONTAINS))
                     .and(ScheduledJobsSpecification.hasField("method", method, MatchMode.EXACT))
                     .and(ScheduledJobsSpecification.hasField("enabled", enabled));
-            Pageable pageable = PageRequest.of(0, 100000, sortDirection.equalsIgnoreCase("asc")
-                    ? Sort.by(sortedBy).ascending()
-                    : Sort.by(sortedBy).descending());
 
-            byte[] fileBytes = service.exportFile(spec, pageable, type);
+            byte[] fileBytes = service.exportFile(spec, type, sortedBy, sortDirection);
 
             String fileName = "scheduled_jobs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
             String contentType = type.equalsIgnoreCase("CSV")

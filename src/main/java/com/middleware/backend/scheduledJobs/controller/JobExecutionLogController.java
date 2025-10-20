@@ -127,32 +127,30 @@ public class JobExecutionLogController {
             @PathVariable("type") String type
     ) {
         try {
-        Pageable pageable = PageRequest.of(
-                0,
-                100000,
-                sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortedBy).ascending() : Sort.by(sortedBy).descending()
-        );
+            Specification<JobExecutionLogs> spec = Specification
+                    .where(JobExecutionLogsSpecification.hasField("job.jobName", jobName, JobExecutionLogsSpecification.MatchMode.CONTAINS))
+                    .and(JobExecutionLogsSpecification.hasField("job.apiEndpoint", apiEndpoint, JobExecutionLogsSpecification.MatchMode.CONTAINS))
+                    .and(JobExecutionLogsSpecification.hasField("status", status, JobExecutionLogsSpecification.MatchMode.EXACT))
+                    .and(JobExecutionLogsSpecification.startedBetween(startAfter, startBefore));
 
-        Specification<JobExecutionLogs> spec = Specification
-                .where(JobExecutionLogsSpecification.hasField("job.jobName", jobName, JobExecutionLogsSpecification.MatchMode.CONTAINS))
-                .and(JobExecutionLogsSpecification.hasField("job.apiEndpoint", apiEndpoint, JobExecutionLogsSpecification.MatchMode.CONTAINS))
-                .and(JobExecutionLogsSpecification.hasField("status", status, JobExecutionLogsSpecification.MatchMode.EXACT))
-                .and(JobExecutionLogsSpecification.startedBetween(startAfter, startBefore));
+            byte[] fileBytes = service.exportFile(spec, type, sortedBy,sortDirection);
 
+            if (fileBytes == null || fileBytes.length == 0) {
+                return ResponseEntity.noContent().build();
+            }
 
-        byte[] fileBytes = service.exportFile(spec, pageable, type);
+            String fileName = "scheduled_execution_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            String contentType = type.equalsIgnoreCase("CSV")
+                    ? "text/csv"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-        String fileName = "_scheduled_execution_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
-        String contentType = type.equalsIgnoreCase("CSV")
-                ? "text/csv"
-                : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(fileBytes);
 
-        return ResponseEntity.ok()
-                .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
-                .contentType(MediaType.parseMediaType(contentType))
-                .body(fileBytes);
-    } catch (Exception e) {
-        return ResponseEntity.internalServerError().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 }

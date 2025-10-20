@@ -1,6 +1,8 @@
 package com.middleware.backend.kaotocamel.spec;
 
 import java.time.LocalDateTime;
+import java.util.Map;
+
 import org.springframework.data.jpa.domain.Specification;
 import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
 
@@ -10,6 +12,62 @@ import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
  */
 public class DynamicRouteSpecification {
 
+    /**
+     * Builds a Specification from a map of filter values.
+     * Supported keys: routeId, description, path, httpMethod, comment, yamlContains,
+     * active, createdAfter, createdBefore, version, defaultVersion.
+     *
+     * @param filters map of filter names to values
+     * @return combined Specification
+     */
+    public static Specification<DynamicRouteEntity> fromFilters(Map<String, String> filters) {
+        Specification<DynamicRouteEntity> spec = Specification.where(null);
+
+        if (filters == null || filters.isEmpty()) {
+            return spec;
+        }
+
+        if (filters.containsKey("routeId")) {
+            spec = spec.and(routeIdContains(filters.get("routeId")));
+        }
+        if (filters.containsKey("description")) {
+            spec = spec.and(descriptionContains(filters.get("description")));
+        }
+        if (filters.containsKey("path")) {
+            spec = spec.and(pathContains(filters.get("path")));
+        }
+        if (filters.containsKey("httpMethod")) {
+            spec = spec.and(httpMethodContains(filters.get("httpMethod")));
+        }
+        if (filters.containsKey("comment")) {
+            spec = spec.and(containsComment(filters.get("comment")));
+        }
+        if (filters.containsKey("yamlContains")) {
+            spec = spec.and(containsInYaml(filters.get("yamlContains")));
+        }
+        if (filters.containsKey("active")) {
+            Boolean active = Boolean.valueOf(filters.get("active"));
+            spec = spec.and(hasActiveStatus(active));
+        }
+        if (filters.containsKey("createdAfter")) {
+            LocalDateTime after = LocalDateTime.parse(filters.get("createdAfter"));
+            spec = spec.and(createdAfter(after));
+        }
+        if (filters.containsKey("createdBefore")) {
+            LocalDateTime before = LocalDateTime.parse(filters.get("createdBefore"));
+            spec = spec.and(createdBefore(before));
+        }
+        if (filters.containsKey("version")) {
+            Integer version = Integer.valueOf(filters.get("version"));
+            spec = spec.and(hasVersion(version));
+        }
+        if (filters.containsKey("defaultVersion")) {
+            Boolean defaultVersion = Boolean.valueOf(filters.get("defaultVersion"));
+            spec = spec.and(isDefaultVersion(defaultVersion));
+        }
+
+        return spec;
+    }
     /**
      * Generic field specification with exact match.
      */

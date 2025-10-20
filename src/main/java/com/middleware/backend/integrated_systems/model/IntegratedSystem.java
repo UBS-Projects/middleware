@@ -62,6 +62,7 @@ public class IntegratedSystem {
     private String password;
 
     /** JWT token for authentication (used only if authenticationType == JWT) */
+    @Column(length = 1000)
     private String token;
 
     /** User who created this system entry */

@@ -36,7 +36,6 @@ import java.util.stream.Collectors;
 public class DashboardService {
 
     private final MiddlewareApiCallLogRepository transactionRepo;
-    private final AuditLogRepository auditRepo;
     private final JobExecutionLogsRepository jobRepo;
     private final TokenRepository tokenRepo;
 
@@ -48,30 +47,23 @@ public class DashboardService {
      */
     public SummaryDto getSummary() {
         LocalDate today = LocalDate.now();
-        LocalDateTime startOfDay = today.atStartOfDay();
-        LocalDateTime endOfDay = today.plusDays(1).atStartOfDay();
+        Timestamp startTimestamp = Timestamp.valueOf(today.atStartOfDay());
+        Timestamp endTimestamp = Timestamp.valueOf(today.plusDays(1).atStartOfDay());
 
-        Timestamp startTimestamp = Timestamp.valueOf(startOfDay);
-        Timestamp endTimestamp = Timestamp.valueOf(endOfDay);
+        Map<String, Object> result = transactionRepo.getDashboardSummary(startTimestamp, endTimestamp);
 
-        long allTransactions = transactionRepo.countByReceivedAtBetween(startOfDay, endOfDay);
-        long succeededTransactions = transactionRepo.countByReceivedAtBetweenAndResponseCodeBetween(startOfDay, endOfDay, 200, 299);
-        long failedTransactions = transactionRepo.countByReceivedAtBetweenAndResponseCodeBetween(startOfDay, endOfDay, 400, 599);
-        long userEvents = auditRepo.countAuditLogsByStartTimeBetween(startOfDay, endOfDay);
-        long allJobs = jobRepo.countAllByStartTimeBetween(startTimestamp, endTimestamp);
-
-        Map<String, String> summaryMap = Map.of(
-                "allTransactions", String.valueOf(allTransactions),
-                "succeededTransactions", String.valueOf(succeededTransactions),
-                "failedTransactions", String.valueOf(failedTransactions),
-                "userEvents", String.valueOf(userEvents),
-                "allJobs", String.valueOf(allJobs)
-        );
+        // Convert to strings for your DTO
+        Map<String, String> summaryMap = result.entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        e -> String.valueOf(e.getValue())
+                ));
 
         return SummaryDto.builder()
                 .summary(summaryMap)
                 .build();
     }
+
 
     /**
      * Retrieves summary metrics for transaction activity.
@@ -81,31 +73,7 @@ public class DashboardService {
      * @return {@link SummaryDto} containing transaction statistics for the given day
      */
     public List<Map<String, Object>> getTransactionGraphCoordinatesLast30Days() {
-        LocalDate today = LocalDate.now();
-        LocalDate firstDayOfMonth = today.withDayOfMonth(1);
-
-        List<Map<String, Object>> dailyData = new ArrayList<>();
-
-        for (LocalDate date = firstDayOfMonth; !date.isAfter(today); date = date.plusDays(1)) {
-            LocalDateTime startOfDay = date.atStartOfDay();
-            LocalDateTime endOfDay = date.plusDays(1).atStartOfDay();
-
-            long total = transactionRepo.countByReceivedAtBetween(startOfDay, endOfDay);
-            long succeeded = transactionRepo.countByReceivedAtBetweenAndResponseCodeBetween(startOfDay, endOfDay, 200, 299);
-            long failed = transactionRepo.countByReceivedAtBetweenAndResponseCodeBetween(startOfDay, endOfDay, 300, 599);
-            long inProgress = transactionRepo.countByReceivedAtBetweenAndStatus(startOfDay, endOfDay, "IN_PROGRESS");
-
-            Map<String, Object> daySummary = Map.of(
-                    "date", date.toString(),
-                    "total", total,
-                    "succeeded", succeeded,
-                    "failed", failed,
-                    "inProgress", inProgress
-            );
-            dailyData.add(daySummary);
-        }
-
-        return dailyData;
+        return transactionRepo.findTransactionGraphDataLast30Days();
     }
 
 
@@ -119,29 +87,7 @@ public class DashboardService {
      * @return {@link SummaryDto} containing job execution statistics for the given day
      */
     public List<Map<String, Object>> getJobsGraphCoordinatesLast30Days() {
-        LocalDate today = LocalDate.now();
-        LocalDate firstDayOfMonth = today.withDayOfMonth(1);
-
-        List<Map<String, Object>> dailyData = new ArrayList<>();
-
-        for (LocalDate date = firstDayOfMonth; !date.isAfter(today); date = date.plusDays(1)) {
-            LocalDateTime startOfDay = date.atStartOfDay();
-            LocalDateTime endOfDay = date.plusDays(1).atStartOfDay();
-
-            long allJobs = jobRepo.countAllByStartTimeBetween(Timestamp.valueOf(startOfDay), Timestamp.valueOf(endOfDay));
-            long succeededJobs = jobRepo.countAllByStatusAndStartTimeBetween(Status.SUCCESS, Timestamp.valueOf(startOfDay), Timestamp.valueOf(endOfDay));
-            long failedJobs = jobRepo.countAllByStatusAndStartTimeBetween(Status.FAILURE, Timestamp.valueOf(startOfDay), Timestamp.valueOf(endOfDay));
-
-            Map<String, Object> daySummary = Map.of(
-                    "date", date.toString(),
-                    "total", allJobs,
-                    "succeeded", succeededJobs,
-                    "failed", failedJobs
-            );
-            dailyData.add(daySummary);
-        }
-
-        return dailyData;
+        return jobRepo.findJobGraphDataLast30Days();
     }
 
 

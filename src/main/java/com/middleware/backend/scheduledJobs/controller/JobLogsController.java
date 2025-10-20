@@ -108,30 +108,32 @@ public class JobLogsController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdAfter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdBefore,
             @PathVariable("type") String type
-            ){
+    ) {
         try {
-        Pageable pageable = PageRequest.of(0, 100000, sortDirection.equalsIgnoreCase("asc")
-                ? Sort.by(sortedBy).ascending()
-                : Sort.by(sortedBy).descending());
-        Specification<ExecutionHistory> spec = Specification
-                .where(JobLogsSpecification.hasField("scheduledJobName", jobName, JobLogsSpecification.MatchMode.CONTAINS))
-                .and(JobLogsSpecification.hasField("scheduledJobPath", apiEndpoint, JobLogsSpecification.MatchMode.CONTAINS))
-                .and(JobLogsSpecification.hasField("status", status, JobLogsSpecification.MatchMode.EXACT))
-                .and(JobLogsSpecification.createdBetween(createdBefore, createdAfter));
-        byte[] fileBytes = service.exportFile(spec, pageable, type);
+            Specification<ExecutionHistory> spec = Specification
+                    .where(JobLogsSpecification.hasField("scheduledJobName", jobName, JobLogsSpecification.MatchMode.CONTAINS))
+                    .and(JobLogsSpecification.hasField("scheduledJobPath", apiEndpoint, JobLogsSpecification.MatchMode.CONTAINS))
+                    .and(JobLogsSpecification.hasField("status", status, JobLogsSpecification.MatchMode.EXACT))
+                    .and(JobLogsSpecification.createdBetween(createdBefore, createdAfter));
 
-        String fileName = "_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
-        String contentType = type.equalsIgnoreCase("CSV")
-                ? "text/csv"
-                : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            byte[] fileBytes = service.exportFile(spec, type, sortedBy,sortDirection);
 
-        return ResponseEntity.ok()
-                .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
-                .contentType(MediaType.parseMediaType(contentType))
-                .body(fileBytes);
+            if (fileBytes == null || fileBytes.length == 0) {
+                return ResponseEntity.noContent().build();
+            }
 
-    } catch (Exception e) {
-        return ResponseEntity.internalServerError().build();
-    }
+            String fileName = "job_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            String contentType = type.equalsIgnoreCase("CSV")
+                    ? "text/csv"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(fileBytes);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }
