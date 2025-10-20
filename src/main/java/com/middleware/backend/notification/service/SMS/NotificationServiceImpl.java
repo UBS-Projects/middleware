@@ -1,5 +1,6 @@
 package com.middleware.backend.notification.service.SMS;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.middleware.backend.audit_logs_interceptor.repository.NotificationLogRepository;
@@ -90,6 +91,7 @@ public class NotificationServiceImpl implements NotificationService {
             NotificationGroup group = groupRepository.findByCode(groupId)
                     .orElseThrow(() -> new RuntimeException("Group not found with id " + groupId));
             try {
+
                 if (channel.getType() == ChannelType.EMAIL) {
                     sendEmail(group, template, config);
                 } else if (channel.getType() == ChannelType.SMS) {
@@ -100,11 +102,16 @@ public class NotificationServiceImpl implements NotificationService {
 
                 // Log success
                 NotificationLog log = NotificationLog.builder()
-                        .group(group)
-                        .template(template)
-                        .channel(channel)
+                        .group(group.getName())
+                        .template(template.getName())
+                        .channel(channel.getName())
                         .status("SUCCESS")
                         .userName(currentUser)
+                        .requestBody(template.getBody())                // The request body content
+                        .requestHeader(objectMapper.writeValueAsString(config)) // The headers/config sent
+                        .responseBody("Sent Successfully")                     // The actual response content
+                        .responseHeader("{\"Content-Type\":\"application/json\"}") // Example header
+                        .responseCode("200")                            // HTTP success code
                         .sentAt(new Timestamp(System.currentTimeMillis()))
                         .createdAt(new Timestamp(System.currentTimeMillis()))
                         .build();
@@ -112,13 +119,25 @@ public class NotificationServiceImpl implements NotificationService {
 
             } catch (Exception ex) {
                 // Log failure
+                String requestHeaderJson;
+                try {
+                    requestHeaderJson = objectMapper.writeValueAsString(config);
+                } catch (JsonProcessingException e) {
+                    requestHeaderJson = "{}"; // fallback if serialization fails
+                }
+
                 NotificationLog log = NotificationLog.builder()
-                        .group(group)
-                        .template(template)
-                        .channel(channel)
+                        .group(group.getName())
+                        .template(template.getName())
+                        .channel(channel.getName())
                         .status("FAILED")
                         .errorMessage(ex.getMessage())
                         .userName(currentUser)
+                        .requestBody(template.getBody())
+                        .requestHeader(requestHeaderJson)
+                        .responseBody(ex.getMessage())                  // Log the error message as response
+                        .responseHeader("{\"Error\":\"Internal Server Error\"}")
+                        .responseCode("500")
                         .sentAt(new Timestamp(System.currentTimeMillis()))
                         .createdAt(new Timestamp(System.currentTimeMillis()))
                         .build();
@@ -251,7 +270,7 @@ public class NotificationServiceImpl implements NotificationService {
     private String applyPlaceholders(String template, Map<String, String> placeholders) {
         String result = template;
         for (Map.Entry<String, String> entry : placeholders.entrySet()) {
-            result = result.replace("{" + entry.getKey() + "}", entry.getValue() != null ? entry.getValue() : "");
+            result = result.replace("{{" + entry.getKey() + "}}", entry.getValue() != null ? entry.getValue() : "");
         }
         return result;
     }
@@ -268,9 +287,9 @@ public class NotificationServiceImpl implements NotificationService {
         return ResponseEntity.ok(logRepository.findAll(spec, pageable).map(r ->
                 LogDto.builder()
                         .id(r.getId())
-                        .groupName(r.getGroup().getName())
-                        .templateName(r.getTemplate().getName())
-                        .channelName(r.getChannel().getName())
+                        .groupName(r.getGroup())
+                        .templateName(r.getTemplate())
+                        .channelName(r.getChannel())
                         .status(r.getStatus())
                         .errorMessage(r.getErrorMessage())
                         .userName(r.getUserName())
@@ -290,12 +309,16 @@ public class NotificationServiceImpl implements NotificationService {
         return ResponseEntity.ok(logRepository.findById(id).map(r ->
                 LogDto.builder()
                         .id(r.getId())
-                        .groupName(r.getGroup().getName())
-                        .templateName(r.getTemplate().getName())
-                        .channelName(r.getChannel().getName())
+                        .groupName(r.getGroup())
+                        .templateName(r.getTemplate())
+                        .channelName(r.getChannel())
                         .status(r.getStatus())
                         .errorMessage(r.getErrorMessage())
                         .userName(r.getUserName())
+                        .requestBody(r.getRequestBody())
+                        .requestHeader(r.getRequestHeader())
+                        .responseBody(r.getResponseBody())
+                        .responseCode(r.getResponseCode())
                         .sentAt(r.getSentAt())
                         .createdAt(r.getCreatedAt())
                         .build()));

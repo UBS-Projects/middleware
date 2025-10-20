@@ -10,15 +10,20 @@ import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
@@ -91,58 +96,103 @@ public class NotificationActionsLogsService {
      * @param type the export type: CSV or Excel/XLSX
      * @return a byte array containing the exported file
      */
-    public byte[] exportFile(Specification<NotificationActionsLogs> spec, Pageable pageable, String type) {
-        List<NotificationActionsLogs> data;
-        try {
-            Page<NotificationActionsLogs> res = repo.findAll(spec, pageable);
-            data = res.getContent();
-        } catch (Exception e) {
-            e.printStackTrace();
-            data = Collections.emptyList();
+    public byte[] exportFile(Specification<NotificationActionsLogs> spec, String type, String sortedBy, String sortDirection) throws IOException {
+        if ("CSV".equalsIgnoreCase(type)) {
+            return convertToCSVStreamed(spec, sortedBy,sortDirection);
+        } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
+            return convertToExcelStreamed(spec, sortedBy,sortDirection);
+        } else {
+            throw new IllegalArgumentException("Unsupported export type: " + type);
         }
+    }
+    private byte[] convertToCSVStreamed(Specification<NotificationActionsLogs> spec, String sortedBy, String sortDirection) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-        try {
-            if ("CSV".equalsIgnoreCase(type)) {
-                return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
-            } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
-                return convertToExcel(data);
-            } else {
-                throw new IllegalArgumentException("Unsupported export type: " + type);
+        try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(bos, StandardCharsets.UTF_8))) {
+            // Header row
+            writer.println("ID,Action,Details,Email,EventTime");
+            writer.flush();
+
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+
+            while (hasMore) {
+                Sort sort = sortDirection.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<NotificationActionsLogs> page = repo.findAll(spec, pageable);
+
+                for (NotificationActionsLogs record : page.getContent()) {
+                    writer.append(String.valueOf(record.getId())).append(",");
+                    writer.append(escapeCsv(record.getAction())).append(",");
+                    writer.append(escapeCsv(record.getDetails())).append(",");
+                    writer.append(escapeCsv(record.getEmail())).append(",");
+                    writer.append(record.getEventTime() != null ? record.getEventTime().toString() : "").append("\n");
+                }
+
+                writer.flush();
+                hasMore = page.hasNext();
+                pageNumber++;
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to export file", e);
-        }
-    }
 
-    // ================= CSV Export =================
-
-    /**
-     * Converts a list of logs to CSV format.
-     *
-     * @param records the list of {@link NotificationActionsLogs}
-     * @return a CSV string
-     */
-    private String convertToCSV(List<NotificationActionsLogs> records) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ID,Action,Details,Email,EventTime\n");
-
-        for (NotificationActionsLogs record : records) {
-            sb.append(record.getId()).append(",");
-            sb.append(escapeCsv(record.getAction())).append(",");
-            sb.append(escapeCsv(record.getDetails())).append(",");
-            sb.append(escapeCsv(record.getEmail())).append(",");
-            sb.append(record.getEventTime() != null ? record.getEventTime().toString() : "").append("\n");
+            writer.flush();
         }
 
-        return sb.toString();
+        return bos.toByteArray();
     }
+    private byte[] convertToExcelStreamed(Specification<NotificationActionsLogs> spec, String sortedBy, String sortDirection) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        SXSSFWorkbook workbook = new SXSSFWorkbook(100); // Keep 100 rows in memory
+        Sheet sheet = workbook.createSheet("Notification Logs");
 
-    /**
-     * Escapes a CSV value to properly handle commas, quotes, and newlines.
-     *
-     * @param value the original string
-     * @return the escaped string
-     */
+        try {
+            // Header row
+            Row header = sheet.createRow(0);
+            String[] columns = {"ID", "Action", "Details", "Email", "EventTime"};
+            for (int i = 0; i < columns.length; i++) {
+                header.createCell(i).setCellValue(columns[i]);
+            }
+
+            int[] widths = {6, 25, 40, 30, 25};
+            for (int i = 0; i < widths.length; i++) {
+                sheet.setColumnWidth(i, widths[i] * 256);
+            }
+
+            int rowIdx = 1;
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+            final int MAX_CELL_LENGTH = 32000;
+
+            while (hasMore) {
+                Sort sort = sortDirection.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<NotificationActionsLogs> page = repo.findAll(spec, pageable);
+
+                for (NotificationActionsLogs record : page.getContent()) {
+                    Row row = sheet.createRow(rowIdx++);
+                    row.createCell(0).setCellValue(record.getId());
+                    row.createCell(1).setCellValue(safeString(record.getAction()));
+                    row.createCell(2).setCellValue(truncate(record.getDetails(), MAX_CELL_LENGTH));
+                    row.createCell(3).setCellValue(safeString(record.getEmail()));
+                    row.createCell(4).setCellValue(record.getEventTime() != null ? record.getEventTime().toString() : "");
+                }
+
+                hasMore = page.hasNext();
+                pageNumber++;
+            }
+
+            workbook.write(bos);
+            return bos.toByteArray();
+
+        } finally {
+            workbook.dispose();
+        }
+    }
     private String escapeCsv(String value) {
         if (value == null) return "";
         String escaped = value.replace("\"", "\"\"");
@@ -152,47 +202,14 @@ public class NotificationActionsLogsService {
         return escaped;
     }
 
-    // ================= Excel Export =================
-
-    /**
-     * Converts a list of logs to an Excel (XLSX) byte array.
-     *
-     * @param records the list of {@link NotificationActionsLogs}
-     * @return a byte array representing the Excel file
-     * @throws IOException if writing to the workbook fails
-     */
-    private byte[] convertToExcel(List<NotificationActionsLogs> records) throws IOException {
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Notification Logs");
-
-            // Header row
-            Row header = sheet.createRow(0);
-            header.createCell(0).setCellValue("ID");
-            header.createCell(1).setCellValue("Action");
-            header.createCell(2).setCellValue("Details");
-            header.createCell(3).setCellValue("Email");
-            header.createCell(4).setCellValue("EventTime");
-
-            // Data rows
-            int rowIdx = 1;
-            for (NotificationActionsLogs record : records) {
-                Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue(record.getId());
-                row.createCell(1).setCellValue(record.getAction() != null ? record.getAction() : "");
-                row.createCell(2).setCellValue(record.getDetails() != null ? record.getDetails() : "");
-                row.createCell(3).setCellValue(record.getEmail() != null ? record.getEmail() : "");
-                row.createCell(4).setCellValue(record.getEventTime() != null ? record.getEventTime().toString() : "");
-            }
-
-            // Auto-size columns
-            for (int i = 0; i <= 4; i++) {
-                sheet.autoSizeColumn(i);
-            }
-
-            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-                workbook.write(bos);
-                return bos.toByteArray();
-            }
-        }
+    private String safeString(String value) {
+        return value != null ? value : "";
     }
+
+    private String truncate(String value, int maxLength) {
+        if (value == null) return "";
+        if (value.length() <= maxLength) return value;
+        return value.substring(0, maxLength - 3) + "...";
+    }
+
 }

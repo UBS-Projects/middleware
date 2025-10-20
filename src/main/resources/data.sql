@@ -99,25 +99,26 @@ INSERT INTO public.permissions (id, name) VALUES
                                               (77, 'template:validate'),
 
                                               (78, 'groupReceivers:create'),
+                                              (79, 'groupReceivers:edit'),
 
-                                              (79, 'notificationLogs:view'),
-                                              (80, 'notificationLogs:export'),
+                                              (80, 'notificationLogs:view'),
+                                              (81, 'notificationLogs:export'),
 
-                                              (81, 'config:view'),
-                                              (82, 'config:create'),
-                                              (83, 'config:edit'),
+                                              (82, 'config:view'),
+                                              (83, 'config:create'),
+                                              (84, 'config:edit'),
 
 
-                                              (84, 'integratedSystem:view'),
-                                              (85, 'integratedSystem:create'),
-                                              (86, 'integratedSystem:edit'),
+                                              (85, 'integratedSystem:view'),
+                                              (86, 'integratedSystem:create'),
+                                              (87, 'integratedSystem:edit'),
 
-                                              (87, 'dashboard:summary'),
-                                              (88, 'dashboard:transactionGraph'),
-                                              (89, 'dashboard:jobGraph'),
-                                              (90, 'dashboard:transactionList'),
-                                              (91, 'dashboard:jobList'),
-                                              (92, 'dashboard:tokenList')
+                                              (88, 'dashboard:summary'),
+                                              (89, 'dashboard:transactionGraph'),
+                                              (90, 'dashboard:jobGraph'),
+                                              (91, 'dashboard:transactionList'),
+                                              (92, 'dashboard:jobList'),
+                                              (93, 'dashboard:tokenList')
 
                                               ON CONFLICT DO NOTHING;
 
@@ -126,7 +127,7 @@ INSERT INTO public.users
 (created_by, created_at, updated_by, updated_at, email, password, status, user_name)
 VALUES
     ('SYSTEM',NOW(),'SYSTEM',NOW(), 'admin@mail.com',
-     '$2a$10$mc8VR2mvx1FLnwLfbcWrSuJBnlRQMJbCz4R/.rVDakUs6LSuLgx3G',
+     '$2a$10$xBgaTDblE6qOZAAuJsMVWeWfuqifp8TyNGmxKeKp6JB3zDxh6gdIe',
      'ACTIVE',
      'admin')
     ON CONFLICT (email) DO NOTHING;
@@ -159,7 +160,7 @@ ALTER TABLE public.role_permissions
 INSERT INTO public.role_permissions (role_id, permission_id)
 SELECT 1, id
 FROM public.permissions
-WHERE id BETWEEN 1 AND 92
+WHERE id BETWEEN 1 AND 93
     ON CONFLICT(role_id, permission_id) DO NOTHING;
 
 

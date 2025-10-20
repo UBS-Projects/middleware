@@ -24,5 +24,4 @@ public interface AuditLogRepository extends JpaRepository<AuditLog, Long> {
      * @return A {@link Page} of {@link AuditLog} entities.
      */
     Page<AuditLog> findAll(Specification<AuditLog> spec, Pageable pageable);
-    long countAuditLogsByStartTimeBetween(LocalDateTime startOfDay, LocalDateTime endOfDay);
 }

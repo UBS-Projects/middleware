@@ -116,11 +116,6 @@ public class NotificationActionsLogsController {
             @PathVariable("type") String type
     ) {
         try {
-            Pageable pageable = PageRequest.of(0, 100000,
-                    sortDirection.equalsIgnoreCase("asc")
-                            ? Sort.by(sortedBy).ascending()
-                            : Sort.by(sortedBy).descending());
-
             Specification<NotificationActionsLogs> spec = Specification
                     .where(NotificationActionsLogsConfigSpecification.hasField("action", action, NotificationActionsLogsConfigSpecification.MatchMode.CONTAINS))
                     .and(NotificationActionsLogsConfigSpecification.hasField("email", email, NotificationActionsLogsConfigSpecification.MatchMode.CONTAINS))
@@ -128,9 +123,13 @@ public class NotificationActionsLogsController {
                     .and(NotificationActionsLogsConfigSpecification.dateAfter("eventTime", createdAfter))
                     .and(NotificationActionsLogsConfigSpecification.dateBefore("eventTime", createdBefore));
 
-            byte[] fileBytes = service.exportFile(spec, pageable, type);
+            byte[] fileBytes = service.exportFile(spec, type, sortedBy,sortDirection);
 
-            String fileName = "_notification_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            if (fileBytes == null || fileBytes.length == 0) {
+                return ResponseEntity.noContent().build();
+            }
+
+            String fileName = "notification_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
             String contentType = type.equalsIgnoreCase("CSV")
                     ? "text/csv"
                     : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -139,6 +138,7 @@ public class NotificationActionsLogsController {
                     .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
                     .contentType(MediaType.parseMediaType(contentType))
                     .body(fileBytes);
+
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

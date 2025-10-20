@@ -1,9 +1,6 @@
 package com.middleware.backend.kaotocamel.service;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,11 +19,10 @@ import org.apache.camel.spi.Resource;
 import org.apache.camel.spi.RoutesBuilderLoader;
 import org.apache.camel.support.ResourceSupport;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -1191,84 +1187,143 @@ public class DynamicRouteService {
         return ResponseEntity.ok(auditRepository.findById(id));
     }
 
-    public byte[] exportFile(Specification<DynamicRouteAudit> spec, Pageable pageable, String type) {
-        // Exports audit logs in CSV or Excel format
-        Page<?> audits = getLatestRoutesLogs(spec, pageable);
-        List<DynamicRouteAudit> data = (List<DynamicRouteAudit>) audits.getContent();
+    public byte[] exportFile(Specification<DynamicRouteAudit> spec, String sortedBy, String sortDirection, String type) {
         try {
             if ("CSV".equalsIgnoreCase(type)) {
-                return exportToCsv(data);
+                return exportToCsvStreamed(spec, sortedBy, sortDirection);
             } else {
-                return exporLogstToExcel(data);
+                return exportToExcelStreamed(spec, sortedBy, sortDirection);
             }
         } catch (Exception e) {
             throw new RuntimeException("Failed to export file: " + e.getMessage(), e);
         }
     }
 
-    private byte[] exportToCsv(List<DynamicRouteAudit> audits) {
-        // Serializes audit logs to CSV
-        StringBuilder sb = new StringBuilder();
+    /**
+     * Streams audit logs to CSV format in chunks to minimize memory usage
+     */
+    private byte[] exportToCsvStreamed(Specification<DynamicRouteAudit> spec, String sortedBy, String sortDirection) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-        // Header row
-        sb.append("ID,RouteId,Version,Action,Details,Timestamp,UserEmail,Status\n");
+        try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(bos, StandardCharsets.UTF_8))) {
+            // Write headers
+            writer.println("ID,RouteId,Version,Action,Details,Timestamp,UserEmail,Status");
+            writer.flush();
 
-        // Data rows
-        for (DynamicRouteAudit audit : audits) {
-            sb.append(audit.getId()).append(",");
-            sb.append(safe(audit.getRouteId())).append(",");
-            sb.append(audit.getVersion()).append(",");
-            sb.append(safe(audit.getAction())).append(",");
-            sb.append(safe(audit.getDetails())).append(",");
-            sb.append(audit.getTimestamp() != null ? audit.getTimestamp().toString() : "").append(",");
-            sb.append(safe(audit.getUserEmail())).append(",");
-            sb.append(safe(audit.getStatus())).append("\n");
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+
+            Sort sort = sortDirection.equalsIgnoreCase("asc")
+                    ? Sort.by(sortedBy).ascending()
+                    : Sort.by(sortedBy).descending();
+
+            while (hasMore) {
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<DynamicRouteAudit> page = auditRepository.findAll(spec, pageable);
+
+                for (DynamicRouteAudit audit : page.getContent()) {
+                    writer.append(String.valueOf(audit.getId())).append(",");
+                    writer.append(escapeCsv(audit.getRouteId())).append(",");
+                    writer.append(String.valueOf(audit.getVersion())).append(",");
+                    writer.append(escapeCsv(audit.getAction())).append(",");
+                    writer.append(escapeCsv(audit.getDetails())).append(",");
+                    writer.append(audit.getTimestamp() != null ? audit.getTimestamp().toString() : "").append(",");
+                    writer.append(escapeCsv(audit.getUserEmail())).append(",");
+                    writer.append(escapeCsv(audit.getStatus())).append("\n");
+                }
+                writer.flush();
+
+                hasMore = page.hasNext();
+                pageNumber++;
+            }
+            writer.flush();
         }
 
-        return sb.toString().getBytes(StandardCharsets.UTF_8);
+        return bos.toByteArray();
     }
 
-    private byte[] exporLogstToExcel(List<DynamicRouteAudit> audits) throws Exception {
-        // Serializes audit logs to XLSX
-        Workbook workbook = new XSSFWorkbook();
+    /**
+     * Streams audit logs to Excel format using SXSSFWorkbook to minimize memory usage
+     */
+    private byte[] exportToExcelStreamed(Specification<DynamicRouteAudit> spec, String sortedBy, String sortDirection) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        SXSSFWorkbook workbook = new SXSSFWorkbook(100);
         Sheet sheet = workbook.createSheet("DynamicRouteLogs");
 
-        // Header row
-        Row header = sheet.createRow(0);
-        String[] columns = {"ID", "RouteId", "Version", "Action", "Details", "Timestamp", "UserEmail", "Status"};
-        for (int i = 0; i < columns.length; i++) {
-            Cell cell = header.createCell(i);
-            cell.setCellValue(columns[i]);
-        }
+        try {
+            // Create header row
+            Row header = sheet.createRow(0);
+            String[] columns = {"ID", "RouteId", "Version", "Action", "Details", "Timestamp", "UserEmail", "Status"};
+            for (int i = 0; i < columns.length; i++) {
+                header.createCell(i).setCellValue(columns[i]);
+            }
 
-        // Data rows
-        int rowIdx = 1;
-        for (DynamicRouteAudit audit : audits) {
-            Row row = sheet.createRow(rowIdx++);
-            row.createCell(0).setCellValue(audit.getId());
-            row.createCell(1).setCellValue(safe(audit.getRouteId()));
-            row.createCell(2).setCellValue(audit.getVersion());
-            row.createCell(3).setCellValue(safe(audit.getAction()));
-            row.createCell(4).setCellValue(safe(audit.getDetails()));
-            row.createCell(5).setCellValue(audit.getTimestamp() != null ? audit.getTimestamp().toString() : "");
-            row.createCell(6).setCellValue(safe(audit.getUserEmail()));
-            row.createCell(7).setCellValue(safe(audit.getStatus()));
-        }
+            // Set column widths
+            int[] widths = {8, 20, 10, 15, 30, 20, 25, 15};
+            for (int i = 0; i < widths.length; i++) {
+                sheet.setColumnWidth(i, widths[i] * 256);
+            }
 
-        // Auto-size columns
-        for (int i = 0; i < columns.length; i++) {
-            sheet.autoSizeColumn(i);
-        }
+            int rowIdx = 1;
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+            final int MAX_CELL_LENGTH = 20000;
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        workbook.write(baos);
-        workbook.close();
-        return baos.toByteArray();
+            Sort sort = sortDirection.equalsIgnoreCase("asc")
+                    ? Sort.by(sortedBy).ascending()
+                    : Sort.by(sortedBy).descending();
+
+            while (hasMore) {
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<DynamicRouteAudit> page = auditRepository.findAll(spec, pageable);
+
+                for (DynamicRouteAudit audit : page.getContent()) {
+                    Row row = sheet.createRow(rowIdx++);
+                    row.createCell(0).setCellValue(audit.getId());
+                    row.createCell(1).setCellValue(truncate(audit.getRouteId(), MAX_CELL_LENGTH));
+                    row.createCell(2).setCellValue(String.valueOf(audit.getVersion()));
+                    row.createCell(3).setCellValue(truncate(audit.getAction(), MAX_CELL_LENGTH));
+                    row.createCell(4).setCellValue(truncate(audit.getDetails(), MAX_CELL_LENGTH));
+                    row.createCell(5).setCellValue(audit.getTimestamp() != null ? audit.getTimestamp().toString() : "");
+                    row.createCell(6).setCellValue(truncate(audit.getUserEmail(), MAX_CELL_LENGTH));
+                    row.createCell(7).setCellValue(truncate(audit.getStatus(), MAX_CELL_LENGTH));
+                }
+
+                hasMore = page.hasNext();
+                pageNumber++;
+            }
+
+            workbook.write(bos);
+            return bos.toByteArray();
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error generating Excel file", e);
+        } finally {
+            workbook.dispose();
+        }
     }
 
-    private String safe(String value) {
-        // Safe CSV cell string
-        return value != null ? value.replace(",", " ") : "";
+    /**
+     * Escapes special characters in CSV strings for proper formatting
+     */
+    private String escapeCsv(String value) {
+        if (value == null) return "";
+        String escaped = value.replace("\"", "\"\"");
+        if (escaped.contains(",") || escaped.contains("\"") || escaped.contains("\n")) {
+            return "\"" + escaped + "\"";
+        }
+        return escaped;
+    }
+
+    /**
+     * Truncates a string to prevent Excel cell limit (32767 characters)
+     */
+    private String truncate(String value, int maxLength) {
+        if (value == null) return "";
+        if (value.length() <= maxLength) return value;
+        return value.substring(0, maxLength - 3) + "...";
     }
 
     public String getRouteIdByPathAndMethod(String path, String method) {
@@ -1306,139 +1361,156 @@ public class DynamicRouteService {
     }
 
 
+    public byte[] exportFile(Map<String, String> filters, String type) throws IOException {
+        Specification<DynamicRouteEntity> spec = DynamicRouteSpecification.fromFilters(filters);
+        Map<String, String> sortFieldMap = Map.ofEntries(
+                Map.entry("id", "id"),
+                Map.entry("route_id", "routeId"),
+                Map.entry("routeId", "routeId"),
+                Map.entry("description", "description"),
+                Map.entry("version", "version"),
+                Map.entry("path", "path"),
+                Map.entry("http_method", "httpMethod"),
+                Map.entry("httpMethod", "httpMethod"),
+                Map.entry("yaml_content", "yamlContent"),
+                Map.entry("yamlContent", "yamlContent"),
+                Map.entry("active", "active"),
+                Map.entry("default_version", "defaultVersion"),
+                Map.entry("defaultVersion", "defaultVersion"),
+                Map.entry("created_by", "createdBy"),
+                Map.entry("createdBy", "createdBy"),
+                Map.entry("created_at", "createdAt"),
+                Map.entry("createdAt", "createdAt"),
+                Map.entry("updated_by", "updatedBy"),
+                Map.entry("updatedBy", "updatedBy"),
+                Map.entry("updated_at", "updatedAt"),
+                Map.entry("updatedAt", "updatedAt"),
+                Map.entry("comment", "comment")
+        );
 
-    public byte[] exportToExcel(List<DynamicRouteEntity> routes) throws IOException {
-        // Exports routes to XLSX with basic styling
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Routes");
+        String sortedBy = filters.get("sortBy");
+        sortedBy = sortFieldMap.getOrDefault(sortedBy, sortedBy); // fallback to original if not mapped
+        String sortDirection = filters.get("sortDirection");
 
-            // Create header style
+        if ("CSV".equalsIgnoreCase(type)) {
+            return convertToCSVStreamed(spec, sortedBy,sortDirection);
+        } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
+            return convertToExcelStreamed(spec, sortedBy,sortDirection);
+        } else {
+            throw new IllegalArgumentException("Unsupported export type: " + type);
+        }
+    }
+    private byte[] convertToCSVStreamed(Specification<DynamicRouteEntity> spec, String sortedBy, String sortDirection) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(bos, StandardCharsets.UTF_8))) {
+            // Header
+            writer.println("Route ID,Version,Status,Description,Path,HTTP Method,Comment,Created At");
+            writer.flush();
+
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+
+            while (hasMore) {
+                Sort sort = sortDirection.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<DynamicRouteEntity> page = routeRepository.findAll(spec, pageable);
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+                for (DynamicRouteEntity route : page.getContent()) {
+                    writer.append(escapeCsv(route.getRouteId())).append(",");
+                    writer.append(String.valueOf(route.getVersion())).append(",");
+                    writer.append(route.isActive() ? "ACTIVE" : "INACTIVE").append(",");
+                    writer.append(escapeCsv(route.getDescription())).append(",");
+                    writer.append(escapeCsv(route.getPath())).append(",");
+                    writer.append(escapeCsv(route.getHttpMethod())).append(",");
+                    writer.append(escapeCsv(route.getComment())).append(",");
+                    writer.append(route.getCreatedAt() != null ? route.getCreatedAt().format(formatter) : "").append("\n");
+                }
+
+                writer.flush();
+                hasMore = page.hasNext();
+                pageNumber++;
+            }
+            writer.flush();
+        }
+
+        return bos.toByteArray();
+    }
+    private byte[] convertToExcelStreamed(Specification<DynamicRouteEntity> spec, String sortedBy, String sortDirection) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        SXSSFWorkbook workbook = new SXSSFWorkbook(100);
+        SXSSFSheet sheet = (SXSSFSheet) workbook.createSheet("Routes");
+
+        try {
+            // Enable tracking for auto-sizing
+            sheet.trackAllColumnsForAutoSizing();
+
+            // Header style
             CellStyle headerStyle = workbook.createCellStyle();
-            Font headerFont = workbook.createFont();
-            headerFont.setBold(true);
-            headerFont.setColor(IndexedColors.WHITE.getIndex());
-            headerStyle.setFont(headerFont);
+            Font font = workbook.createFont();
+            font.setBold(true);
+            font.setColor(IndexedColors.WHITE.getIndex());
+            headerStyle.setFont(font);
             headerStyle.setFillForegroundColor(IndexedColors.DARK_BLUE.getIndex());
             headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-            headerStyle.setBorderBottom(BorderStyle.THIN);
-            headerStyle.setBorderTop(BorderStyle.THIN);
-            headerStyle.setBorderRight(BorderStyle.THIN);
-            headerStyle.setBorderLeft(BorderStyle.THIN);
 
-            // Create data style
-            CellStyle dataStyle = workbook.createCellStyle();
-            dataStyle.setBorderBottom(BorderStyle.THIN);
-            dataStyle.setBorderTop(BorderStyle.THIN);
-            dataStyle.setBorderRight(BorderStyle.THIN);
-            dataStyle.setBorderLeft(BorderStyle.THIN);
-
-            // Create header row
-            Row headerRow = sheet.createRow(0);
             String[] headers = {"Route ID", "Version", "Status", "Description", "Path", "HTTP Method", "Comment", "Created At"};
-
+            Row headerRow = sheet.createRow(0);
             for (int i = 0; i < headers.length; i++) {
                 Cell cell = headerRow.createCell(i);
                 cell.setCellValue(headers[i]);
                 cell.setCellStyle(headerStyle);
             }
 
-            // Create data rows
+            // Data rows
+            int rowIdx = 1;
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            int rowIndex = 1;
 
-            for (DynamicRouteEntity route : routes) {
-                Row row = sheet.createRow(rowIndex++);
+            while (hasMore) {
+                Sort sort = sortDirection.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<DynamicRouteEntity> page = routeRepository.findAll(spec, pageable);
 
-                Cell cell0 = row.createCell(0);
-                cell0.setCellValue(route.getRouteId() != null ? route.getRouteId() : "");
-                cell0.setCellStyle(dataStyle);
+                for (DynamicRouteEntity route : page.getContent()) {
+                    Row row = sheet.createRow(rowIdx++);
+                    row.createCell(0).setCellValue(route.getRouteId() != null ? route.getRouteId() : "");
+                    row.createCell(1).setCellValue(route.getVersion());
+                    row.createCell(2).setCellValue(route.isActive() ? "ACTIVE" : "INACTIVE");
+                    row.createCell(3).setCellValue(route.getDescription() != null ? route.getDescription() : "");
+                    row.createCell(4).setCellValue(route.getPath() != null ? route.getPath() : "");
+                    row.createCell(5).setCellValue(route.getHttpMethod() != null ? route.getHttpMethod() : "");
+                    row.createCell(6).setCellValue(route.getComment() != null ? route.getComment() : "");
+                    row.createCell(7).setCellValue(route.getCreatedAt() != null ? route.getCreatedAt().format(formatter) : "");
+                }
 
-                Cell cell1 = row.createCell(1);
-                cell1.setCellValue(route.getVersion());
-                cell1.setCellStyle(dataStyle);
-
-                Cell cell2 = row.createCell(2);
-                cell2.setCellValue(route.isActive() ? "ACTIVE" : "INACTIVE");
-                cell2.setCellStyle(dataStyle);
-
-                Cell cell3 = row.createCell(3);
-                cell3.setCellValue(route.getDescription() != null ? route.getDescription() : "");
-                cell3.setCellStyle(dataStyle);
-
-                Cell cell4 = row.createCell(4);
-                cell4.setCellValue(route.getPath() != null ? route.getPath() : "");
-                cell4.setCellStyle(dataStyle);
-
-                Cell cell5 = row.createCell(5);
-                cell5.setCellValue(route.getHttpMethod() != null ? route.getHttpMethod() : "");
-                cell5.setCellStyle(dataStyle);
-
-                Cell cell6 = row.createCell(6);
-                cell6.setCellValue(route.getComment() != null ? route.getComment() : "");
-                cell6.setCellStyle(dataStyle);
-
-                Cell cell7 = row.createCell(7);
-                cell7.setCellValue(route.getCreatedAt() != null ? route.getCreatedAt().format(formatter) : "");
-                cell7.setCellStyle(dataStyle);
+                hasMore = page.hasNext();
+                pageNumber++;
             }
 
-            // Auto-size columns
             for (int i = 0; i < headers.length; i++) {
                 sheet.autoSizeColumn(i);
             }
 
-            // Write to byte array
-            try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-                workbook.write(outputStream);
-                return outputStream.toByteArray();
-            }
+            workbook.write(bos);
+            return bos.toByteArray();
+
+        } finally {
+            workbook.dispose();
         }
     }
 
-    /**
-     * Export routes to CSV format.
-     */
-    public byte[] exportToCSV(List<DynamicRouteEntity> routes) throws IOException {
-        StringBuilder csvBuilder = new StringBuilder();
 
-        // Add header
-        csvBuilder.append("Route ID,Version,Status,Description,Path,HTTP Method,Comment,Created At\n");
 
-        // Add data rows
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        for (DynamicRouteEntity route : routes) {
-            csvBuilder.append(escapeCsvValue(route.getRouteId())).append(",");
-            csvBuilder.append(route.getVersion()).append(",");
-            csvBuilder.append(route.isActive() ? "ACTIVE" : "INACTIVE").append(",");
-            csvBuilder.append(escapeCsvValue(route.getDescription())).append(",");
-            csvBuilder.append(escapeCsvValue(route.getPath())).append(",");
-            csvBuilder.append(escapeCsvValue(route.getHttpMethod())).append(",");
-            csvBuilder.append(escapeCsvValue(route.getComment())).append(",");
-            csvBuilder.append(route.getCreatedAt() != null ? route.getCreatedAt().format(formatter) : "");
-            csvBuilder.append("\n");
-        }
-
-        return csvBuilder.toString().getBytes(StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Escapes a string for safe inclusion in CSV.
-     */
-    private String escapeCsvValue(String value) {
-        if (value == null) {
-            return "";
-        }
-
-        // If the value contains comma, quote, or newline, wrap it in quotes
-        if (value.contains(",") || value.contains("\"") || value.contains("\n") || value.contains("\r")) {
-            // Escape quotes by doubling them
-            value = value.replace("\"", "\"\"");
-            return "\"" + value + "\"";
-        }
-
-        return value;
-    }
 
     @Scheduled(fixedRate = 30000)
     @Transactional

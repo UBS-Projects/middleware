@@ -89,9 +89,9 @@ public class NotificationController {
                         : Sort.by(sortedBy).descending());
 
         Specification<NotificationLog> spec = Specification
-                .where(NotificationSpecification.hasField("groupName", groupName, NotificationSpecification.MatchMode.CONTAINS))
-                .and(NotificationSpecification.hasField("templateName", templateName, NotificationSpecification.MatchMode.CONTAINS))
-                .and(NotificationSpecification.hasField("channelName", channelName, NotificationSpecification.MatchMode.CONTAINS))
+                .where(NotificationSpecification.hasField("group", groupName, NotificationSpecification.MatchMode.CONTAINS))
+                .and(NotificationSpecification.hasField("template", templateName, NotificationSpecification.MatchMode.CONTAINS))
+                .and(NotificationSpecification.hasField("channel", channelName, NotificationSpecification.MatchMode.CONTAINS))
                 .and(NotificationSpecification.dateAfter("createdAt", createdAfter))
                 .and(NotificationSpecification.dateBefore("createdAt", createdBefore));
 

@@ -2,13 +2,17 @@ package com.middleware.backend.notification.controller;
 
 import com.middleware.backend.notification.dto.GroupReceiversDto;
 import com.middleware.backend.notification.dto.GroupReceiversDto2;
+import com.middleware.backend.notification.model.NotificationGroup;
 import com.middleware.backend.notification.service.NotificationGroupService;
 import com.middleware.backend.notification.service.groupReceiverService;
+import com.middleware.backend.notification.specification.ChannelConfigSpecification;
+import com.middleware.backend.notification.specification.GroupReceiverSpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -87,6 +91,8 @@ public class groupReceiverController {
     public ResponseEntity<?> getGroupReceivers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String groupName,
+            @RequestParam(required = false) String receiverName,
             @RequestParam(required = false, defaultValue = "updatedAt") String sortedBy,
             @RequestParam(defaultValue = "desc") String sortDirection
     ) {
@@ -97,7 +103,10 @@ public class groupReceiverController {
                         ? Sort.by(sortedBy).ascending()
                         : Sort.by(sortedBy).descending()
         );
-        return ResponseEntity.ok(service.getGroupReceivers(pageable));
+
+        Specification<NotificationGroup> spec = GroupReceiverSpecification.filterBy(groupName, receiverName);
+
+        return ResponseEntity.ok(service.getGroupReceivers(spec, pageable));
     }
 
     /**
@@ -129,6 +138,6 @@ public class groupReceiverController {
             description = "Updates the receiver list of a specific group with the provided group-receiver data."
     )
     public ResponseEntity<?> updateSpecificGroupReceivers(@RequestBody GroupReceiversDto body) {
-        return ResponseEntity.ok(service.updateGroup(body));
+        return service.updateGroup(body);
     }
 }

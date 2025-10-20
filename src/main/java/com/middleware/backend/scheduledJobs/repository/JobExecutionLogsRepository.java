@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Repository for querying {@link JobExecutionLogs} with support for dynamic filtering and eager loading of job.
@@ -36,7 +37,6 @@ public interface JobExecutionLogsRepository extends JpaRepository<JobExecutionLo
 
 
     long countAllByStartTimeBetween(Timestamp startOfDay, Timestamp endOfDay);
-    long countAllByStatusAndStartTimeBetween(Status status, Timestamp startOfDay, Timestamp endOfDay);
     @Query("""
 
             SELECT new com.middleware.backend.dashboard.dto.ScheduledExecutedJobsListDto(
@@ -51,5 +51,15 @@ JOIN l.job j
 ORDER BY l.startTime DESC
 """)
     List<ScheduledExecutedJobsListDto> findTop10JobDtos(Pageable pageable);
-
+    @Query(value = """
+    SELECT DATE(start_time) AS date,
+           COUNT(*) AS total,
+           SUM(CASE WHEN status = 'SUCCESS' THEN 1 ELSE 0 END) AS succeeded,
+           SUM(CASE WHEN status = 'FAILURE' THEN 1 ELSE 0 END) AS failed
+    FROM job_execution_logs
+    WHERE start_time >= NOW() - INTERVAL '30 days'
+    GROUP BY DATE(start_time)
+    ORDER BY DATE(start_time)
+    """, nativeQuery = true)
+    List<Map<String, Object>> findJobGraphDataLast30Days();
 }

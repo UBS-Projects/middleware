@@ -7,6 +7,7 @@ import com.middleware.backend.scheduledJobs.service.JobLogsService;
 import com.middleware.backend.scheduledJobs.specification.JobLogsSpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -51,7 +52,7 @@ public class JobLogsController {
                     "including actions like create, pause, resume, update, and deactivate. " +
                     "Supports filtering by job name, user email, API endpoint, status, and date range. Requires 'scheduledJobsLogs:view' authority."
     )
-    public ResponseEntity<?> getAll(
+    public ResponseEntity<Page<?>> getAll(
             @RequestParam(required = false) String jobName,
             @RequestParam(required = false) String userEmail,
             @RequestParam(required = false) String apiEndpoint,
@@ -107,30 +108,32 @@ public class JobLogsController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdAfter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdBefore,
             @PathVariable("type") String type
-            ){
+    ) {
         try {
-        Pageable pageable = PageRequest.of(0, 100000, sortDirection.equalsIgnoreCase("asc")
-                ? Sort.by(sortedBy).ascending()
-                : Sort.by(sortedBy).descending());
-        Specification<ExecutionHistory> spec = Specification
-                .where(JobLogsSpecification.hasField("scheduledJobName", jobName, JobLogsSpecification.MatchMode.CONTAINS))
-                .and(JobLogsSpecification.hasField("scheduledJobPath", apiEndpoint, JobLogsSpecification.MatchMode.CONTAINS))
-                .and(JobLogsSpecification.hasField("status", status, JobLogsSpecification.MatchMode.EXACT))
-                .and(JobLogsSpecification.createdBetween(createdBefore, createdAfter));
-        byte[] fileBytes = service.exportFile(spec, pageable, type);
+            Specification<ExecutionHistory> spec = Specification
+                    .where(JobLogsSpecification.hasField("scheduledJobName", jobName, JobLogsSpecification.MatchMode.CONTAINS))
+                    .and(JobLogsSpecification.hasField("scheduledJobPath", apiEndpoint, JobLogsSpecification.MatchMode.CONTAINS))
+                    .and(JobLogsSpecification.hasField("status", status, JobLogsSpecification.MatchMode.EXACT))
+                    .and(JobLogsSpecification.createdBetween(createdBefore, createdAfter));
 
-        String fileName = "_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
-        String contentType = type.equalsIgnoreCase("CSV")
-                ? "text/csv"
-                : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            byte[] fileBytes = service.exportFile(spec, type, sortedBy,sortDirection);
 
-        return ResponseEntity.ok()
-                .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
-                .contentType(MediaType.parseMediaType(contentType))
-                .body(fileBytes);
+            if (fileBytes == null || fileBytes.length == 0) {
+                return ResponseEntity.noContent().build();
+            }
 
-    } catch (Exception e) {
-        return ResponseEntity.internalServerError().build();
-    }
+            String fileName = "job_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            String contentType = type.equalsIgnoreCase("CSV")
+                    ? "text/csv"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(fileBytes);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }

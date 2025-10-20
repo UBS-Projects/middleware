@@ -59,6 +59,34 @@ public class LogDto {
      */
     private String userName;
 
+
+    /**
+     * The body content of the notification request.
+     */
+    private String requestBody;
+
+    /**
+     * The headers included in the notification request.
+     */
+    private String requestHeader;
+
+    /**
+     * The body content received in the notification response.
+     */
+    private String responseBody;
+
+    /**
+     * The headers received in the notification response.
+     */
+    private String responseHeader;
+
+    /**
+     * The HTTP status code returned in the notification response.
+     */
+    private String responseCode;
+
+
+
     /**
      * Timestamp when the log entry was created.
      */

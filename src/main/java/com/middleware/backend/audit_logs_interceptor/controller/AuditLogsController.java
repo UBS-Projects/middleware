@@ -146,16 +146,12 @@ public class AuditLogsController {
                     .and(AuditLogSpecification.hasField("apiPath", apiPath, AuditLogSpecification.MatchMode.CONTAINS))
                     .and(AuditLogSpecification.hasField("responseStatus", responseStatus, AuditLogSpecification.MatchMode.EXACT))
                     .and(AuditLogSpecification.hasDateBetween("startTime", startTime, endTime));
-            Pageable pageable = PageRequest.of(0, 100000,
-                    sortDirection.equalsIgnoreCase("asc")
-                            ? Sort.by(sortedBy).ascending()
-                            : Sort.by(sortedBy).descending());
 
+            byte[] fileBytes = service.exportFile(spec, type, sortedBy,sortDirection);
 
-
-
-            byte[] fileBytes = service.exportFile(spec, pageable, type);
-
+            if (fileBytes == null || fileBytes.length == 0) {
+                return ResponseEntity.noContent().build();
+            }
 
             String fileName = "audit_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
             String contentType = type.equalsIgnoreCase("CSV")
@@ -166,7 +162,6 @@ public class AuditLogsController {
                     .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
                     .contentType(MediaType.parseMediaType(contentType))
                     .body(fileBytes);
-
 
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();

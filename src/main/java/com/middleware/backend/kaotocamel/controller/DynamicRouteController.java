@@ -403,16 +403,14 @@ public class DynamicRouteController {
 
 // Add these methods to your DynamicRouteController
 
-    @GetMapping("/export/excel")
-    /**
-     * Exports filtered/sorted routes list to an Excel file.
-     */
+    @GetMapping("/export/{type}")
     @PreAuthorize("hasAnyAuthority('dynamicRoutes:export')")
     @Operation(
-            summary = "Export routes to Excel",
-            description = "Exports dynamic routes to an Excel file. Supports filters and sorting. Requires 'dynamicRoutes:export' authority."
+            summary = "Export routes",
+            description = "Exports dynamic routes to CSV or Excel. Supports filters and sorting. Requires 'dynamicRoutes:export' authority."
     )
-    public ResponseEntity<byte[]> exportToExcel(
+    public ResponseEntity<byte[]> exportRoutes(
+            @PathVariable("type") String type,
             @RequestParam(required = false) String routeId,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) String path,
@@ -422,122 +420,45 @@ public class DynamicRouteController {
             @RequestParam(required = false) String yamlContains,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-            @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String sortDirection) {
-
+            @RequestParam(required = false, defaultValue = "updated_at") String sortBy,
+            @RequestParam(required = false, defaultValue = "desc") String sortDirection
+    ) {
         try {
-            // Create sort object
-            Sort sort = Sort.unsorted();
-            if (sortBy != null && !sortBy.trim().isEmpty()) {
-                Sort.Direction direction = Sort.Direction.ASC;
-                if ("desc".equalsIgnoreCase(sortDirection)) {
-                    direction = Sort.Direction.DESC;
-                }
-                String fieldName = mapColumnToField(sortBy);
-                sort = Sort.by(direction, fieldName);
-            } else {
-                sort = Sort.by(Sort.Direction.DESC, "createdAt");
-            }
+            // Build filter map
+            Map<String, String> filters = new HashMap<>();
+            if (routeId != null) filters.put("routeId", routeId);
+            if (description != null) filters.put("description", description);
+            if (path != null) filters.put("path", path);
+            if (httpMethod != null) filters.put("httpMethod", httpMethod);
+            if (comment != null) filters.put("comment", comment);
+            if (yamlContains != null) filters.put("yamlContains", yamlContains);
+            if (active != null) filters.put("active", active.toString());
+            if (createdAfter != null) filters.put("createdAfter", createdAfter.toString());
+            if (createdBefore != null) filters.put("createdBefore", createdBefore.toString());
+            if (sortBy != null) filters.put("sortBy", sortBy);
+            if (sortDirection != null) filters.put("sortDirection", sortDirection);
 
-            // Use a large page size to get all results for export
-            Pageable pageable = PageRequest.of(0, 10000, sort);
+            // Call service to export file
+            byte[] fileBytes = routeService.exportFile(filters, type);
 
-            boolean hasFilters = Stream.of(routeId, description, path, httpMethod, comment, yamlContains)
-                    .anyMatch(Objects::nonNull) || active != null || createdAfter != null || createdBefore != null;
-
-            Page<DynamicRouteEntity> result;
-            if (hasFilters) {
-                result = routeService.getLatestRoutesWithFiltersOptimized(routeId, description, path, httpMethod,
-                        active, comment, yamlContains, createdAfter, createdBefore, pageable);
-            } else {
-                result = routeService.getLatestRoutesOptimized(pageable);
-            }
-
-            byte[] excelData = routeService.exportToExcel(result.getContent());
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            headers.setContentDispositionFormData("attachment", "routes_export_" +
-                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")) + ".xlsx");
-            headers.setContentLength(excelData.length);
+            // Prepare response headers
+            String extension = type.equalsIgnoreCase("CSV") ? "csv" : "xlsx";
+            String contentType = type.equalsIgnoreCase("CSV") ? "text/csv"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            String fileName = "routes_export_" + LocalDateTime.now()
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")) + "." + extension;
 
             return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(excelData);
+                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(fileBytes);
 
         } catch (Exception e) {
-            log.error("Error exporting to Excel", e);
+            log.error("Error exporting routes", e);
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    @GetMapping("/export/csv")
-    /**
-     * Exports filtered/sorted routes list to a CSV file.
-     */
-    @PreAuthorize("hasAnyAuthority('dynamicRoutes:export')")
-    @Operation(
-            summary = "Export routes to CSV",
-            description = "Exports dynamic routes to a CSV file. Supports filters and sorting. Requires 'dynamicRoutes:export' authority."
-    )
-    public ResponseEntity<byte[]> exportToCSV(
-            @RequestParam(required = false) String routeId,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) String path,
-            @RequestParam(required = false) String httpMethod,
-            @RequestParam(required = false) Boolean active,
-            @RequestParam(required = false) String comment,
-            @RequestParam(required = false) String yamlContains,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-            @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String sortDirection) {
-
-        try {
-            // Create sort object
-            Sort sort = Sort.unsorted();
-            if (sortBy != null && !sortBy.trim().isEmpty()) {
-                Sort.Direction direction = Sort.Direction.ASC;
-                if ("desc".equalsIgnoreCase(sortDirection)) {
-                    direction = Sort.Direction.DESC;
-                }
-                String fieldName = mapColumnToField(sortBy);
-                sort = Sort.by(direction, fieldName);
-            } else {
-                sort = Sort.by(Sort.Direction.DESC, "createdAt");
-            }
-
-            // Use a large page size to get all results for export
-            Pageable pageable = PageRequest.of(0, 10000, sort);
-
-            boolean hasFilters = Stream.of(routeId, description, path, httpMethod, comment, yamlContains)
-                    .anyMatch(Objects::nonNull) || active != null || createdAfter != null || createdBefore != null;
-
-            Page<DynamicRouteEntity> result;
-            if (hasFilters) {
-                result = routeService.getLatestRoutesWithFiltersOptimized(routeId, description, path, httpMethod,
-                        active, comment, yamlContains, createdAfter, createdBefore, pageable);
-            } else {
-                result = routeService.getLatestRoutesOptimized(pageable);
-            }
-
-            byte[] csvData = routeService.exportToCSV(result.getContent());
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.parseMediaType("text/csv"));
-            headers.setContentDispositionFormData("attachment", "routes_export_" +
-                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")) + ".csv");
-            headers.setContentLength(csvData.length);
-
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(csvData);
-
-        } catch (Exception e) {
-            log.error("Error exporting to CSV", e);
-            return ResponseEntity.internalServerError().build();
-        }
-    }
     @GetMapping("/audits")
     /**
      * Retrieves paginated audit logs for route operations with filters.
@@ -618,25 +539,23 @@ public class DynamicRouteController {
             @RequestParam(required = false) Integer version,
             @RequestParam(required = false) String routeId,
             @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
-            ,@RequestParam(required = false, defaultValue = "timestamp") String sortedBy,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(required = false, defaultValue = "timestamp") String sortedBy,
             @RequestParam(defaultValue = "desc") String sortDirection,
             @PathVariable String type
     ) {
         try {
-
-
             Specification<DynamicRouteAudit> spec = Specification
                     .where(DynamicRouteLogsSpecification.hasField("userEmail", userEmail, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
                     .and(DynamicRouteLogsSpecification.hasField("action", action, DynamicRouteLogsSpecification.MatchMode.EXACT))
                     .and(DynamicRouteLogsSpecification.hasField("routeId", routeId, DynamicRouteLogsSpecification.MatchMode.CONTAINS))
                     .and(DynamicRouteLogsSpecification.createdBetween(startDate, endDate));
-            Pageable pageable = PageRequest.of(0, 1000000,
-                    sortDirection.equalsIgnoreCase("asc")
-                            ? Sort.by(sortedBy).ascending()
-                            : Sort.by(sortedBy).descending());
 
-            byte[] fileBytes = routeService.exportFile(spec, pageable, type);
+            byte[] fileBytes = routeService.exportFile(spec, sortedBy, sortDirection, type);
+
+            if (fileBytes == null || fileBytes.length == 0) {
+                return ResponseEntity.noContent().build();
+            }
 
             String fileName = "dynamic_routes_logs." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
             String contentType = type.equalsIgnoreCase("CSV")
@@ -649,9 +568,11 @@ public class DynamicRouteController {
                     .body(fileBytes);
 
         } catch (Exception e) {
+            log.error("Error exporting dynamic routes logs", e);
             return ResponseEntity.internalServerError().build();
         }
     }
+
 
 
 }

@@ -8,15 +8,20 @@ import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
@@ -98,56 +103,132 @@ public class AuditLogsService {
      * @throws IllegalArgumentException if the export type is unsupported.
      * @throws RuntimeException if there is an error generating the Excel file.
      */
-    public byte[] exportFile(Specification<AuditLog> spec, Pageable pageable, String type) {
-        Page<AuditLog> res = repo.findAll(spec, pageable);
-        List<AuditLog> data = res.getContent();
-
+    public byte[] exportFile(Specification<AuditLog> spec, String type, String sortedBy, String sortDirection) throws IOException {
         if ("CSV".equalsIgnoreCase(type)) {
-            return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
+            return convertToCSVStreamed(spec, sortedBy,sortDirection);
         } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
-            try {
-                return convertToExcel(data);
-            } catch (IOException e) {
-                throw new RuntimeException("Error generating Excel file", e);
-            }
+            return convertToExcelStreamed(spec, sortedBy,sortDirection);
         } else {
             throw new IllegalArgumentException("Unsupported export type: " + type);
         }
     }
 
-    /**
-     * Converts a list of {@link AuditLog} objects to a CSV formatted string.
-     *
-     * @param logs The list of audit logs to convert.
-     * @return A string in CSV format.
-     */
-    private String convertToCSV(List<AuditLog> logs) {
-        StringBuilder sb = new StringBuilder();
+    // Streaming CSV - processes in chunks, includes all fields
+    private byte[] convertToCSVStreamed(Specification<AuditLog> spec, String sortedBy, String sortDirection) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-        // CSV headers
-        sb.append("ID,User Name,Method,API Path,Query String,Response Status,Start Time,End Time,Duration (ms)\n");
+        try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(bos, StandardCharsets.UTF_8))) {
+            // Write headers - all fields
+            writer.println("ID,User Name,Method,API Path,Query String,Response Status,Start Time,End Time,Duration (ms)," +
+                    "Request Headers,Request Body,Response Headers,Response Body");
+            writer.flush();
 
-        for (AuditLog log : logs) {
-            sb.append(log.getId()).append(",");
-            sb.append(escapeCsv(log.getUserName())).append(",");
-            sb.append(escapeCsv(log.getMethod())).append(",");
-            sb.append(escapeCsv(log.getApiPath())).append(",");
-            sb.append(escapeCsv(log.getQueryString())).append(",");
-            sb.append(log.getResponseStatus() != null ? log.getResponseStatus() : "").append(",");
-            sb.append(log.getStartTime() != null ? log.getStartTime().toString() : "").append(",");
-            sb.append(log.getEndTime() != null ? log.getEndTime().toString() : "").append(",");
-            sb.append(log.getDurationMs() != null ? log.getDurationMs() : "").append("\n");
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+
+            while (hasMore) {
+                Sort sort = sortDirection.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<AuditLog> page = repo.findAll(spec, pageable);
+
+                for (AuditLog log : page.getContent()) {
+                    writer.append(String.valueOf(log.getId())).append(",");
+                    writer.append(escapeCsv(log.getUserName())).append(",");
+                    writer.append(escapeCsv(log.getMethod())).append(",");
+                    writer.append(escapeCsv(log.getApiPath())).append(",");
+                    writer.append(escapeCsv(log.getQueryString())).append(",");
+                    writer.append(log.getResponseStatus() != null ? log.getResponseStatus().toString() : "").append(",");
+                    writer.append(log.getStartTime() != null ? log.getStartTime().toString() : "").append(",");
+                    writer.append(log.getEndTime() != null ? log.getEndTime().toString() : "").append(",");
+                    writer.append(log.getDurationMs() != null ? log.getDurationMs().toString() : "").append(",");
+                    writer.append(escapeCsv(log.getRequestHeaders())).append(",");
+                    writer.append(escapeCsv(log.getRequestBody())).append(",");
+                    writer.append(escapeCsv(log.getResponseHeaders())).append(",");
+                    writer.append(escapeCsv(log.getResponseBody())).append("\n");
+                }
+                writer.flush();
+
+                hasMore = page.hasNext();
+                pageNumber++;
+            }
+            writer.flush();
         }
 
-        return sb.toString();
+        return bos.toByteArray();
     }
 
-    /**
-     * Escapes special characters in a string for CSV compatibility.
-     *
-     * @param value The string to escape.
-     * @return The escaped string, safe for inclusion in a CSV file.
-     */
+    // Streaming Excel - includes all fields but truncates LOB content to safe limits
+    private byte[] convertToExcelStreamed(Specification<AuditLog> spec, String sortedBy, String sortDirection) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        SXSSFWorkbook workbook = new SXSSFWorkbook(100);
+        Sheet sheet = workbook.createSheet("Audit Logs");
+
+        try {
+            // Create header row
+            Row header = sheet.createRow(0);
+            String[] columns = {
+                    "ID", "User Name", "Method", "API Path", "Query String",
+                    "Response Status", "Start Time", "End Time", "Duration (ms)",
+                    "Request Headers", "Request Body", "Response Headers", "Response Body"
+            };
+            for (int i = 0; i < columns.length; i++) {
+                header.createCell(i).setCellValue(columns[i]);
+            }
+
+            // Set column widths
+            int[] widths = {6, 20, 10, 30, 25, 15, 20, 20, 15, 30, 30, 30, 30};
+            for (int i = 0; i < widths.length; i++) {
+                sheet.setColumnWidth(i, widths[i] * 256);
+            }
+
+            int rowIdx = 1;
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+            final int MAX_CELL_LENGTH = 20000; // Excel limit is 32767, but keep safe margin
+
+            while (hasMore) {
+                Sort sort = sortDirection.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<AuditLog> page = repo.findAll(spec, pageable);
+
+                for (AuditLog log : page.getContent()) {
+                    Row row = sheet.createRow(rowIdx++);
+                    row.createCell(0).setCellValue(log.getId());
+                    row.createCell(1).setCellValue(safeString(log.getUserName()));
+                    row.createCell(2).setCellValue(safeString(log.getMethod()));
+                    row.createCell(3).setCellValue(safeString(log.getApiPath()));
+                    row.createCell(4).setCellValue(safeString(log.getQueryString()));
+                    row.createCell(5).setCellValue(log.getResponseStatus() != null ? log.getResponseStatus() : 0);
+                    row.createCell(6).setCellValue(log.getStartTime() != null ? log.getStartTime().toString() : "");
+                    row.createCell(7).setCellValue(log.getEndTime() != null ? log.getEndTime().toString() : "");
+                    row.createCell(8).setCellValue(log.getDurationMs() != null ? log.getDurationMs() : 0);
+
+                    // Truncate LOB fields to prevent Excel cell limit (32767 chars)
+                    row.createCell(9).setCellValue(truncate(log.getRequestHeaders(), MAX_CELL_LENGTH));
+                    row.createCell(10).setCellValue(truncate(log.getRequestBody(), MAX_CELL_LENGTH));
+                    row.createCell(11).setCellValue(truncate(log.getResponseHeaders(), MAX_CELL_LENGTH));
+                    row.createCell(12).setCellValue(truncate(log.getResponseBody(), MAX_CELL_LENGTH));
+                }
+
+                hasMore = page.hasNext();
+                pageNumber++;
+            }
+
+            workbook.write(bos);
+            return bos.toByteArray();
+
+        } finally {
+            workbook.dispose();
+        }
+    }
+
     private String escapeCsv(String value) {
         if (value == null) return "";
         String escaped = value.replace("\"", "\"\"");
@@ -157,62 +238,22 @@ public class AuditLogsService {
         return escaped;
     }
 
-    /**
-     * Converts a list of {@link AuditLog} objects to an Excel file (XLSX format).
-     *
-     * @param logs The list of audit logs to convert.
-     * @return A byte array representing the Excel file.
-     * @throws IOException if an I/O error occurs during Excel file creation.
-     */
-    private byte[] convertToExcel(List<AuditLog> logs) throws IOException {
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Audit Logs");
-
-            // Header row
-            Row header = sheet.createRow(0);
-            String[] columns = {
-                    "ID", "User Name", "Method", "API Path", "Query String",
-                    "Response Status", "Start Time", "End Time", "Duration (ms)"
-            };
-            for (int i = 0; i < columns.length; i++) {
-                header.createCell(i).setCellValue(columns[i]);
-            }
-
-            // Data rows
-            int rowIdx = 1;
-            for (AuditLog log : logs) {
-                Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue(log.getId());
-                row.createCell(1).setCellValue(safeString(log.getUserName()));
-                row.createCell(2).setCellValue(safeString(log.getMethod()));
-                row.createCell(3).setCellValue(safeString(log.getApiPath()));
-                row.createCell(4).setCellValue(safeString(log.getQueryString()));
-                row.createCell(5).setCellValue(log.getResponseStatus() != null ? log.getResponseStatus() : 0);
-                row.createCell(6).setCellValue(log.getStartTime() != null ? log.getStartTime().toString() : "");
-                row.createCell(7).setCellValue(log.getEndTime() != null ? log.getEndTime().toString() : "");
-                row.createCell(8).setCellValue(log.getDurationMs() != null ? log.getDurationMs() : 0);
-            }
-
-            // Autosize columns
-            for (int i = 0; i < columns.length; i++) {
-                sheet.autoSizeColumn(i);
-            }
-
-            // Write to byte array
-            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-                workbook.write(bos);
-                return bos.toByteArray();
-            }
-        }
-    }
-
-    /**
-     * Returns the given string or an empty string if the value is null.
-     *
-     * @param value The string to check.
-     * @return The original string or an empty string.
-     */
     private String safeString(String value) {
         return value != null ? value : "";
     }
+
+    /**
+     * Truncates a string to a maximum length, appending "..." if truncated.
+     * Used to prevent Excel cell content exceeding 32767 character limit.
+     *
+     * @param value The string to truncate
+     * @param maxLength The maximum allowed length
+     * @return The truncated string, or empty string if input is null
+     */
+    private String truncate(String value, int maxLength) {
+        if (value == null) return "";
+        if (value.length() <= maxLength) return value;
+        return value.substring(0, maxLength - 3) + "...";
+    }
+
 }

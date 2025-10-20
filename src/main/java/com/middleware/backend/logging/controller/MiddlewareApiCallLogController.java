@@ -51,7 +51,7 @@ public class MiddlewareApiCallLogController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/export/{type}")
+    @PostMapping("/export/{type}")
     /**
      * Exports logs to CSV or Excel format based on path variable.
      * @param filters filter map for narrowing results
