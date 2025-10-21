@@ -19,10 +19,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
+ import org.springframework.data.domain.PageRequest;
+ import org.springframework.data.domain.Pageable;
+ import org.springframework.data.domain.Sort;
+ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -30,7 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+ import java.io.OutputStreamWriter;
+ import java.io.PrintWriter;
+ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -268,49 +273,63 @@ public class BackendErrorMappingService {
 
 
 
-    public byte[] exportFile(Map<String, String> filters, Pageable pageable, String type) {
-        // Build dynamic specification from filters
-        Specification<ErrorMapping> spec = ErrorMappingSpecification.filter(filters);
-
-        // Fetch filtered data
-        Page<ErrorMapping> page = errorMappingRepository.findAll(spec, pageable);
-        List<ErrorMapping> data = page.getContent();
-
-        try {
-            if ("CSV".equalsIgnoreCase(type)) {
-                return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
-            } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
-                return convertToExcel(data);
-            } else {
-                throw new IllegalArgumentException("Unsupported export type: " + type);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Error generating export file", e);
+    public byte[] exportFile(Specification<ErrorMapping> spec, String type, String sortedBy, String sortDir) throws IOException {
+        if ("CSV".equalsIgnoreCase(type)) {
+            return convertToCSVStreamed(spec, sortedBy, sortDir);
+        } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
+            return convertToExcelStreamed(spec, sortedBy, sortDir);
+        } else {
+            throw new IllegalArgumentException("Unsupported export type: " + type);
         }
     }
+
 
     // === CSV Export ===
-    private String convertToCSV(List<ErrorMapping> mappings) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Route ID,Route Path,Source System,Raw Error Substring,Match Type,Mapped Error Code,Mapped Message,Error Category,HTTP Status,Language,Active,Created At,Updated At\n");
+    private byte[] convertToCSVStreamed(Specification<ErrorMapping> spec, String sortedBy, String sortDir) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-        for (ErrorMapping em : mappings) {
-            sb.append(escapeCsv(em.getRouteId())).append(",");
-            sb.append(escapeCsv(em.getRoutePath())).append(",");
-            sb.append(em.getSourceSystem() != null ? escapeCsv(em.getSourceSystem().getName()) : "").append(",");
-            sb.append(escapeCsv(em.getRawErrorSubstring())).append(",");
-            sb.append(em.getMatchType() != null ? escapeCsv(em.getMatchType().name()) : "").append(",");
-            sb.append(escapeCsv(em.getMappedErrorCode())).append(",");
-            sb.append(escapeCsv(em.getMappedMessage())).append(",");
-            sb.append(em.getErrorCategory() != null ? escapeCsv(em.getErrorCategory().getName()) : "").append(",");
-            sb.append(em.getHttpStatusCode() != null ? em.getHttpStatusCode() : "").append(",");
-            sb.append(escapeCsv(em.getLanguage())).append(",");
-            sb.append(em.getActive() != null ? em.getActive() : "").append(",");
-            sb.append(em.getCreatedAt() != null ? em.getCreatedAt() : "").append(",");
-            sb.append(em.getUpdatedAt() != null ? em.getUpdatedAt() : "").append("\n");
+        try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(bos, StandardCharsets.UTF_8))) {
+            // Headers
+            writer.println("Route ID,Route Path,Source System,Raw Error Substring,Match Type,Mapped Error Code,Mapped Message,Error Category,HTTP Status,Language,Active,Created At,Updated At");
+            writer.flush();
+
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+
+            while (hasMore) {
+                Sort sort = sortDir.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<ErrorMapping> page = errorMappingRepository.findAll(spec, pageable);
+
+                for (ErrorMapping em : page.getContent()) {
+                    writer.append(escapeCsv(em.getRouteId())).append(",");
+                    writer.append(escapeCsv(em.getRoutePath())).append(",");
+                    writer.append(em.getSourceSystem() != null ? escapeCsv(em.getSourceSystem().getName()) : "").append(",");
+                    writer.append(escapeCsv(em.getRawErrorSubstring())).append(",");
+                    writer.append(em.getMatchType() != null ? escapeCsv(em.getMatchType().name()) : "").append(",");
+                    writer.append(escapeCsv(em.getMappedErrorCode())).append(",");
+                    writer.append(escapeCsv(em.getMappedMessage())).append(",");
+                    writer.append(em.getErrorCategory() != null ? escapeCsv(em.getErrorCategory().getName()) : "").append(",");
+                    writer.append(em.getHttpStatusCode() != null ? em.getHttpStatusCode().toString() : "").append(",");
+                    writer.append(escapeCsv(em.getLanguage())).append(",");
+                    writer.append(em.getActive() != null ? em.getActive().toString() : "").append(",");
+                    writer.append(em.getCreatedAt() != null ? em.getCreatedAt().toString() : "").append(",");
+                    writer.append(em.getUpdatedAt() != null ? em.getUpdatedAt().toString() : "").append("\n");
+                }
+                writer.flush();
+
+                hasMore = page.hasNext();
+                pageNumber++;
+            }
+            writer.flush();
         }
-        return sb.toString();
+
+        return bos.toByteArray();
     }
+
 
     private String escapeCsv(String value) {
         if (value == null) return "";
@@ -321,51 +340,81 @@ public class BackendErrorMappingService {
         return escaped;
     }
 
-    // === Excel Export ===
-    private byte[] convertToExcel(List<ErrorMapping> mappings) throws IOException {
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Error Mappings");
+    private String safeString(String value) {
+        return value != null ? value : "";
+    }
 
-            // Header row
+    private String truncate(String value, int maxLength) {
+        if (value == null) return "";
+        if (value.length() <= maxLength) return value;
+        return value.substring(0, maxLength - 3) + "...";
+    }
+
+
+    // === Excel Export ===
+    private byte[] convertToExcelStreamed(Specification<ErrorMapping> spec, String sortedBy, String sortDir) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        SXSSFWorkbook workbook = new SXSSFWorkbook(100);
+        Sheet sheet = workbook.createSheet("Error Mappings");
+
+        try {
+            // Headers
             Row header = sheet.createRow(0);
-            String[] headers = {
+            String[] columns = {
                     "Route ID", "Route Path", "Source System", "Raw Error Substring",
                     "Match Type", "Mapped Error Code", "Mapped Message", "Error Category",
                     "HTTP Status", "Language", "Active", "Created At", "Updated At"
             };
-
-            for (int i = 0; i < headers.length; i++) {
-                header.createCell(i).setCellValue(headers[i]);
+            for (int i = 0; i < columns.length; i++) {
+                header.createCell(i).setCellValue(columns[i]);
             }
 
-            // Data rows
+            // Column widths
+            int[] widths = {12, 25, 25, 40, 15, 25, 35, 25, 15, 15, 10, 25, 25};
+            for (int i = 0; i < widths.length; i++) {
+                sheet.setColumnWidth(i, widths[i] * 256);
+            }
+
             int rowIdx = 1;
-            for (ErrorMapping em : mappings) {
-                Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue(em.getRouteId());
-                row.createCell(1).setCellValue(em.getRoutePath() != null ? em.getRoutePath() : "");
-                row.createCell(2).setCellValue(em.getSourceSystem() != null ? em.getSourceSystem().getName() : "");
-                row.createCell(3).setCellValue(em.getRawErrorSubstring() != null ? em.getRawErrorSubstring() : "");
-                row.createCell(4).setCellValue(em.getMatchType() != null ? em.getMatchType().name() : "");
-                row.createCell(5).setCellValue(em.getMappedErrorCode() != null ? em.getMappedErrorCode() : "");
-                row.createCell(6).setCellValue(em.getMappedMessage() != null ? em.getMappedMessage() : "");
-                row.createCell(7).setCellValue(em.getErrorCategory() != null ? em.getErrorCategory().getName() : "");
-                row.createCell(8).setCellValue(em.getHttpStatusCode() != null ? em.getHttpStatusCode() : 0);
-                row.createCell(9).setCellValue(em.getLanguage() != null ? em.getLanguage() : "");
-                row.createCell(10).setCellValue(em.getActive() != null ? em.getActive() : false);
-                row.createCell(11).setCellValue(em.getCreatedAt() != null ? em.getCreatedAt().toString() : "");
-                row.createCell(12).setCellValue(em.getUpdatedAt() != null ? em.getUpdatedAt().toString() : "");
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+            final int MAX_CELL_LENGTH = 20000;
+
+            while (hasMore) {
+                Sort sort = sortDir.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<ErrorMapping> page = errorMappingRepository.findAll(spec, pageable);
+
+                for (ErrorMapping em : page.getContent()) {
+                    Row row = sheet.createRow(rowIdx++);
+                    row.createCell(0).setCellValue(safeString(em.getRouteId()));
+                    row.createCell(1).setCellValue(safeString(em.getRoutePath()));
+                    row.createCell(2).setCellValue(em.getSourceSystem() != null ? em.getSourceSystem().getName() : "");
+                    row.createCell(3).setCellValue(truncate(em.getRawErrorSubstring(), MAX_CELL_LENGTH));
+                    row.createCell(4).setCellValue(em.getMatchType() != null ? em.getMatchType().name() : "");
+                    row.createCell(5).setCellValue(safeString(em.getMappedErrorCode()));
+                    row.createCell(6).setCellValue(truncate(em.getMappedMessage(), MAX_CELL_LENGTH));
+                    row.createCell(7).setCellValue(em.getErrorCategory() != null ? em.getErrorCategory().getName() : "");
+                    row.createCell(8).setCellValue(em.getHttpStatusCode() != null ? em.getHttpStatusCode() : 0);
+                    row.createCell(9).setCellValue(safeString(em.getLanguage()));
+                    row.createCell(10).setCellValue(em.getActive() != null ? em.getActive() : false);
+                    row.createCell(11).setCellValue(em.getCreatedAt() != null ? em.getCreatedAt().toString() : "");
+                    row.createCell(12).setCellValue(em.getUpdatedAt() != null ? em.getUpdatedAt().toString() : "");
+                }
+
+                hasMore = page.hasNext();
+                pageNumber++;
             }
 
-            // Auto-size columns
-            for (int i = 0; i < headers.length; i++) {
-                sheet.autoSizeColumn(i);
-            }
+            workbook.write(bos);
+            return bos.toByteArray();
 
-            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-                workbook.write(bos);
-                return bos.toByteArray();
-            }
+        } finally {
+            workbook.dispose();
         }
     }
+
 }

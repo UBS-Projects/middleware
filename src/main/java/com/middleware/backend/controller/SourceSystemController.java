@@ -269,9 +269,7 @@ public class SourceSystemController {
             @RequestParam(required = false, defaultValue = "createdAt") String sortedBy,
             @RequestParam(defaultValue = "desc") String sortDirection,
             @PathVariable("type") String type
-
     ) {
-
         try {
             Boolean activeValue = null;
             if ("active".equalsIgnoreCase(status)) {
@@ -284,13 +282,13 @@ public class SourceSystemController {
                     .where(SourceSystemSpecification.hasField("name", name, SourceSystemSpecification.MatchMode.CONTAINS))
                     .and(SourceSystemSpecification.hasField("description", description, SourceSystemSpecification.MatchMode.CONTAINS))
                     .and(SourceSystemSpecification.hasBooleanField("active", activeValue))
-                    .and(SourceSystemSpecification.createdBetween(createdAfter,createdBefore));
+                    .and(SourceSystemSpecification.createdBetween(createdAfter, createdBefore));
 
-            Pageable pageable = PageRequest.of(0, 100000,
-                    sortDirection.equalsIgnoreCase("asc")
-                            ? Sort.by(sortedBy).ascending()
-                            : Sort.by(sortedBy).descending());
-            byte[] fileBytes = sourceSystemService.exportFile(spec, pageable, type);
+            byte[] fileBytes = sourceSystemService.exportFile(spec, type, sortedBy, sortDirection);
+
+            if (fileBytes == null || fileBytes.length == 0) {
+                return ResponseEntity.noContent().build();
+            }
 
             String fileName = "source_systems." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
             String contentType = type.equalsIgnoreCase("CSV")
@@ -302,6 +300,7 @@ public class SourceSystemController {
                     .contentType(MediaType.parseMediaType(contentType))
                     .body(fileBytes);
         } catch (Exception e) {
+            log.error("Error exporting source systems", e);
             return ResponseEntity.internalServerError().build();
         }
     }

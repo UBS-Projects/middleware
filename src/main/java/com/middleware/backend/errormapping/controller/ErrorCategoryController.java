@@ -263,16 +263,15 @@ public class ErrorCategoryController {
                     .where(ErrorCategorySpecification.hasField("name", name, ErrorCategorySpecification.MatchMode.CONTAINS))
                     .and(ErrorCategorySpecification.hasField("description", description, ErrorCategorySpecification.MatchMode.CONTAINS))
                     .and(ErrorCategorySpecification.hasBooleanField("active", activeValue))
-                    .and(ErrorCategorySpecification.createdBetween(createdAfter,createdBefore));
+                    .and(ErrorCategorySpecification.createdBetween(createdAfter, createdBefore));
 
-            Pageable pageable = PageRequest.of(0, 100000,
-                    sortDirection.equalsIgnoreCase("asc")
-                            ? Sort.by(sortedBy).ascending()
-                            : Sort.by(sortedBy).descending());
+            byte[] fileBytes = categoryService.exportFile(spec, type,sortedBy,sortDirection);
 
-            byte[] fileBytes = categoryService.exportFile(spec, pageable, type);
+            if (fileBytes == null || fileBytes.length == 0) {
+                return ResponseEntity.noContent().build();
+            }
 
-            String fileName = "error_category." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            String fileName = "error_categories." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
             String contentType = type.equalsIgnoreCase("CSV")
                     ? "text/csv"
                     : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -283,6 +282,7 @@ public class ErrorCategoryController {
                     .body(fileBytes);
 
         } catch (Exception e) {
+            log.error("Error exporting error categories", e);
             return ResponseEntity.internalServerError().build();
         }
     }
