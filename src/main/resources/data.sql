@@ -80,45 +80,46 @@ INSERT INTO public.permissions (id, name) VALUES
                                               (63, 'throttling:edit'),
 
                                               (64, 'notification:view'),
+                                              (65, 'notification:send'),
 
-                                              (65, 'channel:view'),
-                                              (66, 'channel:create'),
-                                              (67, 'channel:edit'),
+                                              (66, 'channel:view'),
+                                              (67, 'channel:create'),
+                                              (68, 'channel:edit'),
 
-                                              (68, 'group:view'),
-                                              (69, 'group:create'),
-                                              (70, 'group:edit'),
+                                              (69, 'group:view'),
+                                              (71, 'group:create'),
+                                              (71, 'group:edit'),
 
-                                              (71, 'receiver:view'),
-                                              (72, 'receiver:create'),
-                                              (73, 'receiver:edit'),
+                                              (72, 'receiver:view'),
+                                              (73, 'receiver:create'),
+                                              (74, 'receiver:edit'),
 
-                                              (74, 'template:view'),
-                                              (75, 'template:create'),
-                                              (76, 'template:edit'),
-                                              (77, 'template:validate'),
+                                              (75, 'template:view'),
+                                              (76, 'template:create'),
+                                              (77, 'template:edit'),
+                                              (78, 'template:validate'),
 
-                                              (78, 'groupReceivers:create'),
-                                              (79, 'groupReceivers:edit'),
+                                              (79, 'groupReceivers:create'),
+                                              (80, 'groupReceivers:edit'),
 
-                                              (80, 'notificationLogs:view'),
-                                              (81, 'notificationLogs:export'),
+                                              (81, 'notificationLogs:view'),
+                                              (82, 'notificationLogs:export'),
 
-                                              (82, 'config:view'),
-                                              (83, 'config:create'),
-                                              (84, 'config:edit'),
+                                              (83, 'config:view'),
+                                              (84, 'config:create'),
+                                              (85, 'config:edit'),
 
 
-                                              (85, 'integratedSystem:view'),
-                                              (86, 'integratedSystem:create'),
-                                              (87, 'integratedSystem:edit'),
+                                              (86, 'integratedSystem:view'),
+                                              (87, 'integratedSystem:create'),
+                                              (88, 'integratedSystem:edit'),
 
-                                              (88, 'dashboard:summary'),
-                                              (89, 'dashboard:transactionGraph'),
-                                              (90, 'dashboard:jobGraph'),
-                                              (91, 'dashboard:transactionList'),
-                                              (92, 'dashboard:jobList'),
-                                              (93, 'dashboard:tokenList')
+                                              (89, 'dashboard:summary'),
+                                              (90, 'dashboard:transactionGraph'),
+                                              (91, 'dashboard:jobGraph'),
+                                              (92, 'dashboard:transactionList'),
+                                              (93, 'dashboard:jobList'),
+                                              (94, 'dashboard:tokenList')
 
                                               ON CONFLICT DO NOTHING;
 
@@ -139,7 +140,9 @@ INSERT INTO public.role (role_name, role_type, created_at, created_by, updated_a
 VALUES ('ADMIN', 0, NOW(), 'SYSTEM', NOW(), 'SYSTEM')
     ON CONFLICT (role_name) DO NOTHING;
 
-
+INSERT INTO public.role (role_name, role_type, created_at, created_by, updated_at, updated_by)
+VALUES ('EMAIL_SENDER', 1, NOW(), 'SYSTEM', NOW(), 'SYSTEM')
+    ON CONFLICT (role_name) DO NOTHING;
 
 ALTER TABLE public.users_roles
 DROP CONSTRAINT IF EXISTS uq_users_roles;
@@ -160,7 +163,7 @@ ALTER TABLE public.role_permissions
 INSERT INTO public.role_permissions (role_id, permission_id)
 SELECT 1, id
 FROM public.permissions
-WHERE id BETWEEN 1 AND 93
+WHERE id BETWEEN 1 AND 94
     ON CONFLICT(role_id, permission_id) DO NOTHING;
 
 
