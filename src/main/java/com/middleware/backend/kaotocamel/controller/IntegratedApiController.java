@@ -38,7 +38,7 @@ public class IntegratedApiController {
     private final IntegratedApiService service;
 
     @PostMapping
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integratedApi:create')")
     @Operation(summary = "Create new integrated API definition")
     public ResponseEntity<IntegratedApiDto> create(@Valid @RequestBody IntegratedApiRequestDto request) {
         try {
@@ -52,7 +52,7 @@ public class IntegratedApiController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integratedApi:update')")
     @Operation(summary = "Update integrated API definition")
     public ResponseEntity<IntegratedApiDto> update(
             @PathVariable Long id,
@@ -67,22 +67,8 @@ public class IntegratedApiController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("permitAll()")
-    @Operation(summary = "Soft delete integrated API")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        try {
-            service.softDelete(id);
-            log.info("Soft deleted integrated API: {}", id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            log.error("Failed to delete integrated API {}: {}", id, e.getMessage());
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @GetMapping("/{id}")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integratedApi:view')")
     @Operation(summary = "Get integrated API by ID")
     public ResponseEntity<IntegratedApiDto> findById(@PathVariable Long id) {
         return service.findById(id)
@@ -91,7 +77,7 @@ public class IntegratedApiController {
     }
 
     @GetMapping("/code/{code}")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integratedApi:view')")
     @Operation(summary = "Get integrated API by code")
     public ResponseEntity<IntegratedApiDto> findByCode(@PathVariable String code) {
         return service.findByCode(code)
@@ -100,7 +86,7 @@ public class IntegratedApiController {
     }
 
     @GetMapping
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integratedApi:view')")
     @Operation(summary = "List integrated APIs with advanced filtering, pagination and sorting")
     public ResponseEntity<Page<IntegratedApiDto>> findAll(
             // Basic filters
@@ -196,7 +182,7 @@ public class IntegratedApiController {
      * Toggle active status of an integrated API
      */
     @PatchMapping("/{id}/toggle-status")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integratedApi:update')")
     @Operation(
             summary = "Toggle API active status",
             description = "Toggles the active status of an integrated API (active ↔ inactive)"
@@ -214,14 +200,14 @@ public class IntegratedApiController {
     }
 
     @GetMapping("/types")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integratedApi:view')")
     @Operation(summary = "Get available API types")
     public ResponseEntity<List<String>> getApiTypes() {
         return ResponseEntity.ok(Arrays.asList("ANALYTICS", "METADATA"));
     }
 
     @GetMapping("/systems")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integratedSystem:view')")
     @Operation(summary = "Get distinct integrated systems")
     public ResponseEntity<List<String>> getIntegratedSystems() {
         List<String> systems = service.getDistinctIntegratedSystems();
@@ -302,7 +288,7 @@ public class IntegratedApiController {
      * Exports integrated APIs to CSV or Excel file with current filters applied.
      */
      @GetMapping("/export/{type}")
-     @PreAuthorize("permitAll()")
+     @PreAuthorize("hasAuthority('integratedApi:export')")
      @Operation(
              summary = "Export integrated APIs",
              description = "Exports integrated APIs to CSV or Excel format. Uses the same filters as the main listing API."

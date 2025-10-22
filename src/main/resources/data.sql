@@ -67,61 +67,66 @@ INSERT INTO public.permissions (id, name) VALUES
                                               (53, 'routePermissions:view'),
                                               (54, 'routePermissions:edit'),
 
-                                              (55, 'integrationMapping:view'),
-                                              (56, 'integrationMapping:create'),
-                                              (57, 'integrationMapping:edit'),
-                                              (58, 'integrationMapping:delete'),
-                                              (59, 'integrationMapping:export'),
+                                              (55, 'dhis2:view'),
+                                              (56, 'dhis2:edit'),
 
-                                              (60, 'dhis2:view'),
-                                              (61, 'dhis2:edit'),
+                                              (57, 'throttling:view'),
+                                              (58, 'throttling:edit'),
 
-                                              (62, 'throttling:view'),
-                                              (63, 'throttling:edit'),
+                                              (59, 'notification:view'),
+                                              (60, 'notification:send'),
 
-                                              (64, 'notification:view'),
-                                              (65, 'notification:send'),
+                                              (61, 'channel:view'),
+                                              (62, 'channel:create'),
+                                              (63, 'channel:edit'),
 
-                                              (66, 'channel:view'),
-                                              (67, 'channel:create'),
-                                              (68, 'channel:edit'),
+                                              (64, 'group:view'),
+                                              (65, 'group:create'),
+                                              (66, 'group:edit'),
 
-                                              (69, 'group:view'),
-                                              (71, 'group:create'),
-                                              (71, 'group:edit'),
+                                              (67, 'receiver:view'),
+                                              (68, 'receiver:create'),
+                                              (69, 'receiver:edit'),
 
-                                              (72, 'receiver:view'),
-                                              (73, 'receiver:create'),
-                                              (74, 'receiver:edit'),
+                                              (70, 'template:view'),
+                                              (71, 'template:create'),
+                                              (72, 'template:edit'),
+                                              (73, 'template:validate'),
 
-                                              (75, 'template:view'),
-                                              (76, 'template:create'),
-                                              (77, 'template:edit'),
-                                              (78, 'template:validate'),
+                                              (74, 'groupReceivers:create'),
+                                              (75, 'groupReceivers:edit'),
 
-                                              (79, 'groupReceivers:create'),
-                                              (80, 'groupReceivers:edit'),
+                                              (76, 'notificationLogs:view'),
+                                              (77, 'notificationLogs:export'),
 
-                                              (81, 'notificationLogs:view'),
-                                              (82, 'notificationLogs:export'),
+                                              (78, 'config:view'),
+                                              (79, 'config:create'),
+                                              (80, 'config:edit'),
 
-                                              (83, 'config:view'),
-                                              (84, 'config:create'),
-                                              (85, 'config:edit'),
+                                              (81, 'integratedSystem:view'),
+                                              (82, 'integratedSystem:create'),
+                                              (83, 'integratedSystem:edit'),
 
+                                              (84, 'dashboard:summary'),
+                                              (85, 'dashboard:transactionGraph'),
+                                              (86, 'dashboard:jobGraph'),
+                                              (87, 'dashboard:transactionList'),
+                                              (88, 'dashboard:jobList'),
+                                              (89, 'dashboard:tokenList'),
 
-                                              (86, 'integratedSystem:view'),
-                                              (87, 'integratedSystem:create'),
-                                              (88, 'integratedSystem:edit'),
+                                              (90, 'integratedApi:view'),
+                                              (91, 'integratedApi:create'),
+                                              (92, 'integratedApi:update'),
+                                              (93, 'integratedApi:export'),
 
-                                              (89, 'dashboard:summary'),
-                                              (90, 'dashboard:transactionGraph'),
-                                              (91, 'dashboard:jobGraph'),
-                                              (92, 'dashboard:transactionList'),
-                                              (93, 'dashboard:jobList'),
-                                              (94, 'dashboard:tokenList')
+                                              (94, 'integrationMapping:view'),
+                                              (95, 'integrationMapping:create'),
+                                              (96, 'integrationMapping:edit'),
+                                              (97, 'integrationMapping:validate'),
+                                              (98, 'integrationMapping:export'),
+                                              (99, 'integrationMapping:import')
+    ON CONFLICT DO NOTHING;
 
-                                              ON CONFLICT DO NOTHING;
 
 
 INSERT INTO public.users
@@ -163,7 +168,7 @@ ALTER TABLE public.role_permissions
 INSERT INTO public.role_permissions (role_id, permission_id)
 SELECT 1, id
 FROM public.permissions
-WHERE id BETWEEN 1 AND 94
+WHERE id BETWEEN 1 AND 99
     ON CONFLICT(role_id, permission_id) DO NOTHING;
 
 

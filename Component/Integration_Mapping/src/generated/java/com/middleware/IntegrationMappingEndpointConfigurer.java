@@ -21,6 +21,7 @@ public class IntegrationMappingEndpointConfigurer extends PropertyConfigurerSupp
     public boolean configure(CamelContext camelContext, Object obj, String name, Object value, boolean ignoreCase) {
         IntegrationMappingEndpoint target = (IntegrationMappingEndpoint) obj;
         switch (ignoreCase ? name.toLowerCase() : name) {
+        case "code": target.setCode(property(camelContext, java.lang.String.class, value)); return true;
         case "connectiontimeout":
         case "connectionTimeout": target.setConnectionTimeout(property(camelContext, int.class, value)); return true;
         case "lazystartproducer":
@@ -37,6 +38,7 @@ public class IntegrationMappingEndpointConfigurer extends PropertyConfigurerSupp
     @Override
     public Class<?> getOptionType(String name, boolean ignoreCase) {
         switch (ignoreCase ? name.toLowerCase() : name) {
+        case "code": return java.lang.String.class;
         case "connectiontimeout":
         case "connectionTimeout": return int.class;
         case "lazystartproducer":
@@ -54,6 +56,7 @@ public class IntegrationMappingEndpointConfigurer extends PropertyConfigurerSupp
     public Object getOptionValue(Object obj, String name, boolean ignoreCase) {
         IntegrationMappingEndpoint target = (IntegrationMappingEndpoint) obj;
         switch (ignoreCase ? name.toLowerCase() : name) {
+        case "code": return target.getCode();
         case "connectiontimeout":
         case "connectionTimeout": return target.getConnectionTimeout();
         case "lazystartproducer":
