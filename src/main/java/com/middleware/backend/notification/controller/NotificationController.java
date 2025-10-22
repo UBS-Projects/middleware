@@ -40,6 +40,7 @@ public class NotificationController {
             description = "Sends a notification immediately to one or more groups using the provided template and channel."
     )
     @PostMapping("/send")
+    @PreAuthorize("hasAuthority('notification:send') OR hasRole('EMAIL_SENDER')")
     public ResponseEntity<Map<String, String>> sendNow(@RequestBody NotificationRequest request) {
         try {
             notificationService.sendToGroup(request.getGroupCodes(), request.getTemplateCode(), request.getChannelCode());

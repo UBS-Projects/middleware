@@ -3,8 +3,10 @@
  import com.middleware.backend.dto.RouteOptionDto;
 import com.middleware.backend.dto.SourceSystemOptionDto;
  import com.middleware.backend.errormapping.dto.ErrorMappingDto;
+ import com.middleware.backend.errormapping.model.ErrorMapping;
  import com.middleware.backend.errormapping.service.BackendErrorMappingService;
  import com.middleware.backend.errormapping.service.ErrorCategoryService;
+ import com.middleware.backend.errormapping.spec.ErrorMappingSpecification;
  import com.middleware.backend.service.SourceSystemService;
   import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
+ import org.springframework.data.jpa.domain.Specification;
+ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -217,27 +220,24 @@ public class ErrorMappingController {
     @PreAuthorize("hasAuthority('errorMappings:export')")
     @Operation(
             summary = "Export error mappings (CSV/Excel)",
-            description = "Exports error mappings into CSV or Excel format with optional filters, pagination, and sorting. Requires 'errorMappings:export' authority."
+            description = "Exports error mappings into CSV or Excel format with optional filters. Requires 'errorMappings:export' authority."
     )
     public ResponseEntity<byte[]> export(
             @RequestParam Map<String, String> filters,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @PathVariable("type") String type,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "desc") String sortDir) {
-
+            @PathVariable("type") String type
+    ) {
         try {
-            Sort sort = sortDir.equalsIgnoreCase("desc")
-                    ? Sort.by(sortBy).descending()
-                    : Sort.by(sortBy).ascending();
+            String sortedBy = !filters.get("sortby").equals("")?filters.get("sortby"):"updated_at";
+            String sortDir = !filters.get("sortDir").equals("")?filters.get("sortDir"):"desc";
+            Specification<ErrorMapping> spec = ErrorMappingSpecification.filter(filters);
 
-            Pageable pageable = PageRequest.of(page, size, sort);
+            byte[] fileBytes = errorMappingService.exportFile(spec, type, sortedBy, sortDir);
 
+            if (fileBytes == null || fileBytes.length == 0) {
+                return ResponseEntity.noContent().build();
+            }
 
-            byte[] fileBytes = errorMappingService.exportFile(filters, pageable, type);
-
-            String fileName = "error_configuration." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            String fileName = "error_mappings." + (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
             String contentType = type.equalsIgnoreCase("CSV")
                     ? "text/csv"
                     : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -247,8 +247,9 @@ public class ErrorMappingController {
                     .contentType(MediaType.parseMediaType(contentType))
                     .body(fileBytes);
         } catch (Exception e) {
-            log.error("Error retrieving error mappings", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            log.error("Error exporting error mappings", e);
+            return ResponseEntity.internalServerError().build();
         }
     }
+
 }

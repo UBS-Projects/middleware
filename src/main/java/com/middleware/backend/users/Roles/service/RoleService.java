@@ -80,6 +80,7 @@ public class RoleService {
         roleEntity.setCreatedBy(emailUser);
         roleEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         roleEntity.setUpdatedBy(emailUser);
+        roleEntity.setRoleName(role.getRoleName().toUpperCase());
         Role saved = repo.save(roleEntity);
         return ResponseEntity.ok(RoleMapper.mapToDto(saved));
     }

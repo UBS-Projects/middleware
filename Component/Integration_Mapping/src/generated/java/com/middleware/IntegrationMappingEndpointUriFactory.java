@@ -21,7 +21,8 @@ public class IntegrationMappingEndpointUriFactory extends org.apache.camel.suppo
     private static final Set<String> SECRET_PROPERTY_NAMES;
     private static final Set<String> MULTI_VALUE_PREFIXES;
     static {
-        Set<String> props = new HashSet<>(6);
+        Set<String> props = new HashSet<>(7);
+        props.add("code");
         props.add("connectionTimeout");
         props.add("lazyStartProducer");
         props.add("mapping");

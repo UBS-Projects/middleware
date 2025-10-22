@@ -9,9 +9,12 @@ import com.middleware.backend.errormapping.repository.ErrorCategoryRepository;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +25,8 @@ import jakarta.persistence.EntityNotFoundException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -182,22 +187,16 @@ public class ErrorCategoryService {
      * @return file bytes
      * @throws IllegalArgumentException when an unsupported type is requested
      */
-    public byte[] exportFile(Specification<ErrorCategory> spec, Pageable pageable, String type) {
-        Page<ErrorCategory> res = categoryRepository.findAll(spec, pageable);
-        List<ErrorCategory> data = res.getContent();
-
+    public byte[] exportFile(Specification<ErrorCategory> spec, String type, String sortedBy, String sortDir) throws IOException {
         if ("CSV".equalsIgnoreCase(type)) {
-            return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
+            return convertToCSVStreamed(spec, sortedBy, sortDir);
         } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
-            try {
-                return convertToExcel(data);
-            } catch (IOException e) {
-                throw new RuntimeException("Error generating Excel file", e);
-            }
+            return convertToExcelStreamed(spec, sortedBy, sortDir);
         } else {
             throw new IllegalArgumentException("Unsupported export type: " + type);
         }
     }
+
 
     /**
      * Converts a list of categories into a CSV string.
@@ -205,21 +204,44 @@ public class ErrorCategoryService {
      * @param categories list to serialize
      * @return CSV contents
      */
-    private String convertToCSV(List<ErrorCategory> categories) {
-        StringBuilder sb = new StringBuilder();
-        // CSV headers
-        sb.append("ID,Name,Description,Active,CreatedAt,UpdatedAt\n");
+    private byte[] convertToCSVStreamed(Specification<ErrorCategory> spec, String sortedBy, String sortDir) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-        for (ErrorCategory cat : categories) {
-            sb.append(cat.getId()).append(",");
-            sb.append(escapeCsv(cat.getName())).append(",");
-            sb.append(escapeCsv(cat.getDescription())).append(",");
-            sb.append(cat.getActive()).append(",");
-            sb.append(cat.getCreatedAt() != null ? cat.getCreatedAt().toString() : "").append(",");
-            sb.append(cat.getUpdatedAt() != null ? cat.getUpdatedAt().toString() : "").append("\n");
+        try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(bos, StandardCharsets.UTF_8))) {
+            // Write headers
+            writer.println("ID,Name,Description,Active,Created At,Updated At");
+            writer.flush();
+
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+
+            while (hasMore) {
+                Sort sort = sortDir.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<ErrorCategory> page = categoryRepository.findAll(spec, pageable);
+
+                for (ErrorCategory cat : page.getContent()) {
+                    writer.append(String.valueOf(cat.getId())).append(",");
+                    writer.append(escapeCsv(cat.getName())).append(",");
+                    writer.append(escapeCsv(cat.getDescription())).append(",");
+                    writer.append(cat.getActive() != null ? cat.getActive().toString() : "").append(",");
+                    writer.append(cat.getCreatedAt() != null ? cat.getCreatedAt().toString() : "").append(",");
+                    writer.append(cat.getUpdatedAt() != null ? cat.getUpdatedAt().toString() : "").append("\n");
+                }
+
+                writer.flush();
+                hasMore = page.hasNext();
+                pageNumber++;
+            }
+            writer.flush();
         }
-        return sb.toString();
+
+        return bos.toByteArray();
     }
+
 
     /**
      * Escapes a CSV field by doubling quotes and quoting when necessary.
@@ -236,6 +258,17 @@ public class ErrorCategoryService {
         return escaped;
     }
 
+    private String safeString(String value) {
+        return value != null ? value : "";
+    }
+
+    private String truncate(String value, int maxLength) {
+        if (value == null) return "";
+        if (value.length() <= maxLength) return value;
+        return value.substring(0, maxLength - 3) + "...";
+    }
+
+
     /**
      * Converts a list of categories into an XLSX workbook and returns its bytes.
      *
@@ -243,41 +276,58 @@ public class ErrorCategoryService {
      * @return xlsx bytes
      * @throws IOException if writing fails
      */
-    private byte[] convertToExcel(List<ErrorCategory> categories) throws IOException {
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Error Categories");
+    private byte[] convertToExcelStreamed(Specification<ErrorCategory> spec, String sortedBy, String sortDir) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        SXSSFWorkbook workbook = new SXSSFWorkbook(100);
+        Sheet sheet = workbook.createSheet("Error Categories");
 
+        try {
             // Header row
             Row header = sheet.createRow(0);
-            header.createCell(0).setCellValue("ID");
-            header.createCell(1).setCellValue("Name");
-            header.createCell(2).setCellValue("Description");
-            header.createCell(3).setCellValue("Active");
-            header.createCell(4).setCellValue("CreatedAt");
-            header.createCell(5).setCellValue("UpdatedAt");
+            String[] columns = { "ID", "Name", "Description", "Active", "Created At", "Updated At" };
+            for (int i = 0; i < columns.length; i++) {
+                header.createCell(i).setCellValue(columns[i]);
+            }
 
-            // Data rows
+            // Column widths
+            int[] widths = { 10, 25, 40, 10, 25, 25 };
+            for (int i = 0; i < widths.length; i++) {
+                sheet.setColumnWidth(i, widths[i] * 256);
+            }
+
             int rowIdx = 1;
-            for (ErrorCategory cat : categories) {
-                Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue(cat.getId());
-                row.createCell(1).setCellValue(cat.getName());
-                row.createCell(2).setCellValue(cat.getDescription());
-                row.createCell(3).setCellValue(cat.getActive() != null && cat.getActive());
-                row.createCell(4).setCellValue(cat.getCreatedAt() != null ? cat.getCreatedAt().toString() : "");
-                row.createCell(5).setCellValue(cat.getUpdatedAt() != null ? cat.getUpdatedAt().toString() : "");
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+            final int MAX_CELL_LENGTH = 20000;
+
+            while (hasMore) {
+                Sort sort = sortDir.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<ErrorCategory> page = categoryRepository.findAll(spec, pageable);
+
+                for (ErrorCategory cat : page.getContent()) {
+                    Row row = sheet.createRow(rowIdx++);
+                    row.createCell(0).setCellValue(cat.getId());
+                    row.createCell(1).setCellValue(safeString(cat.getName()));
+                    row.createCell(2).setCellValue(truncate(cat.getDescription(), MAX_CELL_LENGTH));
+                    row.createCell(3).setCellValue(cat.getActive() != null ? cat.getActive() : false);
+                    row.createCell(4).setCellValue(cat.getCreatedAt() != null ? cat.getCreatedAt().toString() : "");
+                    row.createCell(5).setCellValue(cat.getUpdatedAt() != null ? cat.getUpdatedAt().toString() : "");
+                }
+
+                hasMore = page.hasNext();
+                pageNumber++;
             }
 
-            // Autosize columns
-            for (int i = 0; i <= 5; i++) {
-                sheet.autoSizeColumn(i);
-            }
+            workbook.write(bos);
+            return bos.toByteArray();
 
-            // Write to byte array
-            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-                workbook.write(bos);
-                return bos.toByteArray();
-            }
+        } finally {
+            workbook.dispose();
         }
     }
+
 }

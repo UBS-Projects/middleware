@@ -40,7 +40,7 @@ public class IntegrationMappingAdminController {
     private final IntegrationMappingService service;
 
     @PostMapping
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integrationMapping:create')")
     @Operation(summary = "Create new integration mapping")
     public ResponseEntity<IntegrationMappingDto> create(
             @Valid @RequestBody IntegrationMappingRequestDto request) {
@@ -56,7 +56,7 @@ public class IntegrationMappingAdminController {
     }
 
     @PostMapping("/import-excel")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integrationMapping:import')")
     @Operation(summary = "Import mappings from Excel file")
     public ResponseEntity<Map<String, Object>> importFromExcel(
             @RequestParam("file") MultipartFile file,
@@ -85,7 +85,7 @@ public class IntegrationMappingAdminController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integrationMapping:edit')")
     @Operation(summary = "Update integration mapping")
     public ResponseEntity<IntegrationMappingDto> update(
             @PathVariable Long id,
@@ -100,22 +100,8 @@ public class IntegrationMappingAdminController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("permitAll()")
-    @Operation(summary = "Soft delete integration mapping")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        try {
-            service.softDelete(id);
-            log.info("Soft deleted integration mapping: {}", id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            log.error("Failed to delete integration mapping {}: {}", id, e.getMessage());
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @GetMapping("/{id}")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integrationMapping:view')")
     @Operation(summary = "Get integration mapping by ID")
     public ResponseEntity<IntegrationMappingDto> findById(@PathVariable Long id) {
         return service.findById(id)
@@ -124,7 +110,7 @@ public class IntegrationMappingAdminController {
     }
 
     @GetMapping
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integrationMapping:view')")
     @Operation(summary = "List integration mappings with advanced filtering, pagination and sorting")
     public ResponseEntity<Page<IntegrationMappingDto>> findAll(
             // Basic filters
@@ -240,7 +226,7 @@ public class IntegrationMappingAdminController {
                 .body(result);
     }
     @GetMapping("/by-route/{routeId}")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('dynamicRoutes:view')")
     @Operation(summary = "Get all mappings for a Dynamic Route")
     public ResponseEntity<List<IntegrationMappingDto>> findByDynamicRoute(
             @PathVariable String routeId) {
@@ -249,7 +235,7 @@ public class IntegrationMappingAdminController {
     }
 
     @GetMapping("/mapping-types")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integrationMapping:view')")
     @Operation(summary = "Get available mapping types")
     public ResponseEntity<List<String>> getMappingTypes() {
         return ResponseEntity.ok(Arrays.asList(
@@ -260,7 +246,7 @@ public class IntegrationMappingAdminController {
     }
 
     @GetMapping("/dynamic-routes")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('dynamicRoutes:view')")
     @Operation(
             summary = "Get list of all configured Dynamic Route IDs",
             description = "Returns a distinct list of all Dynamic Route IDs that have active mappings"
@@ -277,7 +263,7 @@ public class IntegrationMappingAdminController {
     }
 
     @PostMapping("/validate")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integrationMapping:validate')")
     @Operation(summary = "Validate mapping configuration")
     public ResponseEntity<Map<String, Object>> validateMapping(
             @RequestBody IntegrationMappingRequestDto request) {
@@ -286,7 +272,7 @@ public class IntegrationMappingAdminController {
     }
 
     @PostMapping("/batch")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integrationMapping:create')")
     @Operation(summary = "Create multiple mappings in batch")
     public ResponseEntity<Map<String, Object>> createBatch(
             @RequestBody List<IntegrationMappingRequestDto> requests) {
@@ -306,7 +292,7 @@ public class IntegrationMappingAdminController {
     }
 
     @GetMapping("/export")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integrationMapping:export')")
     @Operation(summary = "Export mappings configuration")
     public ResponseEntity<List<IntegrationMappingDto>> exportMappings(
             @RequestParam(required = false) String dynamicRouteId) {
@@ -320,7 +306,7 @@ public class IntegrationMappingAdminController {
     }
 
     @PostMapping("/import")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integrationMapping:import')")
     @Operation(summary = "Import mappings configuration")
     public ResponseEntity<Map<String, Object>> importMappings(
             @RequestBody List<IntegrationMappingRequestDto> mappings) {
@@ -338,7 +324,7 @@ public class IntegrationMappingAdminController {
      * Toggle active status of a mapping
      */
     @PatchMapping("/{id}/toggle-status")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integrationMapping:edit')")
     @Operation(
             summary = "Toggle mapping active status",
             description = "Toggles the active status of a mapping (active ↔ inactive)"
@@ -358,7 +344,7 @@ public class IntegrationMappingAdminController {
      * Exports integration mappings to CSV or Excel file with current filters applied.
      */
     @GetMapping("/export/{type}")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAuthority('integrationMapping:export')")
     @Operation(
             summary = "Export integration mappings",
             description = "Exports integration mappings to CSV or Excel format. Uses the same filters as the main listing API."

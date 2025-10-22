@@ -8,9 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +24,8 @@ import jakarta.persistence.EntityNotFoundException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -201,19 +206,16 @@ public class SourceSystemService {
      * @throws IOException              on I/O errors
      * @throws IllegalArgumentException when an unsupported type is requested
      */
-    public byte[] exportFile(Specification<SourceSystem> spec, Pageable pageable, String type) throws IOException {
-        // Fetch filtered & paged data
-        Page<SourceSystem> page = sourceSystemRepository.findAll(spec, pageable);
-        List<SourceSystem> data = page.getContent();
-
+    public byte[] exportFile(Specification<SourceSystem> spec, String type, String sortedBy, String sortDir) throws IOException {
         if ("CSV".equalsIgnoreCase(type)) {
-            return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
+            return convertToCSVStreamed(spec, sortedBy, sortDir);
         } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
-            return convertToExcel(data);
+            return convertToExcelStreamed(spec, sortedBy, sortDir);
         } else {
             throw new IllegalArgumentException("Unsupported export type: " + type);
         }
     }
+
 
     // Convert List<SourceSystem> to CSV string
     /**
@@ -222,19 +224,45 @@ public class SourceSystemService {
      * @param systems list to serialize
      * @return CSV contents
      */
-    private String convertToCSV(List<SourceSystem> systems) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Name,Description,Active,Created At,Updated At\n");
+    private byte[] convertToCSVStreamed(Specification<SourceSystem> spec, String sortedBy, String sortDir) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-        for (SourceSystem sys : systems) {
-            sb.append(escapeCsv(sys.getName())).append(",");
-            sb.append(escapeCsv(sys.getDescription())).append(",");
-            sb.append(sys.getActive()).append(",");
-            sb.append(sys.getCreatedAt()).append(",");
-            sb.append(sys.getUpdatedAt()).append("\n");
+        try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(bos, StandardCharsets.UTF_8))) {
+            // CSV header
+            writer.println("ID,Name,Description,Active,Created At,Updated At");
+            writer.flush();
+
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+
+            while (hasMore) {
+                Sort sort = sortDir.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<SourceSystem> page = sourceSystemRepository.findAll(spec, pageable);
+
+                for (SourceSystem sys : page.getContent()) {
+                    writer.append(String.valueOf(sys.getId())).append(",");
+                    writer.append(escapeCsv(sys.getName())).append(",");
+                    writer.append(escapeCsv(sys.getDescription())).append(",");
+                    writer.append(sys.getActive() != null ? sys.getActive().toString() : "").append(",");
+                    writer.append(sys.getCreatedAt() != null ? sys.getCreatedAt().toString() : "").append(",");
+                    writer.append(sys.getUpdatedAt() != null ? sys.getUpdatedAt().toString() : "").append("\n");
+                }
+
+                writer.flush();
+                hasMore = page.hasNext();
+                pageNumber++;
+            }
+
+            writer.flush();
         }
-        return sb.toString();
+
+        return bos.toByteArray();
     }
+
 
     // CSV escaping helper
     /**
@@ -252,6 +280,17 @@ public class SourceSystemService {
         return escaped;
     }
 
+    private String safeString(String value) {
+        return value != null ? value : "";
+    }
+
+    private String truncate(String value, int maxLength) {
+        if (value == null) return "";
+        if (value.length() <= maxLength) return value;
+        return value.substring(0, maxLength - 3) + "...";
+    }
+
+
     // Convert List<SourceSystem> to Excel bytes
     /**
      * Converts a list of source systems into an XLSX workbook and returns its bytes.
@@ -260,37 +299,57 @@ public class SourceSystemService {
      * @return xlsx bytes
      * @throws IOException if writing fails
      */
-    private byte[] convertToExcel(List<SourceSystem> systems) throws IOException {
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Source Systems");
+    private byte[] convertToExcelStreamed(Specification<SourceSystem> spec, String sortedBy, String sortDir) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        SXSSFWorkbook workbook = new SXSSFWorkbook(100);
+        Sheet sheet = workbook.createSheet("Source Systems");
 
+        try {
             // Header row
             Row header = sheet.createRow(0);
-            header.createCell(0).setCellValue("Name");
-            header.createCell(1).setCellValue("Description");
-            header.createCell(2).setCellValue("Active");
-            header.createCell(3).setCellValue("Created At");
-            header.createCell(4).setCellValue("Updated At");
+            String[] columns = { "ID", "Name", "Description", "Active", "Created At", "Updated At" };
+            for (int i = 0; i < columns.length; i++) {
+                header.createCell(i).setCellValue(columns[i]);
+            }
+
+            int[] widths = { 10, 25, 40, 10, 25, 25 };
+            for (int i = 0; i < widths.length; i++) {
+                sheet.setColumnWidth(i, widths[i] * 256);
+            }
 
             int rowIdx = 1;
-            for (SourceSystem sys : systems) {
-                Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue(sys.getName());
-                row.createCell(1).setCellValue(sys.getDescription() != null ? sys.getDescription() : "");
-                row.createCell(2).setCellValue(sys.getActive() != null ? sys.getActive() : false);
-                row.createCell(3).setCellValue(sys.getCreatedAt() != null ? sys.getCreatedAt().toString() : "");
-                row.createCell(4).setCellValue(sys.getUpdatedAt() != null ? sys.getUpdatedAt().toString() : "");
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+            final int MAX_CELL_LENGTH = 20000;
+
+            while (hasMore) {
+                Sort sort = sortDir.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<SourceSystem> page = sourceSystemRepository.findAll(spec, pageable);
+
+                for (SourceSystem sys : page.getContent()) {
+                    Row row = sheet.createRow(rowIdx++);
+                    row.createCell(0).setCellValue(sys.getId());
+                    row.createCell(1).setCellValue(safeString(sys.getName()));
+                    row.createCell(2).setCellValue(truncate(sys.getDescription(), MAX_CELL_LENGTH));
+                    row.createCell(3).setCellValue(sys.getActive() != null ? sys.getActive() : false);
+                    row.createCell(4).setCellValue(sys.getCreatedAt() != null ? sys.getCreatedAt().toString() : "");
+                    row.createCell(5).setCellValue(sys.getUpdatedAt() != null ? sys.getUpdatedAt().toString() : "");
+                }
+
+                hasMore = page.hasNext();
+                pageNumber++;
             }
 
-            // Autosize columns for better formatting
-            for (int i = 0; i <= 4; i++) {
-                sheet.autoSizeColumn(i);
-            }
+            workbook.write(bos);
+            return bos.toByteArray();
 
-            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-                workbook.write(bos);
-                return bos.toByteArray();
-            }
+        } finally {
+            workbook.dispose();
         }
     }
+
 }

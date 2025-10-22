@@ -32,7 +32,7 @@ public class IntegrationMappingComponent extends DefaultComponent {
 
     private static final Logger LOG = LoggerFactory.getLogger(IntegrationMappingComponent.class);
 
-    @Metadata(description = "Integration Mapping Service for handling operations", required = false)
+    @Metadata(label = "internal",description = "Integration Mapping Service for handling operations")
     private IntegrationMappingService integrationMappingService;
 
     public IntegrationMappingComponent() {

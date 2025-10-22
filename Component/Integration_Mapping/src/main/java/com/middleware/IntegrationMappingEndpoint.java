@@ -1,6 +1,8 @@
 package com.middleware;
 
 import com.middleware.service.IntegrationMappingService;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.camel.Category;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
@@ -32,6 +34,8 @@ import org.slf4j.LoggerFactory;
         category = { Category.MESSAGING, Category.TRANSFORMATION },
         producerOnly = true
 )
+@Getter
+@Setter
 public class IntegrationMappingEndpoint extends DefaultEndpoint {
 
     private static final Logger LOG = LoggerFactory.getLogger(IntegrationMappingEndpoint.class);
@@ -39,15 +43,21 @@ public class IntegrationMappingEndpoint extends DefaultEndpoint {
     /**
      * Dummy path required by Camel. Not used at runtime.
      */
-    @UriPath(description = "Dummy path required by Camel. Not used at runtime.")
-    @Metadata(label = "internal")
+    @UriPath(description = "Dummy operation path for Camel syntax.")
     private String operation;
+
+    /**
+     * The system code identifying the integrated system.
+     */
+    @UriParam(description = "The system code identifying the integrated system.")
+    private String code;
 
     /**
      * Middleware API mapping name (e.g., healthmap, education)
      */
     @UriParam(description = "Middleware API mapping name (e.g., healthmap, education)")
     private String mapping;
+
 
     @UriParam(defaultValue = "true", description = "Whether to validate parameters before processing")
     private boolean validateParams = true;
@@ -58,7 +68,6 @@ public class IntegrationMappingEndpoint extends DefaultEndpoint {
     @UriParam(defaultValue = "60000", description = "Read timeout in milliseconds")
     private int readTimeout = 60000;
 
-    @Metadata(label = "internal")
     private IntegrationMappingService integrationMappingService;
 
     /**
@@ -86,22 +95,6 @@ public class IntegrationMappingEndpoint extends DefaultEndpoint {
     public boolean isSingleton() {
         return true;
     }
-
-    // Getters and Setters
-    public String getMapping() { return mapping; }
-    public void setMapping(String mapping) { this.mapping = mapping; }
-
-    public String getOperation() { return operation; }
-    public void setOperation(String operation) { this.operation = operation; }
-
-    public boolean isValidateParams() { return validateParams; }
-    public void setValidateParams(boolean validateParams) { this.validateParams = validateParams; }
-
-    public int getConnectionTimeout() { return connectionTimeout; }
-    public void setConnectionTimeout(int connectionTimeout) { this.connectionTimeout = connectionTimeout; }
-
-    public int getReadTimeout() { return readTimeout; }
-    public void setReadTimeout(int readTimeout) { this.readTimeout = readTimeout; }
 
     // Internal setter only
     void setIntegrationMappingService(IntegrationMappingService integrationMappingService) {
