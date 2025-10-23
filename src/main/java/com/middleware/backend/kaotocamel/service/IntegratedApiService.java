@@ -4,26 +4,32 @@ import com.middleware.backend.kaotocamel.dto.AnalyticsResponseDto;
 import com.middleware.backend.kaotocamel.dto.IntegratedApiDto;
 import com.middleware.backend.kaotocamel.dto.IntegratedApiRequestDto;
 import com.middleware.backend.kaotocamel.model.IntegratedApi;
+import com.middleware.backend.kaotocamel.model.IntegrationMapping;
+import com.middleware.backend.kaotocamel.repository.IntegrationMappingRepository;
 import com.middleware.backend.kaotocamel.repository.IntegratedApiRepository;
 import com.middleware.backend.kaotocamel.spec.IntegratedApiSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -35,6 +41,7 @@ import java.util.stream.Collectors;
 public class IntegratedApiService {
 
     private final IntegratedApiRepository repository;
+    private final IntegrationMappingRepository mappingRepository;
     private final Dhis2ClientService dhis2Client;
 
     @Transactional
@@ -73,18 +80,6 @@ public class IntegratedApiService {
         return mapEntityToDto(saved);
     }
 
-    @Transactional
-    public void softDelete(Long id) {
-        log.info("Soft deleting integrated API: {}", id);
-
-        IntegratedApi entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Integrated API not found: " + id));
-
-        entity.setIsActive(false);
-        repository.save(entity);
-
-        log.info("Soft deleted integrated API: {}", entity.getCode());
-    }
 
     @Transactional(readOnly = true)
     public Optional<IntegratedApiDto> findById(Long id) {
@@ -99,24 +94,26 @@ public class IntegratedApiService {
     }
 
     @Transactional(readOnly = true)
-    public Page<IntegratedApiDto> findWithFilters(String code, String name, String type,
-                                                  String integratedSystem, Boolean isActive,
-                                                  Pageable pageable) {
-        return findWithAdvancedFilters(code, name, null, type, integratedSystem, isActive,
-                null, null, null, null, null, null, null, null, pageable);
-    }
-
-    @Transactional(readOnly = true)
     public Page<IntegratedApiDto> findWithAdvancedFilters(
-            String code, String name, String apiUrl, String type,
-            String integratedSystem, Boolean isActive, String description,
-            LocalDateTime createdAfter, LocalDateTime createdBefore,
-            LocalDateTime updatedAfter, LocalDateTime updatedBefore,
-            String search, Long minId, Long maxId,
+            String code,
+            String name,
+            String apiUrl,
+            String boundApiCode,
+            String type,
+            String integratedSystem,
+            Boolean isActive,
+            String description,
+            LocalDateTime createdAfter,
+            LocalDateTime createdBefore,
+            LocalDateTime updatedAfter,
+            LocalDateTime updatedBefore,
+            String search,
+            Long minId,
+            Long maxId,
             Pageable pageable) {
 
         Specification<IntegratedApi> spec = IntegratedApiSpecification.buildSpecification(
-                code, name, apiUrl, type, integratedSystem, isActive, description,
+                code, name, apiUrl, boundApiCode, type, integratedSystem, isActive, description,
                 createdAfter, createdBefore, updatedAfter, updatedBefore,
                 search, minId, maxId
         );
@@ -124,7 +121,6 @@ public class IntegratedApiService {
         return repository.findAll(spec, pageable)
                 .map(this::mapEntityToDto);
     }
-
     @Transactional(readOnly = true)
     public List<String> getDistinctIntegratedSystems() {
         return repository.findAll().stream()
@@ -133,53 +129,39 @@ public class IntegratedApiService {
                 .sorted()
                 .collect(Collectors.toList());
     }
-
-    /**
-     * Dynamic DHIS2 connection test supporting _dhis2Code
-     */
-    public Map<String, Object> testApiConnection(Long id, String period, String dhis2Code) {
-        log.info("Testing API connection for ID: {} with period: {} and DHIS2 code: {}", id, period, dhis2Code);
-
-        IntegratedApi api = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Integrated API not found: " + id));
-
-        Map<String, Object> result = new HashMap<>();
-
-        try {
-            Map<String, Object> response = dhis2Client.executeApiCall(api, period, dhis2Code);
-
-            result.put("success", true);
-            result.put("message", "Connection successful");
-            result.put("responseType", response.get("type"));
-
-            if ("ANALYTICS".equals(response.get("type"))) {
-                AnalyticsResponseDto analytics = (AnalyticsResponseDto) response.get("data");
-                result.put("rowCount", analytics.getRows().size());
-            }
-
-        } catch (Exception e) {
-            result.put("success", false);
-            result.put("message", "Connection failed");
-            result.put("error", e.getMessage());
-        }
-
-        return result;
-    }
     /**
      * Toggle active status of an integrated API (activate/deactivate)
      *
      * @param id The API ID
+     * @param force if true, force-deactivate linked mappings before deactivating the API
      * @return Updated API DTO
      */
     @Transactional
-    public IntegratedApiDto toggleActiveStatus(Long id) {
-        log.info("Toggling active status for integrated API: {}", id);
+    public IntegratedApiDto toggleActiveStatus(Long id, boolean force) {
+        log.info("Toggling active status for integrated API: {} (force={})", id, force);
 
         IntegratedApi entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Integrated API not found: " + id));
 
         // Toggle status
         boolean newStatus = !entity.getIsActive();
+
+        // If we are turning off, check mappings first
+        if (!newStatus) {
+            long activeMappings = mappingRepository.countByIntegratedApiIdAndIsActiveTrue(entity.getId());
+            if (activeMappings > 0) {
+                if (!force) {
+                    String msg = String.format("Cannot deactivate IntegratedApi id=%d (code=%s): there are %d active mapping(s) linked. Use force=true to deactivate them.",
+                            entity.getId(), entity.getCode(), activeMappings);
+                    log.warn(msg);
+                    throw new IllegalStateException(msg);
+                } else {
+                    // force requested -> deactivate mappings first
+                    deactivateAssociatedMappings(entity.getId());
+                }
+            }
+        }
+
         entity.setIsActive(newStatus);
 
         IntegratedApi saved = repository.save(entity);
@@ -188,6 +170,8 @@ public class IntegratedApiService {
 
         return mapEntityToDto(saved);
     }
+
+
 
     /**
      * Activate an integrated API
@@ -209,7 +193,6 @@ public class IntegratedApiService {
 
         return mapEntityToDto(saved);
     }
-
     /**
      * Deactivate an integrated API (alternative to soft delete)
      *
@@ -223,12 +206,43 @@ public class IntegratedApiService {
         IntegratedApi entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Integrated API not found: " + id));
 
+        long activeMappings = mappingRepository.countByIntegratedApiIdAndIsActiveTrue(entity.getId());
+        if (activeMappings > 0) {
+            String msg = String.format("Cannot deactivate IntegratedApi id=%d (code=%s): there are %d active mapping(s) linked. Use toggle-status?force=true to force deactivation.",
+                    entity.getId(), entity.getCode(), activeMappings);
+            log.warn(msg);
+            throw new IllegalStateException(msg);
+        }
+
         entity.setIsActive(false);
         IntegratedApi saved = repository.save(entity);
 
         log.info("Deactivated integrated API: {}", id);
 
         return mapEntityToDto(saved);
+    }
+    /**
+     * Deactivates all active IntegrationMapping records linked to the given integratedApiId.
+     * This happens only when force=true is provided.
+     *
+     * @param integratedApiId the IntegratedApi id
+     */
+    private void deactivateAssociatedMappings(Long integratedApiId) {
+        if (integratedApiId == null) return;
+
+        List<IntegrationMapping> activeMappings = mappingRepository.findByIntegratedApiIdAndIsActiveTrue(integratedApiId);
+        if (activeMappings == null || activeMappings.isEmpty()) {
+            log.debug("No active mappings found for IntegratedApi {}", integratedApiId);
+            return;
+        }
+
+        log.info("Deactivating {} mapping(s) associated with IntegratedApi {}", activeMappings.size(), integratedApiId);
+        for (IntegrationMapping m : activeMappings) {
+            m.setIsActive(false);
+        }
+
+        mappingRepository.saveAll(activeMappings);
+        log.info("Deactivated {} mapping(s) for IntegratedApi {}", activeMappings.size(), integratedApiId);
     }
     private void mapRequestToEntity(IntegratedApiRequestDto request, IntegratedApi entity) {
         entity.setCode(request.getCode());
@@ -246,51 +260,131 @@ public class IntegratedApiService {
     /**
      * Exports integrated APIs to CSV or Excel bytes according to type.
      */
-    public byte[] exportFile(Specification<IntegratedApi> spec, Pageable pageable, String type) {
-        List<IntegratedApi> data;
-        try {
-            Page<IntegratedApi> res = repository.findAll(spec, pageable);
-            data = res.getContent();
-        } catch (Exception e) {
-            log.error("Error fetching data for export", e);
-            data = Collections.emptyList();
+    public byte[] exportFile(Specification<IntegratedApi> spec, String type, String sortedBy, String sortDirection) throws IOException {
+        if ("CSV".equalsIgnoreCase(type)) {
+            return convertToCSVStreamed(spec, sortedBy, sortDirection);
+        } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
+            return convertToExcelStreamed(spec, sortedBy, sortDirection);
+        } else {
+            throw new IllegalArgumentException("Unsupported export type: " + type);
         }
+    }
+    private byte[] convertToCSVStreamed(Specification<IntegratedApi> spec, String sortedBy, String sortDirection) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-        try {
-            if ("CSV".equalsIgnoreCase(type)) {
-                return convertToCSV(data).getBytes(StandardCharsets.UTF_8);
-            } else if ("Excel".equalsIgnoreCase(type) || "XLSX".equalsIgnoreCase(type)) {
-                return convertToExcel(data);
-            } else {
-                throw new IllegalArgumentException("Unsupported export type: " + type);
+        try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(bos, StandardCharsets.UTF_8))) {
+            writer.println("ID,Code,Name,API URL,Type,Integrated System,Active,Description,Created At,Updated At");
+            writer.flush();
+
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+
+            while (hasMore) {
+                Sort sort = sortDirection.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<IntegratedApi> page = repository.findAll(spec, pageable);
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+                for (IntegratedApi record : page.getContent()) {
+                    writer.append(String.valueOf(record.getId())).append(",");
+                    writer.append(escapeCsv(record.getCode())).append(",");
+                    writer.append(escapeCsv(record.getName())).append(",");
+                    writer.append(escapeCsv(record.getApiUrl())).append(",");
+                    writer.append(record.getType() != null ? record.getType().toString() : "").append(",");
+                    writer.append(escapeCsv(record.getIntegratedSystem())).append(",");
+                    writer.append(record.getIsActive() ? "ACTIVE" : "INACTIVE").append(",");
+                    writer.append(escapeCsv(record.getDescription())).append(",");
+                    writer.append(record.getCreatedAt() != null ? record.getCreatedAt().format(formatter) : "").append(",");
+                    writer.append(record.getUpdatedAt() != null ? record.getUpdatedAt().format(formatter) : "").append("\n");
+                }
+                writer.flush();
+
+                hasMore = page.hasNext();
+                pageNumber++;
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to export file", e);
+            writer.flush();
+        }
+
+        return bos.toByteArray();
+    }
+    private byte[] convertToExcelStreamed(Specification<IntegratedApi> spec, String sortedBy, String sortDirection) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        SXSSFWorkbook workbook = new SXSSFWorkbook(100);
+        Sheet sheet = workbook.createSheet("Integrated APIs");
+
+        try {
+            Row header = sheet.createRow(0);
+            String[] columns = {
+                    "ID", "Code", "Name", "API URL", "Type",
+                    "Integrated System", "Active", "Description",
+                    "Created At", "Updated At"
+            };
+            for (int i = 0; i < columns.length; i++) {
+                header.createCell(i).setCellValue(columns[i]);
+            }
+
+            int[] widths = {6, 15, 25, 35, 15, 20, 10, 40, 20, 20};
+            for (int i = 0; i < widths.length; i++) {
+                sheet.setColumnWidth(i, widths[i] * 256);
+            }
+
+            int rowIdx = 1;
+            int pageSize = 1000;
+            int pageNumber = 0;
+            boolean hasMore = true;
+            final int MAX_CELL_LENGTH = 20000;
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            while (hasMore) {
+                Sort sort = sortDirection.equalsIgnoreCase("asc")
+                        ? Sort.by(sortedBy).ascending()
+                        : Sort.by(sortedBy).descending();
+                Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+                Page<IntegratedApi> page = repository.findAll(spec, pageable);
+
+                for (IntegratedApi record : page.getContent()) {
+                    Row row = sheet.createRow(rowIdx++);
+                    row.createCell(0).setCellValue(record.getId() != null ? record.getId() : 0);
+                    row.createCell(1).setCellValue(safeString(record.getCode()));
+                    row.createCell(2).setCellValue(safeString(record.getName()));
+                    row.createCell(3).setCellValue(safeString(record.getApiUrl()));
+                    row.createCell(4).setCellValue(record.getType() != null ? record.getType().toString() : "");
+                    row.createCell(5).setCellValue(safeString(record.getIntegratedSystem()));
+                    row.createCell(6).setCellValue(record.getIsActive() ? "ACTIVE" : "INACTIVE");
+                    row.createCell(7).setCellValue(truncate(record.getDescription(), MAX_CELL_LENGTH));
+                    row.createCell(8).setCellValue(record.getCreatedAt() != null ? record.getCreatedAt().format(formatter) : "");
+                    row.createCell(9).setCellValue(record.getUpdatedAt() != null ? record.getUpdatedAt().format(formatter) : "");
+                }
+
+                hasMore = page.hasNext();
+                pageNumber++;
+            }
+
+            workbook.write(bos);
+            return bos.toByteArray();
+
+        } finally {
+            workbook.dispose();
         }
     }
 
-    // ================= CSV Export =================
-    private String convertToCSV(List<IntegratedApi> records) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ID,Code,Name,API URL,Type,Integrated System,Active,Description,Created At,Updated At\n");
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        for (IntegratedApi record : records) {
-            sb.append(record.getId()).append(",");
-            sb.append(escapeCsv(record.getCode())).append(",");
-            sb.append(escapeCsv(record.getName())).append(",");
-            sb.append(escapeCsv(record.getApiUrl())).append(",");
-            sb.append(record.getType() != null ? record.getType().toString() : "").append(",");
-            sb.append(escapeCsv(record.getIntegratedSystem())).append(",");
-            sb.append(record.getIsActive() ? "ACTIVE" : "INACTIVE").append(",");
-            sb.append(escapeCsv(record.getDescription())).append(",");
-            sb.append(record.getCreatedAt() != null ? record.getCreatedAt().format(formatter) : "").append(",");
-            sb.append(record.getUpdatedAt() != null ? record.getUpdatedAt().format(formatter) : "").append("\n");
-        }
-
-        return sb.toString();
+    private String safeString(String value) {
+        return value != null ? value : "";
     }
+
+    private String truncate(String value, int maxLength) {
+        if (value == null) return "";
+        if (value.length() <= maxLength) return value;
+        return value.substring(0, maxLength - 3) + "...";
+    }
+
 
     private String escapeCsv(String value) {
         if (value == null) return "";
@@ -299,53 +393,6 @@ public class IntegratedApiService {
             return "\"" + escaped + "\"";
         }
         return escaped;
-    }
-
-    // ================= Excel Export =================
-    private byte[] convertToExcel(List<IntegratedApi> records) throws IOException {
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Integrated APIs");
-
-            // Header row
-            Row header = sheet.createRow(0);
-            header.createCell(0).setCellValue("ID");
-            header.createCell(1).setCellValue("Code");
-            header.createCell(2).setCellValue("Name");
-            header.createCell(3).setCellValue("API URL");
-            header.createCell(4).setCellValue("Type");
-            header.createCell(5).setCellValue("Integrated System");
-            header.createCell(6).setCellValue("Active");
-            header.createCell(7).setCellValue("Description");
-            header.createCell(8).setCellValue("Created At");
-            header.createCell(9).setCellValue("Updated At");
-
-            // Data rows
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            int rowIdx = 1;
-            for (IntegratedApi record : records) {
-                Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue(record.getId() != null ? record.getId() : 0);
-                row.createCell(1).setCellValue(record.getCode() != null ? record.getCode() : "");
-                row.createCell(2).setCellValue(record.getName() != null ? record.getName() : "");
-                row.createCell(3).setCellValue(record.getApiUrl() != null ? record.getApiUrl() : "");
-                row.createCell(4).setCellValue(record.getType() != null ? record.getType().toString() : "");
-                row.createCell(5).setCellValue(record.getIntegratedSystem() != null ? record.getIntegratedSystem() : "");
-                row.createCell(6).setCellValue(record.getIsActive() ? "ACTIVE" : "INACTIVE");
-                row.createCell(7).setCellValue(record.getDescription() != null ? record.getDescription() : "");
-                row.createCell(8).setCellValue(record.getCreatedAt() != null ? record.getCreatedAt().format(formatter) : "");
-                row.createCell(9).setCellValue(record.getUpdatedAt() != null ? record.getUpdatedAt().format(formatter) : "");
-            }
-
-            // Auto-size columns
-            for (int i = 0; i <= 9; i++) {
-                sheet.autoSizeColumn(i);
-            }
-
-            try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-                workbook.write(bos);
-                return bos.toByteArray();
-            }
-        }
     }
     private IntegratedApiDto mapEntityToDto(IntegratedApi entity) {
         return IntegratedApiDto.builder()
@@ -360,8 +407,8 @@ public class IntegratedApiService {
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .boundApiCode(entity.getBoundApiCode())
-                .useOuFromRequest(entity.getUseOuFromRequest())  // NEW
-                .usePeFromRequest(entity.getUsePeFromRequest())  // NEW
+                .useOuFromRequest(entity.getUseOuFromRequest())
+                .usePeFromRequest(entity.getUsePeFromRequest())
                 .build();
     }
 }

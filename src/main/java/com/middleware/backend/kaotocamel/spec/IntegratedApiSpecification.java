@@ -1,4 +1,3 @@
-
 package com.middleware.backend.kaotocamel.spec;
 
 import com.middleware.backend.kaotocamel.model.IntegratedApi;
@@ -70,6 +69,21 @@ public class IntegratedApiSpecification {
             return criteriaBuilder.like(
                     criteriaBuilder.lower(root.get("apiUrl")),
                     "%" + apiUrl.toLowerCase().trim() + "%"
+            );
+        };
+    }
+
+    /**
+     * Filter by bound API code (partial match, case-insensitive)
+     */
+    public static Specification<IntegratedApi> boundApiCodeContains(String boundApiCode) {
+        return (root, query, criteriaBuilder) -> {
+            if (boundApiCode == null || boundApiCode.trim().isEmpty()) {
+                return null;
+            }
+            return criteriaBuilder.like(
+                    criteriaBuilder.lower(root.get("boundApiCode")),
+                    "%" + boundApiCode.toLowerCase().trim() + "%"
             );
         };
     }
@@ -252,7 +266,8 @@ public class IntegratedApiSpecification {
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), searchPattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("apiUrl")), searchPattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("integratedSystem")), searchPattern),
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), searchPattern)
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), searchPattern),
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("boundApiCode")), searchPattern)
             );
         };
     }
@@ -278,11 +293,14 @@ public class IntegratedApiSpecification {
 
     /**
      * Complex combined specification builder
+     *
+     * NOTE: added boundApiCode parameter so the filter can include the bound API / route id
      */
     public static Specification<IntegratedApi> buildSpecification(
             String code,
             String name,
             String apiUrl,
+            String boundApiCode,
             String type,
             String integratedSystem,
             Boolean isActive,
@@ -298,6 +316,7 @@ public class IntegratedApiSpecification {
         return Specification.where(codeContains(code))
                 .and(nameContains(name))
                 .and(apiUrlContains(apiUrl))
+                .and(boundApiCodeContains(boundApiCode))
                 .and(typeEquals(type))
                 .and(integratedSystemContains(integratedSystem))
                 .and(hasActiveStatus(isActive))

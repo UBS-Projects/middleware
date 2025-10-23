@@ -54,4 +54,16 @@ public interface IntegrationMappingRepository
      * Count mappings for a dynamic route
      */
     long countByDynamicRouteIdAndIsActiveTrue(String dynamicRouteId);
+
+    /**
+     * Find active mappings for a given integratedApiId.
+     * Used to deactivate mappings when the parent IntegratedApi is deactivated.
+     */
+    List<IntegrationMapping> findByIntegratedApiIdAndIsActiveTrue(Long integratedApiId);
+
+    /**
+     * Count active mappings for a given integratedApiId.
+     * Used to check if an IntegratedApi can be deactivated.
+     */
+    long countByIntegratedApiIdAndIsActiveTrue(Long integratedApiId);
 }
