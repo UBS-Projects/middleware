@@ -99,6 +99,9 @@ public class IntegratedApiController {
             @Parameter(description = "Filter by API URL (partial match)")
             @RequestParam(required = false) String apiUrl,
 
+            @Parameter(description = "Filter by bound API code / route id (partial match)")
+            @RequestParam(required = false) String boundApiCode,
+
             @Parameter(description = "Filter by API type (ANALYTICS, METADATA)")
             @RequestParam(required = false) String type,
 
@@ -147,27 +150,14 @@ public class IntegratedApiController {
 
             @Parameter(description = "Sort criteria (format: field,direction). Example: name,asc or id,desc. Multiple sorts supported.")
             @RequestParam(defaultValue = "id,desc") String[] sort) {
-         log.info("=== SORTING DEBUG ===");
-        log.info("Received sort array: {}", Arrays.toString(sort));
-        log.info("Sort array length: {}", sort != null ? sort.length : 0);
-
-        if (sort != null) {
-            for (int i = 0; i < sort.length; i++) {
-                log.info("sort[{}] = '{}'", i, sort[i]);
-            }
-        }
 
         // Build dynamic sort
         Sort sortOrder = buildSortOrder(sort);
-        log.info("Final Sort object: {}", sortOrder);
-        log.info("=== END SORTING DEBUG ===");
-
         Pageable pageable = PageRequest.of(page, size, sortOrder);
-        log.info("Pageable: {}", pageable);
 
-        // Use enhanced service method
+        // Use enhanced service method (note boundApiCode added)
         Page<IntegratedApiDto> result = service.findWithAdvancedFilters(
-                code, name, apiUrl, type, integratedSystem, isActive, description,
+                code, name, apiUrl, boundApiCode, type, integratedSystem, isActive, description,
                 createdAfter, createdBefore, updatedAfter, updatedBefore,
                 search, minId, maxId, pageable);
 
@@ -178,6 +168,7 @@ public class IntegratedApiController {
                 .header("X-Page-Size", String.valueOf(result.getSize()))
                 .body(result);
     }
+
     /**
      * Toggle active status of an integrated API
      */
@@ -185,20 +176,26 @@ public class IntegratedApiController {
     @PreAuthorize("hasAuthority('integratedApi:update')")
     @Operation(
             summary = "Toggle API active status",
-            description = "Toggles the active status of an integrated API (active ↔ inactive)"
+            description = "Toggles the active status of an integrated API (active ↔ inactive). Use force=true to force-deactivate linked mappings before deactivating the API."
     )
-    public ResponseEntity<IntegratedApiDto> toggleStatus(@PathVariable Long id) {
+    public ResponseEntity<?> toggleStatus(
+            @PathVariable Long id,
+            @RequestParam(name = "force", defaultValue = "false") boolean force
+    ) {
         try {
-            IntegratedApiDto result = service.toggleActiveStatus(id);
+            IntegratedApiDto result = service.toggleActiveStatus(id, force);
             log.info("Toggled status for API {}: now {}", id,
                     result.getIsActive() ? "ACTIVE" : "INACTIVE");
             return ResponseEntity.ok(result);
+        } catch (IllegalStateException ise) {
+            log.warn("Conflict while toggling status for API {}: {}", id, ise.getMessage());
+            Map<String, Object> body = Collections.singletonMap("error", ise.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
         } catch (Exception e) {
             log.error("Failed to toggle status for API {}: {}", id, e.getMessage());
             return ResponseEntity.notFound().build();
         }
     }
-
     @GetMapping("/types")
     @PreAuthorize("hasAuthority('integratedApi:view')")
     @Operation(summary = "Get available API types")
@@ -287,63 +284,53 @@ public class IntegratedApiController {
      /**
      * Exports integrated APIs to CSV or Excel file with current filters applied.
      */
-     @GetMapping("/export/{type}")
-     @PreAuthorize("hasAuthority('integratedApi:export')")
-     @Operation(
-             summary = "Export integrated APIs",
-             description = "Exports integrated APIs to CSV or Excel format. Uses the same filters as the main listing API."
-     )
-     public ResponseEntity<byte[]> exportFile(
-             @RequestParam(required = false) String code,
-             @RequestParam(required = false) String name,
-             @RequestParam(required = false) String apiUrl,
-             @RequestParam(required = false) String type,
-             @RequestParam(required = false) String integratedSystem,
-             @RequestParam(required = false) Boolean isActive,
-             @RequestParam(required = false) String description,
-             @RequestParam(required = false)
-             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
-             @RequestParam(required = false)
-             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-             @RequestParam(required = false)
-             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedAfter,
-             @RequestParam(required = false)
-             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedBefore,
-             @RequestParam(required = false) String search,
-             @RequestParam(required = false) Long minId,
-             @RequestParam(required = false) Long maxId,
-             @RequestParam(required = false, defaultValue = "id") String sortBy,
-             @RequestParam(defaultValue = "desc") String sortDir,
-             @PathVariable("type") String exportType
-     ) {
+    /**
+     * Exports integrated APIs to CSV or Excel file with current filters applied.
+     */
+    @GetMapping("/export/{type}")
+    @PreAuthorize("hasAuthority('integratedApi:export')")
+    @Operation(
+            summary = "Export integrated APIs",
+            description = "Exports integrated APIs to CSV or Excel format."
+    )
+    public ResponseEntity<byte[]> exportFile(
+            @RequestParam(required = false) String code,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String apiUrl,
+            @RequestParam(required = false) String boundApiCode,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String integratedSystem,
+            @RequestParam(required = false) Boolean isActive,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedAfter,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedBefore,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) Long minId,
+            @RequestParam(required = false) Long maxId,
+            @RequestParam(required = false, defaultValue = "id") String sortedBy,
+            @RequestParam(defaultValue = "desc") String sortDirection,
+            @PathVariable("type") String exportType
+    ) {
         try {
-            // Build sort exactly like in findAll()
-            Sort sortOrder = Sort.by("id").ascending();
-            if (sortBy != null && !sortBy.trim().isEmpty() && isValidSortField(sortBy)) {
-                if ("desc".equalsIgnoreCase(sortDir)) {
-                    sortOrder = Sort.by(sortBy).descending();
-                } else {
-                    sortOrder = Sort.by(sortBy).ascending();
-                }
-            }
-
-            // Use large page size to get all filtered results
-            Pageable pageable = PageRequest.of(0, 100000, sortOrder);
-
-            // Build specification with exact same filters as findAll()
             Specification<IntegratedApi> spec = IntegratedApiSpecification.buildSpecification(
-                    code, name, apiUrl, type, integratedSystem, isActive, description,
+                    code, name, apiUrl, boundApiCode, type, integratedSystem, isActive, description,
                     createdAfter, createdBefore, updatedAfter, updatedBefore,
                     search, minId, maxId
             );
 
-            // Export the data
-            byte[] fileBytes = service.exportFile(spec, pageable, exportType);
+            byte[] fileBytes = service.exportFile(spec, exportType, sortedBy, sortDirection);
 
-            // Set up response headers
-            String fileName = "integrated_apis_export." +
-                    (exportType.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            if (fileBytes == null || fileBytes.length == 0) {
+                return ResponseEntity.noContent().build();
+            }
 
+            String fileName = "integrated_apis." + (exportType.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
             String contentType = exportType.equalsIgnoreCase("CSV")
                     ? "text/csv"
                     : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -358,6 +345,7 @@ public class IntegratedApiController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
     /**
      * Validate sortable field names
      */

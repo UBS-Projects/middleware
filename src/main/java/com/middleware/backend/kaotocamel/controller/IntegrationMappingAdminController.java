@@ -340,15 +340,8 @@ public class IntegrationMappingAdminController {
             return ResponseEntity.notFound().build();
         }
     }
-    /**
-     * Exports integration mappings to CSV or Excel file with current filters applied.
-     */
     @GetMapping("/export/{type}")
     @PreAuthorize("hasAuthority('integrationMapping:export')")
-    @Operation(
-            summary = "Export integration mappings",
-            description = "Exports integration mappings to CSV or Excel format. Uses the same filters as the main listing API."
-    )
     public ResponseEntity<byte[]> exportFile(
             @RequestParam(required = false) String dynamicRouteId,
             @RequestParam(required = false) Long integratedApiId,
@@ -359,36 +352,18 @@ public class IntegrationMappingAdminController {
             @RequestParam(required = false) String attribute,
             @RequestParam(required = false) Boolean isActive,
             @RequestParam(required = false) String notes,
-            @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
-            @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-            @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedAfter,
-            @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedBefore,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedAfter,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedBefore,
             @RequestParam(required = false) String search,
             @RequestParam(required = false) Long minId,
             @RequestParam(required = false) Long maxId,
-            @RequestParam(required = false, defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "desc") String sortDir,
-            @PathVariable("type") String type
+            @RequestParam(required = false, defaultValue = "id") String sortedBy,
+            @RequestParam(defaultValue = "desc") String sortDirection,
+            @PathVariable("type") String exportType
     ) {
         try {
-            // Build sort exactly like in findAll()
-            Sort sortOrder = Sort.by("id").ascending();
-            if (sortBy != null && !sortBy.trim().isEmpty() && isValidSortField(sortBy)) {
-                if ("desc".equalsIgnoreCase(sortDir)) {
-                    sortOrder = Sort.by(sortBy).descending();
-                } else {
-                    sortOrder = Sort.by(sortBy).ascending();
-                }
-            }
-
-            // Use large page size to get all filtered results
-            Pageable pageable = PageRequest.of(0, 100000, sortOrder);
-
-            // Build specification with exact same filters as findAll()
             Specification<IntegrationMapping> spec = IntegrationMappingSpecification.buildSpecification(
                     dynamicRouteId, integratedApiId, integratedApiCode, mappingType,
                     data, externalKey, attribute, isActive, notes,
@@ -396,14 +371,15 @@ public class IntegrationMappingAdminController {
                     search, minId, maxId
             );
 
-            // Export the data
-            byte[] fileBytes = service.exportFile(spec, pageable, type);
+            // ✅ الترتيب الصح: spec, exportType, sortedBy, sortDirection
+            byte[] fileBytes = service.exportFile(spec, exportType, sortedBy, sortDirection);
 
-            // Set up response headers
-            String fileName = "integration_mappings_export." +
-                    (type.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            if (fileBytes == null || fileBytes.length == 0) {
+                return ResponseEntity.noContent().build();
+            }
 
-            String contentType = type.equalsIgnoreCase("CSV")
+            String fileName = "integration_mappings." + (exportType.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
+            String contentType = exportType.equalsIgnoreCase("CSV")
                     ? "text/csv"
                     : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
@@ -413,11 +389,10 @@ public class IntegrationMappingAdminController {
                     .body(fileBytes);
 
         } catch (Exception e) {
-            log.error("Error exporting integration mappings to {}", type, e);
+            log.error("Error exporting integration mappings to {}", exportType, e);
             return ResponseEntity.internalServerError().build();
         }
     }
-
     /**
      * Validate sortable field names
      */
