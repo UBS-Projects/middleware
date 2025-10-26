@@ -44,9 +44,7 @@ public class IntegrationMappingConfiguration {
                         return MappingResponse.error(400, "ERROR", "Middleware API name is required");
                     }
 
-                    if (request.getDhis2Code() == null || request.getDhis2Code().trim().isEmpty()) {
-                        return MappingResponse.error(400, "ERROR", "DHIS2 code (_dhis2Code) is required");
-                    }
+
 
                     MiddlewareResponseDto result = middlewareProcessorService.processMiddlewareRequest(
                             request.getMiddlewareApiName(),
