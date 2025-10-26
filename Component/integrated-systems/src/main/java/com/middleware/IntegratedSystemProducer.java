@@ -82,7 +82,7 @@ public class IntegratedSystemProducer extends DefaultProducer {
 
         // Convert config map to JSON
         String jsonConfig = mapper.writeValueAsString(detail.getConfig());
-        exchange.getMessage().setHeader(detail.getCode(), jsonConfig);
+        exchange.getMessage().setHeader("config", jsonConfig);
         exchange.getMessage().setBody(jsonConfig);
 
         LOG.info("Integrated system config loaded for '{}': {}", detail.getCode(), jsonConfig);
