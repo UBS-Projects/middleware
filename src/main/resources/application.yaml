@@ -7,7 +7,7 @@ spring:
 #    url: jdbc:postgresql://localhost:5432/design_table
     url: jdbc:postgresql://localhost:5432/middleware2
     username: postgres
-    password: root
+    password: 12345
     driver-class-name: org.postgresql.Driver
   main:
     allow-bean-definition-overriding=true:
