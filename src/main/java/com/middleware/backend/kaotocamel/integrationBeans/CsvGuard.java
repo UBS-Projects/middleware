@@ -37,9 +37,7 @@ public class CsvGuard implements Processor {
     public void process(Exchange exchange) {
         Message in = exchange.getIn();
 
-        log.info("=== CSV Guard Processing ===");
-
-         String transactionUUID = str(in.getHeader("transactionUUID", String.class));
+        String transactionUUID = str(in.getHeader("transactionUUID", String.class));
         if (transactionUUID == null) {
             transactionUUID = str(in.getHeader("X-Transaction-UUID", String.class));
         }
@@ -94,12 +92,13 @@ public class CsvGuard implements Processor {
         }
         exchange.setProperty("strategy", strategy);
 
-        final String qBase =
+         final String qBase =
                 "async=false" +
                         "&preheatCache=false" +
                         "&skipAudit=false" +
                         "&skipExistingCheck=false" +
                         "&firstRowIsHeader=true" +
+                        "&reportMode=FULL" +
                         "&strategy=" + strategy +
                         "&dataElementIdScheme=" + scheme +
                         "&orgUnitIdScheme=" + scheme +
@@ -108,14 +107,19 @@ public class CsvGuard implements Processor {
                         "&idScheme=" + scheme;
         exchange.setProperty("_queryBase", qBase);
 
+         System.out.println("   qBase = " + qBase);
+        System.out.println("─────────────────────────────────────────────────────────────────");
+
         String dryRaw = "true";
         String dryHdr1 = str(in.getHeader("dry-run", String.class));
         String dryHdr2 = str(in.getHeader("dryRun", String.class));
         if (!isBlank(dryHdr1)) dryRaw = dryHdr1;
         else if (!isBlank(dryHdr2)) dryRaw = dryHdr2;
 
-        String dryRun = toBoolString(dryRaw); // "true"/"false" normalized
+        String dryRun = toBoolString(dryRaw);
         exchange.setProperty("dryRun", dryRun);
+
+
 
         log.info("CSV Guard OK — bytes={}, scheme={}, strategy={}, dryRun={}, qBase={}",
                 csvBytes.length, scheme, strategy, dryRun, qBase);
@@ -130,7 +134,7 @@ public class CsvGuard implements Processor {
         return (v.matches("^(true|1|yes)$")) ? "true" : "false";
     }
 
-     private static void reject(Exchange ex, int code, String status, String message) {
+    private static void reject(Exchange ex, int code, String status, String message) {
         Message in = ex.getIn();
         in.setHeader(Exchange.HTTP_RESPONSE_CODE, code);
         in.setHeader(Exchange.CONTENT_TYPE, "application/json");

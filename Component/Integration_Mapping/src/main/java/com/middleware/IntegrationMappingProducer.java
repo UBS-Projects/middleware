@@ -48,8 +48,7 @@ public class IntegrationMappingProducer extends DefaultProducer {
     private MappingRequest buildRequest(Exchange exchange, String routeId) {
         MappingRequest request = new MappingRequest();
 
-        // ✅ استخدم routeId مباشرة
-        request.setMiddlewareApiName(routeId);
+         request.setMiddlewareApiName(routeId);
 
         // Camel REST automatically converts query params to headers
         request.setPeriodParam(getHeaderValue(exchange, "pe"));

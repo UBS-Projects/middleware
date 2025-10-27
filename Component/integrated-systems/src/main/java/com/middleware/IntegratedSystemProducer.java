@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Producer implementation for the IntegratedSystemEndpoint.
  * Fetches configuration details for a given system code and
- * populates the Camel Exchange message body and headers.
+ * populates the Camel Exchange message HEADER only (preserves body).
  */
 public class IntegratedSystemProducer extends DefaultProducer {
 
@@ -47,7 +47,7 @@ public class IntegratedSystemProducer extends DefaultProducer {
     /**
      * Processes the Camel Exchange to fetch system configuration.
      * The system code is determined from the endpoint or message header.
-     * If found, configuration is returned in JSON format; otherwise, an error response is set.
+     * Configuration is placed ONLY in header 'config', body is preserved.
      *
      * @param exchange the Camel exchange
      * @throws Exception if an error occurs during processing
@@ -62,9 +62,8 @@ public class IntegratedSystemProducer extends DefaultProducer {
 
         if (code == null || code.isEmpty()) {
             String message = "System code must be provided (via URI or header 'systemCode').";
-            exchange.getMessage().setBody(message);
-            exchange.getMessage().setHeader(Exchange.HTTP_RESPONSE_CODE, 400);
-            exchange.getMessage().setHeader("error", true);
+            exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 400);
+            exchange.getIn().setHeader("error", true);
             LOG.warn(message);
             return;
         }
@@ -73,18 +72,19 @@ public class IntegratedSystemProducer extends DefaultProducer {
 
         if (detail == null) {
             String message = "No configuration found for integrated system code: " + code;
-            exchange.getMessage().setBody(message);
-            exchange.getMessage().setHeader(Exchange.HTTP_RESPONSE_CODE, 404);
-            exchange.getMessage().setHeader("error", true);
+            exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 404);
+            exchange.getIn().setHeader("error", true);
             LOG.warn(message);
             return;
         }
 
         // Convert config map to JSON
         String jsonConfig = mapper.writeValueAsString(detail.getConfig());
-        exchange.getMessage().setHeader("config", jsonConfig);
-        exchange.getMessage().setBody(jsonConfig);
 
-        LOG.info("Integrated system config loaded for '{}': {}", detail.getCode(), jsonConfig);
+        // حط الـ config في header بس، ما تغير الـ body!
+        exchange.getIn().setHeader("config", jsonConfig);
+
+        // الـ body يبقى زي ما هو (CSV)
+        LOG.info("Integrated system config loaded for '{}' and set in header 'config'. Body preserved.", detail.getCode());
     }
 }
