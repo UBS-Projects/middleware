@@ -13,6 +13,8 @@ import java.util.*;
 /**
  * Main service for processing middleware API requests
  * Each API uses its own integratedSystem instead of the global _dhis2Code
+ *
+ * UPDATED: Groups data by OU only, periods are nested inside each OU
  */
 @Service
 @RequiredArgsConstructor
@@ -66,7 +68,7 @@ public class MiddlewareProcessorService {
                             ouFromRequest
                     );
 
-            // Step 6: Build response with enriched orgUnit data
+            // Step 6: Build response with enriched orgUnit data (GROUPED BY OU)
             return buildMiddlewareResponse(
                     mappingsByApi,
                     apiResponses,
@@ -182,14 +184,16 @@ public class MiddlewareProcessorService {
     }
 
     /**
-     * Build response - get org units from correct system
+     * Build response - GROUPED BY OU ONLY
+     * ouDetails appear once per OU, periods are nested inside
      */
     private MiddlewareResponseDto buildMiddlewareResponse(
             Map<IntegratedApi, List<IntegrationMapping>> mappingsByApi,
             Map<IntegratedApi, Map<String, Object>> apiResponses,
             Map<String, Map<String, Map<String, Object>>> orgUnitsMetadataBySystem) {
 
-        Map<AggregationKey, MiddlewareRowDto> aggregatedRows = new LinkedHashMap<>();
+        // Changed: Now we group by OU only (no period in key)
+        Map<String, MiddlewareRowDto> aggregatedByOu = new LinkedHashMap<>();
 
         for (Map.Entry<IntegratedApi, List<IntegrationMapping>> entry : mappingsByApi.entrySet()) {
             IntegratedApi api = entry.getKey();
@@ -208,48 +212,72 @@ public class MiddlewareProcessorService {
                 AnalyticsDataExtractor extractor = new AnalyticsDataExtractor(analytics);
 
                 for (IntegrationMapping mapping : apiMappings) {
-                    processMapping(mapping, extractor, aggregatedRows, orgUnitsMetadata);
+                    processMappingGroupedByOu(mapping, extractor, aggregatedByOu, orgUnitsMetadata);
                 }
             }
         }
 
-        List<MiddlewareRowDto> rows = new ArrayList<>(aggregatedRows.values());
-        log.info("Built middleware response with {} rows", rows.size());
+        List<MiddlewareRowDto> rows = new ArrayList<>(aggregatedByOu.values());
+        log.info("Built middleware response with {} org units", rows.size());
 
         return MiddlewareResponseDto.builder()
                 .rows(rows)
                 .build();
     }
 
-    private void processMapping(IntegrationMapping mapping,
-                                AnalyticsDataExtractor extractor,
-                                Map<AggregationKey, MiddlewareRowDto> aggregatedRows,
-                                Map<String, Map<String, Object>> orgUnitsMetadata) {
+    /**
+     * NEW: Process mapping and group by OU only
+     * Each OU will have a list of periods with their attributes
+     */
+    private void processMappingGroupedByOu(IntegrationMapping mapping,
+                                           AnalyticsDataExtractor extractor,
+                                           Map<String, MiddlewareRowDto> aggregatedByOu,
+                                           Map<String, Map<String, Object>> orgUnitsMetadata) {
 
         Set<String> orgUnits = extractor.getAllOrgUnits();
         Set<String> periods = extractor.getAllPeriods();
 
         for (String ou : orgUnits) {
+            // Get or create the OU row (ouDetails appear only once here)
+            MiddlewareRowDto row = aggregatedByOu.computeIfAbsent(ou, k -> {
+                Map<String, Object> ouDetails = orgUnitsMetadata.getOrDefault(ou, new HashMap<>());
+
+                return MiddlewareRowDto.builder()
+                        .ou(ou)
+                        .ouName(extractor.getOrgUnitName(ou))
+                        .ouDetails(ouDetails)
+                        .periods(new ArrayList<>())
+                        .build();
+            });
+
+            // Now loop through periods and add them to this OU
             for (String period : periods) {
-                AggregationKey key = new AggregationKey(ou, period);
-
-                MiddlewareRowDto row = aggregatedRows.computeIfAbsent(key, k -> {
-                    Map<String, Object> ouDetails = orgUnitsMetadata.getOrDefault(ou, new HashMap<>());
-
-                    return MiddlewareRowDto.builder()
-                            .ou(ou)
-                            .ouName(extractor.getOrgUnitName(ou))
-                            .ouDetails(ouDetails)
-                            .period(extractor.getPeriodName(period))
-                            .attributes(new ArrayList<>())
-                            .build();
-                });
-
                 List<AttributeDto> attributes = extractValuesWithAttributes(
                         mapping, extractor, ou, period
                 );
 
-                row.getAttributes().addAll(attributes);
+                // Create a period entry
+                PeriodDataDto periodData = PeriodDataDto.builder()
+                        .period(extractor.getPeriodName(period))
+                        .attributes(attributes)
+                        .build();
+
+                // Check if this period already exists for this OU
+                boolean periodExists = row.getPeriods().stream()
+                        .anyMatch(p -> p.getPeriod().equals(periodData.getPeriod()));
+
+                if (periodExists) {
+                    // Merge attributes into existing period
+                    row.getPeriods().stream()
+                            .filter(p -> p.getPeriod().equals(periodData.getPeriod()))
+                            .findFirst()
+                            .ifPresent(existingPeriod ->
+                                    existingPeriod.getAttributes().addAll(attributes)
+                            );
+                } else {
+                    // Add new period
+                    row.getPeriods().add(periodData);
+                }
             }
         }
     }
@@ -315,31 +343,6 @@ public class MiddlewareProcessorService {
             default:
                 log.warn("Unsupported mapping type: {}", mapping.getMappingType());
                 return null;
-        }
-    }
-
-    // Inner classes
-    private static class AggregationKey {
-        private final String ou;
-        private final String period;
-
-        public AggregationKey(String ou, String period) {
-            this.ou = ou;
-            this.period = period;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof AggregationKey)) return false;
-            AggregationKey that = (AggregationKey) o;
-            return Objects.equals(ou, that.ou) &&
-                    Objects.equals(period, that.period);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(ou, period);
         }
     }
 
