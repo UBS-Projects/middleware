@@ -7,7 +7,7 @@ spring:
 #    url: jdbc:postgresql://localhost:5432/design_table
     url: jdbc:postgresql://localhost:5432/middleware2
     username: postgres
-    password: 12345
+    password: root
     driver-class-name: org.postgresql.Driver
   main:
     allow-bean-definition-overriding=true:
@@ -36,6 +36,13 @@ spring:
 # JWT SECRET
 jwt:
   secret: 1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p
+
+keycloak:
+  realm: middleware
+  auth-server-url: http://localhost:8082
+  client-id: middleware-client
+  client-secret: yzFOmARMUvUWB7k8hURtr0JksgjobGMw
+  redirect-uri: http://localhost:8081/api/auth/keycloak/exchange
 
 management:
   health:

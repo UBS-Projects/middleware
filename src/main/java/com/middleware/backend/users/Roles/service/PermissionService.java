@@ -64,6 +64,9 @@ public class PermissionService {
         if(optionalRole.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Role not found");
         }
+        if(optionalRole.get().getRoleName().equals("ADMIN")){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ADMIN Role Can't be Edited");
+        }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String emailUser = authentication.getName();
         Role role = optionalRole.get();
