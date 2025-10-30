@@ -1,9 +1,10 @@
 package com.middleware.backend.users.service;
 
+import com.middleware.backend.keycloak.service.KeycloakUserSyncService;
 import com.middleware.backend.users.Roles.dto.RoleRequest;
 import com.middleware.backend.users.Roles.mapper.RoleMapper;
 import com.middleware.backend.users.Roles.model.Role;
-import com.middleware.backend.users.config.JwtUtil;
+//import com.middleware.backend.users.config.JwtUtil;
 import com.middleware.backend.users.dto.UserRequest;
 import com.middleware.backend.users.dto.UserResponse;
 import com.middleware.backend.users.dto.UserResponseRoles;
@@ -39,9 +40,9 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository repo;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
+//    private final JwtUtil jwtUtil;
     private final UserMapper userMapper;
-
+    KeycloakUserSyncService keycloakUserSyncService;
     /**
      * Retrieves a user by id.
      * @param id user id
@@ -125,6 +126,13 @@ public class UserService {
         req.setUpdatedBy(emailUser);
         req.setEmail(req.getEmail().toLowerCase());
         req = repo.save(req);
+        // ⬇️ sync this new user to Keycloak
+        try {
+            keycloakUserSyncService.syncUserByIdToKeycloak(req.getId());
+        } catch (Exception e) {
+            // don't fail the API if Keycloak is down
+            // (optional) log the error with your logger
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(req);
     }
 

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -42,4 +43,24 @@ public interface UserRepository extends JpaRepository<User,Long> {
      * Pages users by role name.
      */
     Page<User> findByRoles_RoleName(String Role, Pageable pageable);
+
+
+    @Query(value = """
+    SELECT DISTINCT p.name
+    FROM users u
+    JOIN users_roles ur      ON ur.user_id = u.id
+    JOIN role r              ON r.id = ur.roles_id
+    JOIN role_permissions rp ON rp.role_id = r.id
+    JOIN permissions p       ON p.id = rp.permission_id
+    WHERE u.id = :userId
+    """, nativeQuery = true)
+    List<String> findPermissionNamesByUserId(@Param("userId") Long userId);
+
+    @Query(value = """
+    SELECT r.role_name AS role_name, p.name AS perm_name
+    FROM role r
+    JOIN role_permissions rp ON rp.role_id = r.id
+    JOIN permissions p       ON p.id = rp.permission_id
+    """, nativeQuery = true)
+    List<Object[]> findAllRolePermissionTuples(); // rows: [role_name, perm_name]
 }

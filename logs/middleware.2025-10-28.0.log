@@ -1,0 +1,417 @@
+2025-10-28 09:52:02 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-10-28 09:52:02 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 21.0.8 with PID 25996 (D:\TOOLS\middleware\target\classes started by Lenovo in D:\TOOLS\middleware)
+2025-10-28 09:52:02 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-28 09:52:12 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-10-28 09:52:12 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-28 09:52:12 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-10-28 09:52:12 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-10-28 09:52:13 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-28 09:52:13 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-10-28 09:52:13 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-10-28 09:52:14 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-28 09:52:14 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@7a13ad55']
+	Database driver: undefined/unknown
+	Database version: 17.5
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-28 09:52:20 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-28 09:52:24 [main] DEBUG o.a.camel.spring.SpringCamelContext - Set the application context classloader to: TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
+
+2025-10-28 09:52:24 [main] DEBUG o.a.camel.support.LRUCacheFactory - Creating DefaultLRUCacheFactory
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.e.DefaultCamelContextExtension - Setting up management with factory: org.apache.camel.impl.engine.DefaultManagementStrategyFactory@2132f68e
+2025-10-28 09:52:24 [main] DEBUG o.a.camel.support.ResolverHelper - Found HealthCheckRegistry: org.apache.camel.impl.health.DefaultHealthCheckRegistry via: META-INF/services/org/apache/camel/health-check/default-registry
+2025-10-28 09:52:24 [main] DEBUG o.a.camel.support.ResolverHelper - Detected and using HealthCheckRegistry: org.apache.camel.impl.health.DefaultHealthCheckRegistry@2031cad2
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id registry-health-check-repository successfully registered
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-spring/4.4.0/camel-spring-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-xml-jaxp/4.4.0/camel-xml-jaxp-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-http/4.4.0/camel-http-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-http-common/4.4.0/camel-http-common-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-attachments/4.4.0/camel-attachments-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-jackson/4.4.0/camel-jackson-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-support/4.4.0/camel-support-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-file/4.4.0/camel-file-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-base/4.4.0/camel-base-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-spring/4.4.0/camel-spring-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-xml-jaxp/4.4.0/camel-xml-jaxp-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-http/4.4.0/camel-http-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-http-common/4.4.0/camel-http-common-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-attachments/4.4.0/camel-attachments-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-jackson/4.4.0/camel-jackson-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-support/4.4.0/camel-support-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-file/4.4.0/camel-file-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/Lenovo/.m2/repository/org/apache/camel/camel-base/4.4.0/camel-base-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.spring.converter.ResourceConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.spring.converter.ResourceConverterLoader loading converters
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.converter.jaxp.CamelXmlJaxpBulkConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.converter.jaxp.CamelXmlJaxpBulkConverterLoader loading converters
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.http.HttpConvertersLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.http.HttpConvertersLoader loading converters
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.http.HttpEntityConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.http.HttpEntityConverterLoader loading converters
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.http.common.HttpConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.http.common.HttpConverterLoader loading converters
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.attachment.AttachmentConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.attachment.AttachmentConverterLoader loading converters
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.jackson.converter.JacksonTypeConvertersLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.jackson.converter.JacksonTypeConvertersLoader loading converters
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.converter.stream.StreamCacheBulkConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.converter.stream.StreamCacheBulkConverterLoader loading converters
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.file.GenericFileConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.file.GenericFileConverterLoader loading converters
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.converter.CamelBaseBulkConverterLoader
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.converter.CamelBaseBulkConverterLoader loading converters
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.c.DefaultTypeConverter - Loaded 259 type converters in 124ms
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) built in 208ms
+2025-10-28 09:52:24 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.e.BaseExecutorServiceManager - Created new ScheduledThreadPool for source: ErrorHandlerRedeliveryThreadPool with name: ErrorHandlerRedeliveryTask -> org.apache.camel.util.concurrent.SizedScheduledExecutorService@2a25dd06[ErrorHandlerRedeliveryTask]
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: spring-event-component via type: org.apache.camel.component.event.EventComponentConfigurer via: META-INF/services/org/apache/camel/configurer/spring-event-component
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: spring-event-endpoint via type: org.apache.camel.component.event.EventEndpointConfigurer via: META-INF/services/org/apache/camel/configurer/spring-event-endpoint
+2025-10-28 09:52:24 [main] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: spring-event-component via type: org.apache.camel.component.event.EventComponentConfigurer via: META-INF/services/org/apache/camel/configurer/spring-event-component
+2025-10-28 09:52:25 [main] DEBUG o.a.camel.spring.SpringCamelContext - Set the application context classloader to: TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
+
+2025-10-28 09:52:28 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-10-28 09:52:28 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2025-10-28 09:52:29 [main] INFO  c.m.b.config.RestTemplateConfig - Creating RestTemplate with SSL trust-all configuration
+2025-10-28 09:52:29 [main] INFO  c.m.b.config.RestTemplateConfig - RestTemplate configured with connect-timeout: 10000ms, read-timeout: 30000ms
+2025-10-28 09:52:35 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-10-28 09:52:35 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-10-28 09:52:35 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-10-28 09:52:35 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-10-28 09:52:35 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-10-28 09:52:35 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-10-28 09:52:35 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-10-28 09:52:35 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@4feb580
+2025-10-28 09:52:35 [main] INFO  c.m.IntegrationMappingComponent - IntegrationMappingComponent initialized with CamelContext.
+2025-10-28 09:52:35 [main] INFO  c.m.b.c.IntegrationMappingConfiguration - ✅ Registered custom Camel component: integrationmapping
+2025-10-28 09:52:35 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2025-10-28 09:52:35 [main] INFO  c.m.b.k.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2025-10-28 09:52:36 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 161 mappings in 'requestMappingHandlerMapping'
+2025-10-28 09:52:36 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-10-28 09:52:37 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheck with id context successfully registered
+2025-10-28 09:52:37 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id routes successfully registered
+2025-10-28 09:52:37 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id producers successfully registered
+2025-10-28 09:52:37 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id consumers successfully registered
+2025-10-28 09:52:37 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-10-28 09:52:37 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-10-28 09:52:38 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2025-10-28 09:52:38 [main] DEBUG o.a.c.h.common.DefaultHttpRegistry - Registering CamelServlet with name CamelServlet consumers present: 0
+2025-10-28 09:52:38 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2025-10-28 09:52:38 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent[source=org.springframework.boot.web.embedded.tomcat.TomcatWebServer@794efcf3]
+2025-10-28 09:52:38 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-10-28 09:52:38 [main] DEBUG o.a.c.s.b.CamelSpringBootApplicationListener - Post-processing CamelContext bean: camel-1
+2025-10-28 09:52:38 [main] DEBUG o.apache.camel.main.RoutesConfigurer - RoutesCollectorEnabled: org.apache.camel.spring.boot.CamelSpringBootRoutesCollector@18eb36ff
+2025-10-28 09:52:38 [main] DEBUG o.a.c.s.b.CamelSpringBootRoutesCollector - Finding additional routes from: classpath:camel/*
+2025-10-28 09:52:38 [main] DEBUG o.a.c.s.b.CamelSpringBootRoutesCollector - Finding additional routes from: classpath:camel-template/*
+2025-10-28 09:52:38 [main] DEBUG o.a.c.s.b.CamelSpringBootRoutesCollector - Finding additional routes from: classpath:camel-rest/*
+2025-10-28 09:52:38 [main] DEBUG o.a.c.s.b.CamelSpringBootRoutesCollector - No additional RoutesBuilder discovered from: classpath:camel/*,classpath:camel-template/*,classpath:camel-rest/*
+2025-10-28 09:52:38 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.context.event.ContextRefreshedEvent[source=org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@341a8659, started on Tue Oct 28 09:52:03 EET 2025]
+2025-10-28 09:52:38 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: simple
+2025-10-28 09:52:38 [main] DEBUG o.a.camel.support.ResolverHelper - Lookup Language with name simple in registry. Found: null
+2025-10-28 09:52:38 [main] DEBUG o.a.camel.support.ResolverHelper - Lookup Language with name simple-language in registry. Found: null
+2025-10-28 09:52:38 [main] DEBUG o.a.c.language.simple.SimpleLanguage - Simple language predicate/expression cache size: 1000
+2025-10-28 09:52:38 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) initialized in 59ms
+2025-10-28 09:52:38 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2025-10-28 09:52:38 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ClassResolver=org.apache.camel.impl.engine.DefaultClassResolver@79939285, PackageScanClassResolver=org.apache.camel.spring.boot.FatJarPackageScanClassResolver@10a70c14, ApplicationContextClassLoader=TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
+, RouteController=org.apache.camel.impl.engine.DefaultRouteController@2a82f6b
+2025-10-28 09:52:38 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - StreamCaching is disabled on CamelContext: camel-1
+2025-10-28 09:52:38 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using HeadersMapFactory: org.apache.camel.impl.engine.DefaultHeadersMapFactory@75ff4ab1
+2025-10-28 09:52:38 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ReactiveExecutor: org.apache.camel.impl.engine.DefaultReactiveExecutor@73fa442a
+2025-10-28 09:52:38 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ThreadPoolFactory: org.apache.camel.support.DefaultThreadPoolFactory@44973096
+2025-10-28 09:52:38 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using HealthCheck: camel-spring-boot
+2025-10-28 09:52:38 [main] DEBUG o.a.c.i.e.DefaultStreamCachingStrategy - StreamCaching configuration DefaultStreamCachingStrategy[spoolDirectoryEnabled=false, spoolDirectory=null, spoolCipher=null, spoolThreshold=131072, spoolUsedHeapMemoryThreshold=0, bufferSize=0, anySpoolRules=false]
+2025-10-28 09:52:38 [main] DEBUG o.a.c.i.e.DefaultStreamCachingStrategy - StreamCaching in use
+2025-10-28 09:52:38 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Clearing BeanIntrospection cache with 1 objects using during starting Camel
+2025-10-28 09:52:38 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - BeanIntrospection invoked 4 times during starting Camel
+2025-10-28 09:52:38 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2025-10-28 09:52:38 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 281ms (build:208ms init:59ms start:14ms)
+2025-10-28 09:52:38 [main] DEBUG o.a.camel.support.ResolverHelper - Found ProcessorFactory: org.apache.camel.processor.DefaultProcessorFactory via: META-INF/services/org/apache/camel/processor-factory
+2025-10-28 09:52:38 [main] DEBUG o.a.camel.support.ResolverHelper - Detected and using ProcessorFactory: org.apache.camel.processor.DefaultProcessorFactory@696bbb2
+2025-10-28 09:52:38 [main] DEBUG o.a.camel.impl.DefaultCamelContext - start() took 79 millis
+2025-10-28 09:52:38 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 37.798 seconds (process running for 42.076)
+2025-10-28 09:52:38 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.context.event.ApplicationStartedEvent[source=org.springframework.boot.SpringApplication@323e5db4]
+2025-10-28 09:52:38 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.availability.AvailabilityChangeEvent[source=org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@341a8659, started on Tue Oct 28 09:52:03 EET 2025]
+2025-10-28 09:52:38 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
+2025-10-28 09:52:39 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.context.event.ApplicationReadyEvent[source=org.springframework.boot.SpringApplication@323e5db4]
+2025-10-28 09:52:39 [main] INFO  c.m.b.k.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding routes from builder: Routes: []
+2025-10-28 09:52:39 [scheduling-1] WARN  o.a.c.d.y.d.CustomResolver - The kebab-case 'set-header' is deprecated and it will be removed in the next version. Use the camelCase 'setHeader' instead.
+2025-10-28 09:52:39 [scheduling-1] WARN  o.a.c.d.y.d.CustomResolver - The kebab-case 'set-body' is deprecated and it will be removed in the next version. Use the camelCase 'setBody' instead.
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: org.apache.camel.spi.RestConfiguration via type: org.apache.camel.impl.RestConfigurationConfigurer via: META-INF/services/org/apache/camel/configurer/org.apache.camel.spi.RestConfiguration
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: org.apache.camel.spi.RestConfiguration via type: org.apache.camel.impl.RestConfigurationConfigurer via: META-INF/services/org/apache/camel/configurer/org.apache.camel.spi.RestConfiguration
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: org.apache.camel.spi.RestConfiguration via type: org.apache.camel.impl.RestConfigurationConfigurer via: META-INF/services/org/apache/camel/configurer/org.apache.camel.spi.RestConfiguration
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: org.apache.camel.spi.RestConfiguration via type: org.apache.camel.impl.RestConfigurationConfigurer via: META-INF/services/org/apache/camel/configurer/org.apache.camel.spi.RestConfiguration
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: org.apache.camel.spi.RestConfiguration via type: org.apache.camel.impl.RestConfigurationConfigurer via: META-INF/services/org/apache/camel/configurer/org.apache.camel.spi.RestConfiguration
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: org.apache.camel.spi.RestConfiguration via type: org.apache.camel.impl.RestConfigurationConfigurer via: META-INF/services/org/apache/camel/configurer/org.apache.camel.spi.RestConfiguration
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: org.apache.camel.spi.RestConfiguration via type: org.apache.camel.impl.RestConfigurationConfigurer via: META-INF/services/org/apache/camel/configurer/org.apache.camel.spi.RestConfiguration
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: org.apache.camel.spi.RestConfiguration via type: org.apache.camel.impl.RestConfigurationConfigurer via: META-INF/services/org/apache/camel/configurer/org.apache.camel.spi.RestConfiguration
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: org.apache.camel.spi.RestConfiguration via type: org.apache.camel.impl.RestConfigurationConfigurer via: META-INF/services/org/apache/camel/configurer/org.apache.camel.spi.RestConfiguration
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: org.apache.camel.spi.RestConfiguration via type: org.apache.camel.impl.RestConfigurationConfigurer via: META-INF/services/org/apache/camel/configurer/org.apache.camel.spi.RestConfiguration
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: org.apache.camel.spi.RestConfiguration via type: org.apache.camel.impl.RestConfigurationConfigurer via: META-INF/services/org/apache/camel/configurer/org.apache.camel.spi.RestConfiguration
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: org.apache.camel.spi.RestConfiguration via type: org.apache.camel.impl.RestConfigurationConfigurer via: META-INF/services/org/apache/camel/configurer/org.apache.camel.spi.RestConfiguration
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ComponentResolver: org.apache.camel.impl.engine.DefaultComponentResolver@73ebdc8d to resolve component with name: rest
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup Component with name rest in registry. Found: null
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup Component with name rest-component in registry. Found: null
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultComponentResolver - Found component: rest via type: org.apache.camel.component.rest.RestComponent via: META-INF/services/org/apache/camel/component/rest
+2025-10-28 09:52:39 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence public.integration_mapping_id_seq synced to 19. setval returned 19
+2025-10-28 09:52:39 [main] INFO  c.m.b.k.service.SequenceFixService - Sequence fix done.
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: rest-component via type: org.apache.camel.component.rest.RestComponentConfigurer via: META-INF/services/org/apache/camel/configurer/rest-component
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: rest-endpoint via type: org.apache.camel.component.rest.RestEndpointConfigurer via: META-INF/services/org/apache/camel/configurer/rest-endpoint
+2025-10-28 09:52:39 [RMI TCP Connection(11)-192.168.1.115] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-28 09:52:39 [RMI TCP Connection(9)-192.168.1.115] DEBUG o.a.c.i.health.AbstractHealthCheck - Invoke health-check (LIVENESS) camel/context
+2025-10-28 09:52:39 [RMI TCP Connection(11)-192.168.1.115] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-10-28 09:52:39 [RMI TCP Connection(11)-192.168.1.115] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-10-28 09:52:39 [RMI TCP Connection(11)-192.168.1.115] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-10-28 09:52:39 [RMI TCP Connection(11)-192.168.1.115] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-10-28 09:52:39 [RMI TCP Connection(11)-192.168.1.115] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@19b05991
+2025-10-28 09:52:39 [RMI TCP Connection(9)-192.168.1.115] DEBUG o.a.c.i.health.AbstractHealthCheck - Invoke health-check (READINESS) camel/context
+2025-10-28 09:52:39 [RMI TCP Connection(11)-192.168.1.115] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@209e3624
+2025-10-28 09:52:39 [RMI TCP Connection(11)-192.168.1.115] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-10-28 09:52:39 [RMI TCP Connection(11)-192.168.1.115] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 6 ms
+2025-10-28 09:52:39 [RMI TCP Connection(9)-192.168.1.115] DEBUG o.a.c.i.health.AbstractHealthCheck - Invoke health-check (ALL) camel/context
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: rest-component via type: org.apache.camel.component.rest.RestComponentConfigurer via: META-INF/services/org/apache/camel/configurer/rest-component
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.DefaultComponent - Creating endpoint uri=[rest://post:/register], path=[post:/register]
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - rest://post:/register converted to endpoint: rest://post:/register by component: org.apache.camel.component.rest.RestComponent@72179040
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Found InternalProcessorFactory: org.apache.camel.processor.DefaultInternalProcessorFactory via: META-INF/services/org/apache/camel/internal-processor-factory
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Detected and using InternalProcessorFactory: org.apache.camel.processor.DefaultInternalProcessorFactory@1d02512a
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup DataFormatFactory with name jackson in registry. Found: null
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup DataFormatFactory with name jackson-dataformat-factory in registry. Found: null
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: jackson-dataformat via type: org.apache.camel.component.jackson.JacksonDataFormatConfigurer via: META-INF/services/org/apache/camel/configurer/jackson-dataformat
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: jackson-dataformat via type: org.apache.camel.component.jackson.JacksonDataFormatConfigurer via: META-INF/services/org/apache/camel/configurer/jackson-dataformat
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: constant
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup Language with name constant in registry. Found: null
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup Language with name constant-language in registry. Found: null
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: constant
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: simple
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: bean
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup Language with name bean in registry. Found: null
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup Language with name bean-language in registry. Found: null
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ComponentResolver: org.apache.camel.impl.engine.DefaultComponentResolver@73ebdc8d to resolve component with name: bean
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup Component with name bean in registry. Found: null
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup Component with name bean-component in registry. Found: null
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultComponentResolver - Found component: bean via type: org.apache.camel.component.bean.BeanComponent via: META-INF/services/org/apache/camel/component/bean
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: bean-component via type: org.apache.camel.component.bean.BeanComponentConfigurer via: META-INF/services/org/apache/camel/configurer/bean-component
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: bean-endpoint via type: org.apache.camel.component.bean.BeanEndpointConfigurer via: META-INF/services/org/apache/camel/configurer/bean-endpoint
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.component.bean.BeanComponent - Creating BeanInfo with maximum cache size: 1000
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: bean-component via type: org.apache.camel.component.bean.BeanComponentConfigurer via: META-INF/services/org/apache/camel/configurer/bean-component
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: simple
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: bean
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: bean
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: bean
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.apache.camel.reifier.RouteReifier - RoutePolicy is enabled: com.middleware.backend.policy.LoggingRoutePolicy@7d2e2d87 on route: register-user
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.InternalRouteStartupManager - Warming up route id: register-user having autoStartup=true
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ComponentResolver: org.apache.camel.impl.engine.DefaultComponentResolver@73ebdc8d to resolve component with name: servlet
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup Component with name servlet in registry. Found: null
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup Component with name servlet-component in registry. Found: org.apache.camel.component.servlet.ServletComponent@5991d481
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: servlet-component via type: org.apache.camel.component.servlet.ServletComponentConfigurer via: META-INF/services/org/apache/camel/configurer/servlet-component
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: servlet-endpoint via type: org.apache.camel.component.servlet.ServletEndpointConfigurer via: META-INF/services/org/apache/camel/configurer/servlet-endpoint
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: servlet-component via type: org.apache.camel.component.servlet.ServletComponentConfigurer via: META-INF/services/org/apache/camel/configurer/servlet-component
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.DefaultComponent - Creating endpoint uri=[servlet:///register?httpMethodRestrict=POST], path=[/register]
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - servlet:///register?httpMethodRestrict=POST converted to endpoint: servlet:/register?httpMethodRestrict=POST by component: org.apache.camel.component.servlet.ServletComponent@5991d481
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Found RestRegistryFactory: org.apache.camel.component.rest.DefaultRestRegistryFactory via: META-INF/services/org/apache/camel/rest-registry-factory
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Detected and using RestRegistryFactory: org.apache.camel.component.rest.DefaultRestRegistryFactory@4e0ac508
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.c.j.AbstractJacksonDataFormat - The option autoDiscoverObjectMapper is set to false, Camel won't search in the registry
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.c.j.AbstractJacksonDataFormat - Creating new ObjectMapper to use: com.fasterxml.jackson.databind.ObjectMapper@6e4a4e5f
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.InternalRouteStartupManager - Route: register-user >>> Route[rest://post:/register -> null]
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.c.i.e.InternalRouteStartupManager - Starting consumer (order: 1000) on route: register-user
+2025-10-28 09:52:39 [scheduling-1] DEBUG o.a.camel.support.DefaultConsumer - Build consumer: Consumer[servlet:/register?httpMethodRestrict=POST]
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.camel.support.DefaultConsumer - Init consumer: Consumer[servlet:/register?httpMethodRestrict=POST]
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.camel.support.DefaultConsumer - Starting consumer: Consumer[servlet:/register?httpMethodRestrict=POST]
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.h.common.DefaultHttpRegistry - Registering consumer for path /register providers present: 1
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.c.s.CamelHttpTransportServlet - Connecting consumer: Consumer[servlet:/register?httpMethodRestrict=POST]
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.e.InternalRouteStartupManager - Route: register-user started and consuming from: servlet:/register
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.e.InternalRouteStartupManager - Warming up route id: register-user having autoStartup=true
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.e.InternalRouteStartupManager - Route: register-user >>> Route[rest://post:/register -> null]
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.e.InternalRouteStartupManager - Starting consumer (order: 1001) on route: register-user
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.e.InternalRouteStartupManager - Route: register-user started and consuming from: servlet:/register
+2025-10-28 09:52:40 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route register-user to context (DB says active)
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding routes from builder: Routes: []
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.e.DefaultUriFactoryResolver - Found EndpointUriFactory: rest via type: org.apache.camel.component.rest.RestEndpointUriFactory via: META-INF/services/org/apache/camel/urifactory/rest
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.camel.support.DefaultComponent - Creating endpoint uri=[rest://get:/healthmap2], path=[get:/healthmap2]
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - rest://get:/healthmap2 converted to endpoint: rest://get:/healthmap2 by component: org.apache.camel.component.rest.RestComponent@72179040
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ComponentResolver: org.apache.camel.impl.engine.DefaultComponentResolver@73ebdc8d to resolve component with name: integrationmapping
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.camel.support.ResolverHelper - Lookup Component with name integrationmapping in registry. Found: com.middleware.IntegrationMappingComponent@1ef76d7c
+2025-10-28 09:52:40 [main] ERROR o.s.boot.SpringApplication - Application run failed
+jakarta.ws.rs.ProcessingException: RESTEASY004655: Unable to invoke request: org.apache.http.conn.HttpHostConnectException: Connect to localhost:8086 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: connect
+	at org.jboss.resteasy.client.jaxrs.engines.ManualClosingApacheHttpClient43Engine.invoke(ManualClosingApacheHttpClient43Engine.java:365)
+	at org.jboss.resteasy.client.jaxrs.internal.ClientInvocation.invoke(ClientInvocation.java:427)
+	at org.jboss.resteasy.client.jaxrs.internal.proxy.ClientInvoker.invokeSync(ClientInvoker.java:134)
+	at org.jboss.resteasy.client.jaxrs.internal.proxy.ClientInvoker.invoke(ClientInvoker.java:103)
+	at org.jboss.resteasy.client.jaxrs.internal.proxy.ClientProxy.invoke(ClientProxy.java:102)
+	at jdk.proxy2/jdk.proxy2.$Proxy281.grantToken(Unknown Source)
+	at org.keycloak.admin.client.token.TokenManager.grantToken(TokenManager.java:99)
+	at org.keycloak.admin.client.token.TokenManager.getAccessToken(TokenManager.java:75)
+	at org.keycloak.admin.client.token.TokenManager.getAccessTokenString(TokenManager.java:70)
+	at org.keycloak.admin.client.resource.BearerAuthFilter.filter(BearerAuthFilter.java:52)
+	at org.jboss.resteasy.client.jaxrs.internal.ClientInvocation.filterRequest(ClientInvocation.java:644)
+	at org.jboss.resteasy.client.jaxrs.internal.ClientInvocation.invoke(ClientInvocation.java:424)
+	at org.jboss.resteasy.client.jaxrs.internal.proxy.ClientInvoker.invokeSync(ClientInvoker.java:134)
+	at org.jboss.resteasy.client.jaxrs.internal.proxy.ClientInvoker.invoke(ClientInvoker.java:103)
+	at org.jboss.resteasy.client.jaxrs.internal.proxy.ClientProxy.invoke(ClientProxy.java:102)
+	at jdk.proxy2/jdk.proxy2.$Proxy290.count(Unknown Source)
+	at com.middleware.backend.keycloak.bootstrap.KeycloakBootstrapper.ensureRealm(KeycloakBootstrapper.java:61)
+	at com.middleware.backend.keycloak.bootstrap.KeycloakBootstrapper.init(KeycloakBootstrapper.java:36)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:382)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:254)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:173)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:387)
+	at org.springframework.boot.context.event.EventPublishingRunListener.ready(EventPublishingRunListener.java:109)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$ready$6(SpringApplicationRunListeners.java:80)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112)
+	at org.springframework.boot.SpringApplicationRunListeners.ready(SpringApplicationRunListeners.java:80)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:332)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.middleware.MiddlewareApplication.main(MiddlewareApplication.java:13)
+Caused by: org.apache.http.conn.HttpHostConnectException: Connect to localhost:8086 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: connect
+	at org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:156)
+	at org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:376)
+	at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:393)
+	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:236)
+	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:186)
+	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)
+	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:83)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)
+	at org.jboss.resteasy.client.jaxrs.engines.ManualClosingApacheHttpClient43Engine.invoke(ManualClosingApacheHttpClient43Engine.java:348)
+	... 37 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/sun.nio.ch.Net.connect0(Native Method)
+	at java.base/sun.nio.ch.Net.connect(Net.java:589)
+	at java.base/sun.nio.ch.Net.connect(Net.java:578)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:583)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:751)
+	at org.apache.http.conn.socket.PlainConnectionSocketFactory.connectSocket(PlainConnectionSocketFactory.java:75)
+	at org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:142)
+	... 47 common frames omitted
+2025-10-28 09:52:40 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.availability.AvailabilityChangeEvent[source=org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@341a8659, started on Tue Oct 28 09:52:03 EET 2025]
+2025-10-28 09:52:40 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.context.event.ContextClosedEvent[source=org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@341a8659, started on Tue Oct 28 09:52:03 EET 2025]
+2025-10-28 09:52:40 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-10-28 09:52:40 [tomcat-shutdown] INFO  o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8081"]
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: integrationmapping-component via type: com.middleware.IntegrationMappingComponentConfigurer via: META-INF/services/org/apache/camel/configurer/integrationmapping-component
+2025-10-28 09:52:40 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8081"]
+2025-10-28 09:52:40 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is shutting down (timeout:45s)
+2025-10-28 09:52:40 [main] DEBUG o.a.c.i.e.DefaultShutdownStrategy - Starting to graceful shutdown 1 routes (timeout 45 seconds)
+2025-10-28 09:52:40 [main] DEBUG o.a.c.i.e.BaseExecutorServiceManager - Created new ThreadPool for source: org.apache.camel.impl.engine.DefaultShutdownStrategy@33a9cb79 with name: ShutdownTask. -> org.apache.camel.util.concurrent.RejectableThreadPoolExecutor@97c2bfb[Running, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0][ShutdownTask]
+2025-10-28 09:52:40 [Camel (camel-1) thread #1 - ShutdownTask] DEBUG o.a.c.i.e.DefaultShutdownStrategy - There are 1 routes to shutdown
+2025-10-28 09:52:40 [Camel (camel-1) thread #1 - ShutdownTask] DEBUG o.a.c.i.e.DefaultShutdownStrategy - Route: register-user suspended and shutdown deferred, was consuming from: rest://post:/register
+2025-10-28 09:52:40 [Camel (camel-1) thread #1 - ShutdownTask] DEBUG o.a.c.h.common.DefaultHttpRegistry - Unregistering consumer for path /register
+2025-10-28 09:52:40 [Camel (camel-1) thread #1 - ShutdownTask] DEBUG o.a.c.c.s.CamelHttpTransportServlet - Disconnecting consumer: Consumer[servlet:/register?httpMethodRestrict=POST]
+2025-10-28 09:52:40 [Camel (camel-1) thread #1 - ShutdownTask] DEBUG o.a.camel.support.DefaultConsumer - Stopping consumer: Consumer[servlet:/register?httpMethodRestrict=POST]
+2025-10-28 09:52:40 [Camel (camel-1) thread #1 - ShutdownTask] DEBUG o.a.c.i.e.DefaultShutdownStrategy - Route: register-user shutdown complete, was consuming from: rest://post:/register
+2025-10-28 09:52:40 [main] DEBUG o.a.c.i.e.DefaultShutdownStrategy - Graceful shutdown of 1 routes completed in 5ms
+2025-10-28 09:52:40 [main] DEBUG o.a.c.i.e.DefaultAsyncProcessorAwaitManager - Shutting down with no inflight threads.
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: integrationmapping-endpoint via type: com.middleware.IntegrationMappingEndpointConfigurer via: META-INF/services/org/apache/camel/configurer/integrationmapping-endpoint
+2025-10-28 09:52:40 [main] DEBUG o.a.camel.support.DefaultConsumer - Shutting down consumer: Consumer[servlet:/register?httpMethodRestrict=POST]
+2025-10-28 09:52:40 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes stopped (stopped:1)
+2025-10-28 09:52:40 [main] INFO  o.a.c.i.engine.AbstractCamelContext -     Stopped register-user (rest://post:/register)
+2025-10-28 09:52:40 [main] DEBUG o.a.c.i.e.BaseExecutorServiceManager - Forcing shutdown of ExecutorService: org.apache.camel.util.concurrent.SizedScheduledExecutorService@2a25dd06[ErrorHandlerRedeliveryTask]
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: integrationmapping-component via type: com.middleware.IntegrationMappingComponentConfigurer via: META-INF/services/org/apache/camel/configurer/integrationmapping-component
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.camel.support.DefaultComponent - Creating endpoint uri=[integrationmapping://default], path=[default]
+2025-10-28 09:52:40 [main] DEBUG o.a.c.i.e.DefaultInflightRepository - Shutting down with no inflight exchanges.
+2025-10-28 09:52:40 [main] DEBUG o.a.c.i.e.BaseExecutorServiceManager - Forcing shutdown of ExecutorService: org.apache.camel.util.concurrent.RejectableThreadPoolExecutor@97c2bfb[Running, pool size = 1, active threads = 0, queued tasks = 0, completed tasks = 1][ShutdownTask]
+2025-10-28 09:52:40 [main] DEBUG o.a.c.i.e.DefaultBeanIntrospection - Stopping BeanIntrospection which was invoked: 29 times
+2025-10-28 09:52:40 [scheduling-1] INFO  c.m.IntegrationMappingEndpoint - IntegrationMappingEndpoint created for URI: integrationmapping://default
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - integrationmapping://default converted to endpoint: integrationmapping://default by component: com.middleware.IntegrationMappingComponent@1ef76d7c
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.apache.camel.reifier.RouteReifier - RoutePolicy is enabled: com.middleware.backend.policy.LoggingRoutePolicy@69fef90e on route: integration-mapping-test
+2025-10-28 09:52:40 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) shutdown in 34ms (uptime:1s)
+2025-10-28 09:52:40 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route integration-mapping-test to context (DB says active)
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding routes from builder: Routes: []
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.e.DefaultUriFactoryResolver - Found EndpointUriFactory: integrationmapping via type: com.middleware.IntegrationMappingEndpointUriFactory via: META-INF/services/org/apache/camel/urifactory/integrationmapping
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.e.DefaultUriFactoryResolver - Found EndpointUriFactory: rest via type: org.apache.camel.component.rest.RestEndpointUriFactory via: META-INF/services/org/apache/camel/urifactory/rest
+2025-10-28 09:52:40 [scheduling-1] ERROR c.m.b.k.service.DynamicRouteService - Error syncing status for route HealthCenter-mapping: Failed to load route: Cannot invoke "org.apache.camel.TypeConverter.convertTo(java.lang.Class, Object)" because the return value of "org.apache.camel.CamelContext.getTypeConverter()" is null
+java.lang.RuntimeException: Failed to load route: Cannot invoke "org.apache.camel.TypeConverter.convertTo(java.lang.Class, Object)" because the return value of "org.apache.camel.CamelContext.getTypeConverter()" is null
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1066)
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService.syncRouteStatuses(DynamicRouteService.java:1543)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService$$SpringCGLIB$$0.syncRouteStatuses(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.lang.NullPointerException: Cannot invoke "org.apache.camel.TypeConverter.convertTo(java.lang.Class, Object)" because the return value of "org.apache.camel.CamelContext.getTypeConverter()" is null
+	at org.apache.camel.support.component.EndpointUriFactorySupport.buildPathParameter(EndpointUriFactorySupport.java:58)
+	at org.apache.camel.component.rest.RestEndpointUriFactory.buildUri(RestEndpointUriFactory.java:61)
+	at org.apache.camel.dsl.yaml.common.YamlSupport.createEndpointUri(YamlSupport.java:100)
+	at org.apache.camel.dsl.yaml.common.YamlSupport.creteEndpointUri(YamlSupport.java:186)
+	at org.apache.camel.dsl.yaml.deserializers.FromDefinitionDeserializer.construct(FromDefinitionDeserializer.java:84)
+	at org.apache.camel.dsl.yaml.common.YamlDeserializationContext.lambda$resolve$0(YamlDeserializationContext.java:157)
+	at org.apache.camel.dsl.yaml.common.YamlDeserializerSupport.asType(YamlDeserializerSupport.java:344)
+	at org.apache.camel.dsl.yaml.deserializers.RouteDefinitionDeserializer.setProperties(RouteDefinitionDeserializer.java:139)
+	at org.apache.camel.dsl.yaml.deserializers.RouteDefinitionDeserializer.setProperties(RouteDefinitionDeserializer.java:34)
+	at org.apache.camel.dsl.yaml.common.YamlDeserializerBase.construct(YamlDeserializerBase.java:66)
+	at org.apache.camel.dsl.yaml.common.YamlDeserializationContext.lambda$resolve$1(YamlDeserializationContext.java:198)
+	at org.apache.camel.dsl.yaml.YamlRoutesBuilderLoader$1.configure(YamlRoutesBuilderLoader.java:150)
+	at org.apache.camel.builder.RouteBuilder.checkInitialized(RouteBuilder.java:780)
+	at org.apache.camel.builder.RouteBuilder.configureRoutes(RouteBuilder.java:725)
+	at org.apache.camel.builder.RouteBuilder.prepareModel(RouteBuilder.java:648)
+	at org.apache.camel.builder.RouteBuilder.addRoutesToCamelContext(RouteBuilder.java:666)
+	at org.apache.camel.impl.engine.AbstractCamelContext.addRoutes(AbstractCamelContext.java:983)
+	at com.middleware.backend.kaotocamel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1064)
+	... 25 common frames omitted
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding routes from builder: Routes: []
+2025-10-28 09:52:40 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route my-new-route to context (DB says active)
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding routes from builder: Routes: []
+2025-10-28 09:52:40 [scheduling-1] DEBUG o.a.c.i.e.DefaultUriFactoryResolver - Found EndpointUriFactory: servlet via type: org.apache.camel.component.servlet.ServletEndpointUriFactory via: META-INF/services/org/apache/camel/urifactory/servlet
+2025-10-28 09:52:40 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Re-added route dhis2-upload-csv to context (DB says active)
+2025-10-28 09:52:40 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
+2025-10-28 09:52:40 [main] DEBUG o.a.c.m.SimpleMainShutdownStrategy - Shutdown called
+2025-10-28 09:52:40 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-10-28 09:52:40 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-10-28 09:52:40 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-10-28 09:52:40 [main] DEBUG o.a.c.h.common.DefaultHttpRegistry - Unregistering CamelServlet with name CamelServlet
+2025-10-28 09:52:40 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]

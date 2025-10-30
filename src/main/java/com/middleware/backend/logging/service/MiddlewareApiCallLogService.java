@@ -24,13 +24,17 @@ import org.springframework.stereotype.Service;
 import com.middleware.backend.logging.model.MiddlewareApiCallLog;
 import com.middleware.backend.logging.repository.MiddlewareApiCallLogRepository;
 import com.middleware.backend.spec.MiddlewareApiCallLogSpecification;
-import com.middleware.backend.users.config.JwtUtil;
+//import com.middleware.backend.users.config.JwtUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.oauth2.jwt.Jwt;
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -38,7 +42,7 @@ public class MiddlewareApiCallLogService {
 
     private final MiddlewareApiCallLogRepository callLogRepository;
     private final MiddlewareApiCallLogMapper mapper;
-    private final JwtUtil jwtUtil;
+//    private final JwtUtil jwtUtil;
 
     public Page<?> getAllLogs(Map<String, String> filters, int page, int size, String sortParam) {
         Specification<MiddlewareApiCallLog> spec = MiddlewareApiCallLogSpecification.fromFilters(filters);
@@ -457,21 +461,36 @@ public class MiddlewareApiCallLogService {
 
         return request.getRemoteAddr();
     }
-
-    private String extractUserFromToken(Exchange exchange) {
+    private String extractUserFromToken(org.apache.camel.Exchange exchange) {
         try {
-            String authHeader = exchange.getIn().getHeader("Authorization", String.class);
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                String token = authHeader.substring(7);
-                return jwtUtil.extractEmail(token);
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth instanceof JwtAuthenticationToken jwtAuth) {
+                Jwt jwt = jwtAuth.getToken();
+                String email = jwt.getClaimAsString("email");
+                if (email != null && !email.isBlank()) return email;
+                String preferred = jwt.getClaimAsString("preferred_username");
+                if (preferred != null && !preferred.isBlank()) return preferred;
+                return jwtAuth.getName();
             }
-            log.debug("No Authorization header or invalid format found");
             return "Anonymous";
         } catch (Exception e) {
-            log.error("Error extracting user from token: {}", e.getMessage());
             return "Anonymous";
         }
     }
+//    private String extractUserFromToken(Exchange exchange) {
+//        try {
+//            String authHeader = exchange.getIn().getHeader("Authorization", String.class);
+//            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+//                String token = authHeader.substring(7);
+//                return jwtUtil.extractEmail(token);
+//            }
+//            log.debug("No Authorization header or invalid format found");
+//            return "Anonymous";
+//        } catch (Exception e) {
+//            log.error("Error extracting user from token: {}", e.getMessage());
+//            return "Anonymous";
+//        }
+//    }
 
     private String readBodyAsString(Message msg) {
         try {
