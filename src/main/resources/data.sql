@@ -209,7 +209,7 @@ INSERT INTO public.camel_rate_limit (
 )
 VALUES (
            1,
-           100,
+           200,
            60
        )
     ON CONFLICT (id) DO NOTHING;
