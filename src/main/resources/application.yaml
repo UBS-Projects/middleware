@@ -37,12 +37,12 @@ spring:
 jwt:
   secret: 1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p
 
-keycloak:
-  realm: middleware
-  auth-server-url: http://localhost:8082
-  client-id: middleware-client
-  client-secret: yzFOmARMUvUWB7k8hURtr0JksgjobGMw
-  redirect-uri: http://localhost:8081/api/auth/keycloak/exchange
+#keycloak:
+#  realm: middleware
+#  auth-server-url: http://localhost:8082
+#  client-id: middleware-client
+#  client-secret: yzFOmARMUvUWB7k8hURtr0JksgjobGMw
+#  redirect-uri: http://localhost:8081/api/auth/keycloak/exchange
 
 management:
   health:

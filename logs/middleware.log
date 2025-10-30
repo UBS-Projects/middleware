@@ -112113,3 +112113,150 @@ Caused by: java.lang.IllegalStateException: ConfigService bridge is required but
 2025-10-30 13:59:27 [SpringApplicationShutdownHook] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
 2025-10-30 13:59:27 [SpringApplicationShutdownHook] DEBUG o.a.c.h.common.DefaultHttpRegistry - Unregistering CamelServlet with name CamelServlet
 2025-10-30 13:59:27 [SpringApplicationShutdownHook] INFO  o.a.c.c.s.CamelHttpTransportServlet - Destroyed CamelHttpTransportServlet[CamelServlet]
+2025-10-30 14:02:24 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-10-30 14:02:24 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 24.0.1 with PID 25664 (C:\Users\1\OneDrive\Desktop\middleware\target\classes started by 1 in C:\Users\1\OneDrive\Desktop\middleware)
+2025-10-30 14:02:24 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-30 14:02:26 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2025-10-30 14:02:26 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-30 14:02:26 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-10-30 14:02:26 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-10-30 14:02:26 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-30 14:02:26 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-10-30 14:02:26 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-10-30 14:02:26 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-30 14:02:26 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@1fa58a48']
+	Database driver: undefined/unknown
+	Database version: 17.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-30 14:02:28 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-30 14:02:29 [main] DEBUG o.a.camel.spring.SpringCamelContext - Set the application context classloader to: TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+jdk.internal.loader.ClassLoaders$AppClassLoader@18b4aac2
+
+2025-10-30 14:02:29 [main] DEBUG o.a.camel.support.LRUCacheFactory - Creating DefaultLRUCacheFactory
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.e.DefaultCamelContextExtension - Setting up management with factory: org.apache.camel.impl.engine.DefaultManagementStrategyFactory@39fcbb42
+2025-10-30 14:02:29 [main] DEBUG o.a.camel.support.ResolverHelper - Found HealthCheckRegistry: org.apache.camel.impl.health.DefaultHealthCheckRegistry via: META-INF/services/org/apache/camel/health-check/default-registry
+2025-10-30 14:02:29 [main] DEBUG o.a.camel.support.ResolverHelper - Detected and using HealthCheckRegistry: org.apache.camel.impl.health.DefaultHealthCheckRegistry@6d48f1c
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id registry-health-check-repository successfully registered
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-spring/4.4.0/camel-spring-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-xml-jaxp/4.4.0/camel-xml-jaxp-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-http/4.4.0/camel-http-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-http-common/4.4.0/camel-http-common-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-attachments/4.4.0/camel-attachments-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-jackson/4.4.0/camel-jackson-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-support/4.4.0/camel-support-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-file/4.4.0/camel-file-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-base/4.4.0/camel-base-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-spring/4.4.0/camel-spring-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-xml-jaxp/4.4.0/camel-xml-jaxp-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-http/4.4.0/camel-http-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-http-common/4.4.0/camel-http-common-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-attachments/4.4.0/camel-attachments-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-jackson/4.4.0/camel-jackson-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-support/4.4.0/camel-support-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-file/4.4.0/camel-file-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-base/4.4.0/camel-base-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.spring.converter.ResourceConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.spring.converter.ResourceConverterLoader loading converters
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.converter.jaxp.CamelXmlJaxpBulkConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.converter.jaxp.CamelXmlJaxpBulkConverterLoader loading converters
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.http.HttpConvertersLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.http.HttpConvertersLoader loading converters
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.http.HttpEntityConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.http.HttpEntityConverterLoader loading converters
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.http.common.HttpConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.http.common.HttpConverterLoader loading converters
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.attachment.AttachmentConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.attachment.AttachmentConverterLoader loading converters
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.jackson.converter.JacksonTypeConvertersLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.jackson.converter.JacksonTypeConvertersLoader loading converters
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.converter.stream.StreamCacheBulkConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.converter.stream.StreamCacheBulkConverterLoader loading converters
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.file.GenericFileConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.file.GenericFileConverterLoader loading converters
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.converter.CamelBaseBulkConverterLoader
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.converter.CamelBaseBulkConverterLoader loading converters
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.c.DefaultTypeConverter - Loaded 259 type converters in 54ms
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) built in 126ms
+2025-10-30 14:02:29 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.e.BaseExecutorServiceManager - Created new ScheduledThreadPool for source: ErrorHandlerRedeliveryThreadPool with name: ErrorHandlerRedeliveryTask -> org.apache.camel.util.concurrent.SizedScheduledExecutorService@6f2df0b3[ErrorHandlerRedeliveryTask]
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: spring-event-component via type: org.apache.camel.component.event.EventComponentConfigurer via: META-INF/services/org/apache/camel/configurer/spring-event-component
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: spring-event-endpoint via type: org.apache.camel.component.event.EventEndpointConfigurer via: META-INF/services/org/apache/camel/configurer/spring-event-endpoint
+2025-10-30 14:02:29 [main] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: spring-event-component via type: org.apache.camel.component.event.EventComponentConfigurer via: META-INF/services/org/apache/camel/configurer/spring-event-component
+2025-10-30 14:02:30 [main] DEBUG o.a.camel.spring.SpringCamelContext - Set the application context classloader to: TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+jdk.internal.loader.ClassLoaders$AppClassLoader@18b4aac2
+
+2025-10-30 14:02:31 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-10-30 14:02:31 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2025-10-30 14:02:31 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2025-10-30 14:02:31 [main] INFO  c.m.b.config.RestTemplateConfig - Creating RestTemplate with SSL trust-all configuration
+2025-10-30 14:02:31 [main] INFO  c.m.b.config.RestTemplateConfig - RestTemplate configured with connect-timeout: 10000ms, read-timeout: 30000ms
+2025-10-30 14:02:32 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-10-30 14:02:32 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-10-30 14:02:32 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-10-30 14:02:32 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-10-30 14:02:32 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-10-30 14:02:32 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-10-30 14:02:32 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-10-30 14:02:32 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@7446bbe5
+2025-10-30 14:02:32 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'keycloakService': Injection of autowired dependencies failed
+2025-10-30 14:02:32 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-10-30 14:02:32 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-10-30 14:02:32 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-10-30 14:02:32 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-10-30 14:02:32 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.context.event.ApplicationFailedEvent[source=org.springframework.boot.SpringApplication@2b6c562e]
+2025-10-30 14:02:32 [main] ERROR o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'keycloakService': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:515)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:347)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1155)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1121)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1056)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.middleware.MiddlewareApplication.main(MiddlewareApplication.java:13)
+Caused by: org.springframework.util.PlaceholderResolutionException: Could not resolve placeholder 'keycloak.auth-server-url' in value "${keycloak.auth-server-url}"
+	at org.springframework.util.PlaceholderResolutionException.withValue(PlaceholderResolutionException.java:81)
+	at org.springframework.util.PlaceholderParser$ParsedValue.resolve(PlaceholderParser.java:423)
+	at org.springframework.util.PlaceholderParser.replacePlaceholders(PlaceholderParser.java:128)
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:118)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:114)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:255)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:226)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:201)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:971)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1577)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1555)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509)
+	... 19 common frames omitted
