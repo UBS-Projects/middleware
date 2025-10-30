@@ -1,32 +1,48 @@
 package com.middleware.backend.kaotocamel.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import java.time.LocalDateTime;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * Row DTO for middleware API output
+ * UPDATED DTO for middleware response row
+ * Now groups by OU only - ouDetails appear once, periods are nested inside
  */
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class MiddlewareRowDto {
-    private String ou;         // Organization unit UID
+
+    /**
+     * Organization Unit ID
+     */
+    private String ou;
+
+    /**
+     * Organization Unit display name
+     */
     private String ouName;
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
 
-    // NEW: Full orgUnit metadata// Organization unit name
+    /**
+     * Full organization unit metadata (code, parent, translations, etc.)
+     * ✅ This appears ONCE per OU (not repeated for each period)
+     */
     private Map<String, Object> ouDetails;
-    private String period;     // Period name/code
 
-    @Builder.Default
-    private List<AttributeDto> attributes = new ArrayList<>();
+    /**
+     * 🆕 NEW: List of periods with their data
+     * Each period contains its attributes
+     */
+    private List<PeriodDataDto> periods;
+
+    // ❌ REMOVED: Single period field (replaced by periods list)
+    // private String period;
+
+    // ❌ REMOVED: Direct attributes list (moved inside periods)
+    // private List<AttributeDto> attributes;
 }
