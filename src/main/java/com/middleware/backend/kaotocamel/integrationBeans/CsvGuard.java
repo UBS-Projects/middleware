@@ -107,9 +107,6 @@ public class CsvGuard implements Processor {
                         "&idScheme=" + scheme;
         exchange.setProperty("_queryBase", qBase);
 
-         System.out.println("   qBase = " + qBase);
-        System.out.println("─────────────────────────────────────────────────────────────────");
-
         String dryRaw = "true";
         String dryHdr1 = str(in.getHeader("dry-run", String.class));
         String dryHdr2 = str(in.getHeader("dryRun", String.class));

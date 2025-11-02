@@ -29,8 +29,6 @@
 //    private final RestTemplate restTemplate = new RestTemplate();
 //
 //    public KeycloakTokenResponse exchangeCodeForToken(String code) {
-//        System.out.println("Exchange Code For Token Method");
-//        System.out.println("Code: " + code);
 //
 //        String url = authServerUrl + "/realms/" + realm + "/protocol/openid-connect/token";
 //
@@ -59,7 +57,6 @@
 //    }
 //
 //    public KeycloakUser getUserInfo(String accessToken) {
-//        System.out.println("getUserInfo Method");
 //
 //        String url = authServerUrl + "/realms/" + realm + "/protocol/openid-connect/userinfo";
 //        HttpHeaders headers = new HttpHeaders();
@@ -98,9 +95,7 @@
 //            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 //            restTemplate.postForEntity(url, request, String.class);
 //
-//            System.out.println("✅ Keycloak session invalidated successfully");
 //        } catch (Exception e) {
-//            System.err.println("⚠️ Failed to log out from Keycloak: " + e.getMessage());
 //        }
 //    }
 //

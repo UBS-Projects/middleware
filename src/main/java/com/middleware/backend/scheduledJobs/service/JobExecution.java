@@ -147,7 +147,6 @@ public class JobExecution implements Job {
 
         // Generate new UUID for this execution
         String newUUID = UUID.randomUUID().toString();
-        System.out.println("Generated UUID for scheduled job: " + newUUID);
 
         // Replace regular placeholder
         String finalUrl = url.replace("{{UUID}}", newUUID);

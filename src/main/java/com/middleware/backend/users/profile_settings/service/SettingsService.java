@@ -38,23 +38,14 @@ public class SettingsService {
     }
 
     public ProfileResponse updateInfo(ProfileRequest profile) {
-        System.out.println(profile.toString());
-        System.out.println("PRofileeeeeeeeeeeeeee");
         if (profile.getCurrentPassword().isEmpty())
             return null;
-        System.out.println("PRofileeeeeeeeeeeeeee");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String emailUser = authentication.getName();
         Optional<User> user = userRepo.findByEmail(emailUser);
         if (user.isEmpty())
             return null;
-        System.out.println("PRofileeeeeeeeeeeeeee");
-        System.out.println(passwordEncoder.encode(profile.getCurrentPassword()));
-        System.out.println(user.get().getPassword());
-        System.out.println(passwordEncoder.matches(profile.getCurrentPassword(), user.get().getPassword()));
         if (passwordEncoder.matches(profile.getCurrentPassword(), user.get().getPassword())) {
-            System.out.println("PRofileeeeeeeeeeeeeee");
-
             if (!profile.getUserName().equals(""))
                 user.get().setUserName(profile.getUserName());
             if (!profile.getPassword().equals(""))
