@@ -228,18 +228,34 @@ public class AuthController {
 
     @PostMapping("/system-user-token")
     @Operation(
-            summary = "Generate a 5-year JWT token for a system user",
-            description = "Authenticates a system user (via email & password) and generates a JWT "
-                    + "that is valid for 5 years. "
-                    + "The token includes roles, permissions, and route access information. "
-                    + "This endpoint is restricted to system users only."
+            summary = "Generate a JWT token for a system user",
+            description = """
+                Authenticates a **system user** using email and password, and generates a JWT token 
+                that remains valid for the specified number of days (default: 1).  
+                
+                The generated token includes:
+                - User roles  
+                - Permissions  
+                - Route access information  
+
+                Only **system users** (non-regular users) are allowed to generate this token.  
+                Attempting to generate a token for a regular user will return an error.  
+                
+                **Parameters:**  
+                - `days` (query): The number of days before the token expires (default = 1).  
+                - `request` (body): Contains `email` and `password` for authentication.  
+
+                **Response:**  
+                - Returns the generated JWT token if authentication succeeds.  
+                - Returns an error message if the user is not a system user or authentication fails.
+                """
     )
-    public ResponseEntity<AuthResponse> GenerateSystemUserToken(@RequestBody AuthRequest request) {
+    public ResponseEntity<AuthResponse> GenerateSystemUserToken(@RequestBody AuthRequest request, @RequestParam(required = true, defaultValue = "1") Integer days) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail().toLowerCase(), request.getPassword())
         );
         // Expiration: 5 years
-        long expirationMillis = 1000L * 60 * 60 * 24 * 365 * 5;
+        long expirationMillis = 1000L * 60 * 60 * 24 * days;
         Optional<User> user = userRepository.findActiveByEmail(request.getEmail().toLowerCase());
         List<Role> roles = user.get().getRoles();
 

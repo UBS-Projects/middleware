@@ -243,7 +243,6 @@ public class ScheduledJobsService{
 
              finalUrl = finalUrl.replace("%7B%7BUUID%7D%7D", newUUID);
 
-            System.out.println("Test: Generated UUID " + newUUID + " for placeholder");
             return finalUrl;
         }
 
