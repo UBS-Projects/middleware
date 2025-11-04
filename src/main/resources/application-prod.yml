@@ -74,18 +74,6 @@ camel:
     config:
       trust-all: true
       verify-hostname: false
-#dhis2:
-#  base-url: play.im.dhis2.org/stable-2-41-5
-#  username: admin
-#  password: district
-#  timeout: 30000
-#  connect-timeout: 10000
-#dhis2:
-#  base-url: hmis-dev.moh.gov.jo/dwh
-#  username: supp_user
-#  password: "F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z"
-#  timeout: 30000
-#  connect-timeout: 10000
 
 springdoc:
   api-docs:
