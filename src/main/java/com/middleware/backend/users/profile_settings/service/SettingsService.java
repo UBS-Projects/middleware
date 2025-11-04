@@ -61,7 +61,12 @@ public class SettingsService {
                 throw new RuntimeException("Current password required");
             }
             if (appSecurityProps.authMode().equalsIgnoreCase("application")) {
-                user.setPassword(passwordEncoder.encode(user.getPassword()));
+                if (!passwordEncoder.matches(profile.getCurrentPassword(), user.getPassword())) {
+                    throw new RuntimeException("Current password incorrect");
+                }
+
+                // Update to new password
+                user.setPassword(passwordEncoder.encode(profile.getPassword()));
             }
             else{
             // We do not check password locally anymore - Check in Keycloak
