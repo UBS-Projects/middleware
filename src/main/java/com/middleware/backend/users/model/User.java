@@ -58,10 +58,8 @@ public class User {
     @Column(nullable = false, name = "updated_at")
     private Timestamp updatedAt;
 
-    /** Hashed password for the user */
-    @Column(nullable = false, name = "password")
+    @Column(name = "password")
     private String password;
-
     /** Roles assigned to the user for authorization purposes */
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;

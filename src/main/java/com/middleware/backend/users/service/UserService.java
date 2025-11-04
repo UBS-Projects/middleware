@@ -2,11 +2,11 @@ package com.middleware.backend.users.service;
 
 import com.middleware.backend.users.Roles.dto.RoleRequest;
 import com.middleware.backend.users.Roles.mapper.RoleMapper;
-import com.middleware.backend.users.Roles.model.Role;
-import com.middleware.backend.users.config.JwtUtil;
+import com.middleware.backend.users.config.AppSecurityProps;
 import com.middleware.backend.users.dto.UserRequest;
 import com.middleware.backend.users.dto.UserResponse;
 import com.middleware.backend.users.dto.UserResponseRoles;
+import com.middleware.backend.users.keycloak.service.KeycloakAdminService;
 import com.middleware.backend.users.mapper.UserMapper;
 import com.middleware.backend.users.model.Status;
 import com.middleware.backend.users.model.User;
@@ -38,10 +38,10 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserService {
     private final UserRepository repo;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
     private final UserMapper userMapper;
-
+    private final KeycloakAdminService keycloakAdminService;
+    private final PasswordEncoder passwordEncoder;
+    private final AppSecurityProps appSecurityProps;
     /**
      * Retrieves a user by id.
      * @param id user id
@@ -71,7 +71,6 @@ public class UserService {
                         .createdAt(user.getCreatedAt())
                         .updatedBy(user.getUpdatedBy())
                         .updatedAt(user.getUpdatedAt())
-                        .password(user.getPassword())
                         .roles(user.getRoles().stream().map(
                                 r-> RoleRequest.builder()
                                         .roleName(r.getRoleName())
@@ -118,13 +117,23 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String emailUser = authentication.getName();
         User req = userMapper.mapToEntity(user);
-        req.setPassword(passwordEncoder.encode(req.getPassword()));
         req.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         req.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         req.setCreatedBy(emailUser);
         req.setUpdatedBy(emailUser);
         req.setEmail(req.getEmail().toLowerCase());
+        if (appSecurityProps.authMode().equalsIgnoreCase("application")) {
+            req.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         req = repo.save(req);
+        if (appSecurityProps.authMode().equalsIgnoreCase("keycloak")) {
+
+            keycloakAdminService.createUser(
+                    user.getUserName(),
+                    user.getEmail(),
+                    user.getPassword()
+            );
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(req);
     }
 
@@ -142,6 +151,9 @@ public class UserService {
         user.get().setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         user.get().setUpdatedBy(emailUser);
         repo.save(user.get());
+        if (appSecurityProps.authMode().equalsIgnoreCase("keycloak")) {
+            keycloakAdminService.disableUser(user.get().getEmail());
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -169,8 +181,6 @@ public class UserService {
 
         exists.get().setStatus(user.getStatus());
         exists.get().setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        exists.get().setPassword(user.getPassword()==null ?
-                exists.get().getPassword():passwordEncoder.encode(user.getPassword()));
         exists.get().setRoles(user.getRoles() == null ?
                 exists.get().getRoles() :
                 user.getRoles().stream()
@@ -178,7 +188,20 @@ public class UserService {
                         .collect(Collectors.toList())
         );
         exists.get().setUpdatedBy(emailUser);
+
+        if (!user.getEmail().isEmpty() && !user.getEmail().equals(exists.get().getEmail())) {
+            keycloakAdminService.updateEmail(exists.get().getEmail(), user.getEmail());
+        }
+
+        if (user.getPassword() != null && !user.getPassword().isBlank()) {
+            if (appSecurityProps.authMode().equalsIgnoreCase("application")) {
+                exists.get().setPassword(passwordEncoder.encode(user.getPassword()));
+            } else {
+                keycloakAdminService.updatePassword(exists.get().getEmail(), user.getPassword());
+            }
+        }
         repo.save(exists.get());
+
         return ResponseEntity.ok(exists.get());
     }
 
@@ -196,6 +219,9 @@ public class UserService {
         user.get().setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         user.get().setUpdatedBy(emailUser);
         repo.save(user.get());
+        if (appSecurityProps.authMode().equalsIgnoreCase("keycloak")) {
+            keycloakAdminService.enableUser(user.get().getEmail());
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

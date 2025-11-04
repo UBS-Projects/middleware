@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
+    private final AppSecurityProps appSecurityProps;
     /**
      * Loads a user by email (case-insensitive) and builds a Spring Security
      * {@link UserDetails} with roles and permissions as authorities.
@@ -55,10 +55,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 // Merge roles + permissions
         authorities.addAll(permissions);
 
+        String dummyPassword = "{noop}KEYCLOAK_USER";
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(email)
-                .password(user.getPassword())
+                .password(appSecurityProps.authMode().equalsIgnoreCase("application")?user.getPassword():dummyPassword)
                 .authorities(authorities)
                 .build();
     }

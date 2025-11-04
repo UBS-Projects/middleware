@@ -5,7 +5,7 @@ spring:
   datasource:
 #    url: jdbc:postgresql://localhost:5432/middleware2
 #    url: jdbc:postgresql://localhost:5432/design_table
-    url: jdbc:postgresql://localhost:5432/middleware2
+    url: jdbc:postgresql://localhost:5432/middlewaretest
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
@@ -33,6 +33,12 @@ spring:
 #          spring.quartz.properties.org.quartz.jobStore.isClustered: false
 #          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
 
+
+app:
+  security:
+    auth-mode: keycloak
+
+
 # JWT SECRET
 jwt:
   secret: 1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p
@@ -44,6 +50,17 @@ jwt:
 #  client-secret: yzFOmARMUvUWB7k8hURtr0JksgjobGMw
 #  redirect-uri: http://localhost:8081/api/auth/keycloak/exchange
 
+security:
+  keycloak:
+    server-url: http://localhost:8082
+    realm: middleware
+    client-id: middleware-client
+    client-secret: iXaRoUGkc0kPb2FcspkCQFiGACbMkjfp
+    redirect-uri: http://localhost:8081/api/auth/keycloak/exchange
+keycloak:
+  admin:
+    username: admin
+    password: admin
 management:
   health:
     rabbit:
