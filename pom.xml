@@ -208,8 +208,8 @@
         </dependency>
         <dependency>
             <groupId>com.middleware.component</groupId>
-            <artifactId>camel-errormapper-component</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <artifactId>camel-error-mapping</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.middleware</groupId>

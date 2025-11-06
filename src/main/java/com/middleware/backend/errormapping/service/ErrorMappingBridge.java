@@ -1,7 +1,7 @@
 package com.middleware.backend.errormapping.service;
 
-import com.middleware.component.errormapper.model.ErrorMappingDetail;
-import com.middleware.component.errormapper.service.ErrorMappingBridgeService;
+import com.middleware.component.model.ErrorMappingDetail;
+import com.middleware.component.service.ErrorMappingBridgeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
