@@ -9,12 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Main service for processing middleware API requests
- * Each API uses its own integratedSystem instead of the global _dhis2Code
- *
- * UPDATED: Groups data by OU only, periods are nested inside each OU
+ * UPDATED: Groups data by OU → Period → AttName
  */
 @Service
 @RequiredArgsConstructor
@@ -24,10 +23,6 @@ public class MiddlewareProcessorService {
     private final IntegrationMappingRepository mappingRepository;
     private final Dhis2ClientService dhis2Client;
 
-    /**
-     * Process middleware request
-     * _dhis2Code is now IGNORED - each API uses its own integratedSystem
-     */
     @Transactional(readOnly = true)
     public MiddlewareResponseDto processMiddlewareRequest(
             String dynamicRouteId,
@@ -48,19 +43,15 @@ public class MiddlewareProcessorService {
                         .build();
             }
 
-            // Step 2: Get ou parameter from request if available
             String ouFromRequest = ouParam;
             log.debug("Request parameters - ou: {}, pe: {}", ouFromRequest, periodParam);
 
-            // Step 3: Group mappings by API
             Map<IntegratedApi, List<IntegrationMapping>> mappingsByApi =
                     groupMappingsByApi(mappings);
 
-            // Step 4: Fetch org units metadata for each unique integratedSystem
             Map<String, Map<String, Map<String, Object>>> orgUnitsMetadataBySystem =
                     fetchOrgUnitsForAllSystems(mappingsByApi.keySet(), dynamicRouteId);
 
-            // Step 5: Execute DHIS2 calls - each API uses its own integratedSystem
             Map<IntegratedApi, Map<String, Object>> apiResponses =
                     executeDhis2CallsWithDynamicParams(
                             mappingsByApi.keySet(),
@@ -68,7 +59,6 @@ public class MiddlewareProcessorService {
                             ouFromRequest
                     );
 
-            // Step 6: Build response with enriched orgUnit data (GROUPED BY OU)
             return buildMiddlewareResponse(
                     mappingsByApi,
                     apiResponses,
@@ -97,9 +87,6 @@ public class MiddlewareProcessorService {
         return grouped;
     }
 
-    /**
-     * Fetch org units metadata for all unique integrated systems
-     */
     private Map<String, Map<String, Map<String, Object>>> fetchOrgUnitsForAllSystems(
             Set<IntegratedApi> apis,
             String middlewareApiName) {
@@ -125,9 +112,6 @@ public class MiddlewareProcessorService {
         return metadataBySystem;
     }
 
-    /**
-     * Execute DHIS2 calls - each API uses its own integratedSystem
-     */
     private Map<IntegratedApi, Map<String, Object>> executeDhis2CallsWithDynamicParams(
             Set<IntegratedApi> apis,
             String periodParam,
@@ -137,7 +121,6 @@ public class MiddlewareProcessorService {
 
         for (IntegratedApi api : apis) {
             try {
-                // Use the API's own integratedSystem
                 String systemCode = api.getIntegratedSystem();
 
                 log.info("Executing call for API: {} ({}) using integratedSystem: {}",
@@ -145,7 +128,6 @@ public class MiddlewareProcessorService {
                 log.debug("API flags - useOuFromRequest: {}, usePeFromRequest: {}",
                         api.getUseOuFromRequest(), api.getUsePeFromRequest());
 
-                // Validate pe if required
                 if (api.getUsePeFromRequest() && (periodParam == null || periodParam.trim().isEmpty())) {
                     throw new IllegalArgumentException(
                             "Parameter 'pe' is required for API: " + api.getCode() +
@@ -153,7 +135,6 @@ public class MiddlewareProcessorService {
                     );
                 }
 
-                // Validate ou if required
                 if (api.getUseOuFromRequest() && (ouFromRequest == null || ouFromRequest.trim().isEmpty())) {
                     throw new IllegalArgumentException(
                             "Parameter 'ou' is required for API: " + api.getCode() +
@@ -161,7 +142,6 @@ public class MiddlewareProcessorService {
                     );
                 }
 
-                // Execute call using the API's integratedSystem (NOT the global _dhis2Code)
                 Map<String, Object> response = dhis2Client.executeApiCall(
                         api,
                         periodParam,
@@ -184,15 +164,13 @@ public class MiddlewareProcessorService {
     }
 
     /**
-     * Build response - GROUPED BY OU ONLY
-     * ouDetails appear once per OU, periods are nested inside
+     * Build response - GROUPED BY OU → PERIOD → ATTNAME
      */
     private MiddlewareResponseDto buildMiddlewareResponse(
             Map<IntegratedApi, List<IntegrationMapping>> mappingsByApi,
             Map<IntegratedApi, Map<String, Object>> apiResponses,
             Map<String, Map<String, Map<String, Object>>> orgUnitsMetadataBySystem) {
 
-        // Changed: Now we group by OU only (no period in key)
         Map<String, MiddlewareRowDto> aggregatedByOu = new LinkedHashMap<>();
 
         for (Map.Entry<IntegratedApi, List<IntegrationMapping>> entry : mappingsByApi.entrySet()) {
@@ -202,7 +180,6 @@ public class MiddlewareProcessorService {
 
             if (response == null || response.isEmpty()) continue;
 
-            // Get org units metadata for this API's system
             String systemCode = api.getIntegratedSystem();
             Map<String, Map<String, Object>> orgUnitsMetadata =
                     orgUnitsMetadataBySystem.getOrDefault(systemCode, new HashMap<>());
@@ -212,7 +189,9 @@ public class MiddlewareProcessorService {
                 AnalyticsDataExtractor extractor = new AnalyticsDataExtractor(analytics);
 
                 for (IntegrationMapping mapping : apiMappings) {
-                    processMappingGroupedByOu(mapping, extractor, aggregatedByOu, orgUnitsMetadata);
+                    processMappingGroupedByOuPeriodAndAttName(
+                            mapping, extractor, aggregatedByOu, orgUnitsMetadata
+                    );
                 }
             }
         }
@@ -226,19 +205,19 @@ public class MiddlewareProcessorService {
     }
 
     /**
-     * NEW: Process mapping and group by OU only
-     * Each OU will have a list of periods with their attributes
+     * Process mapping and group by OU → PERIOD → ATTNAME
      */
-    private void processMappingGroupedByOu(IntegrationMapping mapping,
-                                           AnalyticsDataExtractor extractor,
-                                           Map<String, MiddlewareRowDto> aggregatedByOu,
-                                           Map<String, Map<String, Object>> orgUnitsMetadata) {
+    private void processMappingGroupedByOuPeriodAndAttName(
+            IntegrationMapping mapping,
+            AnalyticsDataExtractor extractor,
+            Map<String, MiddlewareRowDto> aggregatedByOu,
+            Map<String, Map<String, Object>> orgUnitsMetadata) {
 
         Set<String> orgUnits = extractor.getAllOrgUnits();
         Set<String> periods = extractor.getAllPeriods();
 
         for (String ou : orgUnits) {
-            // Get or create the OU row (ouDetails appear only once here)
+            // Get or create the OU row
             MiddlewareRowDto row = aggregatedByOu.computeIfAbsent(ou, k -> {
                 Map<String, Object> ouDetails = orgUnitsMetadata.getOrDefault(ou, new HashMap<>());
 
@@ -250,47 +229,91 @@ public class MiddlewareProcessorService {
                         .build();
             });
 
-            // Now loop through periods and add them to this OU
+            // Loop through periods
             for (String period : periods) {
-                List<AttributeDto> attributes = extractValuesWithAttributes(
-                        mapping, extractor, ou, period
-                );
+                String periodName = extractor.getPeriodName(period);
 
-                // Create a period entry
-                PeriodDataDto periodData = PeriodDataDto.builder()
-                        .period(extractor.getPeriodName(period))
-                        .attributes(attributes)
-                        .build();
+                // Find or create period
+                PeriodDataDto periodData = row.getPeriods().stream()
+                        .filter(p -> p.getPeriod().equals(periodName))
+                        .findFirst()
+                        .orElseGet(() -> {
+                            PeriodDataDto newPeriod = PeriodDataDto.builder()
+                                    .period(periodName)
+                                    .attributeGroups(new ArrayList<>())
+                                    .build();
+                            row.getPeriods().add(newPeriod);
+                            return newPeriod;
+                        });
 
-                // Check if this period already exists for this OU
-                boolean periodExists = row.getPeriods().stream()
-                        .anyMatch(p -> p.getPeriod().equals(periodData.getPeriod()));
+                // Extract attributes with their attName
+                List<AttributeWithAttName> attributesWithAttName =
+                        extractValuesWithAttributesAndAttName(mapping, extractor, ou, period);
 
-                if (periodExists) {
-                    // Merge attributes into existing period
-                    row.getPeriods().stream()
-                            .filter(p -> p.getPeriod().equals(periodData.getPeriod()))
+                // Group attributes by attName
+                Map<String, List<AttributeDto>> groupedByAttName = attributesWithAttName.stream()
+                        .collect(Collectors.groupingBy(
+                                attr -> attr.attName != null ? attr.attName : "default",
+                                LinkedHashMap::new,
+                                Collectors.mapping(
+                                        attr -> attr.attribute,
+                                        Collectors.toList()
+                                )
+                        ));
+
+                // Add or merge attribute groups
+                for (Map.Entry<String, List<AttributeDto>> attNameEntry : groupedByAttName.entrySet()) {
+                    String attName = attNameEntry.getKey();
+                    List<AttributeDto> attributes = attNameEntry.getValue();
+
+                    // Find existing attribute group or create new one
+                    AttributeGroupDto existingGroup = periodData.getAttributeGroups().stream()
+                            .filter(g -> g.getAttName().equals(attName))
                             .findFirst()
-                            .ifPresent(existingPeriod ->
-                                    existingPeriod.getAttributes().addAll(attributes)
-                            );
-                } else {
-                    // Add new period
-                    row.getPeriods().add(periodData);
+                            .orElse(null);
+
+                    if (existingGroup != null) {
+                        // Merge into existing group
+                        existingGroup.getAttributes().addAll(attributes);
+                    } else {
+                        // Create new group
+                        AttributeGroupDto newGroup = AttributeGroupDto.builder()
+                                .attName(attName)
+                                .attributes(new ArrayList<>(attributes))
+                                .build();
+                        periodData.getAttributeGroups().add(newGroup);
+                    }
                 }
             }
         }
     }
 
-    private List<AttributeDto> extractValuesWithAttributes(
+    /**
+     * Helper class to temporarily store attribute with its attName
+     */
+    private static class AttributeWithAttName {
+        AttributeDto attribute;
+        String attName;
+
+        AttributeWithAttName(AttributeDto attribute, String attName) {
+            this.attribute = attribute;
+            this.attName = attName;
+        }
+    }
+
+    /**
+     * Extract values with attributes and preserve attName information
+     */
+    private List<AttributeWithAttName> extractValuesWithAttributesAndAttName(
             IntegrationMapping mapping,
             AnalyticsDataExtractor extractor,
             String ou,
             String period) {
 
-        List<AttributeDto> results = new ArrayList<>();
+        List<AttributeWithAttName> results = new ArrayList<>();
 
         if (extractor.hasAttributeDimension()) {
+            // Has attribute dimension - extract with attName
             Map<String, Object> attributeValues = extractor.getValuesWithAttribute(
                     mapping.getData(), ou, period
             );
@@ -302,13 +325,13 @@ public class MiddlewareProcessorService {
 
                 AttributeDto attr = new AttributeDto(
                         mapping.getExternalKey(),
-                        value,
-                        attName
+                        value
                 );
 
-                results.add(attr);
+                results.add(new AttributeWithAttName(attr, attName));
             }
         } else {
+            // No attribute dimension - use default
             Object value = extractValue(mapping, extractor, ou, period);
             if (value != null) {
                 AttributeDto attr = new AttributeDto(
@@ -316,7 +339,7 @@ public class MiddlewareProcessorService {
                         value
                 );
 
-                results.add(attr);
+                results.add(new AttributeWithAttName(attr, "default"));
             }
         }
 

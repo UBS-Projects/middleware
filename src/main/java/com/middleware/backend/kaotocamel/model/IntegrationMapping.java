@@ -60,9 +60,6 @@ public class IntegrationMapping {
     @Column(name = "data", columnDefinition = "TEXT", nullable = false)
     private String data;
 
-    @Column(name = "attribute", length = 50)
-    private String attribute;
-
     @Column(name = "external_key", nullable = false, length = 100)
     private String externalKey;
 

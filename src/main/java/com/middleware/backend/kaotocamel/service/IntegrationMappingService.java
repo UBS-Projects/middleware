@@ -92,7 +92,7 @@ public class IntegrationMappingService {
     @Transactional(readOnly = true)
     public Page<IntegrationMappingDto> findWithAdvancedFilters(
             String dynamicRouteId, Long integratedApiId, String integratedApiCode,
-            String mappingType, String data, String externalKey, String attribute,
+            String mappingType, String data, String externalKey,
             Boolean isActive, String notes,
             LocalDateTime createdAfter, LocalDateTime createdBefore,
             LocalDateTime updatedAfter, LocalDateTime updatedBefore,
@@ -104,7 +104,7 @@ public class IntegrationMappingService {
 
         Specification<IntegrationMapping> spec = IntegrationMappingSpecification.buildSpecification(
                 dynamicRouteId, integratedApiId, integratedApiCode, mappingType,
-                data, externalKey, attribute, isActive, notes,
+                data, externalKey, isActive, notes,
                 createdAfter, createdBefore, updatedAfter, updatedBefore,
                 search, minId, maxId
         );
@@ -125,11 +125,12 @@ public class IntegrationMappingService {
             throw new IllegalArgumentException("Unsupported export type: " + type);
         }
     }
+
     private byte[] convertToCSVStreamed(Specification<IntegrationMapping> spec, String sortedBy, String sortDirection) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
         try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(bos, StandardCharsets.UTF_8))) {
-            writer.println("Dynamic Route ID,Integrated API ID,Integrated API Code,Integrated API Name,Mapping Type,Data,Attribute,External Key,Active,Notes");
+            writer.println("Dynamic Route ID,Integrated API ID,Integrated API Code,Integrated API Name,Mapping Type,Data,External Key,Active,Notes");
             writer.flush();
 
             int pageSize = 1000;
@@ -156,7 +157,6 @@ public class IntegrationMappingService {
                     writer.append(escapeCsv(record.getIntegratedApi() != null ? record.getIntegratedApi().getName() : "")).append(",");
                     writer.append(record.getMappingType() != null ? record.getMappingType().toString() : "").append(",");
                     writer.append(escapeCsv(record.getData())).append(",");
-                    writer.append(escapeCsv(record.getAttribute())).append(",");
                     writer.append(escapeCsv(record.getExternalKey())).append(",");
                     writer.append(record.getIsActive() ? "ACTIVE" : "INACTIVE").append(",");
                     writer.append(escapeCsv(record.getNotes())).append("\n");
@@ -171,6 +171,7 @@ public class IntegrationMappingService {
 
         return bos.toByteArray();
     }
+
     private byte[] convertToExcelStreamed(Specification<IntegrationMapping> spec, String sortedBy, String sortDirection) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
@@ -181,14 +182,14 @@ public class IntegrationMappingService {
             Row header = sheet.createRow(0);
             String[] columns = {
                     "Dynamic Route ID", "Integrated API ID", "Integrated API Code",
-                    "Integrated API Name", "Mapping Type", "Data", "Attribute",
+                    "Integrated API Name", "Mapping Type", "Data",
                     "External Key", "Active", "Notes"
             };
             for (int i = 0; i < columns.length; i++) {
                 header.createCell(i).setCellValue(columns[i]);
             }
 
-            int[] widths = {20, 15, 20, 25, 20, 30, 15, 20, 10, 35};
+            int[] widths = {20, 15, 20, 25, 20, 30, 20, 10, 35};
             for (int i = 0; i < widths.length; i++) {
                 sheet.setColumnWidth(i, widths[i] * 256);
             }
@@ -220,10 +221,9 @@ public class IntegrationMappingService {
                     row.createCell(3).setCellValue(safeString(record.getIntegratedApi() != null ? record.getIntegratedApi().getName() : ""));
                     row.createCell(4).setCellValue(record.getMappingType() != null ? record.getMappingType().toString() : "");
                     row.createCell(5).setCellValue(safeString(record.getData()));
-                    row.createCell(6).setCellValue(safeString(record.getAttribute()));
-                    row.createCell(7).setCellValue(safeString(record.getExternalKey()));
-                    row.createCell(8).setCellValue(record.getIsActive() ? "ACTIVE" : "INACTIVE");
-                    row.createCell(9).setCellValue(truncate(record.getNotes(), MAX_CELL_LENGTH));
+                    row.createCell(6).setCellValue(safeString(record.getExternalKey()));
+                    row.createCell(7).setCellValue(record.getIsActive() ? "ACTIVE" : "INACTIVE");
+                    row.createCell(8).setCellValue(truncate(record.getNotes(), MAX_CELL_LENGTH));
                 }
 
                 hasMore = page.hasNext();
@@ -251,14 +251,13 @@ public class IntegrationMappingService {
 
 
     private String convertMappingToCSVRow(IntegrationMapping record) {
-        return String.format("%s,%d,%s,%s,%s,%s,%s,%s,%s,%s",
+        return String.format("%s,%d,%s,%s,%s,%s,%s,%s,%s",
                 escapeCsv(record.getDynamicRouteId()),
                 record.getIntegratedApiId(),
                 escapeCsv(record.getIntegratedApi() != null ? record.getIntegratedApi().getCode() : ""),
                 escapeCsv(record.getIntegratedApi() != null ? record.getIntegratedApi().getName() : ""),
                 record.getMappingType() != null ? record.getMappingType().toString() : "",
                 escapeCsv(record.getData()),
-                escapeCsv(record.getAttribute()),
                 escapeCsv(record.getExternalKey()),
                 record.getIsActive() ? "ACTIVE" : "INACTIVE",
                 escapeCsv(record.getNotes())
@@ -314,9 +313,15 @@ public class IntegrationMappingService {
                     if (!(boolean) validation.get("valid")) {
                         Map<String, Object> error = new HashMap<>();
                         error.put("row", i + 1);
+                        error.put("dynamicRouteId", request.getDynamicRouteId());
+                        error.put("integratedApiId", request.getIntegratedApiId());
                         error.put("externalKey", request.getExternalKey());
+                        error.put("mappingType", request.getMappingType());
+                        error.put("data", request.getData());
                         error.put("errors", validation.get("errors"));
                         errors.add(error);
+                        log.warn("Validation failed for row {}: {} - Route: {}, Key: {}",
+                                i + 1, validation.get("errors"), request.getDynamicRouteId(), request.getExternalKey());
                         continue;
                     }
 
@@ -351,6 +356,19 @@ public class IntegrationMappingService {
                     Map<String, Object> error = new HashMap<>();
                     error.put("row", i + 1);
                     error.put("error", e.getMessage());
+
+                    // Add row data for debugging
+                    try {
+                        IntegrationMappingRequestDto request = parseRowToRequest(row);
+                        error.put("dynamicRouteId", request.getDynamicRouteId());
+                        error.put("integratedApiId", request.getIntegratedApiId());
+                        error.put("externalKey", request.getExternalKey());
+                        error.put("mappingType", request.getMappingType());
+                        error.put("data", request.getData());
+                    } catch (Exception ex) {
+                        // If parsing fails, just skip adding row data
+                    }
+
                     errors.add(error);
                     log.error("Error processing row {}: {}", i + 1, e.getMessage());
                 }
@@ -378,26 +396,34 @@ public class IntegrationMappingService {
         Map<String, Object> validation = new HashMap<>();
         List<String> errors = new ArrayList<>();
 
+        // Validate Dynamic Route ID
         if (request.getDynamicRouteId() == null || request.getDynamicRouteId().trim().isEmpty()) {
-            errors.add("Dynamic Route ID is required");
+            errors.add("Dynamic Route ID is required (Column A cannot be empty)");
         } else if (!dynamicRouteRepository.existsByRouteId(request.getDynamicRouteId())) {
-            errors.add("Dynamic Route not found: " + request.getDynamicRouteId());
+            errors.add("Dynamic Route not found: '" + request.getDynamicRouteId() + "' - Please verify this route exists in your system");
         }
 
+        // Validate Integrated API ID
         if (request.getIntegratedApiId() == null) {
-            errors.add("Integrated API ID is required");
+            errors.add("Integrated API ID is required (Column B cannot be empty)");
         } else if (!apiRepository.existsById(request.getIntegratedApiId())) {
-            errors.add("Integrated API not found: " + request.getIntegratedApiId());
+            errors.add("Integrated API not found: ID " + request.getIntegratedApiId() + " - Please verify this API exists in your system");
         }
 
+        // Validate External Key
+        if (request.getExternalKey() == null || request.getExternalKey().trim().isEmpty()) {
+            errors.add("External Key is required (Column G cannot be empty)");
+        }
+
+        // Validate Mapping Type
         if (request.getMappingType() == null || request.getMappingType().trim().isEmpty()) {
-            errors.add("Mapping Type is required");
+            errors.add("Mapping Type is required (Column E cannot be empty)");
         } else {
             try {
                 IntegrationMapping.MappingType type = IntegrationMapping.MappingType.valueOf(request.getMappingType().toUpperCase().trim());
 
                 if (request.getData() == null || request.getData().trim().isEmpty()) {
-                    errors.add("Data is required");
+                    errors.add("Data is required (Column F cannot be empty)");
                 } else {
                     switch (type) {
                         case DATA_ELEMENT:
@@ -418,6 +444,7 @@ public class IntegrationMappingService {
                             break;
 
                         case INDICATOR:
+                            // No specific validation for INDICATOR
                             break;
 
                         default:
@@ -443,13 +470,13 @@ public class IntegrationMappingService {
         if (apiId != null) {
             request.setIntegratedApiId(apiId.longValue());
         }
+        // Skip columns 2 and 3 (Integrated API Code and Name - read-only)
         request.setMappingType(getCellValueAsString(row.getCell(4)));
         request.setData(getCellValueAsString(row.getCell(5)));
-        request.setAttribute(getCellValueAsString(row.getCell(6)));
-        request.setExternalKey(getCellValueAsString(row.getCell(7)));
-        String activeStr = getCellValueAsString(row.getCell(8));
+        request.setExternalKey(getCellValueAsString(row.getCell(6))); // ✅ Column 6 now (was 7)
+        String activeStr = getCellValueAsString(row.getCell(7));      // ✅ Column 7 now (was 8)
         request.setIsActive(activeStr == null || activeStr.equalsIgnoreCase("ACTIVE"));
-        request.setNotes(getCellValueAsString(row.getCell(9)));
+        request.setNotes(getCellValueAsString(row.getCell(8)));       // ✅ Column 8 now (was 9)
         return request;
     }
 
@@ -643,7 +670,6 @@ public class IntegrationMappingService {
         entity.setIntegratedApi(api);
         entity.setMappingType(IntegrationMapping.MappingType.valueOf(request.getMappingType()));
         entity.setData(request.getData());
-        entity.setAttribute(request.getAttribute());
         entity.setExternalKey(request.getExternalKey());
         entity.setIsActive(request.getIsActive() != null ? request.getIsActive() : true);
         entity.setNotes(request.getNotes());
@@ -658,7 +684,6 @@ public class IntegrationMappingService {
                 .integratedApiName(entity.getIntegratedApi() != null ? entity.getIntegratedApi().getName() : null)
                 .mappingType(entity.getMappingType().toString())
                 .data(entity.getData())
-                .attribute(entity.getAttribute())
                 .externalKey(entity.getExternalKey())
                 .isActive(entity.getIsActive())
                 .notes(entity.getNotes())

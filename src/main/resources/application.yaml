@@ -5,7 +5,7 @@ spring:
   datasource:
 #    url: jdbc:postgresql://localhost:5432/middleware2
 #    url: jdbc:postgresql://localhost:5432/design_table
-    url: jdbc:postgresql://localhost:5432/middlewaretest
+    url: jdbc:postgresql://localhost:5432/middleware2
     username: postgres
     password: 12345
     driver-class-name: org.postgresql.Driver
@@ -36,7 +36,7 @@ spring:
 
 app:
   security:
-    auth-mode: keycloak
+    auth-mode: application
 
 
 # JWT SECRET

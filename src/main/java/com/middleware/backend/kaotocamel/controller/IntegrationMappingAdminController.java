@@ -132,9 +132,6 @@ public class IntegrationMappingAdminController {
             @Parameter(description = "Filter by external key (partial match)")
             @RequestParam(required = false) String externalKey,
 
-            @Parameter(description = "Filter by attribute (partial match)")
-            @RequestParam(required = false) String attribute,
-
             @Parameter(description = "Filter by active status")
             @RequestParam(required = false) Boolean isActive,
 
@@ -198,22 +195,21 @@ public class IntegrationMappingAdminController {
         log.info("Final sort: {}", sortOrder);
         Pageable pageable = PageRequest.of(page, size, sortOrder);
 
-        // Use enhanced service method with EXACT MATCH for dynamicRouteId
+        // Use enhanced service method - removed attribute parameter
         Page<IntegrationMappingDto> result = service.findWithAdvancedFilters(
-                dynamicRouteId,      // ← Exact match
+                dynamicRouteId,
                 integratedApiId,
-                integratedApiCode,   // ← Partial match
+                integratedApiCode,
                 mappingType,
-                data,                // ← Partial match
-                externalKey,         // ← Partial match
-                attribute,           // ← Partial match
+                data,
+                externalKey,
                 isActive,
-                notes,               // ← Partial match
+                notes,
                 createdAfter,
                 createdBefore,
                 updatedAfter,
                 updatedBefore,
-                search,              // ← Global search (partial)
+                search,
                 minId,
                 maxId,
                 pageable);
@@ -225,6 +221,7 @@ public class IntegrationMappingAdminController {
                 .header("X-Page-Size", String.valueOf(result.getSize()))
                 .body(result);
     }
+
     @GetMapping("/by-route/{routeId}")
     @PreAuthorize("hasAuthority('dynamicRoutes:view')")
     @Operation(summary = "Get all mappings for a Dynamic Route")
@@ -247,160 +244,139 @@ public class IntegrationMappingAdminController {
 
     @GetMapping("/dynamic-routes")
     @PreAuthorize("hasAuthority('dynamicRoutes:view')")
-    @Operation(
-            summary = "Get list of all configured Dynamic Route IDs",
-            description = "Returns a distinct list of all Dynamic Route IDs that have active mappings"
-    )
-    public ResponseEntity<List<String>> getDynamicRoutes() {
-        try {
-            List<String> routes = service.getDistinctDynamicRoutes();
-            log.info("Found {} distinct dynamic routes", routes.size());
-            return ResponseEntity.ok(routes);
-        } catch (Exception e) {
-            log.error("Error fetching dynamic routes: {}", e.getMessage());
-            return ResponseEntity.internalServerError().build();
-        }
+    @Operation(summary = "Get distinct Dynamic Route IDs")
+    public ResponseEntity<List<String>> getDistinctDynamicRoutes() {
+        return ResponseEntity.ok(service.getDistinctDynamicRoutes());
     }
 
     @PostMapping("/validate")
-    @PreAuthorize("hasAuthority('integrationMapping:validate')")
-    @Operation(summary = "Validate mapping configuration")
-    public ResponseEntity<Map<String, Object>> validateMapping(
-            @RequestBody IntegrationMappingRequestDto request) {
-        Map<String, Object> validation = service.validateMapping(request);
-        return ResponseEntity.ok(validation);
+    @PreAuthorize("hasAuthority('integrationMapping:create')")
+    @Operation(summary = "Validate integration mapping before creation")
+    public ResponseEntity<Map<String, Object>> validate(
+            @Valid @RequestBody IntegrationMappingRequestDto request) {
+        return ResponseEntity.ok(service.validateMapping(request));
     }
 
     @PostMapping("/batch")
     @PreAuthorize("hasAuthority('integrationMapping:create')")
-    @Operation(summary = "Create multiple mappings in batch")
-    public ResponseEntity<Map<String, Object>> createBatch(
-            @RequestBody List<IntegrationMappingRequestDto> requests) {
+    @Operation(summary = "Create multiple integration mappings")
+    public ResponseEntity<List<IntegrationMappingDto>> createBatch(
+            @Valid @RequestBody List<IntegrationMappingRequestDto> requests) {
         try {
-            List<IntegrationMappingDto> created = service.createBatch(requests);
-            Map<String, Object> result = new HashMap<>();
-            result.put("success", true);
-            result.put("created", created.size());
-            result.put("mappings", created);
-            return ResponseEntity.ok(result);
+            List<IntegrationMappingDto> result = service.createBatch(requests);
+            return ResponseEntity.status(HttpStatus.CREATED).body(result);
         } catch (Exception e) {
-            Map<String, Object> error = new HashMap<>();
-            error.put("success", false);
-            error.put("error", e.getMessage());
-            return ResponseEntity.badRequest().body(error);
+            log.error("Failed to create batch: {}", e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
-    }
-
-    @GetMapping("/export")
-    @PreAuthorize("hasAuthority('integrationMapping:export')")
-    @Operation(summary = "Export mappings configuration")
-    public ResponseEntity<List<IntegrationMappingDto>> exportMappings(
-            @RequestParam(required = false) String dynamicRouteId) {
-        List<IntegrationMappingDto> mappings;
-        if (dynamicRouteId != null) {
-            mappings = service.findByDynamicRoute(dynamicRouteId);
-        } else {
-            mappings = service.findAll();
-        }
-        return ResponseEntity.ok(mappings);
     }
 
     @PostMapping("/import")
     @PreAuthorize("hasAuthority('integrationMapping:import')")
-    @Operation(summary = "Import mappings configuration")
+    @Operation(summary = "Import integration mappings")
     public ResponseEntity<Map<String, Object>> importMappings(
-            @RequestBody List<IntegrationMappingRequestDto> mappings) {
-        try {
-            Map<String, Object> result = service.importMappings(mappings);
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            Map<String, Object> error = new HashMap<>();
-            error.put("success", false);
-            error.put("error", e.getMessage());
-            return ResponseEntity.badRequest().body(error);
-        }
+            @Valid @RequestBody List<IntegrationMappingRequestDto> mappings) {
+        return ResponseEntity.ok(service.importMappings(mappings));
     }
-    /**
-     * Toggle active status of a mapping
-     */
-    @PatchMapping("/{id}/toggle-status")
-    @PreAuthorize("hasAuthority('integrationMapping:edit')")
-    @Operation(
-            summary = "Toggle mapping active status",
-            description = "Toggles the active status of a mapping (active ↔ inactive)"
-    )
-    public ResponseEntity<IntegrationMappingDto> toggleStatus(@PathVariable Long id) {
-        try {
-            IntegrationMappingDto result = service.toggleActiveStatus(id);
-            log.info("Toggled status for mapping {}: now {}", id,
-                    result.getIsActive() ? "ACTIVE" : "INACTIVE");
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            log.error("Failed to toggle status for mapping {}: {}", id, e.getMessage());
-            return ResponseEntity.notFound().build();
-        }
-    }
-    @GetMapping("/export/{type}")
+
+    @GetMapping("/export")
     @PreAuthorize("hasAuthority('integrationMapping:export')")
-    public ResponseEntity<byte[]> exportFile(
+    @Operation(summary = "Export integration mappings")
+    public ResponseEntity<byte[]> export(
             @RequestParam(required = false) String dynamicRouteId,
             @RequestParam(required = false) Long integratedApiId,
             @RequestParam(required = false) String integratedApiCode,
             @RequestParam(required = false) String mappingType,
             @RequestParam(required = false) String data,
             @RequestParam(required = false) String externalKey,
-            @RequestParam(required = false) String attribute,
             @RequestParam(required = false) Boolean isActive,
             @RequestParam(required = false) String notes,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedAfter,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedBefore,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdBefore,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedAfter,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedBefore,
             @RequestParam(required = false) String search,
             @RequestParam(required = false) Long minId,
             @RequestParam(required = false) Long maxId,
-            @RequestParam(required = false, defaultValue = "id") String sortedBy,
-            @RequestParam(defaultValue = "desc") String sortDirection,
-            @PathVariable("type") String exportType
-    ) {
+            @RequestParam(defaultValue = "Excel") String type,
+            @RequestParam(defaultValue = "id") String sortedBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+
         try {
             Specification<IntegrationMapping> spec = IntegrationMappingSpecification.buildSpecification(
                     dynamicRouteId, integratedApiId, integratedApiCode, mappingType,
-                    data, externalKey, attribute, isActive, notes,
+                    data, externalKey, isActive, notes,
                     createdAfter, createdBefore, updatedAfter, updatedBefore,
                     search, minId, maxId
             );
 
-            // ✅ الترتيب الصح: spec, exportType, sortedBy, sortDirection
-            byte[] fileBytes = service.exportFile(spec, exportType, sortedBy, sortDirection);
+            byte[] fileData = service.exportFile(spec, type, sortedBy, sortDirection);
 
-            if (fileBytes == null || fileBytes.length == 0) {
-                return ResponseEntity.noContent().build();
+            String filename;
+            String contentType;
+            if ("CSV".equalsIgnoreCase(type)) {
+                filename = "integration_mappings_export.csv";
+                contentType = "text/csv";
+            } else {
+                filename = "integration_mappings_export.xlsx";
+                contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             }
 
-            String fileName = "integration_mappings." + (exportType.equalsIgnoreCase("CSV") ? "csv" : "xlsx");
-            String contentType = exportType.equalsIgnoreCase("CSV")
-                    ? "text/csv"
-                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
             return ResponseEntity.ok()
-                    .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                    .header("Content-Disposition", "attachment; filename=\"" + filename + "\"")
                     .contentType(MediaType.parseMediaType(contentType))
-                    .body(fileBytes);
+                    .body(fileData);
 
         } catch (Exception e) {
-            log.error("Error exporting integration mappings to {}", exportType, e);
+            log.error("Export failed: {}", e.getMessage(), e);
             return ResponseEntity.internalServerError().build();
         }
     }
-    /**
-     * Validate sortable field names
-     */
+
+    @PatchMapping("/{id}/toggle")
+    @PreAuthorize("hasAuthority('integrationMapping:edit')")
+    @Operation(summary = "Toggle active status")
+    public ResponseEntity<IntegrationMappingDto> toggleActiveStatus(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(service.toggleActiveStatus(id));
+        } catch (Exception e) {
+            log.error("Failed to toggle status: {}", e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{id}/activate")
+    @PreAuthorize("hasAuthority('integrationMapping:edit')")
+    @Operation(summary = "Activate integration mapping")
+    public ResponseEntity<IntegrationMappingDto> activate(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(service.activate(id));
+        } catch (Exception e) {
+            log.error("Failed to activate: {}", e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{id}/deactivate")
+    @PreAuthorize("hasAuthority('integrationMapping:edit')")
+    @Operation(summary = "Deactivate integration mapping")
+    public ResponseEntity<IntegrationMappingDto> deactivate(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(service.deactivate(id));
+        } catch (Exception e) {
+            log.error("Failed to deactivate: {}", e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     private boolean isValidSortField(String field) {
         Set<String> validFields = Set.of(
                 "id", "dynamicRouteId", "integratedApiId", "mappingType",
-                "data", "attribute", "externalKey", "isActive", "notes",
-                "createdAt", "updatedAt"
+                "data", "externalKey", "isActive", "createdAt", "updatedAt"
         );
         return validFields.contains(field);
     }

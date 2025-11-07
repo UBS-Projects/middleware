@@ -5,11 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DTO to hold period data with its attributes
- * Used to group periods inside an organization unit
+ * DTO to hold period data with its attribute groups
+ * Attributes are now grouped by attName
  */
 @Data
 @Builder
@@ -23,7 +24,8 @@ public class PeriodDataDto {
     private String period;
 
     /**
-     * List of attributes/data for this period
+     * List of attribute groups organized by attName
      */
-    private List<AttributeDto> attributes;
+    @Builder.Default
+    private List<AttributeGroupDto> attributeGroups = new ArrayList<>();
 }

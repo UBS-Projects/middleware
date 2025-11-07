@@ -165,21 +165,6 @@ public class IntegrationMappingSpecification {
     }
 
     /**
-     * Filter by attribute (partial match, case-insensitive)
-     */
-    public static Specification<IntegrationMapping> attributeContains(String attribute) {
-        return (root, query, criteriaBuilder) -> {
-            if (attribute == null || attribute.trim().isEmpty()) {
-                return null;
-            }
-            return criteriaBuilder.like(
-                    criteriaBuilder.lower(root.get("attribute")),
-                    "%" + attribute.toLowerCase().trim() + "%"
-            );
-        };
-    }
-
-    /**
      * Filter by active status
      */
     public static Specification<IntegrationMapping> hasActiveStatus(Boolean isActive) {
@@ -265,7 +250,6 @@ public class IntegrationMappingSpecification {
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("dynamicRouteId")), searchPattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("data")), searchPattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("externalKey")), searchPattern),
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("attribute")), searchPattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("notes")), searchPattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.join("integratedApi").get("code")), searchPattern),
                     criteriaBuilder.like(criteriaBuilder.lower(root.join("integratedApi").get("name")), searchPattern)
@@ -303,7 +287,6 @@ public class IntegrationMappingSpecification {
             String mappingType,
             String data,
             String externalKey,
-            String attribute,
             Boolean isActive,
             String notes,
             LocalDateTime createdAfter,
@@ -314,13 +297,12 @@ public class IntegrationMappingSpecification {
             Long minId,
             Long maxId
     ) {
-        return Specification.where(dynamicRouteIdEquals(dynamicRouteId))  // ← EXACT MATCH!
+        return Specification.where(dynamicRouteIdEquals(dynamicRouteId))
                 .and(integratedApiIdEquals(integratedApiId))
                 .and(integratedApiCodeContains(integratedApiCode))
                 .and(mappingTypeEquals(mappingType))
                 .and(dataContains(data))
                 .and(externalKeyContains(externalKey))
-                .and(attributeContains(attribute))
                 .and(hasActiveStatus(isActive))
                 .and(notesContains(notes))
                 .and(createdAfter(createdAfter))
