@@ -31,11 +31,18 @@ public class TokenService {
      * @param token the token entity to save
      */
     public void save(Token token) {
-        Optional<List<Token>> exists = repo.findAllByUser_Id(token.getUser().getId());
-        if (exists.isPresent()) {
-            repo.removeByUser_Id(token.getUser().getId());
+        List<Token> existing = repo.findAllByUser_Id(token.getUser().getId()).orElse(List.of());
+
+        if (!existing.isEmpty()) {
+            Token oldToken = existing.get(0);
+            oldToken.setToken(token.getToken());
+            oldToken.setCreatedAt(token.getCreatedAt());
+            oldToken.setExpiresAt(token.getExpiresAt());
+            oldToken.setValid(true);
+            repo.save(oldToken); // update same row → same id
+        } else {
+            repo.save(token); // first time → new id
         }
-        repo.save(token);
     }
 
     /**

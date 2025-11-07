@@ -45,39 +45,49 @@ public class SettingsService {
     public ProfileResponse updateInfo(ProfileRequest profile) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
-        Optional<User> userOpt = userRepo.findByEmail(email);
 
-        if (userOpt.isEmpty()) return null;
+        Optional<User> userOpt = userRepo.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            return null;
+        }
+
         User user = userOpt.get();
 
-        // ✅ Change username
+        if (profile.getCurrentPassword() == null || profile.getCurrentPassword().isBlank()) {
+            throw new RuntimeException("Current password required");
+        }
+        boolean valid = false;
+
+        if (appSecurityProps.authMode().equalsIgnoreCase("application")) {
+            valid = passwordEncoder.matches(profile.getCurrentPassword(), user.getPassword());
+        }
+        // ✅ Keycloak mode
+        else {
+            valid = keycloakAdminService.verifyUserCredentials(email, profile.getCurrentPassword());
+        }
+
+        // ❌ Invalid current password
+        if (!valid) {
+            throw new RuntimeException("Current password incorrect");
+        }
+
+        // ✅ Update username if provided
         if (profile.getUserName() != null && !profile.getUserName().isBlank()) {
             user.setUserName(profile.getUserName());
         }
 
-        // ✅ Change password via Keycloak
         if (profile.getPassword() != null && !profile.getPassword().isBlank()) {
-            if (profile.getCurrentPassword() == null || profile.getCurrentPassword().isBlank()) {
-                throw new RuntimeException("Current password required");
-            }
             if (appSecurityProps.authMode().equalsIgnoreCase("application")) {
-                user.setPassword(passwordEncoder.encode(user.getPassword()));
+                user.setPassword(passwordEncoder.encode(profile.getPassword()));
+            } else {
+                keycloakAdminService.updatePassword(email, profile.getPassword());
             }
-            else{
-            // We do not check password locally anymore - Check in Keycloak
-            boolean valid = keycloakAdminService.verifyUserCredentials(email, profile.getCurrentPassword());
-
-            if (!valid) {
-                throw new RuntimeException("Current password incorrect");
-            }
-
-            keycloakAdminService.updatePassword(email, profile.getPassword());
         }
-        }
+
         user.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         user.setUpdatedBy(email);
         userRepo.save(user);
-
         return getInformation();
     }
+
 }

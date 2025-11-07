@@ -29,7 +29,7 @@ public class Token {
     private Long id;
 
     /** The user this token belongs to */
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

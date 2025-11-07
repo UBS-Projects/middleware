@@ -90,6 +90,11 @@ public class IntegratedApi {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
     @OneToMany(mappedBy = "integratedApi", fetch = FetchType.LAZY)
     private List<IntegrationMapping> mappings;
 

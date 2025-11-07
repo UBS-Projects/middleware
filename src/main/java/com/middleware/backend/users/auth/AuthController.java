@@ -29,6 +29,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.yaml.snakeyaml.scanner.Constant;
 
 import java.net.URI;
 import java.sql.Timestamp;
@@ -47,6 +48,7 @@ import java.util.Optional;
  * service-user tokens with configurable expiration. Issued JWTs embed roles,
  * permissions, allowed route identifiers, and the user's active status.
  */
+
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
@@ -229,7 +231,7 @@ public class AuthController {
             description = "Invalidates the local JWT token, logging out the user from application mode."
     )
     public ResponseEntity<?> logout(@RequestBody AuthResponse req) {
-        return tokenService.logout(jwtUtil.extractEmail(req.getToken().toLowerCase()));
+        return tokenService.logout(jwtUtil.extractEmail(req.getToken()));
     }
 //    *************************************************************************************************
     /**

@@ -1,7 +1,6 @@
 package com.middleware;
 
 import com.middleware.service.IntegratedSystemBridgeService;
-import lombok.Data;
 import org.apache.camel.Category;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;

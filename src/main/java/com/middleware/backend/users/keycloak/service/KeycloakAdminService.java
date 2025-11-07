@@ -187,8 +187,15 @@ public class KeycloakAdminService {
                             "&password=" + password;
 
             HttpEntity<String> req = new HttpEntity<>(body, headers);
-            rest.postForEntity(url, req, Map.class);
-            return true;
+            ResponseEntity<Map> response = rest.postForEntity(url, req, Map.class);
+
+            // ✅ Check response status and content
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                Object token = response.getBody().get("access_token");
+                return token != null; // Only true if access_token exists
+            }
+
+            return false;
         } catch (Exception e) {
             return false;
         }
