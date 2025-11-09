@@ -3,7 +3,7 @@
 #
 #spring:
 #  datasource:
-#    url: jdbc:postgresql://localhost:5432/middleware_prod
+#    url: jdbc:postgresql://localhost:5432/middleware_database_prod
 #    username: sso
 #    password: sso@admin1
 #    driver-class-name: org.postgresql.Driver
@@ -30,11 +30,24 @@
 #          spring.quartz.jdbc.initialize-schema: always
 ##          spring.quartz.properties.org.quartz.jobStore.isClustered: false
 ##          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
-#
+#app:
+#  security:
+#    auth-mode: keycloak  # Options: keycloak, jwt, none
+
 ## JWT SECRET
 #jwt:
 #  secret: 1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p
-#
+#security:
+#  keycloak:
+#    server-url: http://localhost:8082
+#    realm: middleware
+#    client-id: middleware-client
+#    client-secret: iXaRoUGkc0kPb2FcspkCQFiGACbMkjfp
+#    redirect-uri: http://localhost:8081/api/auth/keycloak/exchange
+#keycloak:
+#  admin:
+#    username: admin
+#    password: admin
 #management:
 #  health:
 #    rabbit:
