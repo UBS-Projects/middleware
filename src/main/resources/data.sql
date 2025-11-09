@@ -239,9 +239,9 @@ INSERT INTO public.integrated_system (
     updated_by,
     updated_at
 )VALUES
-         (1,'DHIS2.1','play.im.dhis2.org/stable-2-41-5',443,'DHIS2 Instance one','HTTPS','timeout',30000,'connect-timeout',10000,'BASIC','admin','district','','SYSTEM',NOW(),'SYSTEM',NOW()),
-         (2,'DHIS2.2','hmis-dev.moh.gov.jo/dwh',443,'DHIS2 Instance two','HTTPS','timeout',30000,'connect-timeout',10000,'BASIC','supp_user','F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z','','SYSTEM',NOW(),'SYSTEM',NOW())
-        ON CONFLICT (code) DO NOTHING;
+     (1,'DHIS2.STABLE','play.im.dhis2.org/stable-2-41-5',443,'DHIS2 Instance one','HTTPS','timeout',30000,'connect-timeout',10000,'BASIC','admin','district','','SYSTEM',NOW(),'SYSTEM',NOW()),
+     (2,'DHIS2.DWH','hmis-dev.moh.gov.jo/dwh',443,'DHIS2 Instance two','HTTPS','timeout',30000,'connect-timeout',10000,'BASIC','supp_user','F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z','','SYSTEM',NOW(),'SYSTEM',NOW())
+    ON CONFLICT (code) DO NOTHING;
 
 
 

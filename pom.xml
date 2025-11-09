@@ -231,6 +231,13 @@
             <artifactId>integrated-system-component</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <!--        Keycloak Dep     -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-admin-client</artifactId>
+            <version>26.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
