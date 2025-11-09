@@ -291,20 +291,6 @@ public class IntegrationMappingAdminController {
         }
     }
 
-    @GetMapping("/export")
-    @PreAuthorize("hasAuthority('integrationMapping:export')")
-    @Operation(summary = "Export mappings configuration")
-    public ResponseEntity<List<IntegrationMappingDto>> exportMappings(
-            @RequestParam(required = false) String dynamicRouteId) {
-        List<IntegrationMappingDto> mappings;
-        if (dynamicRouteId != null) {
-            mappings = service.findByDynamicRoute(dynamicRouteId);
-        } else {
-            mappings = service.findAll();
-        }
-        return ResponseEntity.ok(mappings);
-    }
-
     @PostMapping("/import")
     @PreAuthorize("hasAuthority('integrationMapping:import')")
     @Operation(summary = "Import mappings configuration")
