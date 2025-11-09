@@ -51,6 +51,4 @@ public interface MiddlewareApiCallLogRepository
             (SELECT COUNT(*) FROM job_execution_logs WHERE start_time BETWEEN :start AND :end) AS all_jobs
         """, nativeQuery = true)
     Map<String, Object> getDashboardSummary(@Param("start") Timestamp start, @Param("end") Timestamp end);
-
-
 }
