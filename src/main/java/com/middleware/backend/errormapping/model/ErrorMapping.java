@@ -20,6 +20,9 @@ public class ErrorMapping {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
+    private String code;
+
     @Column(name = "route_id", length = 255, nullable = false)
     private String routeId; // Reference to DynamicRouteEntity.routeId
 

@@ -10,6 +10,7 @@ public class ErrorMappingMapper {
     public ErrorMappingDto toDto(ErrorMapping entity) {
         return ErrorMappingDto.builder()
                 .id(entity.getId())
+                .code(entity.getCode())
                 .routeId(entity.getRouteId())
                 .routePath(entity.getRoutePath())
                 .sourceSystemId(entity.getSourceSystem() != null ? entity.getSourceSystem().getId() : null)
@@ -32,6 +33,7 @@ public class ErrorMappingMapper {
     public ErrorMapping toEntity(ErrorMappingDto dto) {
         return ErrorMapping.builder()
                 .id(dto.getId())
+                .code(dto.getCode())
                 .routeId(trimOrNull(dto.getRouteId()))
                 .routePath(trimOrNull(dto.getRoutePath()))
                 .rawErrorSubstring(trimOrNull(dto.getRawErrorSubstring().replaceAll("\\s+", " ")))

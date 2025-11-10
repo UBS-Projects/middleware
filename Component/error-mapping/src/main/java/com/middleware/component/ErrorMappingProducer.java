@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Producer that fetches and applies an error mapping based on its ID.
- * Applies mapping only when the current HTTP response code indicates failure (>= 400).
+ * Producer that fetches an error mapping by code and applies it
+ * only if the provided raw error message actually matches the defined substring or regex.
  */
 public class ErrorMappingProducer extends DefaultProducer {
 
@@ -26,56 +26,97 @@ public class ErrorMappingProducer extends DefaultProducer {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        // Try to extract mapping ID
-        Long code = null;
-        try {
-            if (endpoint.getCode() != null && !endpoint.getCode().isEmpty()) {
-                code = Long.valueOf(endpoint.getCode());
-            }
-        } catch (NumberFormatException ignored) {}
-
-        if (code == null) {
-            code = exchange.getIn().getHeader("errorMappingId", Long.class);
+        // 1️⃣ Extract mapping code
+        String code = endpoint.getCode();
+        if (code == null || code.isEmpty()) {
+            code = exchange.getIn().getHeader("errorMappingCode", String.class);
         }
-
-        if (code == null) {
-            LOG.debug("No error mapping ID provided (neither in URI nor header 'errorMappingId'). Skipping mapping.");
+        if (code == null || code.isEmpty()) {
+            LOG.debug("No error mapping code provided — skipping mapping.");
             return;
         }
 
-        // Get current response code (default to 200 if none)
+        // 2️⃣ Extract HTTP status and body
         Integer httpCode = exchange.getIn().getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
         if (httpCode == null) httpCode = 200;
 
-        // ✅ Only apply mapping if HTTP status indicates failure
         if (httpCode < 400) {
-            LOG.debug("HTTP {} indicates success — skipping error mapping (ID={}).", httpCode, code);
+            LOG.debug("HTTP {} indicates success — skipping mapping (code={})", httpCode, code);
             return;
         }
 
-        // Fetch the mapping definition
-        ErrorMappingDetail detail = bridgeService.getErrorMappingById(code);
-        if (detail == null) {
-            LOG.warn("No error mapping found for ID {}", code);
-            exchange.getIn().setHeader("MappedErrorCode", "NOT_FOUND");
-            exchange.getIn().setHeader("MappedMessage", "Error mapping not found");
+        String rawError = extractErrorMessage(exchange);
+        if (rawError == null || rawError.isBlank()) {
+            LOG.debug("No error message found in exchange body/headers — skipping mapping (code={})", code);
             return;
         }
 
-        // ✅ Apply mapping
-        LOG.info("Applying error mapping ID={} (mappedCode={}, status={})",
-                detail.getId(), detail.getMappedErrorCode(), detail.getHttpStatusCode());
+        // 3️⃣ Fetch mapping definition by code
+        ErrorMappingDetail mapping = bridgeService.getErrorMappingByCode(code);
+        if (mapping == null) {
+            LOG.warn("No error mapping found for code '{}'", code);
+            return;
+        }
 
-        exchange.getIn().setHeader("MappedErrorCode", detail.getMappedErrorCode());
-        exchange.getIn().setHeader("MappedMessage", detail.getMappedMessage());
-        exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, detail.getHttpStatusCode());
+        // 4️⃣ Check if raw error matches the mapping rule
+        boolean isMatch = false;
+        String substring = mapping.getRawErrorSubstring();
+        String matchType = mapping.getMatchType(); // e.g., "CONTAINS", "REGEX", "EQUALS"
+
+        if (matchType == null || substring == null) {
+            LOG.debug("Mapping '{}' missing matchType or substring — skipping mapping", code);
+            return;
+        }
+
+        switch (matchType.toUpperCase()) {
+            case "CONTAINS":
+                isMatch = rawError.contains(substring);
+                break;
+            case "EQUALS":
+                isMatch = rawError.equals(substring);
+                break;
+            case "REGEX":
+                try {
+                    isMatch = rawError.matches(substring);
+                } catch (Exception e) {
+                    LOG.warn("Invalid regex pattern in mapping '{}': {}", code, e.getMessage());
+                }
+                break;
+        }
+
+        // 5️⃣ Apply or skip
+        if (!isMatch) {
+            LOG.info("Mapping '{}' found but no match (pattern='{}', rawError='{}') — keeping original error.",
+                    code, substring, truncate(rawError, 100));
+            return;
+        }
+
+        // 6️⃣ Apply mapping
+        LOG.info("✅ Applying error mapping '{}' (mappedCode={}, httpStatus={})",
+                code, mapping.getMappedErrorCode(), mapping.getHttpStatusCode());
+
+        exchange.getIn().setHeader("MappedErrorCode", mapping.getMappedErrorCode());
+        exchange.getIn().setHeader("MappedMessage", mapping.getMappedMessage());
+        exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, mapping.getHttpStatusCode());
         exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "application/json");
 
-        // Set response body to JSON with mapped info
         String body = String.format(
                 "{\"error\":\"%s\",\"code\":\"%s\"}",
-                detail.getMappedMessage(), detail.getMappedErrorCode()
+                mapping.getMappedMessage(), mapping.getMappedErrorCode()
         );
         exchange.getIn().setBody(body);
+    }
+
+    private String extractErrorMessage(Exchange exchange) {
+        Object body = exchange.getIn().getBody();
+        if (body != null) return body.toString();
+
+        String headerMsg = exchange.getIn().getHeader("ErrorMessage", String.class);
+        return headerMsg != null ? headerMsg : "";
+    }
+
+    private String truncate(String text, int limit) {
+        if (text == null) return "";
+        return text.length() <= limit ? text : text.substring(0, limit) + "...";
     }
 }
