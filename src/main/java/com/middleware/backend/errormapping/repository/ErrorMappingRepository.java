@@ -23,6 +23,9 @@ public interface ErrorMappingRepository extends JpaRepository<ErrorMapping, Long
     @EntityGraph(value = "ErrorMapping.withCategoryAndSourceSystem")
     Optional<ErrorMapping> findWithCategoryAndSourceSystemById(Long id);
 
+    @EntityGraph(value = "ErrorMapping.withCategoryAndSourceSystem")
+    Optional<ErrorMapping> findWithCategoryAndSourceSystemByCode(String code);
+
     @Query("SELECT COUNT(em) FROM ErrorMapping em WHERE em.routeId = :routeId AND em.active = true")
     long countActiveByRouteId(@Param("routeId") String routeId);
 
@@ -52,4 +55,6 @@ public interface ErrorMappingRepository extends JpaRepository<ErrorMapping, Long
     @EntityGraph(value = "ErrorMapping.withCategoryAndSourceSystem")
     @Query("SELECT em FROM ErrorMapping em WHERE em.id = :id")
     Optional<ErrorMapping> findByIdWithRelations(@Param("id") Long id);
+
+    Optional<ErrorMapping> findByCode(String code);
 }

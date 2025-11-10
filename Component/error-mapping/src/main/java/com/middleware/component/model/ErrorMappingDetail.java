@@ -20,4 +20,6 @@ public class ErrorMappingDetail {
     private Integer httpStatusCode;
     private String language;
     private Boolean active;
+    private String rawErrorSubstring;
+    private String matchType; // CONTAINS, EQUALS, or REGEX
 }

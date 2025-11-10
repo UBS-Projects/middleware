@@ -12,8 +12,8 @@ public interface ErrorMappingBridgeService {
     /**
      * Fetches an ErrorMappingDetail by ID.
      *
-     * @param id The error mapping ID.
+     * @param code The error mapping CODE.
      * @return The detailed error mapping info, or null if not found.
      */
-    ErrorMappingDetail getErrorMappingById(Long id);
+    ErrorMappingDetail getErrorMappingByCode(String code);
 }

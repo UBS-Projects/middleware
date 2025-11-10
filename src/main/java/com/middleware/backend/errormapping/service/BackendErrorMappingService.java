@@ -66,6 +66,11 @@ public class BackendErrorMappingService {
                 .map(errorMappingMapper::toDto);
     }
 
+    public Optional<ErrorMappingDto> getErrorMappingByCode(String code) {
+        return errorMappingRepository.findWithCategoryAndSourceSystemByCode(code)
+                .map(errorMappingMapper::toDto);
+    }
+
     private void validateErrorMappingDto(ErrorMappingDto dto) {
         if (dto.getRouteId() == null || dto.getRouteId().trim().isEmpty()) {
             dto.setRouteId("*");
@@ -143,7 +148,10 @@ public class BackendErrorMappingService {
                 dto.getRouteId(), dto.getRawErrorSubstring())) {
             throw new IllegalArgumentException("Error mapping already exists for this route and error substring");
         }
-
+        Optional<ErrorMapping> exists = errorMappingRepository.findByCode(dto.getCode());
+        if(exists.isPresent())
+            throw new IllegalArgumentException("Error mapping with Code: "+dto.getCode()+" already exists");
+        dto.setCode(dto.getCode().trim().toUpperCase());
         ErrorMapping entity = errorMappingMapper.toEntity(dto);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

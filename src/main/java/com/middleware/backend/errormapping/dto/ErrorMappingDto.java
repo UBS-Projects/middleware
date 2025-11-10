@@ -12,6 +12,7 @@ import lombok.Data;
 public class ErrorMappingDto {
     private Long id;
     private String routeId;
+    private String code;
     private String routePath;
 
     private Long sourceSystemId;
