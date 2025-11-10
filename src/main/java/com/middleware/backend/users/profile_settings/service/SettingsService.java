@@ -81,6 +81,7 @@ public class SettingsService {
                 user.setPassword(passwordEncoder.encode(profile.getPassword()));
             } else {
                 keycloakAdminService.updatePassword(email, profile.getPassword());
+                user.setPassword(null);
             }
         }
 

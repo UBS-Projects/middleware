@@ -1,4 +1,5 @@
 package com.middleware.backend.users.keycloak;
+
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.OAuth2Constants;
@@ -9,11 +10,18 @@ import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 @Slf4j
 @Component
+@ConditionalOnProperty(
+        prefix = "app.security",
+        name = "auth-mode",
+        havingValue = "keycloak"
+)
 public class KeycloakAdminInitializer {
 
     @Value("${security.keycloak.server-url}")
@@ -37,7 +45,7 @@ public class KeycloakAdminInitializer {
 
         try (Keycloak keycloak = KeycloakBuilder.builder()
                 .serverUrl(serverUrl)
-                .realm("master") // use master realm for admin login
+                .realm("master") // login realm
                 .grantType(OAuth2Constants.PASSWORD)
                 .clientId("admin-cli")
                 .username(adminUsername)
@@ -61,11 +69,10 @@ public class KeycloakAdminInitializer {
             user.setEnabled(true);
             user.setEmailVerified(true);
 
-            // Create the user
             usersResource.create(user);
             log.info("✅ Created Keycloak user: admin@mail.com");
 
-            // Get the created user ID
+            // Get created user ID
             String userId = usersResource.search("admin@mail.com", true).get(0).getId();
 
             // Create password credentials
@@ -74,7 +81,6 @@ public class KeycloakAdminInitializer {
             passwordCred.setType(CredentialRepresentation.PASSWORD);
             passwordCred.setValue("S123@231");
 
-            // Set password
             usersResource.get(userId).resetPassword(passwordCred);
             log.info("✅ Set password for Keycloak user: admin@mail.com");
 

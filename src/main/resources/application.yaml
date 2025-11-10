@@ -36,7 +36,7 @@ spring:
 
 app:
   security:
-    auth-mode: keycloak  # Options: keycloak, jwt, none
+    auth-mode: application
 
 
 # JWT SECRET
@@ -62,7 +62,6 @@ keycloak:
   admin:
     username: admin
     password: admin
-
 management:
   health:
     rabbit:
