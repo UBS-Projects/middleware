@@ -1,20 +1,20 @@
 {
   "component": {
     "kind": "component",
-    "name": "config",
-    "title": "Config",
-    "description": "Apache Camel endpoint for configuration management operations.",
+    "name": "notification",
+    "title": "Notification",
+    "description": "Camel endpoint for interacting with the notification system.",
     "deprecated": false,
     "firstVersion": "1.0.0",
     "label": "messaging",
-    "javaType": "com.middleware.ConfigComponent",
+    "javaType": "com.middleware.NotificationComponent",
     "supportLevel": "Preview",
     "groupId": "com.middleware",
-    "artifactId": "configuration-component",
+    "artifactId": "Notifications-component",
     "version": "1.0.0",
-    "scheme": "config",
+    "scheme": "notification",
     "extendsScheme": "",
-    "syntax": "config:null",
+    "syntax": "notification:null",
     "async": false,
     "api": false,
     "consumerOnly": false,
@@ -28,7 +28,9 @@
   },
   "properties": {
     "operation": { "index": 0, "kind": "path", "displayName": "Operation", "group": "producer", "label": "", "required": false, "type": "string", "javaType": "java.lang.String", "deprecated": false, "autowired": false, "secret": false, "description": "Dummy path required by Camel. Not used at runtime." },
-    "code": { "index": 1, "kind": "parameter", "displayName": "Code", "group": "producer", "label": "", "required": false, "type": "string", "javaType": "java.lang.String", "deprecated": false, "autowired": false, "secret": false, "description": "The code identifying the configuration group." },
-    "lazyStartProducer": { "index": 2, "kind": "parameter", "displayName": "Lazy Start Producer", "group": "producer (advanced)", "label": "producer,advanced", "required": false, "type": "boolean", "javaType": "boolean", "deprecated": false, "autowired": false, "secret": false, "defaultValue": false, "description": "Whether the producer should be started lazy (on the first message). By starting lazy you can use this to allow CamelContext and routes to startup in situations where a producer may otherwise fail during starting and cause the route to fail being started. By deferring this startup to be lazy then the startup failure can be handled during routing messages via Camel's routing error handlers. Beware that when the first message is processed then creating and starting the producer may take a little time and prolong the total processing time of the processing." }
+    "channelCode": { "index": 1, "kind": "parameter", "displayName": "Channel Code", "group": "producer", "label": "", "required": false, "type": "string", "javaType": "java.lang.String", "deprecated": false, "autowired": false, "secret": false, "description": "Channel code for the notification" },
+    "groupCodes": { "index": 2, "kind": "parameter", "displayName": "Group Codes", "group": "producer", "label": "", "required": false, "type": "array", "javaType": "java.util.List<java.lang.String>", "deprecated": false, "autowired": false, "secret": false, "description": "Target group codes" },
+    "templateCode": { "index": 3, "kind": "parameter", "displayName": "Template Code", "group": "producer", "label": "", "required": false, "type": "string", "javaType": "java.lang.String", "deprecated": false, "autowired": false, "secret": false, "description": "Template code for the notification" },
+    "lazyStartProducer": { "index": 4, "kind": "parameter", "displayName": "Lazy Start Producer", "group": "producer (advanced)", "label": "producer,advanced", "required": false, "type": "boolean", "javaType": "boolean", "deprecated": false, "autowired": false, "secret": false, "defaultValue": false, "description": "Whether the producer should be started lazy (on the first message). By starting lazy you can use this to allow CamelContext and routes to startup in situations where a producer may otherwise fail during starting and cause the route to fail being started. By deferring this startup to be lazy then the startup failure can be handled during routing messages via Camel's routing error handlers. Beware that when the first message is processed then creating and starting the producer may take a little time and prolong the total processing time of the processing." }
   }
 }
