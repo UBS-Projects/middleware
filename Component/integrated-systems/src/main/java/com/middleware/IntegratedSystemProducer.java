@@ -106,10 +106,12 @@ public class IntegratedSystemProducer extends DefaultProducer {
             }
         }
 
-        if ("TOKEN".equalsIgnoreCase(authType)) {
+        if ("TOKEN".equalsIgnoreCase(authType) || "JWT".equalsIgnoreCase(authType)) {
             String token = (String) configMap.get("token");
             if (token != null) {
                 exchange.getIn().setHeader("Authorization", "Bearer " + token);
+                LOG.info("{} Auth header added automatically for system '{}'",
+                        authType, detail.getCode());
             }
         }
 
