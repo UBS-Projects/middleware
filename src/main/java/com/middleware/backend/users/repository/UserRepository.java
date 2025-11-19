@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -42,4 +43,12 @@ public interface UserRepository extends JpaRepository<User,Long> {
      * Pages users by role name.
      */
     Page<User> findByRoles_RoleName(String Role, Pageable pageable);
+
+    @Query("""
+        SELECT DISTINCT u
+        FROM User u
+        JOIN u.roles r
+        WHERE r.roleName = 'ADMIN' AND u.status = 'ACTIVE'
+        """)
+    List<User> findAllAdmins();
 }

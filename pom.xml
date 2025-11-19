@@ -238,6 +238,13 @@
             <artifactId>keycloak-admin-client</artifactId>
             <version>26.0.0</version>
         </dependency>
+
+
+        <!--        Email Sender Dependency     -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

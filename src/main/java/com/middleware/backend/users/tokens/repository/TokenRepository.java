@@ -96,4 +96,31 @@ List<TokenListDto> findExpiringOrRecentlyExpiredTokensByRole(
 );
 
 
+
+    // Expired strictly before now
+    @Query("""
+        SELECT t
+        FROM Token t
+        JOIN t.user u
+        JOIN u.roles r
+        WHERE t.expiresAt < :now
+          AND r.roleType = com.middleware.backend.users.Roles.model.Role.RoleType.SYSTEM_USER
+    """)
+    List<Token> findExpiredSystemUserTokens(@Param("now") Timestamp now);
+
+
+
+    // Will expire in the given window (inclusive)
+    @Query("""
+        SELECT t
+        FROM Token t
+        JOIN t.user u
+        JOIN u.roles r
+        WHERE t.expiresAt BETWEEN :from AND :to
+          AND r.roleType = com.middleware.backend.users.Roles.model.Role.RoleType.SYSTEM_USER
+    """)
+    List<Token> findSystemUserTokensExpiringBetween(
+            @Param("from") Timestamp from,
+            @Param("to") Timestamp to
+    );
 }
