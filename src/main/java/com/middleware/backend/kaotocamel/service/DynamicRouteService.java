@@ -59,7 +59,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@EnableScheduling
+//@EnableScheduling
 /**
  * Service for managing dynamically defined Apache Camel routes stored in the database.
  * Provides CRUD-like operations on route versions, validation and test loading of YAML,

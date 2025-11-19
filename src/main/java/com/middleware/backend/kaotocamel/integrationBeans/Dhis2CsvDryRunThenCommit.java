@@ -113,14 +113,15 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
 
         return map;
     }
-
     private void handleDryRun(Exchange exchange, byte[] csv, String qBase, Map<String, String> config) throws Exception {
         log.info("=== DRY RUN phase ===");
 
         String dryResp = callDhis2(csv, qBase, true, config);
 
         if (checkConflictsYamlLogic(dryResp, getLastResponseCode())) {
-            setJson(exchange, 409, "{ \"status\":\"CONFLICT\",\"message\":\"Resolve conflicts then re-upload\",\"details\":" + safeJson(dryResp) + "}");
+            setJson(exchange, 409,
+                    "{ \"status\":\"CONFLICT\",\"message\":\"Resolve conflicts then re-upload\",\"details\":"
+                            + safeJson(dryResp) + "}");
             exchange.setRouteStop(true);
             return;
         }
@@ -130,19 +131,49 @@ public class Dhis2CsvDryRunThenCommit implements Processor {
         String commitResp = callDhis2(csv, qBase, false, config);
         int commitCode = getLastResponseCode();
 
-        String status = (commitCode >= 200 && commitCode <= 202) ? "SUCCESS" : "ERROR";
-        setJson(exchange, commitCode, "{ \"status\":\"" + status + "\",\"message\":\"Import completed successfully\",\"details\":" + safeJson(commitResp) + " }");
-    }
+        String status;
+        String message;
 
+        if (commitCode >= 200 && commitCode <= 202) {
+            status = "SUCCESS";
+            message = "Import completed successfully";
+        } else if (commitCode == 409) {
+            status = "CONFLICT";
+            message = "DHIS2 reported conflicts. Please resolve and re-upload.";
+        } else {
+            status = "ERROR";
+            message = "Import failed with HTTP " + commitCode;
+        }
+
+        setJson(exchange, commitCode,
+                "{ \"status\":\"" + status + "\",\"message\":\"" + esc(message) + "\",\"details\":"
+                        + safeJson(commitResp) + " }");
+    }
     private void handleDirectCommit(Exchange exchange, byte[] csv, String qBase, Map<String, String> config) throws Exception {
         log.info("=== Direct commit ===");
 
         String resp = callDhis2(csv, qBase, false, config);
         int code = getLastResponseCode();
 
-        String status = (code == 409) ? "CONFLICT" : (code >= 200 && code <= 202) ? "SUCCESS" : "ERROR";
-        setJson(exchange, code, "{ \"status\":\"" + status + "\",\"message\":\"Import completed\",\"details\":" + safeJson(resp) + " }");
+        String status;
+        String message;
+
+        if (code == 409) {
+            status = "CONFLICT";
+            message = "DHIS2 reported conflicts. Please resolve and re-upload.";
+        } else if (code >= 200 && code <= 202) {
+            status = "SUCCESS";
+            message = "Import completed successfully";
+        } else {
+            status = "ERROR";
+            message = "Import failed with HTTP " + code;
+        }
+
+        setJson(exchange, code,
+                "{ \"status\":\"" + status + "\",\"message\":\"" + esc(message) + "\",\"details\":"
+                        + safeJson(resp) + " }");
     }
+
 
     private String buildBaseUrl(Map<String, String> config) {
         String protocol = config.getOrDefault("protocol", "https").toLowerCase();
