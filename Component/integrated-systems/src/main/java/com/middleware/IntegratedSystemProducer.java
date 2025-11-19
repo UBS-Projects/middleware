@@ -8,6 +8,8 @@ import org.apache.camel.support.DefaultProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 /**
  * Producer implementation for the IntegratedSystemEndpoint.
  * Fetches configuration details for a given system code and
@@ -83,6 +85,33 @@ public class IntegratedSystemProducer extends DefaultProducer {
 
         // حط الـ config في header بس، ما تغير الـ body!
         exchange.getIn().setHeader("config", jsonConfig);
+
+        Map<String, Object> configMap = detail.getConfig();
+
+        Object authTypeObj = configMap.get("authenticationType");
+        String authType = authTypeObj != null ? authTypeObj.toString() : null;
+
+        if ("BASIC".equalsIgnoreCase(authType)) {
+            String username = (String) configMap.get("username");
+            String password = (String) configMap.get("password");
+
+            if (username != null && password != null) {
+                String auth = username + ":" + password;
+                String encoded = java.util.Base64.getEncoder()
+                        .encodeToString(auth.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+
+                exchange.getIn().setHeader("Authorization", "Basic " + encoded);
+
+                LOG.info("Basic Auth header added automatically for system '{}'", detail.getCode());
+            }
+        }
+
+        if ("TOKEN".equalsIgnoreCase(authType)) {
+            String token = (String) configMap.get("token");
+            if (token != null) {
+                exchange.getIn().setHeader("Authorization", "Bearer " + token);
+            }
+        }
 
         // الـ body يبقى زي ما هو (CSV)
         LOG.info("Integrated system config loaded for '{}' and set in header 'config'. Body preserved.", detail.getCode());
