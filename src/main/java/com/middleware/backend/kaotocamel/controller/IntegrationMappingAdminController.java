@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,16 +43,45 @@ public class IntegrationMappingAdminController {
     @PostMapping
     @PreAuthorize("hasAuthority('integrationMapping:create')")
     @Operation(summary = "Create new integration mapping")
-    public ResponseEntity<IntegrationMappingDto> create(
-            @Valid @RequestBody IntegrationMappingRequestDto request) {
+    public ResponseEntity<?> create(@Valid @RequestBody IntegrationMappingRequestDto request) {
         try {
             IntegrationMappingDto result = service.create(request);
-            log.info("Created integration mapping: {} -> {}",
+            log.info(" Created integration mapping: {} -> {}",
                     request.getDynamicRouteId(), request.getExternalKey());
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
-        } catch (Exception e) {
+
+        } catch (IllegalArgumentException e) {
+            log.warn("Duplicate mapping: {}", e.getMessage());
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Duplicate Mapping");
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+
+        } catch (DataIntegrityViolationException e) {
+            log.error(" Database constraint violation: {}", e.getMessage());
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Database Constraint Violation");
+            errorResponse.put("message", "A mapping with this combination already exists in the database.");
+            errorResponse.put("timestamp", LocalDateTime.now());
+
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+
+        } catch (RuntimeException e) {
             log.error("Failed to create integration mapping: {}", e.getMessage());
-            return ResponseEntity.badRequest().build();
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Creation Failed");
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
 
@@ -87,16 +117,46 @@ public class IntegrationMappingAdminController {
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('integrationMapping:edit')")
     @Operation(summary = "Update integration mapping")
-    public ResponseEntity<IntegrationMappingDto> update(
+    public ResponseEntity<?> update(
             @PathVariable Long id,
             @Valid @RequestBody IntegrationMappingRequestDto request) {
         try {
             IntegrationMappingDto result = service.update(id, request);
             log.info("Updated integration mapping: {}", id);
             return ResponseEntity.ok(result);
-        } catch (Exception e) {
+
+        } catch (IllegalArgumentException e) {
+            log.warn(" Duplicate mapping on update: {}", e.getMessage());
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Duplicate Mapping");
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+
+        } catch (DataIntegrityViolationException e) {
+            log.error("Database constraint violation on update: {}", e.getMessage());
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Database Constraint Violation");
+            errorResponse.put("message", "Cannot update: this combination already exists in the database.");
+            errorResponse.put("timestamp", LocalDateTime.now());
+
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+
+        } catch (RuntimeException e) {
             log.error("Failed to update integration mapping {}: {}", id, e.getMessage());
-            return ResponseEntity.notFound().build();
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Update Failed");
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
 
@@ -113,7 +173,6 @@ public class IntegrationMappingAdminController {
     @PreAuthorize("hasAuthority('integrationMapping:view')")
     @Operation(summary = "List integration mappings with advanced filtering, pagination and sorting")
     public ResponseEntity<Page<IntegrationMappingDto>> findAll(
-            // Basic filters
             @Parameter(description = "Filter by Dynamic Route ID (exact match)")
             @RequestParam(required = false) String dynamicRouteId,
 
@@ -138,7 +197,6 @@ public class IntegrationMappingAdminController {
             @Parameter(description = "Filter by notes (partial match)")
             @RequestParam(required = false) String notes,
 
-            // Date filters
             @Parameter(description = "Filter by created after date (ISO format: yyyy-MM-dd'T'HH:mm:ss)")
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime createdAfter,
@@ -155,7 +213,6 @@ public class IntegrationMappingAdminController {
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime updatedBefore,
 
-            // Advanced filters
             @Parameter(description = "Global search across multiple fields (partial match)")
             @RequestParam(required = false) String search,
 
@@ -165,22 +222,19 @@ public class IntegrationMappingAdminController {
             @Parameter(description = "Filter by maximum ID")
             @RequestParam(required = false) Long maxId,
 
-            // Sorting parameters
             @Parameter(description = "Sort field")
             @RequestParam(required = false) String sortBy,
 
             @Parameter(description = "Sort direction (asc/desc)")
             @RequestParam(required = false, defaultValue = "asc") String sortDir,
 
-            // Pagination
             @Parameter(description = "Page number (0-based)")
             @RequestParam(defaultValue = "0") int page,
 
             @Parameter(description = "Page size")
             @RequestParam(defaultValue = "10") int size) {
 
-        // Build sort
-        Sort sortOrder = Sort.by("id").ascending(); // default
+        Sort sortOrder = Sort.by("id").ascending();
 
         if (sortBy != null && !sortBy.trim().isEmpty() && isValidSortField(sortBy)) {
             if ("desc".equalsIgnoreCase(sortDir)) {
@@ -195,7 +249,6 @@ public class IntegrationMappingAdminController {
         log.info("Final sort: {}", sortOrder);
         Pageable pageable = PageRequest.of(page, size, sortOrder);
 
-        // Use enhanced service method - removed attribute parameter
         Page<IntegrationMappingDto> result = service.findWithAdvancedFilters(
                 dynamicRouteId,
                 integratedApiId,
@@ -225,8 +278,7 @@ public class IntegrationMappingAdminController {
     @GetMapping("/by-route/{routeId}")
     @PreAuthorize("hasAuthority('dynamicRoutes:view')")
     @Operation(summary = "Get all mappings for a Dynamic Route")
-    public ResponseEntity<List<IntegrationMappingDto>> findByDynamicRoute(
-            @PathVariable String routeId) {
+    public ResponseEntity<List<IntegrationMappingDto>> findByDynamicRoute(@PathVariable String routeId) {
         List<IntegrationMappingDto> result = service.findByDynamicRoute(routeId);
         return ResponseEntity.ok(result);
     }
@@ -252,8 +304,7 @@ public class IntegrationMappingAdminController {
     @PostMapping("/validate")
     @PreAuthorize("hasAuthority('integrationMapping:create')")
     @Operation(summary = "Validate integration mapping before creation")
-    public ResponseEntity<Map<String, Object>> validate(
-            @Valid @RequestBody IntegrationMappingRequestDto request) {
+    public ResponseEntity<Map<String, Object>> validate(@Valid @RequestBody IntegrationMappingRequestDto request) {
         return ResponseEntity.ok(service.validateMapping(request));
     }
 
@@ -340,12 +391,20 @@ public class IntegrationMappingAdminController {
     @PatchMapping("/{id}/toggle")
     @PreAuthorize("hasAuthority('integrationMapping:edit')")
     @Operation(summary = "Toggle active status")
-    public ResponseEntity<IntegrationMappingDto> toggleActiveStatus(@PathVariable Long id) {
+    public ResponseEntity<?> toggleActiveStatus(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(service.toggleActiveStatus(id));
+            IntegrationMappingDto result = service.toggleActiveStatus(id);
+            return ResponseEntity.ok(result);
         } catch (Exception e) {
             log.error("Failed to toggle status: {}", e.getMessage());
-            return ResponseEntity.notFound().build();
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Toggle Failed");
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
 

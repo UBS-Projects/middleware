@@ -66,4 +66,26 @@ public interface IntegrationMappingRepository
      * Used to check if an IntegratedApi can be deactivated.
      */
     long countByIntegratedApiIdAndIsActiveTrue(Long integratedApiId);
+    boolean existsByDynamicRouteIdAndIntegratedApiIdAndMappingTypeAndDataAndExternalKey(
+            String dynamicRouteId,
+            Long integratedApiId,
+            IntegrationMapping.MappingType mappingType,
+            String data,
+            String externalKey
+    );
+    @Query("SELECT CASE WHEN COUNT(m) > 0 THEN true ELSE false END FROM IntegrationMapping m " +
+            "WHERE m.dynamicRouteId = :dynamicRouteId " +
+            "AND m.integratedApi.id = :integratedApiId " +
+            "AND m.mappingType = :mappingType " +
+            "AND m.data = :data " +
+            "AND m.externalKey = :externalKey " +
+            "AND m.id != :excludeId")
+    boolean existsByUniqueConstraintExcludingId(
+            @Param("dynamicRouteId") String dynamicRouteId,
+            @Param("integratedApiId") Long integratedApiId,
+            @Param("mappingType") IntegrationMapping.MappingType mappingType,
+            @Param("data") String data,
+            @Param("externalKey") String externalKey,
+            @Param("excludeId") Long excludeId
+    );
 }

@@ -22,7 +22,6 @@ public class MiddlewareProcessorService {
 
     private final IntegrationMappingRepository mappingRepository;
     private final Dhis2ClientService dhis2Client;
-
     @Transactional(readOnly = true)
     public MiddlewareResponseDto processMiddlewareRequest(
             String dynamicRouteId,
@@ -42,6 +41,8 @@ public class MiddlewareProcessorService {
                         .rows(new ArrayList<>())
                         .build();
             }
+
+            validateRequiredParameters(mappings, periodParam, ouParam);
 
             String ouFromRequest = ouParam;
             log.debug("Request parameters - ou: {}, pe: {}", ouFromRequest, periodParam);
@@ -70,6 +71,40 @@ public class MiddlewareProcessorService {
         } catch (Exception e) {
             log.error("Error processing middleware request: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to process middleware request: " + e.getMessage());
+        }
+    }
+
+    private void validateRequiredParameters(
+            List<IntegrationMapping> mappings,
+            String periodParam,
+            String ouParam) {
+
+         Set<IntegratedApi> apis = mappings.stream()
+                .map(IntegrationMapping::getIntegratedApi)
+                .collect(Collectors.toSet());
+
+        List<String> missingParams = new ArrayList<>();
+
+        for (IntegratedApi api : apis) {
+             if (api.getUseOuFromRequest() != null && api.getUseOuFromRequest()) {
+                if (ouParam == null || ouParam.trim().isEmpty()) {
+                    missingParams.add("Parameter 'ou' (Organization Unit)");
+                }
+            }
+
+             if (api.getUsePeFromRequest() != null && api.getUsePeFromRequest()) {
+                if (periodParam == null || periodParam.trim().isEmpty()) {
+                    missingParams.add("Parameter 'pe' (Period)");
+                }
+            }
+        }
+
+         if (!missingParams.isEmpty()) {
+             List<String> uniqueParams = missingParams.stream().distinct().collect(Collectors.toList());
+            String errorMessage = "Missing Required Parameters: " + String.join(", ", uniqueParams) + ". Please provide the missing parameters in your request.";
+
+            log.warn("Missing required parameters: {}", errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 

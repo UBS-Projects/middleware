@@ -65,18 +65,26 @@ public class MiddlewareController {
         try {
             // Validate mandatory params
             if (dhis2Code == null || dhis2Code.trim().isEmpty()) {
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("status", "ERROR");
+                errorResponse.put("message", "Missing Required Parameters: Parameter '_dhis2Code' is required.");
+
                 return ResponseEntity
                         .status(HttpStatus.BAD_REQUEST)
-                        .body(createErrorResponse("Parameter '_dhis2Code' is required"));
+                        .body(errorResponse);
             }
 
             if (dx == null || dx.trim().isEmpty()) {
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("status", "ERROR");
+                errorResponse.put("message", "Missing Required Parameters: Parameter 'dx' (Data Dimension) is required.");
+
                 return ResponseEntity
                         .status(HttpStatus.BAD_REQUEST)
-                        .body(createErrorResponse("Parameter 'dx' is required"));
+                        .body(errorResponse);
             }
 
-            // Build other params map (excluding known dimensions and system params)
+            // Build other params map
             Map<String, String> otherParams = new LinkedHashMap<>();
             if (outputIdScheme != null && !outputIdScheme.trim().isEmpty()) {
                 otherParams.put("outputIdScheme", outputIdScheme);
@@ -88,14 +96,14 @@ public class MiddlewareController {
                 otherParams.put("completedOnly", completedOnly);
             }
 
-            // Extract attribute dimensions (params not in known list)
+            // Extract attribute dimensions
             Map<String, String> attributeDimensions = new LinkedHashMap<>();
             if (attributes != null) {
                 Set<String> knownParams = Set.of("_dhis2Code", "dx", "ou", "pe",
                         "outputIdScheme", "skipRounding", "completedOnly");
 
                 attributes.forEach((key, value) -> {
-                    if (!knownParams.contains(key) && key.length() == 11) { // DHIS2 UIDs are 11 chars
+                    if (!knownParams.contains(key) && key.length() == 11) {
                         attributeDimensions.put(key, value);
                     }
                 });
@@ -104,7 +112,6 @@ public class MiddlewareController {
             log.info("Executing Analytics - DHIS2: {}, dx: {}, ou: {}, pe: {}, attrs: {}",
                     dhis2Code, dx, ou, pe, attributeDimensions.size());
 
-            // Call new service method
             Map<String, Object> response = dhis2Client.executeAnalyticsCall(
                     dhis2Code, dx, ou, pe, attributeDimensions, otherParams
             );
@@ -116,18 +123,27 @@ public class MiddlewareController {
 
         } catch (IllegalArgumentException e) {
             log.error("Validation error: {}", e.getMessage());
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", "ERROR");
+            errorResponse.put("message", "Failed to execute analytics: " + e.getMessage());
+
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body(createErrorResponse(e.getMessage()));
+                    .body(errorResponse);
 
         } catch (Exception e) {
             log.error("Error executing analytics: {}", e.getMessage(), e);
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", "ERROR");
+            errorResponse.put("message", "Failed to execute analytics: " + e.getMessage());
+
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(createErrorResponse("Internal server error: " + e.getMessage()));
+                    .body(errorResponse);
         }
     }
-
     /**
      * Legacy middleware endpoint
      * NOW: pe and ou are OPTIONAL - will be validated in service based on API configuration
@@ -149,17 +165,22 @@ public class MiddlewareController {
         try {
             // Only dhis2Code is strictly required here
             if (dhis2Code == null || dhis2Code.trim().isEmpty()) {
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("success", false);
+                errorResponse.put("error", "Missing Parameter");
+                errorResponse.put("message", "⚠️ Parameter '_dhis2Code' is required");
+                errorResponse.put("timestamp", System.currentTimeMillis());
+
                 return ResponseEntity
                         .status(HttpStatus.BAD_REQUEST)
-                        .body(createErrorResponse("Parameter '_dhis2Code' is required"));
+                        .body(errorResponse);
             }
 
             String fullApiName = "/" + apiName;
             log.info("Processing middleware request - API: {}, Period: {}, OU: {}, DHIS2: {}",
                     fullApiName, pe, ou, dhis2Code);
 
-            // Service will handle validation based on API configuration
-            MiddlewareResponseDto response = processorService.processMiddlewareRequest(
+             MiddlewareResponseDto response = processorService.processMiddlewareRequest(
                     fullApiName, pe, ou, dhis2Code);
 
             long executionTime = System.currentTimeMillis() - startTime;
@@ -169,16 +190,30 @@ public class MiddlewareController {
             return ResponseEntity.ok(response);
 
         } catch (IllegalArgumentException e) {
-            log.error("Validation error for API {}: {}", apiName, e.getMessage());
+             log.error("Validation error for API {}: {}", apiName, e.getMessage());
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Validation Error");
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", System.currentTimeMillis());
+
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body(createErrorResponse(e.getMessage()));
+                    .body(errorResponse);
 
         } catch (Exception e) {
             log.error("Error processing middleware request for API {}: {}", apiName, e.getMessage(), e);
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Internal Server Error");
+            errorResponse.put("message", "Internal server error: " + e.getMessage());
+            errorResponse.put("timestamp", System.currentTimeMillis());
+
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(createErrorResponse("Internal server error: " + e.getMessage()));
+                    .body(errorResponse);
         }
     }
 

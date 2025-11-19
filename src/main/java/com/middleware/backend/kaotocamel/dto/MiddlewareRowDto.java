@@ -30,19 +30,15 @@ public class MiddlewareRowDto {
 
     /**
      * Full organization unit metadata (code, parent, translations, etc.)
-     * ✅ This appears ONCE per OU (not repeated for each period)
+     * This appears ONCE per OU (not repeated for each period)
      */
     private Map<String, Object> ouDetails;
 
     /**
-     * 🆕 NEW: List of periods with their data
+     * NEW: List of periods with their data
      * Each period contains its attributes
      */
     private List<PeriodDataDto> periods;
 
-    // ❌ REMOVED: Single period field (replaced by periods list)
-    // private String period;
 
-    // ❌ REMOVED: Direct attributes list (moved inside periods)
-    // private List<AttributeDto> attributes;
 }

@@ -18,6 +18,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,14 +54,23 @@ public class IntegratedApiService {
             throw new IllegalArgumentException("API with code '" + request.getCode() + "' already exists");
         }
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
         IntegratedApi entity = new IntegratedApi();
         mapRequestToEntity(request, entity);
 
+        entity.setCreatedBy(currentUser);
+        entity.setUpdatedBy(currentUser);
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setUpdatedAt(LocalDateTime.now());
+
         IntegratedApi saved = repository.save(entity);
-        log.info("Created integrated API: {} (ID: {})", saved.getCode(), saved.getId());
+        log.info("Created integrated API: {} (ID: {}) by user: {}", saved.getCode(), saved.getId(), currentUser);
 
         return mapEntityToDto(saved);
     }
+
 
     @Transactional
     public IntegratedApiDto update(Long id, IntegratedApiRequestDto request) {
@@ -73,14 +84,20 @@ public class IntegratedApiService {
             throw new IllegalArgumentException("API with code '" + request.getCode() + "' already exists");
         }
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
         mapRequestToEntity(request, entity);
+
+
+        entity.setUpdatedBy(currentUser);
+        entity.setUpdatedAt(LocalDateTime.now());
+
         IntegratedApi saved = repository.save(entity);
 
-        log.info("Updated integrated API: {}", saved.getCode());
+        log.info("Updated integrated API: {} by user: {}", saved.getCode(), currentUser);
         return mapEntityToDto(saved);
     }
-
-
     @Transactional(readOnly = true)
     public Optional<IntegratedApiDto> findById(Long id) {
         return repository.findById(id)
@@ -143,10 +160,11 @@ public class IntegratedApiService {
         IntegratedApi entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Integrated API not found: " + id));
 
-        // Toggle status
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
         boolean newStatus = !entity.getIsActive();
 
-        // If we are turning off, check mappings first
         if (!newStatus) {
             long activeMappings = mappingRepository.countByIntegratedApiIdAndIsActiveTrue(entity.getId());
             if (activeMappings > 0) {
@@ -156,7 +174,6 @@ public class IntegratedApiService {
                     log.warn(msg);
                     throw new IllegalStateException(msg);
                 } else {
-                    // force requested -> deactivate mappings first
                     deactivateAssociatedMappings(entity.getId());
                 }
             }
@@ -164,14 +181,17 @@ public class IntegratedApiService {
 
         entity.setIsActive(newStatus);
 
+
+        entity.setUpdatedBy(currentUser);
+        entity.setUpdatedAt(LocalDateTime.now());
+
         IntegratedApi saved = repository.save(entity);
 
-        log.info("Toggled integrated API {} status to: {}", id, newStatus ? "ACTIVE" : "INACTIVE");
+        log.info("Toggled integrated API {} status to: {} by user: {}",
+                id, newStatus ? "ACTIVE" : "INACTIVE", currentUser);
 
         return mapEntityToDto(saved);
     }
-
-
 
     /**
      * Activate an integrated API
@@ -186,10 +206,17 @@ public class IntegratedApiService {
         IntegratedApi entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Integrated API not found: " + id));
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
         entity.setIsActive(true);
+
+        entity.setUpdatedBy(currentUser);
+        entity.setUpdatedAt(LocalDateTime.now());
+
         IntegratedApi saved = repository.save(entity);
 
-        log.info("Activated integrated API: {}", id);
+        log.info("Activated integrated API: {} by user: {}", id, currentUser);
 
         return mapEntityToDto(saved);
     }
@@ -214,10 +241,17 @@ public class IntegratedApiService {
             throw new IllegalStateException(msg);
         }
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
         entity.setIsActive(false);
+
+        entity.setUpdatedBy(currentUser);
+        entity.setUpdatedAt(LocalDateTime.now());
+
         IntegratedApi saved = repository.save(entity);
 
-        log.info("Deactivated integrated API: {}", id);
+        log.info("Deactivated integrated API: {} by user: {}", id, currentUser);
 
         return mapEntityToDto(saved);
     }
@@ -236,13 +270,20 @@ public class IntegratedApiService {
             return;
         }
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
         log.info("Deactivating {} mapping(s) associated with IntegratedApi {}", activeMappings.size(), integratedApiId);
+
         for (IntegrationMapping m : activeMappings) {
             m.setIsActive(false);
+            m.setUpdatedBy(currentUser);
+            m.setUpdatedAt(LocalDateTime.now());
         }
 
         mappingRepository.saveAll(activeMappings);
-        log.info("Deactivated {} mapping(s) for IntegratedApi {}", activeMappings.size(), integratedApiId);
+        log.info("Deactivated {} mapping(s) for IntegratedApi {} by user: {}",
+                activeMappings.size(), integratedApiId, currentUser);
     }
     private void mapRequestToEntity(IntegratedApiRequestDto request, IntegratedApi entity) {
         entity.setCode(request.getCode());
@@ -409,6 +450,8 @@ public class IntegratedApiService {
                 .boundApiCode(entity.getBoundApiCode())
                 .useOuFromRequest(entity.getUseOuFromRequest())
                 .usePeFromRequest(entity.getUsePeFromRequest())
+                 .createdBy(entity.getCreatedBy())
+                .updatedBy(entity.getUpdatedBy())
                 .build();
     }
 }

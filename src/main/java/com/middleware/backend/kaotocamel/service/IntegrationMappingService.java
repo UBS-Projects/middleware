@@ -15,12 +15,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -43,11 +46,51 @@ public class IntegrationMappingService {
         IntegratedApi api = apiRepository.findById(request.getIntegratedApiId())
                 .orElseThrow(() -> new RuntimeException("Integrated API not found: " + request.getIntegratedApiId()));
 
+         IntegrationMapping.MappingType mappingType = IntegrationMapping.MappingType.valueOf(request.getMappingType());
+
+        boolean isDuplicate = mappingRepository.existsByDynamicRouteIdAndIntegratedApiIdAndMappingTypeAndDataAndExternalKey(
+                request.getDynamicRouteId(),
+                request.getIntegratedApiId(),
+                mappingType,
+                request.getData(),
+                request.getExternalKey()
+        );
+
+        if (isDuplicate) {
+            String errorMsg = String.format(
+                    "Duplicate Mapping Detected!\n\n" +
+                            "A mapping with this exact combination already exists:\n\n" +
+                            "• Dynamic Route ID: %s\n" +
+                            "• Integrated API ID: %d\n" +
+                            "• Mapping Type: %s\n" +
+                            "• Data: %s\n" +
+                            "• External Key: %s\n\n" +
+                            "Please modify one or more of these values to create a unique mapping.",
+                    request.getDynamicRouteId(),
+                    request.getIntegratedApiId(),
+                    request.getMappingType(),
+                    request.getData(),
+                    request.getExternalKey()
+            );
+
+            log.warn("Duplicate mapping attempt: {}", errorMsg);
+            throw new IllegalArgumentException(errorMsg);
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
         IntegrationMapping entity = new IntegrationMapping();
         mapRequestToEntity(request, entity, api);
 
+        entity.setCreatedBy(currentUser);
+        entity.setUpdatedBy(currentUser);
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setUpdatedAt(LocalDateTime.now());
+
         IntegrationMapping saved = mappingRepository.save(entity);
-        log.info("Created integration mapping: {} -> {}", saved.getDynamicRouteId(), saved.getExternalKey());
+        log.info("Created integration mapping: {} -> {} by user: {}",
+                saved.getDynamicRouteId(), saved.getExternalKey(), currentUser);
 
         return mapEntityToDto(saved);
     }
@@ -67,12 +110,52 @@ public class IntegrationMappingService {
                     .orElseThrow(() -> new RuntimeException("Integrated API not found: " + request.getIntegratedApiId()));
         }
 
+         IntegrationMapping.MappingType mappingType = IntegrationMapping.MappingType.valueOf(request.getMappingType());
+
+        boolean isDuplicate = mappingRepository.existsByUniqueConstraintExcludingId(
+                request.getDynamicRouteId(),
+                request.getIntegratedApiId(),
+                mappingType,
+                request.getData(),
+                request.getExternalKey(),
+                id
+        );
+
+        if (isDuplicate) {
+            String errorMsg = String.format(
+                    "⚠Duplicate Mapping Detected!\n\n" +
+                            "Another mapping with this combination already exists:\n\n" +
+                            "• Dynamic Route ID: %s\n" +
+                            "• Integrated API ID: %d\n" +
+                            "• Mapping Type: %s\n" +
+                            "• Data: %s\n" +
+                            "• External Key: %s\n\n" +
+                            "Cannot update to duplicate values. Please modify one or more fields.",
+                    request.getDynamicRouteId(),
+                    request.getIntegratedApiId(),
+                    request.getMappingType(),
+                    request.getData(),
+                    request.getExternalKey()
+            );
+
+            log.warn("Duplicate mapping on update for ID {}: {}", id, errorMsg);
+            throw new IllegalArgumentException(errorMsg);
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
         mapRequestToEntity(request, entity, api);
+
+        entity.setUpdatedBy(currentUser);
+        entity.setUpdatedAt(LocalDateTime.now());
+
         IntegrationMapping saved = mappingRepository.save(entity);
 
-        log.info("Updated integration mapping: {}", saved.getId());
+        log.info("Updated integration mapping: {} by user: {}", saved.getId(), currentUser);
         return mapEntityToDto(saved);
     }
+
 
 
     @Transactional(readOnly = true)
@@ -125,12 +208,11 @@ public class IntegrationMappingService {
             throw new IllegalArgumentException("Unsupported export type: " + type);
         }
     }
-
     private byte[] convertToCSVStreamed(Specification<IntegrationMapping> spec, String sortedBy, String sortDirection) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
         try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(bos, StandardCharsets.UTF_8))) {
-            writer.println("Dynamic Route ID,Integrated API ID,Integrated API Code,Integrated API Name,Mapping Type,Data,External Key,Active,Notes");
+            writer.println("Dynamic Route ID,Integrated API ID,Integrated API Code,Integrated API Name,Mapping Type,Data,External Key,Active,Notes,Created At,Updated At,Created By,Updated By");
             writer.flush();
 
             int pageSize = 1000;
@@ -150,6 +232,8 @@ public class IntegrationMappingService {
                     return spec != null ? spec.toPredicate(root, query, criteriaBuilder) : null;
                 }, pageable);
 
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
                 for (IntegrationMapping record : page.getContent()) {
                     writer.append(escapeCsv(record.getDynamicRouteId())).append(",");
                     writer.append(String.valueOf(record.getIntegratedApiId())).append(",");
@@ -159,7 +243,11 @@ public class IntegrationMappingService {
                     writer.append(escapeCsv(record.getData())).append(",");
                     writer.append(escapeCsv(record.getExternalKey())).append(",");
                     writer.append(record.getIsActive() ? "ACTIVE" : "INACTIVE").append(",");
-                    writer.append(escapeCsv(record.getNotes())).append("\n");
+                    writer.append(escapeCsv(record.getNotes())).append(",");
+                    writer.append(record.getCreatedAt() != null ? record.getCreatedAt().format(formatter) : "").append(",");
+                    writer.append(record.getUpdatedAt() != null ? record.getUpdatedAt().format(formatter) : "").append(",");
+                    writer.append(escapeCsv(record.getCreatedBy())).append(",");
+                    writer.append(escapeCsv(record.getUpdatedBy())).append("\n");
                 }
                 writer.flush();
 
@@ -180,16 +268,17 @@ public class IntegrationMappingService {
 
         try {
             Row header = sheet.createRow(0);
-            String[] columns = {
+             String[] columns = {
                     "Dynamic Route ID", "Integrated API ID", "Integrated API Code",
                     "Integrated API Name", "Mapping Type", "Data",
-                    "External Key", "Active", "Notes"
+                    "External Key", "Active", "Notes",
+                    "Created At", "Updated At", "Created By", "Updated By"
             };
             for (int i = 0; i < columns.length; i++) {
                 header.createCell(i).setCellValue(columns[i]);
             }
 
-            int[] widths = {20, 15, 20, 25, 20, 30, 20, 10, 35};
+            int[] widths = {20, 15, 20, 25, 20, 30, 20, 10, 35, 20, 20, 25, 25};
             for (int i = 0; i < widths.length; i++) {
                 sheet.setColumnWidth(i, widths[i] * 256);
             }
@@ -199,6 +288,8 @@ public class IntegrationMappingService {
             int pageNumber = 0;
             boolean hasMore = true;
             final int MAX_CELL_LENGTH = 20000;
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
             while (hasMore) {
                 Sort sort = sortDirection.equalsIgnoreCase("asc")
@@ -224,6 +315,10 @@ public class IntegrationMappingService {
                     row.createCell(6).setCellValue(safeString(record.getExternalKey()));
                     row.createCell(7).setCellValue(record.getIsActive() ? "ACTIVE" : "INACTIVE");
                     row.createCell(8).setCellValue(truncate(record.getNotes(), MAX_CELL_LENGTH));
+                    row.createCell(9).setCellValue(record.getCreatedAt() != null ? record.getCreatedAt().format(formatter) : "");
+                    row.createCell(10).setCellValue(record.getUpdatedAt() != null ? record.getUpdatedAt().format(formatter) : "");
+                    row.createCell(11).setCellValue(safeString(record.getCreatedBy()));
+                    row.createCell(12).setCellValue(safeString(record.getUpdatedBy()));
                 }
 
                 hasMore = page.hasNext();
@@ -237,7 +332,6 @@ public class IntegrationMappingService {
             workbook.dispose();
         }
     }
-
 
     private String safeString(String value) {
         return value != null ? value : "";
@@ -274,7 +368,6 @@ public class IntegrationMappingService {
     }
 
 
-
     @Transactional
     public Map<String, Object> importFromExcel(InputStream inputStream, boolean updateExisting) throws IOException {
         Map<String, Object> result = new HashMap<>();
@@ -284,11 +377,15 @@ public class IntegrationMappingService {
         List<Map<String, Object>> errors = new ArrayList<>();
         int totalRows = 0;
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
         try (Workbook workbook = new XSSFWorkbook(inputStream)) {
             Sheet sheet = workbook.getSheetAt(0);
             int rowCount = sheet.getLastRowNum();
             totalRows = rowCount;
-            log.info("Processing {} data rows from Excel (updateExisting={})", totalRows, updateExisting);
+            log.info("Processing {} data rows from Excel (updateExisting={}) by user: {}",
+                    totalRows, updateExisting, currentUser);
 
             for (int i = 1; i <= rowCount; i++) {
                 Row row = sheet.getRow(i);
@@ -333,23 +430,35 @@ public class IntegrationMappingService {
                         IntegratedApi api = apiRepository.findById(request.getIntegratedApiId())
                                 .orElseThrow(() -> new RuntimeException("API not found"));
                         mapRequestToEntity(request, entity, api);
+
+                        entity.setUpdatedBy(currentUser);
+                        entity.setUpdatedAt(LocalDateTime.now());
+
                         IntegrationMapping savedEntity = mappingRepository.save(entity);
                         updated.add(mapEntityToDto(savedEntity));
-                        log.debug("Updated existing mapping at row {}", i + 1);
+                        log.debug("Updated existing mapping at row {} by user: {}", i + 1, currentUser);
+
                     } else if (existing.isPresent()) {
                         Map<String, Object> ignoredItem = new HashMap<>();
                         ignoredItem.put("row", i + 1);
                         ignoredItem.put("externalKey", request.getExternalKey());
                         ignoredItem.put("reason", "Already exists");
                         ignored.add(ignoredItem);
+
                     } else {
                         IntegratedApi api = apiRepository.findById(request.getIntegratedApiId())
                                 .orElseThrow(() -> new RuntimeException("API not found"));
                         IntegrationMapping entity = new IntegrationMapping();
                         mapRequestToEntity(request, entity, api);
+
+                        entity.setCreatedBy(currentUser);
+                        entity.setUpdatedBy(currentUser);
+                        entity.setCreatedAt(LocalDateTime.now());
+                        entity.setUpdatedAt(LocalDateTime.now());
+
                         IntegrationMapping savedEntity = mappingRepository.save(entity);
                         imported.add(mapEntityToDto(savedEntity));
-                        log.debug("Imported new mapping at row {}", i + 1);
+                        log.debug("Imported new mapping at row {} by user: {}", i + 1, currentUser);
                     }
 
                 } catch (Exception e) {
@@ -357,7 +466,6 @@ public class IntegrationMappingService {
                     error.put("row", i + 1);
                     error.put("error", e.getMessage());
 
-                    // Add row data for debugging
                     try {
                         IntegrationMappingRequestDto request = parseRowToRequest(row);
                         error.put("dynamicRouteId", request.getDynamicRouteId());
@@ -386,12 +494,11 @@ public class IntegrationMappingService {
         result.put("ignoredMappings", ignored);
         result.put("errorDetails", errors);
 
-        log.info("Import complete: {} imported, {} updated, {} ignored, {} errors",
-                imported.size(), updated.size(), ignored.size(), errors.size());
+        log.info("Import complete by {}: {} imported, {} updated, {} ignored, {} errors",
+                currentUser, imported.size(), updated.size(), ignored.size(), errors.size());
 
         return result;
     }
-
     private Map<String, Object> validateMappingForImport(IntegrationMappingRequestDto request) {
         Map<String, Object> validation = new HashMap<>();
         List<String> errors = new ArrayList<>();
@@ -470,13 +577,12 @@ public class IntegrationMappingService {
         if (apiId != null) {
             request.setIntegratedApiId(apiId.longValue());
         }
-        // Skip columns 2 and 3 (Integrated API Code and Name - read-only)
         request.setMappingType(getCellValueAsString(row.getCell(4)));
         request.setData(getCellValueAsString(row.getCell(5)));
-        request.setExternalKey(getCellValueAsString(row.getCell(6))); // ✅ Column 6 now (was 7)
-        String activeStr = getCellValueAsString(row.getCell(7));      // ✅ Column 7 now (was 8)
+        request.setExternalKey(getCellValueAsString(row.getCell(6)));
+        String activeStr = getCellValueAsString(row.getCell(7));
         request.setIsActive(activeStr == null || activeStr.equalsIgnoreCase("ACTIVE"));
-        request.setNotes(getCellValueAsString(row.getCell(8)));       // ✅ Column 8 now (was 9)
+        request.setNotes(getCellValueAsString(row.getCell(8)));
         return request;
     }
 
@@ -617,7 +723,6 @@ public class IntegrationMappingService {
             throw new IllegalArgumentException("Dynamic Route not found: " + dynamicRouteId);
         }
     }
-
     @Transactional
     public IntegrationMappingDto toggleActiveStatus(Long id) {
         log.info("Toggling active status for integration mapping: {}", id);
@@ -625,12 +730,19 @@ public class IntegrationMappingService {
         IntegrationMapping entity = mappingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Integration mapping not found: " + id));
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
         boolean newStatus = !entity.getIsActive();
         entity.setIsActive(newStatus);
 
+        entity.setUpdatedBy(currentUser);
+        entity.setUpdatedAt(LocalDateTime.now());
+
         IntegrationMapping saved = mappingRepository.save(entity);
 
-        log.info("Toggled integration mapping {} status to: {}", id, newStatus ? "ACTIVE" : "INACTIVE");
+        log.info("Toggled integration mapping {} status to: {} by user: {}",
+                id, newStatus ? "ACTIVE" : "INACTIVE", currentUser);
 
         return mapEntityToDto(saved);
     }
@@ -642,10 +754,17 @@ public class IntegrationMappingService {
         IntegrationMapping entity = mappingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Integration mapping not found: " + id));
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
         entity.setIsActive(true);
+
+        entity.setUpdatedBy(currentUser);
+        entity.setUpdatedAt(LocalDateTime.now());
+
         IntegrationMapping saved = mappingRepository.save(entity);
 
-        log.info("Activated integration mapping: {}", id);
+        log.info("Activated integration mapping: {} by user: {}", id, currentUser);
 
         return mapEntityToDto(saved);
     }
@@ -657,14 +776,20 @@ public class IntegrationMappingService {
         IntegrationMapping entity = mappingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Integration mapping not found: " + id));
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+
         entity.setIsActive(false);
+
+        entity.setUpdatedBy(currentUser);
+        entity.setUpdatedAt(LocalDateTime.now());
+
         IntegrationMapping saved = mappingRepository.save(entity);
 
-        log.info("Deactivated integration mapping: {}", id);
+        log.info("Deactivated integration mapping: {} by user: {}", id, currentUser);
 
         return mapEntityToDto(saved);
     }
-
     private void mapRequestToEntity(IntegrationMappingRequestDto request, IntegrationMapping entity, IntegratedApi api) {
         entity.setDynamicRouteId(request.getDynamicRouteId());
         entity.setIntegratedApi(api);
@@ -689,6 +814,8 @@ public class IntegrationMappingService {
                 .notes(entity.getNotes())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
+                 .createdBy(entity.getCreatedBy())
+                .updatedBy(entity.getUpdatedBy())
                 .build();
     }
 }

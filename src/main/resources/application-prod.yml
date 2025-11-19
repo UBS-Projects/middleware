@@ -3,7 +3,7 @@
 #
 #spring:
 #  datasource:
-#    url: jdbc:postgresql://localhost:5432/middleware_database_prod
+#    url: jdbc:postgresql://localhost:5432/middleware_prod_db
 #    username: sso
 #    password: sso@admin1
 #    driver-class-name: org.postgresql.Driver
@@ -32,8 +32,8 @@
 ##          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
 #app:
 #  security:
-#    auth-mode: keycloak  # Options: keycloak, jwt, none
-
+#    auth-mode: application  # Options: keycloak, jwt, none
+#
 ## JWT SECRET
 #jwt:
 #  secret: 1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p

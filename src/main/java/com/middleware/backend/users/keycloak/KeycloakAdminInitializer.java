@@ -70,7 +70,7 @@ public class KeycloakAdminInitializer {
             user.setEmailVerified(true);
 
             usersResource.create(user);
-            log.info("✅ Created Keycloak user: admin@mail.com");
+            log.info("Created Keycloak user: admin@mail.com");
 
             // Get created user ID
             String userId = usersResource.search("admin@mail.com", true).get(0).getId();
@@ -82,10 +82,10 @@ public class KeycloakAdminInitializer {
             passwordCred.setValue("S123@231");
 
             usersResource.get(userId).resetPassword(passwordCred);
-            log.info("✅ Set password for Keycloak user: admin@mail.com");
+            log.info("Set password for Keycloak user: admin@mail.com");
 
         } catch (Exception e) {
-            log.error("❌ Failed to initialize Keycloak admin user: {}", e.getMessage(), e);
+            log.error("Failed to initialize Keycloak admin user: {}", e.getMessage(), e);
         }
     }
 }
