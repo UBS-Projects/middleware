@@ -58,13 +58,9 @@ public class IntegratedSystemService {
      * @return the created {@link IntegratedSystemDto}, or null if a system with the same code already exists
      */
     public IntegratedSystemDto create(IntegratedSystemDto body) {
-        System.out.println("*****************************************");
-        System.out.println(body.getCode());
-        System.out.println("*****************************************");
         Optional<IntegratedSystem> exists = repo.findByCode(body.getCode());
-        if (exists.isPresent()){
-            System.out.println("*****************************************");
-            return null;}
+        if (exists.isPresent())
+            return null;
 
         IntegratedSystem entity = IntegratedSystemMapper.toEntity(body);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

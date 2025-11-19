@@ -16,8 +16,6 @@ public class IntegratedSystemMapper {
      * @return the corresponding {@link IntegratedSystemDto}, or null if the entity is null
      */
     public static IntegratedSystemDto toDto(IntegratedSystem entity) {
-        if (entity == null) return null;
-
         return IntegratedSystemDto.builder()
                 .id(entity.getId())
                 .code(entity.getCode())
@@ -47,8 +45,6 @@ public class IntegratedSystemMapper {
      * @return the corresponding {@link IntegratedSystem} entity, or null if the DTO is null
      */
     public static IntegratedSystem toEntity(IntegratedSystemDto dto) {
-        if (dto == null) return null;
-
         return IntegratedSystem.builder()
                 .id(dto.getId())
                 .code(dto.getCode())
