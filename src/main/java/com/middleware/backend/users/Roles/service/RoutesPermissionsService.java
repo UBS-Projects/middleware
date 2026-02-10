@@ -51,12 +51,21 @@ public class RoutesPermissionsService {
     }
 
     /**
-     * List all registered routes permissions as DTOs.
+     * List all registered routes permissions as DTOs with their associated roles.
      * @return HTTP 200 with a stream of {@link RoutesPermissionsDto}
      */
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(repo.findAll().stream().map(
-                RoutesPermissionMapper::mapToDto
+                route -> RoutesPermissionsDto.builder()
+                        .id(route.getId())
+                        .routeId(route.getRouteId())
+                        .roles(roleRepo.findByRoutesPermissions_Id(route.getId()).stream().map(
+                                r -> com.middleware.backend.users.Roles.dto.RoleRequest.builder()
+                                        .id(r.getId())
+                                        .roleName(r.getRoleName())
+                                        .build()
+                        ).toList())
+                        .build()
         ));
     }
     @Transactional

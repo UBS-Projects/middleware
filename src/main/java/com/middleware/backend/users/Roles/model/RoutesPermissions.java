@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
  * Route permission entity representing access to a dynamic route.
  * Each record links a route identifier to a set of roles.
@@ -25,7 +23,5 @@ public class RoutesPermissions {
     private Long id;
     /** unique route identifier used in authorization checks. */
     private String routeId;
-    @ManyToMany(mappedBy = "routesPermissions", fetch = FetchType.EAGER)
-    private List<Role> roles;
 }
 

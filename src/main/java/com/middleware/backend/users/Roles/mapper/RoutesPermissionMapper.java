@@ -11,33 +11,24 @@ import com.middleware.backend.users.Roles.model.RoutesPermissions;
 public class RoutesPermissionMapper {
         /**
          * Maps a DTO to the entity, projecting roles by id and name only.
+         * Note: roles field removed from entity to prevent N+1 queries.
          */
         public static RoutesPermissions mapToEntity(RoutesPermissionsDto route){
         return RoutesPermissions.builder()
                 .id(route.getId())
                 .routeId(route.getRouteId())
-                .roles(route.getRoles().stream().map(
-                                r1 -> Role.builder()
-                                        .id(r1.getId())
-                                        .roleName(r1.getRoleName())
-                                        .build()
-                        ).toList())
                 .build();
     }
 
         /**
          * Maps the entity to a DTO, exposing basic role fields.
+         * Roles must be fetched separately from RoleRepository.
          */
         public static RoutesPermissionsDto mapToDto(RoutesPermissions route){
         return RoutesPermissionsDto.builder()
                 .id(route.getId())
                 .routeId(route.getRouteId())
-                .roles(route.getRoles().stream().map(
-                        r1 -> RoleRequest.builder()
-                                .id(r1.getId())
-                                .roleName(r1.getRoleName())
-                                .build()
-                ).toList())
+                .roles(java.util.Collections.emptyList())
                 .build();
     }
 }
