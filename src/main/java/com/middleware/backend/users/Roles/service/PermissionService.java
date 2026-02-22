@@ -41,7 +41,7 @@ public class PermissionService {
                 per -> PermissionsDTO.builder()
                         .id(per.getId())
                         .name(per.getName())
-                        .roles(per.getRoles().stream().map(
+                        .roles(roleRepo.findByPermissions_Id(per.getId()).stream().map(
                                 r -> RoleRequest.builder()
                                         .id(r.getId())
                                         .roleName(r.getRoleName())
