@@ -24,6 +24,12 @@ public class AttributeGroupDto {
     private String attName;
 
     /**
+     * The attribute code from DHIS2
+     * Example: "ICU", "EMERGENCY"
+     */
+    private String code;
+
+    /**
      * List of attributes belonging to this attribute group
      */
     @Builder.Default

@@ -221,7 +221,16 @@ public class MiddlewareProcessorService {
 
             if (api.getType() == IntegratedApi.ApiType.ANALYTICS) {
                 AnalyticsResponseDto analytics = (AnalyticsResponseDto) response.get("data");
-                AnalyticsDataExtractor extractor = new AnalyticsDataExtractor(analytics);
+                
+                // Fetch categoryOption codes from DHIS2 for attribute dimensions
+                Set<String> attributeIds = dhis2Client.extractAttributeIdsFromApiUrl(api.getApiUrl());
+                Map<String, String> categoryOptionCodes = new HashMap<>();
+                if (!attributeIds.isEmpty()) {
+                    categoryOptionCodes = dhis2Client.fetchCategoryOptionCodes(systemCode, attributeIds);
+                    log.debug("Fetched {} categoryOption codes for API: {}", categoryOptionCodes.size(), api.getCode());
+                }
+                
+                AnalyticsDataExtractor extractor = new AnalyticsDataExtractor(analytics, categoryOptionCodes);
 
                 for (IntegrationMapping mapping : apiMappings) {
                     processMappingGroupedByOuPeriodAndAttName(
@@ -285,21 +294,23 @@ public class MiddlewareProcessorService {
                 List<AttributeWithAttName> attributesWithAttName =
                         extractValuesWithAttributesAndAttName(mapping, extractor, ou, period);
 
-                // Group attributes by attName
-                Map<String, List<AttributeDto>> groupedByAttName = attributesWithAttName.stream()
-                        .collect(Collectors.groupingBy(
-                                attr -> attr.attName != null ? attr.attName : "default",
-                                LinkedHashMap::new,
-                                Collectors.mapping(
-                                        attr -> attr.attribute,
-                                        Collectors.toList()
-                                )
-                        ));
+                // Group attributes by attName - keep attCode info
+                Map<String, AttributeGroupInfo> groupedByAttName = new LinkedHashMap<>();
+                
+                for (AttributeWithAttName attr : attributesWithAttName) {
+                    String attName = attr.attName != null ? attr.attName : "default";
+                    String attCode = attr.attCode;
+                    
+                    groupedByAttName.computeIfAbsent(attName, k -> 
+                        new AttributeGroupInfo(attName, attCode)
+                    ).attributes.add(attr.attribute);
+                }
 
                 // Add or merge attribute groups
-                for (Map.Entry<String, List<AttributeDto>> attNameEntry : groupedByAttName.entrySet()) {
-                    String attName = attNameEntry.getKey();
-                    List<AttributeDto> attributes = attNameEntry.getValue();
+                for (AttributeGroupInfo groupInfo : groupedByAttName.values()) {
+                    String attName = groupInfo.attName;
+                    String attCode = groupInfo.attCode;
+                    List<AttributeDto> attributes = groupInfo.attributes;
 
                     // Find existing attribute group or create new one
                     AttributeGroupDto existingGroup = periodData.getAttributeGroups().stream()
@@ -311,9 +322,10 @@ public class MiddlewareProcessorService {
                         // Merge into existing group
                         existingGroup.getAttributes().addAll(attributes);
                     } else {
-                        // Create new group
+                        // Create new group with code
                         AttributeGroupDto newGroup = AttributeGroupDto.builder()
                                 .attName(attName)
+                                .code(attCode)
                                 .attributes(new ArrayList<>(attributes))
                                 .build();
                         periodData.getAttributeGroups().add(newGroup);
@@ -324,15 +336,32 @@ public class MiddlewareProcessorService {
     }
 
     /**
-     * Helper class to temporarily store attribute with its attName
+     * Helper class to temporarily store attribute with its attName and attCode
      */
     private static class AttributeWithAttName {
         AttributeDto attribute;
         String attName;
+        String attCode;
 
-        AttributeWithAttName(AttributeDto attribute, String attName) {
+        public AttributeWithAttName(AttributeDto attribute, String attName, String attCode) {
             this.attribute = attribute;
             this.attName = attName;
+            this.attCode = attCode;
+        }
+    }
+
+    /**
+     * Helper class to group attributes by attName and preserve the code
+     */
+    private static class AttributeGroupInfo {
+        String attName;
+        String attCode;
+        List<AttributeDto> attributes;
+
+        public AttributeGroupInfo(String attName, String attCode) {
+            this.attName = attName;
+            this.attCode = attCode;
+            this.attributes = new ArrayList<>();
         }
     }
 
@@ -348,7 +377,7 @@ public class MiddlewareProcessorService {
         List<AttributeWithAttName> results = new ArrayList<>();
 
         if (extractor.hasAttributeDimension()) {
-            // Has attribute dimension - extract with attName
+            // Has attribute dimension - extract with attName and attCode
             Map<String, Object> attributeValues = extractor.getValuesWithAttribute(
                     mapping.getData(), ou, period
             );
@@ -357,13 +386,14 @@ public class MiddlewareProcessorService {
                 String attributeId = entry.getKey();
                 Object value = entry.getValue();
                 String attName = extractor.getAttributeName(attributeId);
+                String attCode = extractor.getAttributeCode(attributeId);
 
                 AttributeDto attr = new AttributeDto(
                         mapping.getExternalKey(),
                         value
                 );
 
-                results.add(new AttributeWithAttName(attr, attName));
+                results.add(new AttributeWithAttName(attr, attName, attCode));
             }
         } else {
             // No attribute dimension - use default
@@ -374,7 +404,7 @@ public class MiddlewareProcessorService {
                         value
                 );
 
-                results.add(new AttributeWithAttName(attr, "default"));
+                results.add(new AttributeWithAttName(attr, "default", null));
             }
         }
 
@@ -410,9 +440,11 @@ public class MiddlewareProcessorService {
         private final Map<String, Map<String, Map<String, Object>>> valueIndex;
         private final Integer attributeIndex;
         private final String attributeDimensionName;
+        private final Map<String, String> categoryOptionCodes; // ID -> CODE mapping from DHIS2
 
-        public AnalyticsDataExtractor(AnalyticsResponseDto analytics) {
+        public AnalyticsDataExtractor(AnalyticsResponseDto analytics, Map<String, String> categoryOptionCodes) {
             this.analytics = analytics;
+            this.categoryOptionCodes = categoryOptionCodes != null ? categoryOptionCodes : new HashMap<>();
             this.headerIndexes = buildHeaderIndexes();
             this.attributeIndex = findAttributeIndex();
             this.attributeDimensionName = findAttributeDimensionName();
@@ -471,6 +503,23 @@ public class MiddlewareProcessorService {
                 return item != null ? item.getName() : attributeId;
             }
             return attributeId;
+        }
+
+        public String getAttributeCode(String attributeId) {
+            // First, try to get code from categoryOptionCodes map (fetched from DHIS2)
+            if (categoryOptionCodes.containsKey(attributeId)) {
+                return categoryOptionCodes.get(attributeId);
+            }
+            // Fallback to metaData.items (usually doesn't have code)
+            if (analytics.getMetaData() != null &&
+                    analytics.getMetaData().getItems() != null) {
+                ItemDto item = analytics.getMetaData().getItems().get(attributeId);
+                if (item != null && item.getCode() != null) {
+                    return item.getCode();
+                }
+            }
+            // Return null if no code found (instead of ID)
+            return null;
         }
 
         public Map<String, Object> getValuesWithAttribute(String dx, String ou, String period) {

@@ -508,4 +508,122 @@ public class Dhis2ClientService {
         }
         return peId;
     }
+
+    /**
+     * Fetch categoryOption codes from DHIS2 for given IDs
+     * Calls: /api/categoryOptions.json?filter=id:in:[ids]&fields=id,name,code&paging=false
+     * 
+     * @param systemCode The integrated system code (e.g., DHIS2.DWH)
+     * @param categoryOptionIds Set of categoryOption IDs to fetch codes for
+     * @return Map of categoryOption ID to code
+     */
+    public Map<String, String> fetchCategoryOptionCodes(String systemCode, Set<String> categoryOptionIds) {
+        Map<String, String> idToCodeMap = new HashMap<>();
+        
+        if (categoryOptionIds == null || categoryOptionIds.isEmpty()) {
+            return idToCodeMap;
+        }
+        
+        try {
+            IntegratedSystemDto dto = service.getById(systemCode);
+            if (dto == null) {
+                log.warn("No DHIS2 config found for systemCode: {}", systemCode);
+                return idToCodeMap;
+            }
+            
+            String baseUrl = dto.getProtocol() + "://" + dto.getHost();
+            HttpHeaders headers = createAuthHeaders(dto);
+            
+            // Build filter: id:in:[id1,id2,id3]
+            String idsJoined = String.join(",", categoryOptionIds);
+            String apiUrl = "/api/categoryOptions.json?filter=id:in:[" + idsJoined + "]&fields=id,name,code&paging=false";
+            
+            String fullUrl = baseUrl + apiUrl;
+            
+            log.debug("Fetching categoryOption codes from: {}", fullUrl);
+            
+            disableSSLVerification();
+            
+            ResponseEntity<String> response = restTemplate.exchange(
+                    fullUrl,
+                    HttpMethod.GET,
+                    new HttpEntity<>(headers),
+                    String.class
+            );
+            
+            // Parse response
+            if (response.getBody() != null) {
+                Map<String, Object> parsed = objectMapper.readValue(response.getBody(), Map.class);
+                List<Map<String, Object>> categoryOptions = (List<Map<String, Object>>) parsed.get("categoryOptions");
+                
+                if (categoryOptions != null) {
+                    for (Map<String, Object> option : categoryOptions) {
+                        String id = (String) option.get("id");
+                        String code = (String) option.get("code");
+                        if (id != null && code != null) {
+                            idToCodeMap.put(id, code);
+                        }
+                    }
+                }
+            }
+            
+            log.info("Fetched {} categoryOption codes from DHIS2 (systemCode: {})", 
+                    idToCodeMap.size(), systemCode);
+            
+        } catch (Exception e) {
+            log.error("Error fetching categoryOption codes: {}", e.getMessage());
+        }
+        
+        return idToCodeMap;
+    }
+
+    /**
+     * Extract attribute dimension IDs from API URL
+     * Example: dimension=UedUhlkhYWX:KG7l26av4v5;M0TzDNQdeju;NDWlje7qHvH
+     * Returns: Set of [KG7l26av4v5, M0TzDNQdeju, NDWlje7qHvH]
+     */
+    public Set<String> extractAttributeIdsFromApiUrl(String apiUrl) {
+        Set<String> attributeIds = new HashSet<>();
+        
+        if (apiUrl == null || apiUrl.isEmpty()) {
+            return attributeIds;
+        }
+        
+        try {
+            // Decode URL if needed
+            String decodedUrl = decodeUrlIfNeeded(apiUrl);
+            
+            // Find all dimension parameters
+            String[] parts = decodedUrl.split("[?&]");
+            for (String part : parts) {
+                if (part.startsWith("dimension=")) {
+                    String dimValue = part.substring("dimension=".length());
+                    String[] dimParts = dimValue.split(":", 2);
+                    
+                    if (dimParts.length == 2) {
+                        String dimKey = dimParts[0];
+                        String dimValues = dimParts[1];
+                        
+                        // Skip dx, ou, pe - these are not attribute dimensions
+                        if (!dimKey.equals("dx") && !dimKey.equals("ou") && !dimKey.equals("pe")) {
+                            // This is an attribute dimension - extract the IDs
+                            String[] ids = dimValues.split(";");
+                            for (String id : ids) {
+                                if (id != null && !id.trim().isEmpty()) {
+                                    attributeIds.add(id.trim());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            log.debug("Extracted {} attribute IDs from API URL", attributeIds.size());
+            
+        } catch (Exception e) {
+            log.warn("Error extracting attribute IDs from URL: {}", e.getMessage());
+        }
+        
+        return attributeIds;
+    }
 }
