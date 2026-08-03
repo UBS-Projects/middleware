@@ -1,7 +1,7 @@
 package com.middleware.backend.users.config;
 
-import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
-import com.middleware.backend.kaotocamel.service.DynamicRouteService;
+import com.middleware.backend.camel.model.DynamicRouteEntity;
+import com.middleware.backend.camel.service.DynamicRouteService;
 import com.middleware.backend.users.tokens.repository.TokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,8 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.apache.camel.util.AntPathMatcher;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

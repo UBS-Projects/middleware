@@ -978,9 +978,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:44:28 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:44:29 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:44:29 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:44:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:44:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:44:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:44:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:44:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:44:29 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:44:29 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[167ms]
 2025-11-25 15:44:29 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -989,7 +989,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:44:53 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:44:54 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/create, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:44:54 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/create", parameters={}
-2025-11-25 15:44:54 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#create(String, String)
+2025-11-25 15:44:54 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#create(String, String)
 2025-11-25 15:44:54 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: "test for   ai project "<EOL>    description: "aiiiiii"<EOL>    from:<EOL>      uri: rest:post: (truncated)..."]
 2025-11-25 15:44:54 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'text/plain', given [*/*] and supported [text/plain, */*, application/json, application/*+json, application/yaml]
 2025-11-25 15:44:54 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing ["Route ID contains invalid characters. Use only letters, numbers, underscore and hyphen."]
@@ -1009,18 +1009,18 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:44:55 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:44:56 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:44:56 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:44:56 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:44:56 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:44:56 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:44:56 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:44:56 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:44:56 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:44:56 [http-nio-8081-exec-1] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[165ms]
 2025-11-25 15:44:56 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:44:59 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:44:59 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:44:59 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:44:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:44:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:44:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:44:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:44:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:44:59 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:44:59 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[69ms]
 2025-11-25 15:44:59 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1029,9 +1029,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:45:29 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:45:29 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:45:29 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:45:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:45:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:45:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:45:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:45:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:45:29 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:45:29 [http-nio-8081-exec-2] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[138ms]
 2025-11-25 15:45:29 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1040,9 +1040,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:45:59 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:45:59 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:45:59 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:45:59 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:45:59 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:45:59 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:45:59 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:45:59 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:45:59 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:45:59 [http-nio-8081-exec-7] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[67ms]
 2025-11-25 15:45:59 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1051,27 +1051,27 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:46:26 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:46:26 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=asc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:46:26 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=asc", parameters={masked}
-2025-11-25 15:46:26 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:46:26 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:46:26 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:46:26 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:46:26 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:46:26 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:46:26 [http-nio-8081-exec-9] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[160ms]
 2025-11-25 15:46:26 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=asc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:46:27 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:46:27 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:46:27 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:46:27 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:46:27 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:46:27 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:46:27 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:46:27 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:46:27 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:46:27 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[63ms]
 2025-11-25 15:46:27 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:46:29 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:46:29 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:46:29 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:46:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:46:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:46:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:46:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:46:29 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:46:29 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:46:29 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[55ms]
 2025-11-25 15:46:29 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1080,7 +1080,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:46:48 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:46:48 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/create, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:46:48 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/create", parameters={}
-2025-11-25 15:46:48 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#create(String, String)
+2025-11-25 15:46:48 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#create(String, String)
 2025-11-25 15:46:48 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: "aiiiii"<EOL>    description: "aiiiii"<EOL>    from:<EOL>      uri: rest:post:/api/aiiiii<EOL>      (truncated)..."]
 2025-11-25 15:46:49 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - found 0 versions
 2025-11-25 15:46:49 [http-nio-8081-exec-3] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -1123,18 +1123,18 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:46:50 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:46:50 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:46:50 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:46:50 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:46:50 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:46:50 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:46:50 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:46:50 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:46:50 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:46:50 [http-nio-8081-exec-1] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[53ms]
 2025-11-25 15:46:50 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:46:59 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:46:59 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:46:59 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:46:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:46:59 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:47:00 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:47:00 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:47:00 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:47:00 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:47:00 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[178ms]
 2025-11-25 15:47:00 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1143,9 +1143,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:47:29 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:47:29 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:47:29 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:47:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:47:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:47:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:47:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:47:29 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:47:29 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:47:29 [http-nio-8081-exec-2] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[87ms]
 2025-11-25 15:47:29 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1154,9 +1154,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:48:02 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:48:02 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:48:02 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:48:02 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:48:02 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:48:02 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:48:02 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:48:02 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:48:02 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:48:02 [http-nio-8081-exec-7] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[71ms]
 2025-11-25 15:48:02 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1167,9 +1167,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:49:02 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:49:02 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:49:02 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:49:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:49:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:49:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:49:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:49:02 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:49:02 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:49:02 [http-nio-8081-exec-5] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[47ms]
 2025-11-25 15:49:02 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1180,9 +1180,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:50:02 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:50:02 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:50:02 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:50:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:50:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:50:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:50:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:50:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:50:02 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:50:02 [http-nio-8081-exec-9] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[67ms]
 2025-11-25 15:50:02 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1193,9 +1193,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:51:02 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:51:02 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:51:02 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:51:02 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:51:02 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:51:02 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:51:02 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:51:02 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:51:02 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:51:02 [http-nio-8081-exec-6] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[79ms]
 2025-11-25 15:51:02 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1206,9 +1206,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:52:02 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:52:02 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:52:02 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:52:02 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:52:02 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:52:02 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:52:02 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:52:02 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:52:02 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:52:02 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[50ms]
 2025-11-25 15:52:02 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1219,9 +1219,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:53:02 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:53:02 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:53:02 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:53:02 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:53:02 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:53:02 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:53:02 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:53:02 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:53:02 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:53:02 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[66ms]
 2025-11-25 15:53:02 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1230,9 +1230,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:53:29 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:53:29 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:53:29 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:53:29 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:53:29 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:53:29 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:53:29 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:53:29 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:53:29 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:53:29 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[74ms]
 2025-11-25 15:53:29 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1241,7 +1241,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:53:46 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:53:46 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/create, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:53:46 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/create", parameters={}
-2025-11-25 15:53:46 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#create(String, String)
+2025-11-25 15:53:46 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#create(String, String)
 2025-11-25 15:53:46 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: "my-new-testforAi"<EOL>    description: "New route description"<EOL>    from:<EOL>      uri: re (truncated)..."]
 2025-11-25 15:53:46 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - found 0 versions
 2025-11-25 15:53:46 [http-nio-8081-exec-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -1282,18 +1282,18 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:53:47 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:53:47 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:53:47 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:53:47 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:53:47 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:53:47 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:53:47 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:53:47 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:53:47 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:53:47 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[64ms]
 2025-11-25 15:53:47 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:53:59 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:53:59 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:53:59 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:53:59 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:53:59 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:53:59 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:53:59 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:53:59 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:53:59 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:53:59 [http-nio-8081-exec-2] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[67ms]
 2025-11-25 15:53:59 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1302,9 +1302,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:54:29 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:54:29 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:54:29 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:54:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:54:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:54:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:54:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:54:29 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:54:29 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:54:29 [http-nio-8081-exec-7] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[72ms]
 2025-11-25 15:54:29 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1313,9 +1313,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:55:02 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:55:02 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:55:02 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc", parameters={masked}
-2025-11-25 15:55:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:55:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:55:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:55:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:55:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:55:02 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:55:02 [http-nio-8081-exec-9] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[85ms]
 2025-11-25 15:55:02 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=createdAt&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1324,9 +1324,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:55:10 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:55:10 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:55:10 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:55:10 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:55:10 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:55:10 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:55:10 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:55:10 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:55:10 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:55:10 [http-nio-8081-exec-6] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[76ms]
 2025-11-25 15:55:10 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1335,9 +1335,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:55:40 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:55:40 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:55:40 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:55:40 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:55:40 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:55:40 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:55:40 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:55:40 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:55:40 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:55:40 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[61ms]
 2025-11-25 15:55:40 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1346,9 +1346,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:56:10 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:56:10 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:56:10 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:56:10 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:56:10 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:56:10 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:56:10 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:56:10 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:56:10 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:56:10 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[145ms]
 2025-11-25 15:56:10 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1357,9 +1357,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:56:41 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:56:41 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:56:41 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:56:41 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:56:41 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:56:42 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:56:42 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:56:42 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:56:42 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:56:42 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[82ms]
 2025-11-25 15:56:42 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1368,7 +1368,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:57:17 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:57:18 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/create, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:57:18 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/create", parameters={}
-2025-11-25 15:57:18 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#create(String, String)
+2025-11-25 15:57:18 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#create(String, String)
 2025-11-25 15:57:18 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: "xxxxxxxxxx"<EOL>    description: "New route xxxxxxxxxx"<EOL>    from:<EOL>      uri: rest:post (truncated)..."]
 2025-11-25 15:57:18 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - found 0 versions
 2025-11-25 15:57:18 [http-nio-8081-exec-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -1409,9 +1409,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:57:18 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:57:18 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:57:18 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:57:18 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:57:18 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:57:18 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:57:18 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:57:18 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:57:18 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:57:18 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[62ms]
 2025-11-25 15:57:18 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1420,9 +1420,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:57:41 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:57:41 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:57:41 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:57:41 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:57:41 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:57:42 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:57:42 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:57:42 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:57:42 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:57:42 [http-nio-8081-exec-2] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[234ms]
 2025-11-25 15:57:42 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1431,9 +1431,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:58:11 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:58:11 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:58:11 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:58:11 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:58:11 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:58:11 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:58:11 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:58:11 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:58:11 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:58:11 [http-nio-8081-exec-7] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[131ms]
 2025-11-25 15:58:11 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1442,9 +1442,9 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2025-11-25 15:58:44 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-25 15:58:45 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-25 15:58:45 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-25 15:58:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-25 15:58:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-25 15:58:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-25 15:58:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-25 15:58:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-25 15:58:45 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-25 15:58:45 [http-nio-8081-exec-5] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[74ms]
 2025-11-25 15:58:45 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -2933,13 +2933,13 @@ Caused by: java.net.ConnectException: Connection timed out: connect
 2026-02-22 14:32:05 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-22 14:32:05 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-22 14:32:05 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2026-02-22 14:32:05 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2026-02-22 14:32:05 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2026-02-22 14:32:05 [http-nio-8081-exec-3] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
 	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
 	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
 
 2026-02-22 14:32:05 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2026-02-22 14:32:05 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2026-02-22 14:32:05 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2026-02-22 14:32:05 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2026-02-22 14:32:05 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[226ms]
 2026-02-22 14:32:05 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -2948,9 +2948,9 @@ Caused by: java.net.ConnectException: Connection timed out: connect
 2026-02-22 14:32:35 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-22 14:32:35 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-22 14:32:35 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2026-02-22 14:32:35 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2026-02-22 14:32:35 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2026-02-22 14:32:36 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2026-02-22 14:32:36 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2026-02-22 14:32:36 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2026-02-22 14:32:36 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2026-02-22 14:32:36 [http-nio-8081-exec-7] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[223ms]
 2026-02-22 14:32:36 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -4771,7 +4771,7 @@ org.springframework.transaction.CannotCreateTransactionException: Could not open
 	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService$$SpringCGLIB$$0.syncRouteStatuses(<generated>)
+	at com.middleware.backend.camel.service.DynamicRouteService$$SpringCGLIB$$0.syncRouteStatuses(<generated>)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)

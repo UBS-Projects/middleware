@@ -516,13 +516,13 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 08:25:28 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 08:25:28 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/mapping-types", parameters={}
 2025-11-09 08:25:28 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?size=1000&isActive=true", parameters={masked}
-2025-11-09 08:25:28 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
-2025-11-09 08:25:28 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMappingTypes()
+2025-11-09 08:25:28 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 08:25:28 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#getMappingTypes()
 2025-11-09 08:25:28 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 08:25:28 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, INDICATOR]]
 2025-11-09 08:25:28 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 08:25:28 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 08:25:28 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 08:25:28 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 08:25:28 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 08:25:28 [http-nio-8081-exec-9] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings/mapping-types]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[5ms]
 2025-11-09 08:25:28 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -540,7 +540,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 08:25:28 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 08:25:28 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 08:25:28 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 08:25:28 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 08:25:28 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 08:25:28 [http-nio-8081-exec-1] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 08:25:28 [http-nio-8081-exec-1] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: null, integratedApiId: null, mappingType: null
 2025-11-09 08:25:28 [http-nio-8081-exec-1] DEBUG c.m.b.k.s.IntegrationMappingService - Found 0 results out of 0 total
@@ -4139,13 +4139,13 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:30:41 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:30:41 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=finaluser@mail.com]
 2025-11-09 09:30:41 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-09 09:30:41 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-09 09:30:41 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-09 09:30:41 [http-nio-8081-exec-8] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
 	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
 	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
 
 2025-11-09 09:30:41 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 09:30:41 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-09 09:30:41 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-09 09:30:41 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 09:30:41 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[finaluser@mail.com]; time=[134ms]
 2025-11-09 09:30:41 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=finaluser@mail.com]
@@ -4344,14 +4344,14 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:51:15 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:51:15 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:15 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?page=0&size=10", parameters={masked}
-2025-11-09 09:51:15 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 09:51:15 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2025-11-09 09:51:15 [http-nio-8081-exec-6] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 09:51:15 [http-nio-8081-exec-6] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2025-11-09 09:51:15 [http-nio-8081-exec-6] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
 2025-11-09 09:51:15 [http-nio-8081-exec-6] DEBUG c.m.b.k.c.IntegratedApiController - Final sort object: id: DESC
 2025-11-09 09:51:15 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:15 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 09:51:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 09:51:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 09:51:15 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-system/codes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:15 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-system/codes", parameters={}
 2025-11-09 09:51:15 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.integrated_systems.controller.IntegratedSystemController#getAllCodes()
@@ -4381,22 +4381,22 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:51:19 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:51:19 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:19 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 09:51:19 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 09:51:19 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 09:51:19 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
 2025-11-09 09:51:19 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:19 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?size=1000&isActive=true", parameters={masked}
-2025-11-09 09:51:19 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 09:51:19 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2025-11-09 09:51:19 [http-nio-8081-exec-4] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 09:51:19 [http-nio-8081-exec-4] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2025-11-09 09:51:19 [http-nio-8081-exec-4] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
 2025-11-09 09:51:19 [http-nio-8081-exec-4] DEBUG c.m.b.k.c.IntegratedApiController - Final sort object: id: DESC
 2025-11-09 09:51:19 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:19 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 09:51:19 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 09:51:19 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 09:51:19 [http-nio-8081-exec-9] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 09:51:19 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:19 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/mapping-types", parameters={}
-2025-11-09 09:51:19 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMappingTypes()
+2025-11-09 09:51:19 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#getMappingTypes()
 2025-11-09 09:51:19 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 09:51:19 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, INDICATOR]]
 2025-11-09 09:51:19 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -4426,11 +4426,11 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:51:22 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:51:23 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:23 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 09:51:23 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 09:51:23 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 09:51:23 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
 2025-11-09 09:51:23 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:23 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?page=0&size=10", parameters={masked}
-2025-11-09 09:51:23 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 09:51:23 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2025-11-09 09:51:23 [http-nio-8081-exec-6] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 09:51:23 [http-nio-8081-exec-6] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2025-11-09 09:51:23 [http-nio-8081-exec-6] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
@@ -4458,7 +4458,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:51:24 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:51:24 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:24 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 09:51:24 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 09:51:24 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 09:51:24 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
 2025-11-09 09:51:24 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Found 2 active routes
 2025-11-09 09:51:24 [http-nio-8081-exec-2] INFO  c.m.b.k.c.DynamicRouteController - Returning 2 routes for dropdown
@@ -4470,7 +4470,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:51:38 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:51:39 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/integrated-apis, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:39 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/integrated-apis", parameters={}
-2025-11-09 09:51:39 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#create(IntegratedApiRequestDto)
+2025-11-09 09:51:39 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#create(IntegratedApiRequestDto)
 2025-11-09 09:51:39 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [IntegratedApiRequestDto(code=re, name=r, apiUrl=/api/analytics.json?dimension=dx:t&dimension=ou:t&di (truncated)...]
 2025-11-09 09:51:39 [http-nio-8081-exec-7] INFO  c.m.b.k.service.IntegratedApiService - Creating integrated API with code: re
 2025-11-09 09:51:39 [http-nio-8081-exec-7] INFO  c.m.b.k.service.IntegratedApiService - Created integrated API: re (ID: 1)
@@ -4484,13 +4484,13 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:51:39 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?page=0&size=10", parameters={masked}
-2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
 2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG c.m.b.k.c.IntegratedApiController - Final sort object: id: DESC
 2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[101ms]
 2025-11-09 09:51:40 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -4508,22 +4508,22 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:51:45 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:51:45 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:45 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 09:51:45 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 09:51:45 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 09:51:45 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
 2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?size=1000&isActive=true", parameters={masked}
-2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
 2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG c.m.b.k.c.IntegratedApiController - Final sort object: id: DESC
 2025-11-09 09:51:45 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:45 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 09:51:45 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 09:51:45 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 09:51:45 [http-nio-8081-exec-1] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 09:51:45 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:45 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/mapping-types", parameters={}
-2025-11-09 09:51:45 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMappingTypes()
+2025-11-09 09:51:45 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#getMappingTypes()
 2025-11-09 09:51:45 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 09:51:45 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, INDICATOR]]
 2025-11-09 09:51:45 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -4538,7 +4538,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:51:45 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:45 [http-nio-8081-exec-1] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: null, integratedApiId: null, mappingType: null
 2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[70ms]
 2025-11-09 09:51:45 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -4553,7 +4553,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:51:56 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:51:56 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/integration-mappings, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:56 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/integration-mappings", parameters={}
-2025-11-09 09:51:56 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#create(IntegrationMappingRequestDto)
+2025-11-09 09:51:56 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#create(IntegrationMappingRequestDto)
 2025-11-09 09:51:56 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [IntegrationMappingRequestDto(dynamicRouteId=my-new-route, integratedApiId=1, mappingType=DATA_ELEMEN (truncated)...]
 2025-11-09 09:51:57 [http-nio-8081-exec-2] INFO  c.m.b.k.s.IntegrationMappingService - Creating integration mapping for Dynamic Route: my-new-route
 2025-11-09 09:51:57 [http-nio-8081-exec-2] INFO  c.m.b.k.s.IntegrationMappingService - Created integration mapping: my-new-route -> t
@@ -4567,7 +4567,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:51:57 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:51:57 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:57 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 09:51:57 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 09:51:57 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 09:51:57 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
 2025-11-09 09:51:57 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Found 2 active routes
 2025-11-09 09:51:57 [http-nio-8081-exec-7] INFO  c.m.b.k.c.DynamicRouteController - Returning 2 routes for dropdown
@@ -4578,19 +4578,19 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:51:57 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:57 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:57 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 09:51:57 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 09:51:57 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 09:51:57 [http-nio-8081-exec-5] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 09:51:57 [http-nio-8081-exec-5] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: null, integratedApiId: null, mappingType: null
 2025-11-09 09:51:57 [http-nio-8081-exec-5] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 09:51:57 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 09:51:57 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 09:51:57 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 09:51:57 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 09:51:57 [http-nio-8081-exec-5] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[80ms]
 2025-11-09 09:51:57 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:59 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:51:59 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/export?type=Excel, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:51:59 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/export?type=Excel", parameters={masked}
-2025-11-09 09:51:59 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#exportMappings(String)
+2025-11-09 09:51:59 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#exportMappings(String)
 2025-11-09 09:51:59 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 09:51:59 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[IntegrationMappingDto(id=1, dynamicRouteId=my-new-route, integratedApiId=1, integratedApiCode=re, i (truncated)...]
 2025-11-09 09:51:59 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -4601,7 +4601,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:52:09 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:52:09 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:52:09 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?page=0&size=10", parameters={masked}
-2025-11-09 09:52:09 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 09:52:09 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2025-11-09 09:52:09 [http-nio-8081-exec-6] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 09:52:09 [http-nio-8081-exec-6] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2025-11-09 09:52:09 [http-nio-8081-exec-6] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
@@ -4611,12 +4611,12 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:52:09 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.integrated_systems.controller.IntegratedSystemController#getAllCodes()
 2025-11-09 09:52:09 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:52:09 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 09:52:09 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 09:52:09 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 09:52:09 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
 2025-11-09 09:52:09 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 09:52:09 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 09:52:09 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[DHIS2.DWH, DHIS2.STABLE]]
-2025-11-09 09:52:09 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-11-09 09:52:09 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2025-11-09 09:52:09 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 09:52:09 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 09:52:09 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-system/codes]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[76ms]
@@ -4633,7 +4633,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:52:11 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:52:11 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/export/EXCEL, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:52:11 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/export/EXCEL", parameters={}
-2025-11-09 09:52:11 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#exportFile(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, String)
+2025-11-09 09:52:11 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#exportFile(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, String)
 2025-11-09 09:52:12 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Found 'Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' in response
 2025-11-09 09:52:12 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{80, 75, 3, 4, 45, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 91, 6 (truncated)...]
 2025-11-09 09:52:12 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -4647,20 +4647,20 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:52:19 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:52:19 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:52:19 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 09:52:19 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 09:52:19 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 09:52:19 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
 2025-11-09 09:52:19 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:52:19 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 09:52:19 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 09:52:19 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 09:52:19 [http-nio-8081-exec-3] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 09:52:19 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:52:19 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/mapping-types", parameters={}
-2025-11-09 09:52:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMappingTypes()
+2025-11-09 09:52:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#getMappingTypes()
 2025-11-09 09:52:19 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:52:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 09:52:19 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?size=1000&isActive=true", parameters={masked}
 2025-11-09 09:52:19 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, INDICATOR]]
-2025-11-09 09:52:19 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 09:52:19 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2025-11-09 09:52:19 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 09:52:19 [http-nio-8081-exec-5] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings/mapping-types]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[0ms]
 2025-11-09 09:52:19 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -4678,19 +4678,19 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:52:19 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:52:20 [http-nio-8081-exec-3] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 09:52:20 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 09:52:20 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 09:52:20 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 09:52:20 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 09:52:20 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[73ms]
 2025-11-09 09:52:20 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:52:20 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 09:52:20 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-11-09 09:52:20 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2025-11-09 09:52:20 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 09:52:20 [http-nio-8081-exec-2] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[63ms]
 2025-11-09 09:52:20 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:52:31 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:52:31 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/export?type=Excel, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:52:31 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/export?type=Excel", parameters={masked}
-2025-11-09 09:52:31 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#exportMappings(String)
+2025-11-09 09:52:31 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#exportMappings(String)
 2025-11-09 09:52:31 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 09:52:31 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[IntegrationMappingDto(id=1, dynamicRouteId=my-new-route, integratedApiId=1, integratedApiCode=re, i (truncated)...]
 2025-11-09 09:52:31 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -4715,7 +4715,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:56:46 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:56:47 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/export?type=CSV, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:56:47 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/export?type=CSV", parameters={masked}
-2025-11-09 09:56:47 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#exportMappings(String)
+2025-11-09 09:56:47 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#exportMappings(String)
 2025-11-09 09:56:47 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 09:56:47 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[IntegrationMappingDto(id=1, dynamicRouteId=my-new-route, integratedApiId=1, integratedApiCode=re, i (truncated)...]
 2025-11-09 09:56:47 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -4739,12 +4739,12 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:59:08 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:59:08 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?size=1000&isActive=true", parameters={masked}
 2025-11-09 09:59:08 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 09:59:08 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
-2025-11-09 09:59:08 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 09:59:08 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 09:59:08 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 09:59:08 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:59:08 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/mapping-types", parameters={}
 2025-11-09 09:59:08 [http-nio-8081-exec-4] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
-2025-11-09 09:59:08 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMappingTypes()
+2025-11-09 09:59:08 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#getMappingTypes()
 2025-11-09 09:59:08 [http-nio-8081-exec-3] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 09:59:08 [http-nio-8081-exec-3] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2025-11-09 09:59:08 [http-nio-8081-exec-3] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
@@ -4757,13 +4757,13 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:59:08 [http-nio-8081-exec-4] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: null, integratedApiId: null, mappingType: null
 2025-11-09 09:59:08 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:59:08 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 09:59:08 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 09:59:08 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 09:59:08 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
 2025-11-09 09:59:08 [http-nio-8081-exec-4] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 09:59:08 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 09:59:08 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 09:59:08 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 09:59:08 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 09:59:08 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-11-09 09:59:08 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2025-11-09 09:59:08 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 09:59:08 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 09:59:08 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[131ms]
@@ -4780,7 +4780,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 09:59:15 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 09:59:15 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/export/Excel, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 09:59:15 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/export/Excel", parameters={}
-2025-11-09 09:59:15 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#exportFile(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, String)
+2025-11-09 09:59:15 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#exportFile(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, String)
 2025-11-09 09:59:15 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Found 'Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' in response
 2025-11-09 09:59:15 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{80, 75, 3, 4, 45, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 91, 6 (truncated)...]
 2025-11-09 09:59:15 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -4817,7 +4817,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:05:45 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:05:45 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:05:45 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/mapping-types", parameters={}
-2025-11-09 10:05:45 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMappingTypes()
+2025-11-09 10:05:45 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#getMappingTypes()
 2025-11-09 10:05:45 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:05:45 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 10:05:45 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, INDICATOR]]
@@ -4826,10 +4826,10 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:05:45 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?size=1000&isActive=true", parameters={masked}
-2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2025-11-09 10:05:45 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:05:45 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 10:05:45 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 10:05:45 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
@@ -4843,18 +4843,18 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:05:45 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/routes]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[112ms]
 2025-11-09 10:05:45 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[125ms]
 2025-11-09 10:05:45 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:05:45 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:05:45 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 10:05:45 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 10:05:45 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 10:05:45 [http-nio-8081-exec-2] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 10:05:45 [http-nio-8081-exec-2] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: null, integratedApiId: null, mappingType: null
 2025-11-09 10:05:45 [http-nio-8081-exec-2] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 10:05:45 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:05:45 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 10:05:45 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 10:05:46 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:05:46 [http-nio-8081-exec-2] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[239ms]
 2025-11-09 10:05:46 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -4879,7 +4879,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:09:43 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:09:44 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:09:44 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/mapping-types", parameters={}
-2025-11-09 10:09:44 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMappingTypes()
+2025-11-09 10:09:44 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#getMappingTypes()
 2025-11-09 10:09:44 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 10:09:44 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, INDICATOR]]
 2025-11-09 10:09:44 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -4889,8 +4889,8 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:09:44 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:09:44 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?size=1000&isActive=true", parameters={masked}
 2025-11-09 10:09:44 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 10:09:44 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
-2025-11-09 10:09:44 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 10:09:44 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 10:09:44 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 10:09:44 [http-nio-8081-exec-5] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 10:09:44 [http-nio-8081-exec-5] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2025-11-09 10:09:44 [http-nio-8081-exec-5] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
@@ -4899,19 +4899,19 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:09:44 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:09:44 [http-nio-8081-exec-4] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: null, integratedApiId: null, mappingType: null
 2025-11-09 10:09:44 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:09:44 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-11-09 10:09:44 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2025-11-09 10:09:44 [http-nio-8081-exec-4] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 10:09:44 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:09:44 [http-nio-8081-exec-5] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[97ms]
 2025-11-09 10:09:44 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:09:44 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:09:44 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 10:09:44 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 10:09:44 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:09:44 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[99ms]
 2025-11-09 10:09:44 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:09:44 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:09:44 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 10:09:44 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 10:09:44 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 10:09:44 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
 2025-11-09 10:09:44 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Found 2 active routes
 2025-11-09 10:09:44 [http-nio-8081-exec-7] INFO  c.m.b.k.c.DynamicRouteController - Returning 2 routes for dropdown
@@ -4939,31 +4939,31 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:13:41 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:13:42 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:13:42 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 10:13:42 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 10:13:42 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 10:13:42 [http-nio-8081-exec-8] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 10:13:42 [http-nio-8081-exec-8] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: null, integratedApiId: null, mappingType: null
 2025-11-09 10:13:42 [http-nio-8081-exec-8] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 10:13:42 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:13:42 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 10:13:42 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 10:13:42 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:13:42 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[210ms]
 2025-11-09 10:13:42 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:13:45 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:13:45 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10&dynamicRouteId=my-new-route, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:13:45 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10&dynamicRouteId=my-new-route", parameters={masked}
-2025-11-09 10:13:45 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 10:13:45 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 10:13:45 [http-nio-8081-exec-3] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 10:13:45 [http-nio-8081-exec-3] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: my-new-route, integratedApiId: null, mappingType: null
 2025-11-09 10:13:46 [http-nio-8081-exec-3] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 10:13:46 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:13:46 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 10:13:46 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 10:13:46 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:13:46 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[128ms]
 2025-11-09 10:13:46 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings?page=0&size=10&dynamicRouteId=my-new-route, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:13:48 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:13:48 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10&dynamicRouteId=get-user-from-ap21ewi, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:13:48 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10&dynamicRouteId=get-user-from-ap21ewi", parameters={masked}
-2025-11-09 10:13:48 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 10:13:48 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 10:13:48 [http-nio-8081-exec-4] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 10:13:48 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
 2025-11-09 10:13:48 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
@@ -4977,7 +4977,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:13:53 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:13:53 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/export/Excel?dynamicRouteId=get-user-from-ap21ewi, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:13:53 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/export/Excel?dynamicRouteId=get-user-from-ap21ewi", parameters={masked}
-2025-11-09 10:13:53 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#exportFile(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, String)
+2025-11-09 10:13:53 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#exportFile(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, String)
 2025-11-09 10:13:54 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Found 'Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' in response
 2025-11-09 10:13:54 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{80, 75, 3, 4, 45, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 91, 6 (truncated)...]
 2025-11-09 10:13:54 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -4986,12 +4986,12 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:14:14 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:14:15 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:14:15 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 10:14:15 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 10:14:15 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 10:14:15 [http-nio-8081-exec-2] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 10:14:15 [http-nio-8081-exec-2] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: null, integratedApiId: null, mappingType: null
 2025-11-09 10:14:15 [http-nio-8081-exec-2] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 10:14:15 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:14:15 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 10:14:15 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 10:14:15 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:14:15 [http-nio-8081-exec-2] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[96ms]
 2025-11-09 10:14:15 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -5025,14 +5025,14 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:24:12 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:24:12 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:24:12 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 10:24:12 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 10:24:12 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 10:24:12 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:24:12 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:24:12 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?size=1000&isActive=true", parameters={masked}
 2025-11-09 10:24:12 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
 2025-11-09 10:24:12 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
-2025-11-09 10:24:12 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
-2025-11-09 10:24:12 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 10:24:12 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 10:24:12 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 10:24:12 [http-nio-8081-exec-10] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 10:24:12 [http-nio-8081-exec-3] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 10:24:12 [http-nio-8081-exec-10] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
@@ -5041,14 +5041,14 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:24:12 [http-nio-8081-exec-3] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: null, integratedApiId: null, mappingType: null
 2025-11-09 10:24:12 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:24:12 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/mapping-types", parameters={}
-2025-11-09 10:24:12 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMappingTypes()
+2025-11-09 10:24:12 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#getMappingTypes()
 2025-11-09 10:24:12 [http-nio-8081-exec-3] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 10:24:12 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 10:24:12 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, INDICATOR]]
 2025-11-09 10:24:12 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:24:12 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 10:24:12 [http-nio-8081-exec-1] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings/mapping-types]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[4ms]
-2025-11-09 10:24:12 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 10:24:12 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 10:24:12 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:24:12 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:24:12 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[108ms]
@@ -5061,7 +5061,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:24:13 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/routes]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[196ms]
 2025-11-09 10:24:13 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:24:13 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:24:13 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-11-09 10:24:13 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2025-11-09 10:24:13 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:24:13 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[198ms]
 2025-11-09 10:24:13 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -5090,12 +5090,12 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:25:21 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:25:22 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:25:22 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 10:25:22 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 10:25:22 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 10:25:22 [http-nio-8081-exec-2] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 10:25:22 [http-nio-8081-exec-2] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: null, integratedApiId: null, mappingType: null
 2025-11-09 10:25:22 [http-nio-8081-exec-2] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 10:25:22 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:25:22 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 10:25:22 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 10:25:22 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:25:22 [http-nio-8081-exec-2] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[97ms]
 2025-11-09 10:25:22 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -5143,8 +5143,8 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:38:45 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:38:45 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
 2025-11-09 10:38:45 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?size=1000&isActive=true", parameters={masked}
-2025-11-09 10:38:45 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
-2025-11-09 10:38:45 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 10:38:45 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 10:38:45 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2025-11-09 10:38:45 [http-nio-8081-exec-1] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 10:38:45 [http-nio-8081-exec-8] INFO  c.m.b.k.c.IntegrationMappingAdminController - Final sort: id: ASC
 2025-11-09 10:38:45 [http-nio-8081-exec-1] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
@@ -5152,7 +5152,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:38:45 [http-nio-8081-exec-1] DEBUG c.m.b.k.c.IntegratedApiController - Final sort object: id: DESC
 2025-11-09 10:38:45 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:38:45 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/mapping-types", parameters={}
-2025-11-09 10:38:45 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMappingTypes()
+2025-11-09 10:38:45 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#getMappingTypes()
 2025-11-09 10:38:45 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 10:38:45 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, INDICATOR]]
 2025-11-09 10:38:45 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -5160,17 +5160,17 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:38:45 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:38:45 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:38:45 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 10:38:45 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 10:38:45 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 10:38:45 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
 2025-11-09 10:38:45 [http-nio-8081-exec-8] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: null, integratedApiId: null, mappingType: null
 2025-11-09 10:38:45 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:38:45 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-11-09 10:38:45 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2025-11-09 10:38:45 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:38:45 [http-nio-8081-exec-1] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[114ms]
 2025-11-09 10:38:45 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:38:45 [http-nio-8081-exec-8] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 10:38:45 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:38:45 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 10:38:45 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 10:38:45 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:38:45 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[133ms]
 2025-11-09 10:38:45 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -5186,7 +5186,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:41:05 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:41:05 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:41:05 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?size=1000&isActive=true", parameters={masked}
-2025-11-09 10:41:05 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 10:41:05 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2025-11-09 10:41:05 [http-nio-8081-exec-2] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 10:41:05 [http-nio-8081-exec-2] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2025-11-09 10:41:05 [http-nio-8081-exec-2] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
@@ -5196,14 +5196,14 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:41:05 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:41:05 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/mapping-types", parameters={}
 2025-11-09 10:41:05 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 10:41:05 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMappingTypes()
-2025-11-09 10:41:05 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 10:41:05 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#getMappingTypes()
+2025-11-09 10:41:05 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 10:41:05 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
 2025-11-09 10:41:05 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 10:41:05 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, INDICATOR]]
 2025-11-09 10:41:05 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 10:41:05 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2025-11-09 10:41:05 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-11-09 10:41:05 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2025-11-09 10:41:05 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings/mapping-types]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[7ms]
 2025-11-09 10:41:05 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:41:05 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -5213,7 +5213,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:41:05 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Found 2 active routes
 2025-11-09 10:41:05 [http-nio-8081-exec-6] INFO  c.m.b.k.c.DynamicRouteController - Returning 2 routes for dropdown
 2025-11-09 10:41:05 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 10:41:05 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 10:41:05 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 10:41:05 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 10:41:05 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[{path=/external-users/{id}, routeId=get-user-from-ap21ewi}, {path=/api/hello, routeId=my-new-route} (truncated)...]
 2025-11-09 10:41:05 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -5223,7 +5223,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:41:05 [http-nio-8081-exec-1] DEBUG c.m.b.k.s.IntegrationMappingService - Searching with advanced filters - dynamicRouteId: null, integratedApiId: null, mappingType: null
 2025-11-09 10:41:05 [http-nio-8081-exec-1] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 10:41:05 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:41:05 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 10:41:05 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 10:41:05 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:41:05 [http-nio-8081-exec-1] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[96ms]
 2025-11-09 10:41:05 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -5258,9 +5258,9 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 10:41:28 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 10:41:28 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 10:41:28 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-09 10:41:28 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-09 10:41:28 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-09 10:41:29 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 10:41:29 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-09 10:41:29 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-09 10:41:29 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 10:41:29 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[49ms]
 2025-11-09 10:41:29 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -6504,18 +6504,18 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 13:01:48 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 13:01:49 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:01:49 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-09 13:01:49 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-09 13:01:49 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-09 13:01:49 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 13:01:49 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-09 13:01:49 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-09 13:01:49 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 13:01:49 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[42ms]
 2025-11-09 13:01:49 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:02:00 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 13:02:00 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:02:00 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-09 13:02:00 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-09 13:02:00 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-09 13:02:00 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 13:02:00 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-09 13:02:00 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-09 13:02:00 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 13:02:00 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[28ms]
 2025-11-09 13:02:00 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -6524,9 +6524,9 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 13:02:30 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 13:02:30 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:02:30 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-09 13:02:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-09 13:02:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-09 13:02:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 13:02:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-09 13:02:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-09 13:02:30 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 13:02:30 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[41ms]
 2025-11-09 13:02:30 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -6596,16 +6596,16 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 13:04:19 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 13:04:19 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/audits?page=0&size=10&sortedBy=timestamp&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:04:19 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/audits?page=0&size=10&sortedBy=timestamp&sortDirection=desc", parameters={masked}
-2025-11-09 13:04:19 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRouteAudits(int, int, String, String, Integer, String, LocalDate, LocalDate, String, String)
+2025-11-09 13:04:19 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRouteAudits(int, int, String, String, Integer, String, LocalDate, LocalDate, String, String)
 2025-11-09 13:04:19 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 13:04:19 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 16 containing com.middleware.backend.kaotocamel.model.DynamicRouteAudit instances]
+2025-11-09 13:04:19 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 16 containing com.middleware.backend.camel.model.DynamicRouteAudit instances]
 2025-11-09 13:04:19 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 13:04:19 [http-nio-8081-exec-9] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/audits]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[52ms]
 2025-11-09 13:04:19 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/audits?page=0&size=10&sortedBy=timestamp&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:04:23 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 13:04:23 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/audits/EXCEL, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:04:23 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/audits/EXCEL", parameters={masked}
-2025-11-09 13:04:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#export(String, String, Integer, String, LocalDate, LocalDate, String, String, String)
+2025-11-09 13:04:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#export(String, String, Integer, String, LocalDate, LocalDate, String, String, String)
 2025-11-09 13:04:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Found 'Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' in response
 2025-11-09 13:04:23 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{80, 75, 3, 4, 45, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 91, 6 (truncated)...]
 2025-11-09 13:04:23 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6856,11 +6856,11 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 13:17:16 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?size=1000&isActive=true, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:17:16 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?size=1000&isActive=true", parameters={masked}
 2025-11-09 13:17:16 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings?page=0&size=10", parameters={masked}
-2025-11-09 13:17:16 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
-2025-11-09 13:17:16 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
+2025-11-09 13:17:16 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2025-11-09 13:17:16 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findAll(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, int, int)
 2025-11-09 13:17:16 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:17:16 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2025-11-09 13:17:16 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2025-11-09 13:17:16 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2025-11-09 13:17:16 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching latest active routes for dropdown
 2025-11-09 13:17:16 [http-nio-8081-exec-7] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2025-11-09 13:17:16 [http-nio-8081-exec-7] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
@@ -6892,10 +6892,10 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 13:17:16 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: constant
 2025-11-09 13:17:16 [scheduling-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: simple
 2025-11-09 13:17:16 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 13:17:16 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2025-11-09 13:17:16 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2025-11-09 13:17:16 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:17:16 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/mapping-types", parameters={}
-2025-11-09 13:17:16 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#getMappingTypes()
+2025-11-09 13:17:16 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#getMappingTypes()
 2025-11-09 13:17:16 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 13:17:16 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[DATA_ELEMENT, DATA_ELEMENT_WITH_DISAGGREGATION, INDICATOR]]
 2025-11-09 13:17:16 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -6903,7 +6903,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 13:17:16 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integration-mappings/mapping-types, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:17:16 [http-nio-8081-exec-3] DEBUG c.m.b.k.s.IntegrationMappingService - Found 1 results out of 1 total
 2025-11-09 13:17:16 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2025-11-09 13:17:16 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegrationMappingDto instances]
+2025-11-09 13:17:16 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegrationMappingDto instances]
 2025-11-09 13:17:16 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 13:17:16 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-09 13:17:16 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integration-mappings]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[200ms]
@@ -6998,7 +6998,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 13:17:24 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 13:17:24 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/export/Excel, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:17:24 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/export/Excel", parameters={}
-2025-11-09 13:17:24 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#exportFile(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, String)
+2025-11-09 13:17:24 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#exportFile(String, Long, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, String, String, String)
 2025-11-09 13:17:25 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Found 'Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' in response
 2025-11-09 13:17:25 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{80, 75, 3, 4, 45, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 91, 6 (truncated)...]
 2025-11-09 13:17:25 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -7011,7 +7011,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-09 13:18:24 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-09 13:18:24 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integration-mappings/1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-09 13:18:24 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integration-mappings/1", parameters={}
-2025-11-09 13:18:24 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegrationMappingAdminController#findById(Long)
+2025-11-09 13:18:24 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegrationMappingAdminController#findById(Long)
 2025-11-09 13:18:24 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2025-11-09 13:18:24 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegrationMappingDto(id=1, dynamicRouteId=my-new-route, integratedApiId=1, integratedApiCode=re, in (truncated)...]
 2025-11-09 13:18:24 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK

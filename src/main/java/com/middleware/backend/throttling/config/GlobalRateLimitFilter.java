@@ -1,6 +1,6 @@
 package com.middleware.backend.throttling.config;
-import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
-import com.middleware.backend.kaotocamel.service.DynamicRouteService;
+import com.middleware.backend.camel.model.DynamicRouteEntity;
+import com.middleware.backend.camel.service.DynamicRouteService;
 import com.middleware.backend.throttling.model.CamelLimitConfig;
 import com.middleware.backend.throttling.model.CustomCamelLimitConfig;
 import com.middleware.backend.throttling.model.RateLimitConfig;
@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *   <li>For URIs under <code>/camel/**</code>: applies a global Camel routes limit based on
  *   {@link com.middleware.backend.throttling.model.CamelLimitConfig} and, if configured, a per-route
  *   limit based on {@link com.middleware.backend.throttling.model.CustomCamelLimitConfig} matched
- *   against active routes from {@link com.middleware.backend.kaotocamel.service.DynamicRouteService}.</li>
+ *   against active routes from {@link com.middleware.backend.camel.service.DynamicRouteService}.</li>
  *   <li>For all other URIs: applies a global system rate limit from
  *   {@link com.middleware.backend.throttling.model.RateLimitConfig}.</li>
  * </ul>

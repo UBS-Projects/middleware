@@ -678,13 +678,13 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:30:24 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?page=0&size=10", parameters={masked}
-2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2026-02-25 12:30:24 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-system/codes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:30:24 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-system/codes", parameters={}
 2026-02-25 12:30:24 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.integrated_systems.controller.IntegratedSystemController#getAllCodes()
 2026-02-25 12:30:24 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/routes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:30:24 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/routes", parameters={}
-2026-02-25 12:30:24 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutesForDropdown()
+2026-02-25 12:30:24 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutesForDropdown()
 2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
@@ -707,14 +707,14 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
 
 2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[113ms]
 2026-02-25 12:30:24 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:30:28 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:30:28 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/5, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:30:28 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/5", parameters={}
-2026-02-25 12:30:28 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 12:30:28 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 12:30:28 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 12:30:28 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=5, code=HealthCenter_Metadata, name=HealthCenter, apiUrl=/api/metadata.json?orga (truncated)...]
 2026-02-25 12:30:28 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -723,7 +723,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:30:30 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:30:30 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/4, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:30:30 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/4", parameters={}
-2026-02-25 12:30:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 12:30:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 12:30:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 12:30:30 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=4, code=HealthCenter, name=HealthCenter, apiUrl=/api/analytics.json?dimension=dx (truncated)...]
 2026-02-25 12:30:30 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -732,7 +732,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:30:33 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:30:33 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:30:33 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/2", parameters={}
-2026-02-25 12:30:33 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 12:30:33 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 12:30:33 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 12:30:33 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=2, code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyti (truncated)...]
 2026-02-25 12:30:33 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -889,7 +889,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:39:15 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:39:15 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:39:15 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/2", parameters={}
-2026-02-25 12:39:15 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 12:39:15 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 12:39:16 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 12:39:16 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=2, code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyti (truncated)...]
 2026-02-25 12:39:16 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -924,7 +924,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:45:36 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:45:37 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PUT /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:45:37 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/integrated-apis/2", parameters={}
-2026-02-25 12:45:37 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
+2026-02-25 12:45:37 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
 2026-02-25 12:45:37 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [IntegratedApiRequestDto(code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyt (truncated)...]
 2026-02-25 12:45:37 [http-nio-8081-exec-1] INFO  c.m.b.k.service.IntegratedApiService - Updating integrated API: 2
 2026-02-25 12:45:37 [http-nio-8081-exec-1] INFO  c.m.b.k.service.IntegratedApiService - Updated integrated API: Hospital_HealthMap_Mapping by user: admin@mail.com
@@ -938,13 +938,13 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:45:37 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?page=0&size=10", parameters={masked}
-2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
 2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG c.m.b.k.c.IntegratedApiController - Final sort object: id: DESC
 2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[60ms]
 2026-02-25 12:45:37 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -959,7 +959,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:45:40 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:45:40 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:45:40 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/1", parameters={}
-2026-02-25 12:45:40 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 12:45:40 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 12:45:40 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 12:45:40 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=1, code=f, name=f, apiUrl=/meatadara?Sdfsd, type=METADATA, integratedSystem=DHIS (truncated)...]
 2026-02-25 12:45:40 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -968,7 +968,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:45:41 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:45:41 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:45:41 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/2", parameters={}
-2026-02-25 12:45:41 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 12:45:41 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 12:45:41 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 12:45:41 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=2, code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyti (truncated)...]
 2026-02-25 12:45:41 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -977,7 +977,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:45:46 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:45:46 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PUT /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:45:46 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/integrated-apis/2", parameters={}
-2026-02-25 12:45:46 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
+2026-02-25 12:45:46 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
 2026-02-25 12:45:46 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [IntegratedApiRequestDto(code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyt (truncated)...]
 2026-02-25 12:45:46 [http-nio-8081-exec-9] INFO  c.m.b.k.service.IntegratedApiService - Updating integrated API: 2
 2026-02-25 12:45:46 [http-nio-8081-exec-9] INFO  c.m.b.k.service.IntegratedApiService - Updated integrated API: Hospital_HealthMap_Mapping by user: admin@mail.com
@@ -991,7 +991,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:45:47 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?page=0&size=10", parameters={masked}
-2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
@@ -1000,7 +1000,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:45:47 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-system/codes", parameters={}
 2026-02-25 12:45:47 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.integrated_systems.controller.IntegratedSystemController#getAllCodes()
 2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[71ms]
 2026-02-25 12:45:47 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1014,7 +1014,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:45:59 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:45:59 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/3, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:45:59 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/3", parameters={}
-2026-02-25 12:45:59 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 12:45:59 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 12:45:59 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 12:45:59 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=3, code=Metadata_Hospital_HealthMap, name=Metadata Hospital HealthMap, apiUrl=/a (truncated)...]
 2026-02-25 12:45:59 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -1023,7 +1023,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:46:02 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:46:02 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PUT /api/integrated-apis/3, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:46:02 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/integrated-apis/3", parameters={}
-2026-02-25 12:46:02 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
+2026-02-25 12:46:02 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
 2026-02-25 12:46:02 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [IntegratedApiRequestDto(code=Metadata_Hospital_HealthMap, name=Metadata Hospital HealthMap, apiUrl=/ (truncated)...]
 2026-02-25 12:46:02 [http-nio-8081-exec-3] INFO  c.m.b.k.service.IntegratedApiService - Updating integrated API: 3
 2026-02-25 12:46:02 [http-nio-8081-exec-3] INFO  c.m.b.k.service.IntegratedApiService - Updated integrated API: Metadata_Hospital_HealthMap by user: admin@mail.com
@@ -1037,13 +1037,13 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:46:03 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?page=0&size=10", parameters={masked}
-2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
 2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG c.m.b.k.c.IntegratedApiController - Final sort object: id: DESC
 2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[59ms]
 2026-02-25 12:46:03 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1100,7 +1100,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:46:52 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:46:52 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:46:52 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/2", parameters={}
-2026-02-25 12:46:52 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 12:46:52 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 12:46:52 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 12:46:52 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=2, code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyti (truncated)...]
 2026-02-25 12:46:52 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -1109,7 +1109,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:47:21 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:47:22 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PUT /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:47:22 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/integrated-apis/2", parameters={}
-2026-02-25 12:47:22 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
+2026-02-25 12:47:22 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
 2026-02-25 12:47:22 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [IntegratedApiRequestDto(code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyt (truncated)...]
 2026-02-25 12:47:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Starting route status sync with Camel context
 2026-02-25 12:47:22 [scheduling-1] INFO  c.m.b.k.service.DynamicRouteService - Completed route status sync
@@ -1128,7 +1128,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:47:22 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.integrated_systems.controller.IntegratedSystemController#getAllCodes()
 2026-02-25 12:47:22 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:47:22 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?page=0&size=10", parameters={masked}
-2026-02-25 12:47:22 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2026-02-25 12:47:22 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2026-02-25 12:47:22 [http-nio-8081-exec-5] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2026-02-25 12:47:22 [http-nio-8081-exec-5] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2026-02-25 12:47:22 [http-nio-8081-exec-5] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
@@ -1139,7 +1139,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:47:23 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-system/codes]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[61ms]
 2026-02-25 12:47:23 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-system/codes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:47:23 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2026-02-25 12:47:23 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2026-02-25 12:47:23 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2026-02-25 12:47:23 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2026-02-25 12:47:23 [http-nio-8081-exec-5] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[70ms]
 2026-02-25 12:47:23 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1210,7 +1210,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 12:54:17 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 12:54:17 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 12:54:17 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/2", parameters={}
-2026-02-25 12:54:17 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 12:54:17 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 12:54:17 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 12:54:17 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=2, code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyti (truncated)...]
 2026-02-25 12:54:17 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -2072,7 +2072,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:04:42 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 13:04:42 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PUT /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:04:42 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/integrated-apis/2", parameters={}
-2026-02-25 13:04:42 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
+2026-02-25 13:04:42 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
 2026-02-25 13:04:42 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [IntegratedApiRequestDto(code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyt (truncated)...]
 2026-02-25 13:04:43 [http-nio-8081-exec-7] INFO  c.m.b.k.service.IntegratedApiService - Updating integrated API: 2
 2026-02-25 13:04:43 [http-nio-8081-exec-7] INFO  c.m.b.k.service.IntegratedApiService - Updated integrated API: Hospital_HealthMap_Mapping by user: admin@mail.com
@@ -2086,7 +2086,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:04:44 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?page=0&size=10", parameters={masked}
-2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
@@ -2099,7 +2099,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
 
 2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[167ms]
 2026-02-25 13:04:44 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -2163,7 +2163,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:08:09 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 13:08:09 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:08:09 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/2", parameters={}
-2026-02-25 13:08:09 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 13:08:09 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 13:08:09 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 13:08:09 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=2, code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyti (truncated)...]
 2026-02-25 13:08:09 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -2172,7 +2172,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:08:13 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 13:08:13 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:08:13 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/2", parameters={}
-2026-02-25 13:08:13 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 13:08:13 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 13:08:13 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 13:08:13 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=2, code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyti (truncated)...]
 2026-02-25 13:08:13 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -2183,7 +2183,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:08:26 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 13:08:26 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PUT /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:08:26 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/integrated-apis/2", parameters={}
-2026-02-25 13:08:26 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
+2026-02-25 13:08:26 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
 2026-02-25 13:08:26 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [IntegratedApiRequestDto(code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyt (truncated)...]
 2026-02-25 13:08:26 [http-nio-8081-exec-6] INFO  c.m.b.k.service.IntegratedApiService - Updating integrated API: 2
 2026-02-25 13:08:26 [http-nio-8081-exec-6] INFO  c.m.b.k.service.IntegratedApiService - Updated integrated API: Hospital_HealthMap_Mapping by user: admin@mail.com
@@ -2200,7 +2200,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:08:27 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.integrated_systems.controller.IntegratedSystemController#getAllCodes()
 2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?page=0&size=10", parameters={masked}
-2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
@@ -2211,7 +2211,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:08:27 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-system/codes]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[184ms]
 2026-02-25 13:08:27 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-system/codes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[148ms]
 2026-02-25 13:08:27 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -2264,7 +2264,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:08:49 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 13:08:50 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:08:50 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/2", parameters={}
-2026-02-25 13:08:50 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 13:08:50 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 13:08:50 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 13:08:50 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=2, code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyti (truncated)...]
 2026-02-25 13:08:50 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -2275,7 +2275,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:08:56 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 13:08:56 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:08:56 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/2", parameters={}
-2026-02-25 13:08:56 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 13:08:56 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 13:08:56 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 13:08:56 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=2, code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyti (truncated)...]
 2026-02-25 13:08:56 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
@@ -2284,7 +2284,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:08:59 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 13:08:59 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [PUT /api/integrated-apis/2, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:08:59 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/integrated-apis/2", parameters={}
-2026-02-25 13:08:59 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
+2026-02-25 13:08:59 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#update(Long, IntegratedApiRequestDto)
 2026-02-25 13:08:59 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [IntegratedApiRequestDto(code=Hospital_HealthMap_Mapping, name=Hospital HealthMap, apiUrl=/api/analyt (truncated)...]
 2026-02-25 13:08:59 [http-nio-8081-exec-3] INFO  c.m.b.k.service.IntegratedApiService - Updating integrated API: 2
 2026-02-25 13:08:59 [http-nio-8081-exec-3] INFO  c.m.b.k.service.IntegratedApiService - Updated integrated API: Hospital_HealthMap_Mapping by user: admin@mail.com
@@ -2301,7 +2301,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:09:00 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.integrated_systems.controller.IntegratedSystemController#getAllCodes()
 2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis?page=0&size=10", parameters={masked}
-2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
+2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findAll(String, String, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime, LocalDateTime, LocalDateTime, String, Long, Long, int, int, String[])
 2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG c.m.b.k.c.IntegratedApiController - Received sort params: [id, desc]
 2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG c.m.b.k.c.IntegratedApiController - Handling separated params - field: 'id', direction: 'desc'
 2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG c.m.b.k.c.IntegratedApiController - Added separated sort order: id DESC
@@ -2312,7 +2312,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:09:00 [http-nio-8081-exec-5] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-system/codes]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[127ms]
 2026-02-25 13:09:00 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-system/codes, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
-2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.dto.IntegratedApiDto instances]
+2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.dto.IntegratedApiDto instances]
 2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/integrated-apis]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[149ms]
 2026-02-25 13:09:00 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/integrated-apis?page=0&size=10, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -2406,7 +2406,7 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 2026-02-25 13:14:36 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2026-02-25 13:14:37 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/integrated-apis/4, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2026-02-25 13:14:37 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/integrated-apis/4", parameters={}
-2026-02-25 13:14:37 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.IntegratedApiController#findById(Long)
+2026-02-25 13:14:37 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.IntegratedApiController#findById(Long)
 2026-02-25 13:14:37 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/yaml]
 2026-02-25 13:14:37 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [IntegratedApiDto(id=4, code=HealthCenter, name=HealthCenter, apiUrl=/api/analytics.json?dimension=dx (truncated)...]
 2026-02-25 13:14:37 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
