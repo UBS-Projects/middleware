@@ -7,7 +7,7 @@ spring:
     #    url: jdbc:postgresql://localhost:5432/design_table
     url: jdbc:postgresql://localhost:5432/middlewaretest
     username: postgres
-    password: root
+    password: postgres
     driver-class-name: org.postgresql.Driver
   main:
     allow-bean-definition-overriding=true:
@@ -37,7 +37,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: mohammadkadoumi77@gmail.com
-    password: ********
+    password: tcpf gpzv mfki eyfn
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
