@@ -5309,20 +5309,20 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-12 13:08:34 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-12 13:08:34 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/audits?page=0&size=10&sortedBy=timestamp&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-12 13:08:34 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/audits?page=0&size=10&sortedBy=timestamp&sortDirection=desc", parameters={masked}
-2025-11-12 13:08:34 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRouteAudits(int, int, String, String, Integer, String, LocalDate, LocalDate, String, String)
+2025-11-12 13:08:34 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRouteAudits(int, int, String, String, Integer, String, LocalDate, LocalDate, String, String)
 2025-11-12 13:08:34 [http-nio-8081-exec-10] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
 	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
 	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
 
 2025-11-12 13:08:34 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-12 13:08:34 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 23 containing com.middleware.backend.kaotocamel.model.DynamicRouteAudit instances]
+2025-11-12 13:08:34 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 23 containing com.middleware.backend.camel.model.DynamicRouteAudit instances]
 2025-11-12 13:08:34 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-12 13:08:34 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/audits]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[95ms]
 2025-11-12 13:08:34 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/audits?page=0&size=10&sortedBy=timestamp&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-12 13:08:38 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-12 13:08:38 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/audits/EXCEL, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-12 13:08:38 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/audits/EXCEL", parameters={masked}
-2025-11-12 13:08:38 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#export(String, String, Integer, String, LocalDate, LocalDate, String, String, String)
+2025-11-12 13:08:38 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#export(String, String, Integer, String, LocalDate, LocalDate, String, String, String)
 2025-11-12 13:08:39 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Found 'Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' in response
 2025-11-12 13:08:39 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{80, 75, 3, 4, 45, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 91, 6 (truncated)...]
 2025-11-12 13:08:39 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK

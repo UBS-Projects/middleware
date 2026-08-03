@@ -37,7 +37,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: mohammadkadoumi77@gmail.com
-    password: tcpf gpzv mfki eyfn
+    password: ********
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true

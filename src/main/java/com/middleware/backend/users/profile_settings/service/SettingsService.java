@@ -61,18 +61,15 @@ public class SettingsService {
         if (appSecurityProps.authMode().equalsIgnoreCase("application")) {
             valid = passwordEncoder.matches(profile.getCurrentPassword(), user.getPassword());
         }
-        // ✅ Keycloak mode
-        else {
+         else {
             valid = keycloakAdminService.verifyUserCredentials(email, profile.getCurrentPassword());
         }
 
-        // ❌ Invalid current password
-        if (!valid) {
+         if (!valid) {
             throw new RuntimeException("Current password incorrect");
         }
 
-        // ✅ Update username if provided
-        if (profile.getUserName() != null && !profile.getUserName().isBlank()) {
+         if (profile.getUserName() != null && !profile.getUserName().isBlank()) {
             user.setUserName(profile.getUserName());
         }
 

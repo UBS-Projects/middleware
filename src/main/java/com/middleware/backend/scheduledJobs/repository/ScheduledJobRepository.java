@@ -1,6 +1,5 @@
 package com.middleware.backend.scheduledJobs.repository;
 
-import com.middleware.backend.kaotocamel.model.DynamicRouteEntity;
 import com.middleware.backend.scheduledJobs.model.ScheduledJobs;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

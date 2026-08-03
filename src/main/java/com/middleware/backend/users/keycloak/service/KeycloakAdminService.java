@@ -49,8 +49,7 @@ public class KeycloakAdminService {
         return response.getBody().get("access_token").toString();
     }
 
-    // ✅ CREATE USER
-    public void createUser(String username, String email, String password) {
+     public void createUser(String username, String email, String password) {
         String token = getAdminAccessToken();
         String url = serverUrl + "/admin/realms/" + realm + "/users";
 
@@ -78,8 +77,7 @@ public class KeycloakAdminService {
     }
 
 
-    // ✅ DISABLE USER
-    public void disableUser(String email) {
+     public void disableUser(String email) {
         String token = getAdminAccessToken();
         String userId = getUserIdByEmail(email, token);
         if (userId == null) return;
@@ -114,8 +112,7 @@ public class KeycloakAdminService {
         rest.exchange(url, HttpMethod.PUT, new HttpEntity<>(json, headers), Void.class);
     }
 
-    // ✅ UPDATE EMAIL
-    public void updateEmail(String oldEmail, String newEmail) {
+     public void updateEmail(String oldEmail, String newEmail) {
         String token = getAdminAccessToken();
         String userId = getUserIdByEmail(oldEmail, token);
         if (userId == null) return;
@@ -136,8 +133,7 @@ public class KeycloakAdminService {
         rest.exchange(url, HttpMethod.PUT, new HttpEntity<>(json, headers), Void.class);
     }
 
-    // ✅ UPDATE PASSWORD
-    public void updatePassword(String email, String password) {
+     public void updatePassword(String email, String password) {
         String token = getAdminAccessToken();
         String userId = getUserIdByEmail(email, token);
         if (userId == null) return;
@@ -159,8 +155,7 @@ public class KeycloakAdminService {
         rest.put(url, new HttpEntity<>(json, headers));
     }
 
-    // ✅ Get Keycloak user ID by email
-    private String getUserIdByEmail(String email, String token) {
+     private String getUserIdByEmail(String email, String token) {
         String url = serverUrl + "/admin/realms/" + realm + "/users?email=" + email;
 
         HttpHeaders headers = new HttpHeaders();
@@ -189,8 +184,7 @@ public class KeycloakAdminService {
             HttpEntity<String> req = new HttpEntity<>(body, headers);
             ResponseEntity<Map> response = rest.postForEntity(url, req, Map.class);
 
-            // ✅ Check response status and content
-            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
                 Object token = response.getBody().get("access_token");
                 return token != null; // Only true if access_token exists
             }

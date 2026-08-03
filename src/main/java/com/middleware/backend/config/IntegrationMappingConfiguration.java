@@ -5,8 +5,8 @@ import com.middleware.IntegrationMappingComponent;
 import com.middleware.service.IntegrationMappingService;
 import com.middleware.model.MappingRequest;
 import com.middleware.model.MappingResponse;
-import com.middleware.backend.kaotocamel.dto.MiddlewareResponseDto;
-import com.middleware.backend.kaotocamel.service.MiddlewareProcessorService;
+import com.middleware.backend.camel.dto.MiddlewareResponseDto;
+import com.middleware.backend.camel.service.MiddlewareProcessorService;
 import org.apache.camel.CamelContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class IntegrationMappingConfiguration {
     private ObjectMapper objectMapper;
 
     /**
-     * ✅ Bean 1: IntegrationMappingService implementation (business logic)
+     * Bean 1: IntegrationMappingService implementation (business logic)
      */
     @Bean(name = "integrationMappingComponentService")
     public IntegrationMappingService integrationMappingComponentServiceImplementation() {
@@ -68,14 +68,14 @@ public class IntegrationMappingConfiguration {
     }
 
     /**
-     * ✅ Bean 2: Register the Camel Component itself
+     * Bean 2: Register the Camel Component itself
      */
     @Bean("integrationmapping")
     public IntegrationMappingComponent integrationMappingComponent(CamelContext camelContext,
                                                                    IntegrationMappingService integrationMappingComponentService) {
         IntegrationMappingComponent component = new IntegrationMappingComponent(camelContext);
         component.setIntegrationMappingService(integrationMappingComponentService);
-        LOG.info("✅ Registered custom Camel component: integrationmapping");
+        LOG.info("Registered custom Camel component: integrationmapping");
         return component;
     }
 }

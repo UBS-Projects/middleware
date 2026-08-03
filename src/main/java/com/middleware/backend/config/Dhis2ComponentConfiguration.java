@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.middleware.backend.kaotocamel.integrationBeans.CsvGuard;
-import com.middleware.backend.kaotocamel.integrationBeans.Dhis2CsvDryRunThenCommit;
-import com.middleware.backend.kaotocamel.integrationBeans.Dhis2ImportSummarizer;
+import com.middleware.backend.camel.integrationBeans.CsvGuard;
+import com.middleware.backend.camel.integrationBeans.Dhis2CsvDryRunThenCommit;
+import com.middleware.backend.camel.integrationBeans.Dhis2ImportSummarizer;
 import com.middleware.dhis2.model.Dhis2Request;
 import com.middleware.dhis2.model.Dhis2Response;
 import com.middleware.dhis2.service.Dhis2Service;

@@ -159,8 +159,7 @@ public class NotificationTemplateService {
                 return response;
             }
 
-            // ✅ Everything passed
-            response.put("valid", true);
+             response.put("valid", true);
             response.put("message", "JSON is valid and contains required fields with correct placeholders");
             response.put("subject", subject);
             response.put("body", body);

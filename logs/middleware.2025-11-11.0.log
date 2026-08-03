@@ -1462,9 +1462,9 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-11 10:19:44 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:19:44 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:19:44 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-11 10:19:44 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-11 10:19:44 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-11 10:19:44 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-11 10:19:44 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-11 10:19:44 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-11 10:19:44 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-11 10:19:44 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[54ms]
 2025-11-11 10:19:44 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1473,7 +1473,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-11 10:19:57 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:19:57 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/create, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:19:57 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/create", parameters={}
-2025-11-11 10:19:57 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#create(String, String)
+2025-11-11 10:19:57 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#create(String, String)
 2025-11-11 10:19:57 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: "test"<EOL>    description: "New route description"<EOL>    from:<EOL>      uri: rest:post:/api (truncated)..."]
 2025-11-11 10:19:57 [http-nio-8081-exec-7] ERROR c.m.b.k.service.DynamicRouteService - Failed to process route update for routeId=test version=null operation=create : Query did not return a unique result: 4 results were returned
 org.springframework.dao.IncorrectResultSizeDataAccessException: Query did not return a unique result: 4 results were returned
@@ -1488,7 +1488,7 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Query did not re
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223)
 	at jdk.proxy2/jdk.proxy2.$Proxy203.findByPathAndHttpMethod(Unknown Source)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.updateRoute(DynamicRouteService.java:112)
+	at com.middleware.backend.camel.service.DynamicRouteService.updateRoute(DynamicRouteService.java:112)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
@@ -1498,8 +1498,8 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Query did not re
 	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService$$SpringCGLIB$$0.updateRoute(<generated>)
-	at com.middleware.backend.kaotocamel.controller.DynamicRouteController.create(DynamicRouteController.java:72)
+	at com.middleware.backend.camel.service.DynamicRouteService$$SpringCGLIB$$0.updateRoute(<generated>)
+	at com.middleware.backend.camel.controller.DynamicRouteController.create(DynamicRouteController.java:72)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
@@ -1511,7 +1511,7 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Query did not re
 	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.controller.DynamicRouteController$$SpringCGLIB$$0.create(<generated>)
+	at com.middleware.backend.camel.controller.DynamicRouteController$$SpringCGLIB$$0.create(<generated>)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
@@ -1695,7 +1695,7 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:20:02 [http-nio-8081-exec-9] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:20:02 [http-nio-8081-exec-9] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/create, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:20:02 [http-nio-8081-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/create", parameters={}
-2025-11-11 10:20:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#create(String, String)
+2025-11-11 10:20:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#create(String, String)
 2025-11-11 10:20:02 [http-nio-8081-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: "test"<EOL>    description: "New route description"<EOL>    from:<EOL>      uri: rest:post:/api (truncated)..."]
 2025-11-11 10:20:02 [http-nio-8081-exec-9] ERROR c.m.b.k.service.DynamicRouteService - Failed to process route update for routeId=test version=null operation=create : Query did not return a unique result: 4 results were returned
 org.springframework.dao.IncorrectResultSizeDataAccessException: Query did not return a unique result: 4 results were returned
@@ -1710,7 +1710,7 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Query did not re
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223)
 	at jdk.proxy2/jdk.proxy2.$Proxy203.findByPathAndHttpMethod(Unknown Source)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.updateRoute(DynamicRouteService.java:112)
+	at com.middleware.backend.camel.service.DynamicRouteService.updateRoute(DynamicRouteService.java:112)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
@@ -1720,8 +1720,8 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Query did not re
 	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService$$SpringCGLIB$$0.updateRoute(<generated>)
-	at com.middleware.backend.kaotocamel.controller.DynamicRouteController.create(DynamicRouteController.java:72)
+	at com.middleware.backend.camel.service.DynamicRouteService$$SpringCGLIB$$0.updateRoute(<generated>)
+	at com.middleware.backend.camel.controller.DynamicRouteController.create(DynamicRouteController.java:72)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
@@ -1733,7 +1733,7 @@ org.springframework.dao.IncorrectResultSizeDataAccessException: Query did not re
 	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.controller.DynamicRouteController$$SpringCGLIB$$0.create(<generated>)
+	at com.middleware.backend.camel.controller.DynamicRouteController$$SpringCGLIB$$0.create(<generated>)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
@@ -1917,7 +1917,7 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:20:15 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:20:15 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/create, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:20:15 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/create", parameters={}
-2025-11-11 10:20:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#create(String, String)
+2025-11-11 10:20:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#create(String, String)
 2025-11-11 10:20:15 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: "test"<EOL>    description: "New route description"<EOL>    from:<EOL>      uri: rest:get:/api/ (truncated)..."]
 2025-11-11 10:20:15 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - found 0 versions
 2025-11-11 10:20:15 [http-nio-8081-exec-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -1958,18 +1958,18 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:20:16 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:20:16 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:20:16 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-11 10:20:16 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-11 10:20:16 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-11 10:20:16 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-11 10:20:16 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-11 10:20:16 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-11 10:20:16 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-11 10:20:16 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[145ms]
 2025-11-11 10:20:16 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:20:21 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:20:21 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?routeId=test&size=1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:20:21 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?routeId=test&size=1", parameters={masked}
-2025-11-11 10:20:21 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-11 10:20:21 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-11 10:20:21 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-11 10:20:21 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-11 10:20:21 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-11 10:20:21 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-11 10:20:21 [http-nio-8081-exec-6] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[36ms]
 2025-11-11 10:20:21 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?routeId=test&size=1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1978,9 +1978,9 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:20:45 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:20:45 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:20:45 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-11 10:20:45 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-11 10:20:45 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-11 10:20:45 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-11 10:20:45 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-11 10:20:45 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-11 10:20:45 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-11 10:20:45 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[34ms]
 2025-11-11 10:20:45 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -1989,9 +1989,9 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:21:15 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:21:15 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:21:15 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-11 10:21:15 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-11 10:21:15 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-11 10:21:15 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-11 10:21:15 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-11 10:21:15 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-11 10:21:15 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-11 10:21:15 [http-nio-8081-exec-8] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[28ms]
 2025-11-11 10:21:15 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -2000,9 +2000,9 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:21:44 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:21:45 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:21:45 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-11 10:21:45 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-11 10:21:45 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-11 10:21:45 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-11 10:21:45 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-11 10:21:45 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-11 10:21:45 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-11 10:21:45 [http-nio-8081-exec-7] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[142ms]
 2025-11-11 10:21:45 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -2011,28 +2011,28 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:22:14 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:22:14 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/test/versions?size=50, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:22:14 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/test/versions?size=50", parameters={masked}
-2025-11-11 10:22:14 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRouteVersions(String, int, int)
+2025-11-11 10:22:14 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRouteVersions(String, int, int)
 2025-11-11 10:22:14 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching routes for routeId=test with pagination
 2025-11-11 10:22:14 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-11 10:22:14 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-11 10:22:14 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-11 10:22:14 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-11 10:22:14 [http-nio-8081-exec-1] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/test/versions]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[150ms]
 2025-11-11 10:22:14 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/test/versions?size=50, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:22:14 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:22:14 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:22:14 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-11 10:22:14 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-11 10:22:14 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-11 10:22:14 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-11 10:22:14 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-11 10:22:14 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-11 10:22:14 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-11 10:22:14 [http-nio-8081-exec-3] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[183ms]
 2025-11-11 10:22:14 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:22:18 [http-nio-8081-exec-10] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:22:18 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?routeId=test&size=1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:22:18 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?routeId=test&size=1", parameters={masked}
-2025-11-11 10:22:18 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-11 10:22:18 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-11 10:22:18 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-11 10:22:18 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-11 10:22:18 [http-nio-8081-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-11 10:22:18 [http-nio-8081-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-11 10:22:18 [http-nio-8081-exec-10] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[144ms]
 2025-11-11 10:22:18 [http-nio-8081-exec-10] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?routeId=test&size=1, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -2041,9 +2041,9 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:22:44 [http-nio-8081-exec-5] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:22:45 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:22:45 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-11 10:22:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-11 10:22:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-11 10:22:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-11 10:22:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-11 10:22:45 [http-nio-8081-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-11 10:22:45 [http-nio-8081-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-11 10:22:45 [http-nio-8081-exec-5] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[129ms]
 2025-11-11 10:22:45 [http-nio-8081-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -2052,7 +2052,7 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:23:06 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:23:06 [http-nio-8081-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:23:06 [http-nio-8081-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/update", parameters={}
-2025-11-11 10:23:06 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#update(String, String)
+2025-11-11 10:23:06 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#update(String, String)
 2025-11-11 10:23:06 [http-nio-8081-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: test<EOL>    description: New route description<EOL>    from:<EOL>      uri: rest:get:/api/hell (truncated)..."]
 2025-11-11 10:23:06 [http-nio-8081-exec-2] INFO  c.m.b.k.service.DynamicRouteService - found 1 versions
 2025-11-11 10:23:06 [http-nio-8081-exec-2] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -2108,9 +2108,9 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:23:14 [http-nio-8081-exec-4] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:23:14 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:23:14 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc", parameters={masked}
-2025-11-11 10:23:14 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
+2025-11-11 10:23:14 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#getRoutes(String, String, String, String, Boolean, String, String, LocalDateTime, LocalDateTime, String, String, int, int)
 2025-11-11 10:23:14 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
-2025-11-11 10:23:14 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.kaotocamel.model.DynamicRouteEntity instances]
+2025-11-11 10:23:14 [http-nio-8081-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.middleware.backend.camel.model.DynamicRouteEntity instances]
 2025-11-11 10:23:14 [http-nio-8081-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
 2025-11-11 10:23:14 [http-nio-8081-exec-4] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: ServletRequestHandledEvent: url=[/api/routes/latest]; client=[0:0:0:0:0:0:0:1]; method=[GET]; status=[200]; servlet=[dispatcherServlet]; session=[null]; user=[admin@mail.com]; time=[47ms]
 2025-11-11 10:23:14 [http-nio-8081-exec-4] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [GET /api/routes/latest?page=0&size=10&sortBy=updated_at&sortDirection=desc, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
@@ -2244,7 +2244,7 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:25:31 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:25:32 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:25:32 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/update", parameters={}
-2025-11-11 10:25:32 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#update(String, String)
+2025-11-11 10:25:32 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#update(String, String)
 2025-11-11 10:25:32 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: test<EOL>    description: New route description<EOL>    from:<EOL>      uri: rest:get:/api/hell (truncated)..."]
 2025-11-11 10:25:32 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - found 2 versions
 2025-11-11 10:25:32 [http-nio-8081-exec-7] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -2319,7 +2319,7 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:25:49 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:25:49 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:25:49 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/update", parameters={}
-2025-11-11 10:25:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#update(String, String)
+2025-11-11 10:25:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#update(String, String)
 2025-11-11 10:25:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: test<EOL>    description: New route description<EOL>    from:<EOL>      uri: rest:get:/api/hell (truncated)..."]
 2025-11-11 10:25:49 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - found 3 versions
 2025-11-11 10:25:49 [http-nio-8081-exec-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -2402,7 +2402,7 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:27:40 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:27:40 [http-nio-8081-exec-6] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:27:40 [http-nio-8081-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/update", parameters={}
-2025-11-11 10:27:40 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#update(String, String)
+2025-11-11 10:27:40 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#update(String, String)
 2025-11-11 10:27:40 [http-nio-8081-exec-6] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: test<EOL>    description: New route description<EOL>    from:<EOL>      uri: rest:get:/api/hell (truncated)..."]
 2025-11-11 10:27:40 [http-nio-8081-exec-6] INFO  c.m.b.k.service.DynamicRouteService - found 4 versions
 2025-11-11 10:27:40 [http-nio-8081-exec-6] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -2424,8 +2424,8 @@ Caused by: org.hibernate.NonUniqueResultException: Query did not return a unique
 2025-11-11 10:27:40 [http-nio-8081-exec-6] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: simple
 2025-11-11 10:27:40 [http-nio-8081-exec-6] ERROR c.m.b.k.service.DynamicRouteService - Failed to process route update for routeId=test version=5 operation=update : Failed to load route: Failed to create route test at: >>> To[notification?groupCodes=2,3&templateCode=1&channelCode=4] <<< in route: Route(test)[From[rest:get:/api/hello] -> [Log[Received: ${bo... because of No endpoint could be found for: notification?groupCodes=2,3&templateCode=1&channelCode=4, please check your classpath contains the needed Camel component jar.
 java.lang.RuntimeException: Failed to load route: Failed to create route test at: >>> To[notification?groupCodes=2,3&templateCode=1&channelCode=4] <<< in route: Route(test)[From[rest:get:/api/hello] -> [Log[Received: ${bo... because of No endpoint could be found for: notification?groupCodes=2,3&templateCode=1&channelCode=4, please check your classpath contains the needed Camel component jar.
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1066)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.updateRoute(DynamicRouteService.java:144)
+	at com.middleware.backend.camel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1066)
+	at com.middleware.backend.camel.service.DynamicRouteService.updateRoute(DynamicRouteService.java:144)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
@@ -2435,8 +2435,8 @@ java.lang.RuntimeException: Failed to load route: Failed to create route test at
 	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService$$SpringCGLIB$$0.updateRoute(<generated>)
-	at com.middleware.backend.kaotocamel.controller.DynamicRouteController.update(DynamicRouteController.java:94)
+	at com.middleware.backend.camel.service.DynamicRouteService$$SpringCGLIB$$0.updateRoute(<generated>)
+	at com.middleware.backend.camel.controller.DynamicRouteController.update(DynamicRouteController.java:94)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
@@ -2448,7 +2448,7 @@ java.lang.RuntimeException: Failed to load route: Failed to create route test at
 	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.controller.DynamicRouteController$$SpringCGLIB$$0.update(<generated>)
+	at com.middleware.backend.camel.controller.DynamicRouteController$$SpringCGLIB$$0.update(<generated>)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
@@ -2604,7 +2604,7 @@ Caused by: org.apache.camel.FailedToCreateRouteException: Failed to create route
 	at org.apache.camel.builder.RouteBuilder.populateRoutes(RouteBuilder.java:851)
 	at org.apache.camel.builder.RouteBuilder.addRoutesToCamelContext(RouteBuilder.java:669)
 	at org.apache.camel.impl.engine.AbstractCamelContext.addRoutes(AbstractCamelContext.java:983)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1064)
+	at com.middleware.backend.camel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1064)
 	... 169 common frames omitted
 Caused by: org.apache.camel.NoSuchEndpointException: No endpoint could be found for: notification?groupCodes=2,3&templateCode=1&channelCode=4, please check your classpath contains the needed Camel component jar.
 	at org.apache.camel.impl.engine.AbstractCamelContext.doGetEndpoint(AbstractCamelContext.java:784)
@@ -2980,7 +2980,7 @@ Caused by: org.apache.camel.NoSuchEndpointException: No endpoint could be found 
 2025-11-11 10:32:36 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:32:37 [http-nio-8081-exec-7] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:32:37 [http-nio-8081-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/update", parameters={}
-2025-11-11 10:32:37 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#update(String, String)
+2025-11-11 10:32:37 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#update(String, String)
 2025-11-11 10:32:37 [http-nio-8081-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: test<EOL>    description: New route description<EOL>    from:<EOL>      uri: rest:get:/api/hell (truncated)..."]
 2025-11-11 10:32:37 [http-nio-8081-exec-7] INFO  c.m.b.k.service.DynamicRouteService - found 4 versions
 2025-11-11 10:32:37 [http-nio-8081-exec-7] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -3002,8 +3002,8 @@ Caused by: org.apache.camel.NoSuchEndpointException: No endpoint could be found 
 2025-11-11 10:32:37 [http-nio-8081-exec-7] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: simple
 2025-11-11 10:32:37 [http-nio-8081-exec-7] ERROR c.m.b.k.service.DynamicRouteService - Failed to process route update for routeId=test version=5 operation=update : Failed to load route: Failed to create route test at: >>> To[notification?groupCodes=1&templateCode=1&channelCode=1] <<< in route: Route(test)[From[rest:get:/api/hello] -> [Log[Received: ${bo... because of No endpoint could be found for: notification?groupCodes=1&templateCode=1&channelCode=1, please check your classpath contains the needed Camel component jar.
 java.lang.RuntimeException: Failed to load route: Failed to create route test at: >>> To[notification?groupCodes=1&templateCode=1&channelCode=1] <<< in route: Route(test)[From[rest:get:/api/hello] -> [Log[Received: ${bo... because of No endpoint could be found for: notification?groupCodes=1&templateCode=1&channelCode=1, please check your classpath contains the needed Camel component jar.
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1066)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.updateRoute(DynamicRouteService.java:144)
+	at com.middleware.backend.camel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1066)
+	at com.middleware.backend.camel.service.DynamicRouteService.updateRoute(DynamicRouteService.java:144)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
@@ -3013,8 +3013,8 @@ java.lang.RuntimeException: Failed to load route: Failed to create route test at
 	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService$$SpringCGLIB$$0.updateRoute(<generated>)
-	at com.middleware.backend.kaotocamel.controller.DynamicRouteController.update(DynamicRouteController.java:94)
+	at com.middleware.backend.camel.service.DynamicRouteService$$SpringCGLIB$$0.updateRoute(<generated>)
+	at com.middleware.backend.camel.controller.DynamicRouteController.update(DynamicRouteController.java:94)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
@@ -3026,7 +3026,7 @@ java.lang.RuntimeException: Failed to load route: Failed to create route test at
 	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.controller.DynamicRouteController$$SpringCGLIB$$0.update(<generated>)
+	at com.middleware.backend.camel.controller.DynamicRouteController$$SpringCGLIB$$0.update(<generated>)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
@@ -3182,7 +3182,7 @@ Caused by: org.apache.camel.FailedToCreateRouteException: Failed to create route
 	at org.apache.camel.builder.RouteBuilder.populateRoutes(RouteBuilder.java:851)
 	at org.apache.camel.builder.RouteBuilder.addRoutesToCamelContext(RouteBuilder.java:669)
 	at org.apache.camel.impl.engine.AbstractCamelContext.addRoutes(AbstractCamelContext.java:983)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1064)
+	at com.middleware.backend.camel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1064)
 	... 169 common frames omitted
 Caused by: org.apache.camel.NoSuchEndpointException: No endpoint could be found for: notification?groupCodes=1&templateCode=1&channelCode=1, please check your classpath contains the needed Camel component jar.
 	at org.apache.camel.impl.engine.AbstractCamelContext.doGetEndpoint(AbstractCamelContext.java:784)
@@ -3616,7 +3616,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-11 10:33:49 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 10:33:49 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 10:33:49 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/update", parameters={}
-2025-11-11 10:33:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#update(String, String)
+2025-11-11 10:33:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#update(String, String)
 2025-11-11 10:33:49 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: test<EOL>    description: New route description<EOL>    from:<EOL>      uri: rest:get:/api/hell (truncated)..."]
 2025-11-11 10:33:49 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - found 4 versions
 2025-11-11 10:33:49 [http-nio-8081-exec-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -5021,7 +5021,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-11 15:43:34 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 15:43:34 [http-nio-8081-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 15:43:34 [http-nio-8081-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/update", parameters={}
-2025-11-11 15:43:34 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#update(String, String)
+2025-11-11 15:43:34 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#update(String, String)
 2025-11-11 15:43:34 [http-nio-8081-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: test<EOL>    description: New route description<EOL>    from:<EOL>      uri: rest:get:/api/hell (truncated)..."]
 2025-11-11 15:43:34 [http-nio-8081-exec-3] INFO  c.m.b.k.service.DynamicRouteService - found 5 versions
 2025-11-11 15:43:34 [http-nio-8081-exec-3] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -5052,8 +5052,8 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-11 15:43:34 [http-nio-8081-exec-3] DEBUG o.a.camel.support.DefaultComponent - Creating endpoint uri=[config://null?code=API_TIME_OUT], path=[null]
 2025-11-11 15:43:34 [http-nio-8081-exec-3] ERROR c.m.b.k.service.DynamicRouteService - Failed to process route update for routeId=test version=6 operation=update : Failed to load route: Failed to create route test at: >>> To[config:null?code=API_TIME_OUT] <<< in route: Route(test)[From[rest:get:/api/hello] -> [To[config:null?cod... because of Failed to resolve endpoint: config://null?code=API_TIME_OUT due to: ConfigService bridge is required but not found in Camel registry.
 java.lang.RuntimeException: Failed to load route: Failed to create route test at: >>> To[config:null?code=API_TIME_OUT] <<< in route: Route(test)[From[rest:get:/api/hello] -> [To[config:null?cod... because of Failed to resolve endpoint: config://null?code=API_TIME_OUT due to: ConfigService bridge is required but not found in Camel registry.
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1066)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.updateRoute(DynamicRouteService.java:144)
+	at com.middleware.backend.camel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1066)
+	at com.middleware.backend.camel.service.DynamicRouteService.updateRoute(DynamicRouteService.java:144)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
@@ -5063,8 +5063,8 @@ java.lang.RuntimeException: Failed to load route: Failed to create route test at
 	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService$$SpringCGLIB$$0.updateRoute(<generated>)
-	at com.middleware.backend.kaotocamel.controller.DynamicRouteController.update(DynamicRouteController.java:94)
+	at com.middleware.backend.camel.service.DynamicRouteService$$SpringCGLIB$$0.updateRoute(<generated>)
+	at com.middleware.backend.camel.controller.DynamicRouteController.update(DynamicRouteController.java:94)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
@@ -5076,7 +5076,7 @@ java.lang.RuntimeException: Failed to load route: Failed to create route test at
 	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.controller.DynamicRouteController$$SpringCGLIB$$0.update(<generated>)
+	at com.middleware.backend.camel.controller.DynamicRouteController$$SpringCGLIB$$0.update(<generated>)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
@@ -5232,7 +5232,7 @@ Caused by: org.apache.camel.FailedToCreateRouteException: Failed to create route
 	at org.apache.camel.builder.RouteBuilder.populateRoutes(RouteBuilder.java:851)
 	at org.apache.camel.builder.RouteBuilder.addRoutesToCamelContext(RouteBuilder.java:669)
 	at org.apache.camel.impl.engine.AbstractCamelContext.addRoutes(AbstractCamelContext.java:983)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1064)
+	at com.middleware.backend.camel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1064)
 	... 169 common frames omitted
 Caused by: org.apache.camel.ResolveEndpointFailedException: Failed to resolve endpoint: config://null?code=API_TIME_OUT due to: ConfigService bridge is required but not found in Camel registry.
 	at org.apache.camel.impl.engine.AbstractCamelContext.doGetEndpoint(AbstractCamelContext.java:830)
@@ -5664,7 +5664,7 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-11 15:46:04 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 15:46:04 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 15:46:04 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/update", parameters={}
-2025-11-11 15:46:04 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#update(String, String)
+2025-11-11 15:46:04 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#update(String, String)
 2025-11-11 15:46:04 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: test<EOL>    description: New route description<EOL>    from:<EOL>      uri: rest:get:/api/hell (truncated)..."]
 2025-11-11 15:46:04 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - found 5 versions
 2025-11-11 15:46:04 [http-nio-8081-exec-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -5696,8 +5696,8 @@ jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
 2025-11-11 15:46:04 [http-nio-8081-exec-1] DEBUG o.a.camel.support.DefaultComponent - Creating endpoint uri=[config://null?code=API_TIME_OUT], path=[null]
 2025-11-11 15:46:04 [http-nio-8081-exec-1] ERROR c.m.b.k.service.DynamicRouteService - Failed to process route update for routeId=test version=6 operation=update : Failed to load route: Failed to create route test at: >>> To[config:null?code=API_TIME_OUT] <<< in route: Route(test)[From[rest:get:/api/hello] -> [To[config:null?cod... because of Failed to resolve endpoint: config://null?code=API_TIME_OUT due to: ConfigService bridge is required but not found in Camel registry.
 java.lang.RuntimeException: Failed to load route: Failed to create route test at: >>> To[config:null?code=API_TIME_OUT] <<< in route: Route(test)[From[rest:get:/api/hello] -> [To[config:null?cod... because of Failed to resolve endpoint: config://null?code=API_TIME_OUT due to: ConfigService bridge is required but not found in Camel registry.
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1066)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.updateRoute(DynamicRouteService.java:144)
+	at com.middleware.backend.camel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1066)
+	at com.middleware.backend.camel.service.DynamicRouteService.updateRoute(DynamicRouteService.java:144)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
@@ -5707,8 +5707,8 @@ java.lang.RuntimeException: Failed to load route: Failed to create route test at
 	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService$$SpringCGLIB$$0.updateRoute(<generated>)
-	at com.middleware.backend.kaotocamel.controller.DynamicRouteController.update(DynamicRouteController.java:94)
+	at com.middleware.backend.camel.service.DynamicRouteService$$SpringCGLIB$$0.updateRoute(<generated>)
+	at com.middleware.backend.camel.controller.DynamicRouteController.update(DynamicRouteController.java:94)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
@@ -5720,7 +5720,7 @@ java.lang.RuntimeException: Failed to load route: Failed to create route test at
 	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
-	at com.middleware.backend.kaotocamel.controller.DynamicRouteController$$SpringCGLIB$$0.update(<generated>)
+	at com.middleware.backend.camel.controller.DynamicRouteController$$SpringCGLIB$$0.update(<generated>)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
@@ -5876,7 +5876,7 @@ Caused by: org.apache.camel.FailedToCreateRouteException: Failed to create route
 	at org.apache.camel.builder.RouteBuilder.populateRoutes(RouteBuilder.java:851)
 	at org.apache.camel.builder.RouteBuilder.addRoutesToCamelContext(RouteBuilder.java:669)
 	at org.apache.camel.impl.engine.AbstractCamelContext.addRoutes(AbstractCamelContext.java:983)
-	at com.middleware.backend.kaotocamel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1064)
+	at com.middleware.backend.camel.service.DynamicRouteService.loadRoute(DynamicRouteService.java:1064)
 	... 169 common frames omitted
 Caused by: org.apache.camel.ResolveEndpointFailedException: Failed to resolve endpoint: config://null?code=API_TIME_OUT due to: ConfigService bridge is required but not found in Camel registry.
 	at org.apache.camel.impl.engine.AbstractCamelContext.doGetEndpoint(AbstractCamelContext.java:830)
@@ -5995,7 +5995,7 @@ Caused by: java.lang.IllegalStateException: ConfigService bridge is required but
 2025-11-11 15:50:24 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 15:50:24 [http-nio-8081-exec-8] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 15:50:24 [http-nio-8081-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/update", parameters={}
-2025-11-11 15:50:24 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#update(String, String)
+2025-11-11 15:50:24 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#update(String, String)
 2025-11-11 15:50:24 [http-nio-8081-exec-8] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: test<EOL>    description: New route description<EOL>    from:<EOL>      uri: rest:get:/api/hell (truncated)..."]
 2025-11-11 15:50:24 [http-nio-8081-exec-8] INFO  c.m.b.k.service.DynamicRouteService - found 5 versions
 2025-11-11 15:50:24 [http-nio-8081-exec-8] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
@@ -6087,7 +6087,7 @@ Caused by: java.lang.IllegalStateException: ConfigService bridge is required but
 2025-11-11 15:50:43 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - Fetching active routes with pagination
 2025-11-11 15:50:43 [http-nio-8081-exec-1] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /api/routes/update, client=0:0:0:0:0:0:0:1, user=admin@mail.com]
 2025-11-11 15:50:43 [http-nio-8081-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/routes/update", parameters={}
-2025-11-11 15:50:43 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.kaotocamel.controller.DynamicRouteController#update(String, String)
+2025-11-11 15:50:43 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.middleware.backend.camel.controller.DynamicRouteController#update(String, String)
 2025-11-11 15:50:43 [http-nio-8081-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "text/plain;charset=UTF-8" to ["- route:<EOL>    id: test<EOL>    description: New route description<EOL>    from:<EOL>      uri: rest:get:/api/hell (truncated)..."]
 2025-11-11 15:50:44 [http-nio-8081-exec-1] INFO  c.m.b.k.service.DynamicRouteService - found 6 versions
 2025-11-11 15:50:44 [http-nio-8081-exec-1] DEBUG o.a.c.i.engine.AbstractCamelContext - Adding route configurations from builder: Routes: []
