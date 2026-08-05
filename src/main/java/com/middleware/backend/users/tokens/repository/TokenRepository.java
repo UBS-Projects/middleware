@@ -74,7 +74,7 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
 
 //    ****************************** Dashboard methods
 @Query("""
-    SELECT new com.middleware.backend.dashboard.dto.TokenListDto(
+    SELECT DISTINCT new com.middleware.backend.dashboard.dto.TokenListDto(
         t.id,
         t.user.userName,
         t.user.id,
