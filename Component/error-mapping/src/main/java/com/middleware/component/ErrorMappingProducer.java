@@ -54,10 +54,10 @@ public class ErrorMappingProducer extends DefaultProducer {
         // 3️⃣ Fetch mapping definition by code
         ErrorMappingDetail mapping = bridgeService.getErrorMappingByCode(code);
         if (mapping == null) {
+
             LOG.warn("No error mapping found for code '{}'", code);
             return;
         }
-
         String currentRouteId = exchange.getFromRouteId();
 
         if (mapping.getRouteId() != null &&
@@ -71,7 +71,6 @@ public class ErrorMappingProducer extends DefaultProducer {
             );
             return;
         }
-
         // 4️⃣ Check if raw error matches the mapping rule
         boolean isMatch = false;
         String substring = mapping.getRawErrorSubstring();
