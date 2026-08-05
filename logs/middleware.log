@@ -8703,3 +8703,6 @@ jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not 
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
+2026-08-05 18:36:00 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-05 18:36:00 [scheduling-1] WARN  c.m.b.c.service.DynamicRouteService - No active version found for route test
+2026-08-05 18:36:00 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
