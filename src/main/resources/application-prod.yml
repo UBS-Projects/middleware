@@ -30,6 +30,16 @@
 #          spring.quartz.jdbc.initialize-schema: always
 ##          spring.quartz.properties.org.quartz.jobStore.isClustered: false
 ##          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
+#STATIC EMAIL CONFIG
+#mail:
+#  host: smtp.gmail.com
+#  port: 587
+#  username: middleware@gmail.com
+#  password: 67890
+#  properties:
+#    mail.smtp.auth: true
+#    mail.smtp.starttls.enable: true
+#    from: no-reply@middleware.org
 #app:
 #  security:
 #    auth-mode: application  # Options: keycloak, jwt, none

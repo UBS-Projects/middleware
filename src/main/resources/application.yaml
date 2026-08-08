@@ -5,9 +5,9 @@ spring:
   datasource:
     #    url: jdbc:postgresql://localhost:5432/middleware2
     #    url: jdbc:postgresql://localhost:5432/design_table
-    url: jdbc:postgresql://localhost:5432/middlewaretest
+    url: jdbc:postgresql://localhost:5432/middleware_database_prod
     username: postgres
-    password: postgres
+    password: 12345
     driver-class-name: org.postgresql.Driver
   main:
     allow-bean-definition-overriding=true:
@@ -30,14 +30,14 @@ spring:
         properties:
           spring.quartz.job-store-type: jdbc
           spring.quartz.jdbc.initialize-schema: always
-#          spring.quartz.properties.org.quartz.jobStore.isClustered: false
-#          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
-#STATIC EMAIL CONFIG
+  #          spring.quartz.properties.org.quartz.jobStore.isClustered: false
+  #          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
+  #STATIC EMAIL CONFIG
   mail:
     host: smtp.gmail.com
     port: 587
     username: mohammadkadoumi77@gmail.com
-    password: 71727737371
+    password: 67890
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
@@ -46,8 +46,7 @@ spring:
 app:
   security:
     auth-mode: application
-#    keycloak
-# application
+
 
 # JWT SECRET
 jwt:
@@ -63,13 +62,14 @@ jwt:
 #  client-id: middleware-client
 #  client-secret: yzFOmARMUvUWB7k8hURtr0JksgjobGMw
 #  redirect-uri: http://localhost:8081/api/auth/keycloak/exchange
+#  kc.bat start-dev --http-port=8082 --hostname=localhost
 
 security:
   keycloak:
     server-url: http://localhost:8082
     realm: middleware
     client-id: middleware-client
-    client-secret: iXaRoUGkc0kPb2FcspkCQFiGACbMkjfp
+    client-secret: JENrok9lo1mH5bnoYbvxhUoZWoReSYCj
     redirect-uri: http://localhost:8081/api/auth/keycloak/exchange
 keycloak:
   admin:
@@ -136,3 +136,4 @@ cache:
 
 #http://localhost:8081/swagger-ui/index.html
 #https://generate-uuid.com/?utm_source=chatgpt.com#
+#  kc.bat start-dev --http-port=8082 --hostname=localhost
