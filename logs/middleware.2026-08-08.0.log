@@ -1,0 +1,365 @@
+2026-08-08 22:13:18 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2026-08-08 22:13:18 [main] INFO  c.middleware.MiddlewareApplication - Starting MiddlewareApplication using Java 21.0.9 with PID 17900 (C:\Users\1\OneDrive\Desktop\UBS\MoH Middleware\middleware\target\classes started by 1 in C:\Users\1\OneDrive\Desktop\UBS\MoH Middleware\middleware)
+2026-08-08 22:13:18 [main] INFO  c.middleware.MiddlewareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-08-08 22:13:23 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2026-08-08 22:13:23 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-08-08 22:13:23 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2026-08-08 22:13:23 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-08-08 22:13:24 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-08-08 22:13:24 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2026-08-08 22:13:24 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-08-08 22:13:24 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-08-08 22:13:24 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.DriverManagerDataSource@4e1b5532']
+	Database driver: undefined/unknown
+	Database version: 17.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-08-08 22:13:27 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uknoqqfb6yhfucopakrvcaprulu" of relation "config" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "ukshsrqfv8ss6egkcuiqa0khsac" of relation "error_categories" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "ukojgramgoxx6s26v8moliysy3h" of relation "error_mapping" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uk_api_code" of relation "integrated_apis" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "ukns43dtpxi4x22k9a3tkmsvngu" of relation "integrated_system" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uk_mapping_unique" of relation "integration_mapping" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uk_call_uuid_attempt" of relation "middleware_api_call_log" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uk_transaction_id" of relation "middleware_api_call_log" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uknhxrhjcqmus10xtqb0opscqxv" of relation "notification_channels" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "ukefmmoqy7rptk7qk5k06gl32ve" of relation "notification_groups" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uk590i2e6i9u4i77xek1ohkbwak" of relation "notification_templates" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "ukpnvtwliis6p05pn6i3ndjrqt2" of relation "permissions" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "ukiubw515ff0ugtm28p8g3myt0h" of relation "role" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uk1irnkpbh80c3umgcck2nrd1ia" of relation "source_systems" does not exist, skipping
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Warning Code: 0, SQLState: 00000
+2026-08-08 22:13:28 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - constraint "uk6dotkott2kjsp8vw4d0m25fb7" of relation "users" does not exist, skipping
+2026-08-08 22:13:29 [main] DEBUG o.a.camel.spring.SpringCamelContext - Set the application context classloader to: TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
+
+2026-08-08 22:13:29 [main] DEBUG o.a.camel.support.LRUCacheFactory - Creating DefaultLRUCacheFactory
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.e.DefaultCamelContextExtension - Setting up management with factory: org.apache.camel.impl.engine.DefaultManagementStrategyFactory@408530d2
+2026-08-08 22:13:29 [main] DEBUG o.a.camel.support.ResolverHelper - Found HealthCheckRegistry: org.apache.camel.impl.health.DefaultHealthCheckRegistry via: META-INF/services/org/apache/camel/health-check/default-registry
+2026-08-08 22:13:29 [main] DEBUG o.a.camel.support.ResolverHelper - Detected and using HealthCheckRegistry: org.apache.camel.impl.health.DefaultHealthCheckRegistry@73d7b6b0
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id registry-health-check-repository successfully registered
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-spring/4.4.0/camel-spring-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-xml-jaxp/4.4.0/camel-xml-jaxp-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-http/4.4.0/camel-http-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-http-common/4.4.0/camel-http-common-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-attachments/4.4.0/camel-attachments-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-jackson/4.4.0/camel-jackson-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-support/4.4.0/camel-support-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-file/4.4.0/camel-file-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-base/4.4.0/camel-base-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-spring/4.4.0/camel-spring-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-xml-jaxp/4.4.0/camel-xml-jaxp-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-http/4.4.0/camel-http-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-http-common/4.4.0/camel-http-common-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-attachments/4.4.0/camel-attachments-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-jackson/4.4.0/camel-jackson-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-support/4.4.0/camel-support-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-file/4.4.0/camel-file-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Loading file META-INF/services/org/apache/camel/TypeConverterLoader to retrieve list of type converters, from url: jar:file:/C:/Users/1/.m2/repository/org/apache/camel/camel-base/4.4.0/camel-base-4.4.0.jar!/META-INF/services/org/apache/camel/TypeConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.spring.converter.ResourceConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.spring.converter.ResourceConverterLoader loading converters
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.converter.jaxp.CamelXmlJaxpBulkConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.converter.jaxp.CamelXmlJaxpBulkConverterLoader loading converters
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.http.HttpConvertersLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.http.HttpConvertersLoader loading converters
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.http.HttpEntityConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.http.HttpEntityConverterLoader loading converters
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.http.common.HttpConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.http.common.HttpConverterLoader loading converters
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.attachment.AttachmentConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.attachment.AttachmentConverterLoader loading converters
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.jackson.converter.JacksonTypeConvertersLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.jackson.converter.JacksonTypeConvertersLoader loading converters
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.converter.stream.StreamCacheBulkConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.converter.stream.StreamCacheBulkConverterLoader loading converters
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.component.file.GenericFileConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.component.file.GenericFileConverterLoader loading converters
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - Resolving TypeConverterLoader: org.apache.camel.converter.CamelBaseBulkConverterLoader
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.BaseTypeConverterRegistry - TypeConverterLoader: org.apache.camel.converter.CamelBaseBulkConverterLoader loading converters
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.c.DefaultTypeConverter - Loaded 259 type converters in 62ms
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) built in 110ms
+2026-08-08 22:13:29 [main] INFO  o.a.camel.util.concurrent.ThreadType - The type of thread detected is PLATFORM
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.e.BaseExecutorServiceManager - Created new ScheduledThreadPool for source: ErrorHandlerRedeliveryThreadPool with name: ErrorHandlerRedeliveryTask -> org.apache.camel.util.concurrent.SizedScheduledExecutorService@7a8c01ef[ErrorHandlerRedeliveryTask]
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: spring-event-component via type: org.apache.camel.component.event.EventComponentConfigurer via: META-INF/services/org/apache/camel/configurer/spring-event-component
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: spring-event-endpoint via type: org.apache.camel.component.event.EventEndpointConfigurer via: META-INF/services/org/apache/camel/configurer/spring-event-endpoint
+2026-08-08 22:13:29 [main] DEBUG o.a.c.i.e.DefaultConfigurerResolver - Found configurer: spring-event-component via type: org.apache.camel.component.event.EventComponentConfigurer via: META-INF/services/org/apache/camel/configurer/spring-event-component
+2026-08-08 22:13:29 [main] DEBUG o.a.camel.spring.SpringCamelContext - Set the application context classloader to: TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
+
+2026-08-08 22:13:32 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2026-08-08 22:13:32 [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'logFilter' configured for use
+2026-08-08 22:13:32 [main] DEBUG c.m.b.users.config.JwtRequestFilter - Filter 'jwtRequestFilter' configured for use
+2026-08-08 22:13:33 [main] INFO  c.m.b.config.RestTemplateConfig - Creating RestTemplate with SSL trust-all configuration
+2026-08-08 22:13:33 [main] INFO  c.m.b.config.RestTemplateConfig - RestTemplate configured with connect-timeout: 10000ms, read-timeout: 30000ms
+2026-08-08 22:13:36 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2026-08-08 22:13:36 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2026-08-08 22:13:36 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2026-08-08 22:13:36 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2026-08-08 22:13:36 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2026-08-08 22:13:36 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2026-08-08 22:13:36 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2026-08-08 22:13:36 [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@21772c6f
+2026-08-08 22:13:37 [main] INFO  c.m.b.c.i.Dhis2HeaderFilterConfig - === Configuring DHIS2 Header Filter (Static Test) ===
+2026-08-08 22:13:37 [main] INFO  c.m.b.c.i.Dhis2HeaderFilterConfig - DHIS2 Header Filter configured - allowing most headers for testing
+2026-08-08 22:13:37 [main] INFO  c.m.IntegrationMappingComponent - IntegrationMappingComponent initialized with CamelContext.
+2026-08-08 22:13:37 [main] INFO  c.m.b.c.IntegrationMappingConfiguration - Registered custom Camel component: integrationmapping
+2026-08-08 22:13:38 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 168 mappings in 'requestMappingHandlerMapping'
+2026-08-08 22:13:38 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2026-08-08 22:13:38 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheck with id context successfully registered
+2026-08-08 22:13:38 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id routes successfully registered
+2026-08-08 22:13:38 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id producers successfully registered
+2026-08-08 22:13:38 [main] DEBUG o.a.c.i.h.DefaultHealthCheckRegistry - HealthCheckRepository with id consumers successfully registered
+2026-08-08 22:13:39 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-08-08 22:13:39 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-08-08 22:13:41 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2026-08-08 22:13:42 [main] DEBUG o.a.c.h.common.DefaultHttpRegistry - Registering CamelServlet with name CamelServlet consumers present: 0
+2026-08-08 22:13:42 [main] INFO  o.a.c.c.s.CamelHttpTransportServlet - Initialized CamelHttpTransportServlet[name=CamelServlet, contextPath=]
+2026-08-08 22:13:42 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.web.servlet.context.ServletWebServerInitializedEvent[source=org.springframework.boot.web.embedded.tomcat.TomcatWebServer@469640e4]
+2026-08-08 22:13:42 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2026-08-08 22:13:42 [main] DEBUG o.a.c.s.b.CamelSpringBootApplicationListener - Post-processing CamelContext bean: camel-1
+2026-08-08 22:13:42 [main] DEBUG o.apache.camel.main.RoutesConfigurer - RoutesCollectorEnabled: org.apache.camel.spring.boot.CamelSpringBootRoutesCollector@118c0c7e
+2026-08-08 22:13:42 [main] DEBUG o.a.c.s.b.CamelSpringBootRoutesCollector - Finding additional routes from: classpath:camel/*
+2026-08-08 22:13:42 [main] DEBUG o.a.c.s.b.CamelSpringBootRoutesCollector - Finding additional routes from: classpath:camel-template/*
+2026-08-08 22:13:42 [main] DEBUG o.a.c.s.b.CamelSpringBootRoutesCollector - Finding additional routes from: classpath:camel-rest/*
+2026-08-08 22:13:42 [main] DEBUG o.a.c.s.b.CamelSpringBootRoutesCollector - No additional RoutesBuilder discovered from: classpath:camel/*,classpath:camel-template/*,classpath:camel-rest/*
+2026-08-08 22:13:42 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.context.event.ContextRefreshedEvent[source=org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@57fd91c9, started on Sat Aug 08 22:13:18 EET 2026]
+2026-08-08 22:13:42 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Resolving language: simple
+2026-08-08 22:13:42 [main] DEBUG o.a.camel.support.ResolverHelper - Lookup Language with name simple in registry. Found: null
+2026-08-08 22:13:42 [main] DEBUG o.a.camel.support.ResolverHelper - Lookup Language with name simple-language in registry. Found: null
+2026-08-08 22:13:42 [main] DEBUG o.a.c.language.simple.SimpleLanguage - Simple language predicate/expression cache size: 1000
+2026-08-08 22:13:42 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) initialized in 141ms
+2026-08-08 22:13:42 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) is starting
+2026-08-08 22:13:42 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ClassResolver=org.apache.camel.impl.engine.DefaultClassResolver@251504fb, PackageScanClassResolver=org.apache.camel.spring.boot.FatJarPackageScanClassResolver@1221a708, ApplicationContextClassLoader=TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
+, RouteController=org.apache.camel.impl.engine.DefaultRouteController@4c7d8eb4
+2026-08-08 22:13:42 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - StreamCaching is disabled on CamelContext: camel-1
+2026-08-08 22:13:42 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using HeadersMapFactory: org.apache.camel.impl.engine.DefaultHeadersMapFactory@47c33908
+2026-08-08 22:13:42 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ReactiveExecutor: org.apache.camel.impl.engine.DefaultReactiveExecutor@1feed3f7
+2026-08-08 22:13:42 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using ThreadPoolFactory: org.apache.camel.support.DefaultThreadPoolFactory@5125a26c
+2026-08-08 22:13:42 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Using HealthCheck: camel-spring-boot
+2026-08-08 22:13:42 [main] DEBUG o.a.c.i.e.DefaultStreamCachingStrategy - StreamCaching configuration DefaultStreamCachingStrategy[spoolDirectoryEnabled=false, spoolDirectory=null, spoolCipher=null, spoolThreshold=131072, spoolUsedHeapMemoryThreshold=0, bufferSize=0, anySpoolRules=false]
+2026-08-08 22:13:42 [main] DEBUG o.a.c.i.e.DefaultStreamCachingStrategy - StreamCaching in use
+2026-08-08 22:13:42 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - Clearing BeanIntrospection cache with 1 objects using during starting Camel
+2026-08-08 22:13:42 [main] DEBUG o.a.c.i.engine.AbstractCamelContext - BeanIntrospection invoked 4 times during starting Camel
+2026-08-08 22:13:42 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Routes startup (started:0)
+2026-08-08 22:13:42 [main] INFO  o.a.c.i.engine.AbstractCamelContext - Apache Camel 4.4.0 (camel-1) started in 286ms (build:110ms init:141ms start:35ms)
+2026-08-08 22:13:42 [main] DEBUG o.a.camel.support.ResolverHelper - Found ProcessorFactory: org.apache.camel.processor.DefaultProcessorFactory via: META-INF/services/org/apache/camel/processor-factory
+2026-08-08 22:13:42 [main] DEBUG o.a.camel.support.ResolverHelper - Detected and using ProcessorFactory: org.apache.camel.processor.DefaultProcessorFactory@f5c44d0
+2026-08-08 22:13:42 [main] DEBUG o.a.camel.impl.DefaultCamelContext - start() took 189 millis
+2026-08-08 22:13:42 [main] INFO  c.middleware.MiddlewareApplication - Started MiddlewareApplication in 24.416 seconds (process running for 26.064)
+2026-08-08 22:13:42 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.context.event.ApplicationStartedEvent[source=org.springframework.boot.SpringApplication@678cbfb6]
+2026-08-08 22:13:42 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.availability.AvailabilityChangeEvent[source=org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@57fd91c9, started on Sat Aug 08 22:13:18 EET 2026]
+2026-08-08 22:13:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:13:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:13:42 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.context.event.ApplicationReadyEvent[source=org.springframework.boot.SpringApplication@678cbfb6]
+2026-08-08 22:13:42 [main] INFO  c.m.b.c.service.SequenceFixService - Fixing sequence for integration_mapping.id ...
+2026-08-08 22:13:43 [main] INFO  c.m.b.c.service.SequenceFixService - Sequence public.integration_mapping_id_seq initialized. setval returned 1
+2026-08-08 22:13:43 [main] INFO  c.m.b.c.service.SequenceFixService - Sequence fix done.
+2026-08-08 22:13:43 [main] DEBUG o.a.camel.spring.SpringCamelContext - onApplicationEvent: org.springframework.boot.availability.AvailabilityChangeEvent[source=org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@57fd91c9, started on Sat Aug 08 22:13:18 EET 2026]
+2026-08-08 22:13:44 [RMI TCP Connection(4)-172.25.55.134] DEBUG o.a.c.i.health.AbstractHealthCheck - Invoke health-check (LIVENESS) camel/context
+2026-08-08 22:13:44 [RMI TCP Connection(1)-172.25.55.134] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-08-08 22:13:44 [RMI TCP Connection(1)-172.25.55.134] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-08-08 22:13:44 [RMI TCP Connection(1)-172.25.55.134] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2026-08-08 22:13:44 [RMI TCP Connection(1)-172.25.55.134] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2026-08-08 22:13:44 [RMI TCP Connection(1)-172.25.55.134] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2026-08-08 22:13:44 [RMI TCP Connection(4)-172.25.55.134] DEBUG o.a.c.i.health.AbstractHealthCheck - Invoke health-check (READINESS) camel/context
+2026-08-08 22:13:44 [RMI TCP Connection(4)-172.25.55.134] DEBUG o.a.c.i.health.AbstractHealthCheck - Invoke health-check (ALL) camel/context
+2026-08-08 22:13:44 [RMI TCP Connection(1)-172.25.55.134] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@3eca364c
+2026-08-08 22:13:44 [RMI TCP Connection(1)-172.25.55.134] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@5ee617
+2026-08-08 22:13:44 [RMI TCP Connection(1)-172.25.55.134] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-08-08 22:13:44 [RMI TCP Connection(1)-172.25.55.134] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 16 ms
+2026-08-08 22:13:46 [RMI TCP Connection(4)-172.25.55.134] WARN  o.s.b.a.mail.MailHealthIndicator - Mail health check failed
+jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-4813ccea399sm2239120f8f.13 - gsmtp
+
+	at org.eclipse.angus.mail.smtp.SMTPTransport$Authenticator.authenticate(SMTPTransport.java:954)
+	at org.eclipse.angus.mail.smtp.SMTPTransport.authenticate(SMTPTransport.java:865)
+	at org.eclipse.angus.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:769)
+	at jakarta.mail.Service.connect(Service.java:342)
+	at org.springframework.mail.javamail.JavaMailSenderImpl.connectTransport(JavaMailSenderImpl.java:480)
+	at org.springframework.mail.javamail.JavaMailSenderImpl.testConnection(JavaMailSenderImpl.java:360)
+	at org.springframework.boot.actuate.mail.MailHealthIndicator.doHealthCheck(MailHealthIndicator.java:52)
+	at org.springframework.boot.actuate.health.AbstractHealthIndicator.health(AbstractHealthIndicator.java:82)
+	at org.springframework.boot.actuate.health.HealthIndicator.getHealth(HealthIndicator.java:37)
+	at org.springframework.boot.actuate.health.HealthEndpoint.getHealth(HealthEndpoint.java:82)
+	at org.springframework.boot.actuate.health.HealthEndpoint.getHealth(HealthEndpoint.java:41)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getLoggedHealth(HealthEndpointSupport.java:172)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getContribution(HealthEndpointSupport.java:145)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getAggregateContribution(HealthEndpointSupport.java:156)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getContribution(HealthEndpointSupport.java:141)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getHealth(HealthEndpointSupport.java:110)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getHealth(HealthEndpointSupport.java:81)
+	at org.springframework.boot.actuate.health.HealthEndpoint.health(HealthEndpoint.java:76)
+	at org.springframework.boot.actuate.health.HealthEndpoint.health(HealthEndpoint.java:66)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:281)
+	at org.springframework.boot.actuate.endpoint.invoke.reflect.ReflectiveOperationInvoker.invoke(ReflectiveOperationInvoker.java:74)
+	at org.springframework.boot.actuate.endpoint.annotation.AbstractDiscoveredOperation.invoke(AbstractDiscoveredOperation.java:60)
+	at org.springframework.boot.actuate.endpoint.jmx.EndpointMBean.invoke(EndpointMBean.java:124)
+	at org.springframework.boot.actuate.endpoint.jmx.EndpointMBean.invoke(EndpointMBean.java:97)
+	at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.invoke(DefaultMBeanServerInterceptor.java:803)
+	at java.management/com.sun.jmx.mbeanserver.JmxMBeanServer.invoke(JmxMBeanServer.java:802)
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:1472)
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:1310)
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:1405)
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.invoke(RMIConnectionImpl.java:829)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:598)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:844)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:721)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:720)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-08-08 22:14:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:14:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:14:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:14:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:15:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:15:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:15:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:15:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:16:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:16:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:16:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:16:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:17:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:17:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:17:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:17:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:18:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:18:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:18:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:18:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:19:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:19:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:19:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:19:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:20:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:20:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:20:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:20:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:21:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:21:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:21:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:21:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:22:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:22:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:22:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:22:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:23:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:23:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:23:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:23:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:24:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:24:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:24:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:24:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:25:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:25:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:25:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:25:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:26:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:26:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:26:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:26:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:27:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:27:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:27:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:27:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:28:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:28:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:28:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:28:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:29:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:29:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:29:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:29:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:30:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:30:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:30:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:30:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:31:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:31:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:31:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:31:42 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 22:32:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 22:32:12 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:55 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:55 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:55 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:55 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:56 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:57 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:57 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:57 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:57 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:57 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:57 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:57 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:57 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:57 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:57 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
+2026-08-08 23:30:57 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Starting route status sync with Camel context
+2026-08-08 23:30:57 [scheduling-1] INFO  c.m.b.c.service.DynamicRouteService - Completed route status sync
