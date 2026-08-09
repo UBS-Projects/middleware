@@ -5,7 +5,7 @@ spring:
   datasource:
     #    url: jdbc:postgresql://localhost:5432/middleware2
     #    url: jdbc:postgresql://localhost:5432/design_table
-    url: jdbc:postgresql://localhost:5432/new_middleware2
+    url: jdbc:postgresql://localhost:5432/middlewaretest
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
