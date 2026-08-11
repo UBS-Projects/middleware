@@ -1,0 +1,228 @@
+# ================================================================
+# Dynamic Routes — Active Default Versions Only
+# Generated   : 2026-08-11 20:58
+# Database    : last_middleware (localhost:5432)
+# Total routes: 8
+# SECURITY    : Secrets replaced with *****
+# ================================================================
+
+# ----------------------------------------------------------------
+# DB id       : 5
+# route_id    : dhis2-system-info
+# path        : /v1/system-info
+# method      : GET
+# version     : 1 (default=true, active=true)
+# description : GET DHIS2 production system info
+# created_by  : admin@mail.com
+# ----------------------------------------------------------------
+- route:
+    id: dhis2-system-info
+    description: GET DHIS2 production system info
+    from:
+      uri: rest
+      parameters:
+        method: get
+        path: /v1/system-info
+      steps:
+        - setHeader:
+            constant: ApiToken *****
+            name: Authorization
+        - to:
+            uri: https://hmis.moh.gov.jo/dwh/api/system/info
+            parameters:
+              bridgeEndpoint: true
+              throwExceptionOnFailure: false
+        - convertBodyTo:
+            type: java.lang.String
+
+# ----------------------------------------------------------------
+# DB id       : 11
+# route_id    : dhis2-upload-csv
+# path        : /v1/datasets
+# method      : POST
+# version     : 4 (default=true, active=true)
+# description : POST /v1/datasets
+# created_by  : admin@mail.com
+# ----------------------------------------------------------------
+- route:
+    id: dhis2-upload-csv
+    description: POST /v1/datasets
+    from:
+      uri: servlet:/v1/datasets
+      parameters:
+        httpMethodRestrict: POST
+      steps:
+        - process:
+            ref: csvGuard
+        - to:
+            id: to-3233
+            uri: integratedSystem
+            parameters:
+              code: DHIS2.DEV
+        - process:
+            ref: dhis2CsvDryRunThenCommit
+        - process:
+            ref: dhis2ImportSummarizer
+
+# ----------------------------------------------------------------
+# DB id       : 6
+# route_id    : get-tei-info
+# path        : /v1/tei-info
+# method      : POST
+# version     : 1 (default=true, active=true)
+# description : Get tracked entity information by TEI UID from DHIS2 Test
+# created_by  : admin@mail.com
+# ----------------------------------------------------------------
+- route:
+    id: get-tei-info
+    description: Get tracked entity information by TEI UID from DHIS2 Test
+    from:
+      uri: rest
+      parameters:
+        method: post
+        path: /v1/tei-info
+      steps:
+        - unmarshal:
+            json:
+              library: Jackson
+        - setHeaders:
+            id: setHeaders-2114
+            headers:
+              - constant:
+                  expression: GET
+                name: CamelHttpMethod
+              - constant:
+                  expression: Basic *****
+                name: Authorization
+              - id: ""
+                name: tei
+                simple:
+                  expression: ${body[tei]}
+        - toD:
+            uri: https://play.im.dhis2.org/dev-2-42/api/tracker/trackedEntities/${header.tei}?fields=*&bridgeEndpoint=true&throwExceptionOnFailure=false
+        - convertBodyTo:
+            type: java.lang.String
+
+# ----------------------------------------------------------------
+# DB id       : 3
+# route_id    : HealthCenter-mapping
+# path        : /HealthCenter
+# method      : GET
+# version     : 1 (default=true, active=true)
+# description : HealthCenter mapping
+# created_by  : admin@mail.com
+# ----------------------------------------------------------------
+- route:
+    id: HealthCenter-mapping
+    description: HealthCenter mapping
+    from:
+      uri: rest
+      parameters:
+        method: get
+        path: /HealthCenter
+      steps:
+        - to:
+            id: to-3694
+            uri: integrationmapping
+            parameters:
+              code: default
+
+# ----------------------------------------------------------------
+# DB id       : 8
+# route_id    : hello-name-route
+# path        : /v1/hello
+# method      : POST
+# version     : 1 (default=true, active=true)
+# description : Return hello message using name from request body
+# created_by  : admin@mail.com
+# ----------------------------------------------------------------
+- route:
+    id: hello-name-route
+    description: Return hello message using name from request body
+    from:
+      uri: rest
+      parameters:
+        method: post
+        path: /v1/hello
+      steps:
+        - unmarshal:
+            json:
+              library: Jackson
+        - setBody:
+            simple:
+              expression: Hello ${body[name]}
+        - setHeader:
+            constant: text/plain
+            name: Content-Type
+
+# ----------------------------------------------------------------
+# DB id       : 1
+# route_id    : Hospital_HealthMap_Annual_Mapping
+# path        : /v1/hospitals/annual
+# method      : GET
+# version     : 1 (default=true, active=true)
+# description : Hospital HealthMap Annual
+# created_by  : admin@mail.com
+# ----------------------------------------------------------------
+- route:
+    id: Hospital_HealthMap_Annual_Mapping
+    description: Hospital HealthMap Annual
+    from:
+      uri: rest
+      parameters:
+        method: get
+        path: /v1/hospitals/annual
+      steps:
+        - to:
+            id: to-hospital-healthmap-annual
+            uri: integrationmapping
+            parameters:
+              code: hospital_healthmap_annual
+
+# ----------------------------------------------------------------
+# DB id       : 16
+# route_id    : Hospital_HealthMap_Mapping
+# path        : /v1/hospitales
+# method      : GET
+# version     : 6 (default=true, active=true)
+# description : Hospital HealthMap
+# created_by  : admin@mail.com
+# ----------------------------------------------------------------
+- route:
+    id: Hospital_HealthMap_Mapping
+    description: Hospital HealthMap
+    from:
+      uri: rest
+      parameters:
+        method: get
+        path: /v1/hospitales
+      steps:
+        - to:
+            id: to-3694
+            uri: integrationmapping
+            parameters:
+              code: default
+
+# ----------------------------------------------------------------
+# DB id       : 2
+# route_id    : HospitalDepartments_HealthMap_Mapping
+# path        : /v1/hospitalDepartments
+# method      : GET
+# version     : 1 (default=true, active=true)
+# description : Hospital Departments HealthMap
+# created_by  : admin@mail.com
+# ----------------------------------------------------------------
+- route:
+    id: HospitalDepartments_HealthMap_Mapping
+    description: Hospital Departments HealthMap 
+    from:
+      uri: rest
+      parameters:
+        method: get
+        path: /v1/hospitalDepartments
+      steps:
+        - to:
+            id: to-3694
+            uri: integrationmapping
+            parameters:
+              code: default
