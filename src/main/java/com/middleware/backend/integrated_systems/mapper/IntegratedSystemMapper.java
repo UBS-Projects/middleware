@@ -2,6 +2,7 @@ package com.middleware.backend.integrated_systems.mapper;
 
 import com.middleware.backend.integrated_systems.dto.IntegratedSystemDto;
 import com.middleware.backend.integrated_systems.model.IntegratedSystem;
+import com.middleware.backend.integrated_systems.model.SystemType;
 
 /**
  * Mapper class responsible for converting between {@link IntegratedSystem} entities
@@ -16,12 +17,18 @@ public class IntegratedSystemMapper {
      * @return the corresponding {@link IntegratedSystemDto}, or null if the entity is null
      */
     public static IntegratedSystemDto toDto(IntegratedSystem entity) {
+        if (entity == null) {
+            return null;
+        }
         return IntegratedSystemDto.builder()
                 .id(entity.getId())
                 .code(entity.getCode())
                 .host(entity.getHost())
                 .port(entity.getPort())
                 .description(entity.getDescription())
+                .systemType(entity.getSystemType() != null
+                        ? entity.getSystemType()
+                        : SystemType.fromProtocol(entity.getProtocol()))
                 .protocol(entity.getProtocol())
                 .additionalKey1(entity.getAdditionalKey1())
                 .additionalValue1(entity.getAdditionalValue1())
@@ -45,12 +52,16 @@ public class IntegratedSystemMapper {
      * @return the corresponding {@link IntegratedSystem} entity, or null if the DTO is null
      */
     public static IntegratedSystem toEntity(IntegratedSystemDto dto) {
+        if (dto == null) {
+            return null;
+        }
         return IntegratedSystem.builder()
                 .id(dto.getId())
                 .code(dto.getCode())
                 .host(dto.getHost())
                 .port(dto.getPort())
                 .description(dto.getDescription())
+                .systemType(dto.getSystemType())
                 .protocol(dto.getProtocol())
                 .additionalKey1(dto.getAdditionalKey1())
                 .additionalValue1(dto.getAdditionalValue1())

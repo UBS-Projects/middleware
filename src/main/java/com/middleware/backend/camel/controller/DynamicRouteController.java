@@ -199,6 +199,7 @@ public class DynamicRouteController {
     )
     public ResponseEntity<Page<DynamicRouteEntity>> getRoutes(
             @RequestParam(required = false) String routeId,
+            @RequestParam(required = false, defaultValue = "false") Boolean exactMatch,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) String path,
             @RequestParam(required = false) String httpMethod,
@@ -244,7 +245,7 @@ public class DynamicRouteController {
             String queryType;
 
             if (hasFilters) {
-                result = routeService.getLatestRoutesWithFiltersOptimized(routeId, description, path, httpMethod,
+                result = routeService.getLatestRoutesWithFiltersOptimized(routeId, exactMatch, description, path, httpMethod,
                         active, comment, yamlContains, createdAfter, createdBefore, pageable);
                 queryType = "filtered";
             } else {

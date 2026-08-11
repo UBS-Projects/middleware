@@ -837,7 +837,7 @@ public class DynamicRouteService {
         return applyPagination(routesList, pageable);
     }
 
-    private boolean applyAllFilters(DynamicRouteEntity route, String routeId, String description, String path,
+    private boolean applyAllFilters(DynamicRouteEntity route, String routeId, Boolean exactMatch, String description, String path,
                                     String httpMethod, Boolean active, String comment, String yamlContains,
                                     LocalDateTime createdAfter, LocalDateTime createdBefore) {
         // Applies in-memory filter criteria to a single route entity
@@ -849,8 +849,14 @@ public class DynamicRouteService {
 
         // Apply routeId filter
         if (routeId != null && !routeId.trim().isEmpty()) {
-            if (!route.getRouteId().toLowerCase().contains(routeId.toLowerCase().trim())) {
-                return false;
+            if (exactMatch) {
+                if (!route.getRouteId().equalsIgnoreCase(routeId.trim())) {
+                    return false;
+                }
+            } else {
+                if (!route.getRouteId().toLowerCase().contains(routeId.toLowerCase().trim())) {
+                    return false;
+                }
             }
         }
 
@@ -906,7 +912,7 @@ public class DynamicRouteService {
         return true;
     }
 
-    public Page<DynamicRouteEntity> getLatestRoutesWithFiltersOptimized(String routeId, String description, String path,
+    public Page<DynamicRouteEntity> getLatestRoutesWithFiltersOptimized(String routeId, Boolean exactMatch, String description, String path,
                                                                         String httpMethod, Boolean active, String comment, String yamlContains, LocalDateTime createdAfter,
                                                                         LocalDateTime createdBefore, Pageable pageable) {
         // Optimized latest-versions query with in-memory filtering then pagination
@@ -919,7 +925,7 @@ public class DynamicRouteService {
         // Step 2: Convert to list and apply all filters
         List<DynamicRouteEntity> filteredRoutes = latestRoutesMap.values().stream()
                 .filter(route -> route != null)
-                .filter(route -> applyAllFilters(route, routeId, description, path, httpMethod, active,
+                .filter(route -> applyAllFilters(route, routeId, exactMatch, description, path, httpMethod, active,
                         comment, yamlContains, createdAfter, createdBefore))
                 .collect(Collectors.toList());
 

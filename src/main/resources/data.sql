@@ -219,12 +219,32 @@ ALTER TABLE public.dynamic_route_audit
 ALTER COLUMN details TYPE text;
 
 
+ALTER TABLE public.integrated_system
+    ADD COLUMN IF NOT EXISTS system_type varchar(50);
+
+UPDATE public.integrated_system
+SET system_type = 'HTTP_API'
+WHERE system_type IS NULL;
+
+ALTER TABLE public.integrated_system
+    DROP CONSTRAINT IF EXISTS integrated_system_protocol_check;
+
+ALTER TABLE public.integrated_system
+    ADD CONSTRAINT integrated_system_protocol_check
+    CHECK (protocol IS NULL OR protocol IN (
+        'HTTP', 'HTTPS',
+        'POSTGRESQL', 'MYSQL', 'SQLSERVER', 'ORACLE',
+        'SMTP', 'FTP', 'SFTP', 'MQTT', 'AMQP'
+    ));
+
+
 INSERT INTO public.integrated_system (
     id,
     code,
     host,
     port,
     description,
+    system_type,
     protocol,
     additional_key1,
     additional_value1,
@@ -239,8 +259,8 @@ INSERT INTO public.integrated_system (
     updated_by,
     updated_at
 )VALUES
-     (1,'DHIS2.STABLE','play.im.dhis2.org/stable-2-41-5',443,'DHIS2 Instance one','HTTPS','timeout',30000,'connect-timeout',10000,'BASIC','admin','district','','SYSTEM',NOW(),'SYSTEM',NOW()),
-     (2,'DHIS2.DWH','hmis-dev.moh.gov.jo/dwh',443,'DHIS2 Instance two','HTTPS','timeout',30000,'connect-timeout',10000,'BASIC','supp_user','F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z','','SYSTEM',NOW(),'SYSTEM',NOW())
+     (1,'DHIS2.STABLE','play.im.dhis2.org/stable-2-41-5',443,'DHIS2 Instance one','HTTP_API','HTTPS','timeout',30000,'connect-timeout',10000,'BASIC','admin','district','','SYSTEM',NOW(),'SYSTEM',NOW()),
+     (2,'DHIS2.DWH','hmis-dev.moh.gov.jo/dwh',443,'DHIS2 Instance two','HTTP_API','HTTPS','timeout',30000,'connect-timeout',10000,'BASIC','supp_user','F^*+(<2:&!^.L7:6GTtfP7>2<:6)@Z','','SYSTEM',NOW(),'SYSTEM',NOW())
     ON CONFLICT (code) DO NOTHING;
 
 

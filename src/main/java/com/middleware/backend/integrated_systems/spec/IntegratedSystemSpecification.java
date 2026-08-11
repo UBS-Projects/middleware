@@ -25,17 +25,27 @@ public class IntegratedSystemSpecification {
      * @param matchMode the match mode (EXACT or CONTAINS)
      * @return a JPA Specification for the field, or null if value is empty
      */
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public static Specification<IntegratedSystem> hasField(String fieldName, String value, MatchMode matchMode) {
         return (root, query, criteriaBuilder) -> {
             if (!StringUtils.hasText(value)) return null;
 
-            Path<String> field = root.get(fieldName);
+            Path<?> field = root.get(fieldName);
+            Class<?> javaType = field.getJavaType();
 
             switch (matchMode) {
                 case EXACT:
-                    return criteriaBuilder.equal(field, value);
+                    Object compareValue = value;
+                    if (javaType.isEnum()) {
+                        try {
+                            compareValue = Enum.valueOf((Class<Enum>) javaType, value.trim().toUpperCase());
+                        } catch (IllegalArgumentException ex) {
+                            return criteriaBuilder.disjunction();
+                        }
+                    }
+                    return criteriaBuilder.equal(field, compareValue);
                 case CONTAINS:
-                    return criteriaBuilder.like(criteriaBuilder.lower(field), "%" + value.toLowerCase() + "%");
+                    return criteriaBuilder.like(criteriaBuilder.lower(field.as(String.class)), "%" + value.toLowerCase() + "%");
                 default:
                     return null;
             }

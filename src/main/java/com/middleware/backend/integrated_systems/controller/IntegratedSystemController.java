@@ -38,6 +38,7 @@ public class IntegratedSystemController {
      * @param host          partial host value to filter by
      * @param description   partial description to filter by
      * @param protocol      exact protocol to filter by
+     * @param systemType    exact system type to filter by
      * @param createdAfter  include systems created after this date
      * @param createdBefore include systems created before this date
      * @param sortedBy      field name to sort by (default: updatedAt)
@@ -51,13 +52,14 @@ public class IntegratedSystemController {
     @Operation(
             summary = "List integrated systems with filters",
             description = "Retrieves a paginated list of integrated systems. Supports filtering by code, host, description, " +
-                    "protocol, and creation date range. Supports sorting and pagination. Requires 'integratedSystem:view' authority."
+                    "protocol, system type, and creation date range. Supports sorting and pagination. Requires 'integratedSystem:view' authority."
     )
     public ResponseEntity<Page<?>> getAll(
             @RequestParam(required = false) String code,
             @RequestParam(required = false) String host,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) String protocol,
+            @RequestParam(required = false) String systemType,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdAfter,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdBefore,
             @RequestParam(defaultValue = "updatedAt") String sortedBy,
@@ -75,6 +77,7 @@ public class IntegratedSystemController {
                 .and(IntegratedSystemSpecification.hasField("host", host, IntegratedSystemSpecification.MatchMode.CONTAINS))
                 .and(IntegratedSystemSpecification.hasField("description", description, IntegratedSystemSpecification.MatchMode.CONTAINS))
                 .and(IntegratedSystemSpecification.hasField("protocol", protocol, IntegratedSystemSpecification.MatchMode.EXACT))
+                .and(IntegratedSystemSpecification.hasField("systemType", systemType, IntegratedSystemSpecification.MatchMode.EXACT))
                 .and(IntegratedSystemSpecification.dateAfter("createdAt", createdAfter))
                 .and(IntegratedSystemSpecification.dateBefore("createdAt", createdBefore));
 
@@ -129,11 +132,15 @@ public class IntegratedSystemController {
             description = "Creates a new integrated system. Requires 'integratedSystem:create' authority. Returns 400 if the key already exists."
     )
     public ResponseEntity<?> integrateNewSystem(@RequestBody IntegratedSystemDto body) {
-        IntegratedSystemDto response = service.create(body);
-        if (response == null) {
-            return ResponseEntity.badRequest().body("Key already exists");
+        try {
+            IntegratedSystemDto response = service.create(body);
+            if (response == null) {
+                return ResponseEntity.badRequest().body("Key already exists");
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     // ===================== UPDATE INTEGRATED SYSTEM =====================
@@ -151,10 +158,14 @@ public class IntegratedSystemController {
             description = "Updates an existing integrated system with the provided details. Requires 'integratedSystem:edit' authority. Returns 400 if the system key is not found."
     )
     public ResponseEntity<?> update(@RequestBody IntegratedSystemDto body) {
-        IntegratedSystemDto response = service.update(body);
-        if (response == null) {
-            return ResponseEntity.badRequest().body("Key wasn't found");
+        try {
+            IntegratedSystemDto response = service.update(body);
+            if (response == null) {
+                return ResponseEntity.badRequest().body("Key wasn't found");
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
