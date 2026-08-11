@@ -50,9 +50,13 @@ public class IntegratedSystemBridge {
 
                 Map<String, Object> map = new LinkedHashMap<>();
                 map.put("host", dto.getHost());
-                map.put("port", dto.getPort().isEmpty()?(dto.getProtocol() == Protocol.HTTP ? 80 : 443):dto.getProtocol());
-                map.put("protocol", dto.getProtocol());
-                map.put("authenticationType", dto.getAuthenticationType());
+                map.put("port", resolvePort(dto));
+                // Store enum names as strings so JDBC / HTTP consumers can match reliably
+                map.put("systemType", dto.getSystemType() != null ? dto.getSystemType().name() : null);
+                map.put("protocol", dto.getProtocol() != null ? dto.getProtocol().name() : null);
+                map.put(
+                        "authenticationType",
+                        dto.getAuthenticationType() != null ? dto.getAuthenticationType().name() : null);
                 map.put("username", dto.getUsername());
                 map.put("password", dto.getPassword());
                 map.put("token", dto.getToken());
@@ -77,5 +81,20 @@ public class IntegratedSystemBridge {
                 return null;
             }
         };
+    }
+
+    /**
+     * Uses the configured port when present; otherwise the protocol default
+     * (80/443 for HTTP/HTTPS so existing API systems keep working).
+     */
+    private static Object resolvePort(IntegratedSystemDto dto) {
+        if (StringUtils.hasText(dto.getPort())) {
+            return dto.getPort();
+        }
+        Protocol protocol = dto.getProtocol();
+        if (protocol == null) {
+            return 443;
+        }
+        return protocol.defaultPort();
     }
 }

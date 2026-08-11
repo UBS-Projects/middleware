@@ -2,6 +2,7 @@ package com.middleware.backend.integrated_systems.dto;
 
 import com.middleware.backend.integrated_systems.model.AuthenticationType;
 import com.middleware.backend.integrated_systems.model.Protocol;
+import com.middleware.backend.integrated_systems.model.SystemType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +29,8 @@ public class IntegratedSystemDto {
     private String port;
 
     private String description;
+
+    private SystemType systemType;
 
     private Protocol protocol;
 

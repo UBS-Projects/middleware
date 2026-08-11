@@ -4,6 +4,7 @@ import com.middleware.backend.integrated_systems.dto.IntegratedSystemDto;
 import com.middleware.backend.integrated_systems.mapper.IntegratedSystemMapper;
 import com.middleware.backend.integrated_systems.model.IntegratedSystem;
 import com.middleware.backend.integrated_systems.repository.IntegratedSystemRepository;
+import com.middleware.backend.integrated_systems.validation.IntegratedSystemValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -58,6 +59,7 @@ public class IntegratedSystemService {
      * @return the created {@link IntegratedSystemDto}, or null if a system with the same code already exists
      */
     public IntegratedSystemDto create(IntegratedSystemDto body) {
+        IntegratedSystemValidator.applyDefaultsAndValidate(body);
         Optional<IntegratedSystem> exists = repo.findByCode(body.getCode());
         if (exists.isPresent())
             return null;
@@ -83,6 +85,7 @@ public class IntegratedSystemService {
      * @return the updated {@link IntegratedSystemDto}, or null if the system with the given code does not exist
      */
     public IntegratedSystemDto update(IntegratedSystemDto body) {
+        IntegratedSystemValidator.applyDefaultsAndValidate(body);
         Optional<IntegratedSystem> exists = repo.findByCode(body.getCode());
         if (exists.isEmpty()) return null;
 
@@ -95,6 +98,7 @@ public class IntegratedSystemService {
         entity.setHost(body.getHost());
         entity.setPort(body.getPort());
         entity.setDescription(body.getDescription());
+        entity.setSystemType(body.getSystemType());
         entity.setProtocol(body.getProtocol());
         entity.setAdditionalKey1(body.getAdditionalKey1());
         entity.setAdditionalValue1(body.getAdditionalValue1());

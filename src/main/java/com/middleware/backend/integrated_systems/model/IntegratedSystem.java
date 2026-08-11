@@ -39,7 +39,16 @@ public class IntegratedSystem {
     /** Optional human-readable description */
     private String description;
 
-    /** Communication protocol used (HTTP or HTTPS) */
+    /**
+     * High-level system category (HTTP API, database, broker, email, file transfer).
+     * Existing records default to {@link SystemType#HTTP_API}.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "system_type")
+    @Builder.Default
+    private SystemType systemType = SystemType.HTTP_API;
+
+    /** Communication protocol used (HTTP, HTTPS, PostgreSQL, SMTP, …) */
     @Enumerated(EnumType.STRING)
     private Protocol protocol;
 
@@ -76,4 +85,16 @@ public class IntegratedSystem {
 
     /** Timestamp when this system entry was last updated */
     private Timestamp updatedAt;
+
+    /**
+     * Ensures existing HTTP/HTTPS rows (and payloads that omit systemType)
+     * persist as {@link SystemType#HTTP_API}.
+     */
+    @PrePersist
+    @PreUpdate
+    private void ensureSystemType() {
+        if (systemType == null) {
+            systemType = SystemType.fromProtocol(protocol);
+        }
+    }
 }

@@ -21,10 +21,20 @@ public class IntegratedSystemEndpointUriFactory extends org.apache.camel.support
     private static final Set<String> SECRET_PROPERTY_NAMES;
     private static final Set<String> MULTI_VALUE_PREFIXES;
     static {
-        Set<String> props = new HashSet<>(3);
+        Set<String> props = new HashSet<>(13);
+        props.add("additionalKey1");
+        props.add("additionalKey2");
+        props.add("additionalValue1");
+        props.add("additionalValue2");
+        props.add("authenticationType");
         props.add("code");
+        props.add("description");
+        props.add("host");
         props.add("lazyStartProducer");
         props.add("operation");
+        props.add("port");
+        props.add("protocol");
+        props.add("systemType");
         PROPERTY_NAMES = Collections.unmodifiableSet(props);
         SECRET_PROPERTY_NAMES = Collections.emptySet();
         MULTI_VALUE_PREFIXES = Collections.emptySet();

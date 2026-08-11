@@ -53,7 +53,7 @@ public class Dhis2ClientService {
                 throw new RuntimeException("No DHIS2 config found for code: " + dhis2Code);
             }
 
-            String baseUrl = dto.getProtocol() + "://" + dto.getHost();
+            String baseUrl = buildBaseUrl(dto);
             String analyticsUrl = buildAnalyticsUrlFromParams(dx, ou, pe, attributes, otherParams);
             String fullUrl = baseUrl + analyticsUrl;
 
@@ -167,7 +167,7 @@ public class Dhis2ClientService {
                 throw new RuntimeException("No DHIS2 config found for integratedSystem: " + systemCode);
             }
 
-            String baseUrl = dto.getProtocol() + "://" + dto.getHost();
+            String baseUrl = buildBaseUrl(dto);
             HttpHeaders headers = createAuthHeaders(dto);
 
             log.info("Using DHIS2 settings: integratedSystem={}, baseUrl={}", systemCode, baseUrl);
@@ -364,7 +364,7 @@ public class Dhis2ClientService {
                 throw new RuntimeException("No DHIS2 config found for integratedSystem: " + metadataSystemCode);
             }
 
-            String baseUrl = dto.getProtocol() + "://" + dto.getHost();
+            String baseUrl = buildBaseUrl(dto);
             HttpHeaders headers = createAuthHeaders(dto);
 
             String decodedApiUrl = decodeUrlIfNeeded(metadataApi.getApiUrl());
@@ -407,6 +407,15 @@ public class Dhis2ClientService {
     }
 
     // ============ HELPER METHODS ============
+
+    /**
+     * Builds an HTTP(S) base URL for DHIS2. Existing HTTP/HTTPS integrated systems
+     * continue to resolve to {@code http://} / {@code https://}.
+     */
+    private String buildBaseUrl(IntegratedSystemDto dto) {
+        String scheme = dto.getProtocol() != null ? dto.getProtocol().toUrlScheme() : "https";
+        return scheme + "://" + dto.getHost();
+    }
 
     private String buildFullUrl(String integratedSystem, String relativeUrl, String baseUrl) {
         if (!baseUrl.endsWith("/") && !relativeUrl.startsWith("/")) {
@@ -531,7 +540,7 @@ public class Dhis2ClientService {
                 return idToCodeMap;
             }
             
-            String baseUrl = dto.getProtocol() + "://" + dto.getHost();
+            String baseUrl = buildBaseUrl(dto);
             HttpHeaders headers = createAuthHeaders(dto);
             
             // Build filter: id:in:[id1,id2,id3]
