@@ -104,7 +104,16 @@ public interface DynamicRouteRepository
         /**
          * Finds a route by REST path and HTTP method.
          */
-        Optional<DynamicRouteEntity> findByPathAndHttpMethod(String path, String httpMethod);
+        boolean existsByPathAndHttpMethod(
+                String path,
+                String httpMethod
+        );
+
+        boolean existsByPathAndHttpMethodAndRouteIdNot(
+                String path,
+                String httpMethod,
+                String routeId
+        );
         /**
          * Finds a route by REST path, HTTP method, and active flag.
          */

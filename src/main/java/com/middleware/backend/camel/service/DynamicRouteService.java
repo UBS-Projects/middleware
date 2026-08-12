@@ -73,100 +73,336 @@ public class DynamicRouteService {
      */
 
     @Transactional
-    public String updateRoute(String yamlContent, String comment, String operation) {
+    public String updateRoute(
+            String yamlContent,
+            String comment,
+            String operation) {
+
         String routeId = null;
         Integer newVersion = null;
-        String userEmail = "anonymous"; // fallback
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = "anonymous";
+
+        Authentication auth =
+                SecurityContextHolder.getContext().getAuthentication();
+
         if (auth != null && auth.getPrincipal() != null) {
-            userEmail = auth.getName(); // Usually the `sub` claim (email/username)
+            userEmail = auth.getName();
         }
+
         try {
-            RouteValidationResult checkRouteMandatoryFields = checkRouteMandatoryFields(yamlContent);
+
+            // =========================================================
+            // 1. Validate mandatory route fields
+            // =========================================================
+
+            RouteValidationResult checkRouteMandatoryFields =
+                    checkRouteMandatoryFields(yamlContent);
+
             if (!checkRouteMandatoryFields.isValid()) {
                 return checkRouteMandatoryFields.getErrorMessage();
             }
 
-            Map<String, String> metaData = extractRouteMetadata(yamlContent);
+            // =========================================================
+            // 2. Extract route metadata
+            // =========================================================
+
+            Map<String, String> metaData =
+                    extractRouteMetadata(yamlContent);
+
             routeId = metaData.get("id");
+
             String description = metaData.get("description");
             String path = metaData.get("path");
             String method = metaData.get("method");
 
-            // Check for duplicate route (path + method) when creating a new route
-            if ("create".equalsIgnoreCase(operation) && path != null && method != null) {
-                Optional<DynamicRouteEntity> existingRoute = routeRepository.findByPathAndHttpMethod(path, method);
-                if (existingRoute.isPresent()) {
-                    String duplicateRouteId = existingRoute.get().getRouteId();
-                    String errorMsg = String.format("Duplicate route not allowed: path '%s' with method '%s' already exists in route '%s'",
-                            path, method, duplicateRouteId);
-                    audit(routeId, -1, "create-failed", errorMsg, userEmail, "FAILED");
-                    throw new RuntimeException(errorMsg);
+            // =========================================================
+            // 3. Normalize path and HTTP method
+            // =========================================================
+
+            String normalizedPath = path != null
+                    ? path.trim().toLowerCase(Locale.ROOT)
+                    : null;
+
+            String normalizedMethod = method != null
+                    ? method.trim().toUpperCase(Locale.ROOT)
+                    : null;
+
+            // =========================================================
+            // 4. Validate path + method uniqueness
+            // =========================================================
+
+            if (normalizedPath != null && normalizedMethod != null) {
+
+                // -----------------------------------------------------
+                // CREATE
+                // -----------------------------------------------------
+                //
+                // Path + method must NEVER have existed before.
+                // Active or inactive does not matter.
+                //
+                // Example:
+                //
+                // routeA | GET | /api/users | active=false
+                //
+                // Creating routeB with:
+                // GET /api/users
+                //
+                // => NOT ALLOWED
+                // -----------------------------------------------------
+
+                if ("create".equalsIgnoreCase(operation)) {
+
+                    boolean routeExists =
+                            routeRepository.existsByPathAndHttpMethod(
+                                    normalizedPath,
+                                    normalizedMethod
+                            );
+
+                    if (routeExists) {
+
+                        String errorMsg = String.format(
+                                "Duplicate route not allowed: path '%s' with method '%s' is already used",
+                                path,
+                                method
+                        );
+
+                        audit(
+                                routeId,
+                                -1,
+                                "duplicate-route",
+                                errorMsg,
+                                userEmail,
+                                "FAILED"
+                        );
+
+                        throw new RuntimeException(errorMsg);
+                    }
+                }
+
+                // -----------------------------------------------------
+                // UPDATE
+                // -----------------------------------------------------
+                //
+                // Path + method can be used if it belongs to the
+                // SAME routeId.
+                //
+                // If another routeId already uses it, reject.
+                //
+                // Active/inactive does NOT matter.
+                // -----------------------------------------------------
+
+                else if ("update".equalsIgnoreCase(operation)) {
+
+                    boolean usedByAnotherRoute =
+                            routeRepository
+                                    .existsByPathAndHttpMethodAndRouteIdNot(
+                                            normalizedPath,
+                                            normalizedMethod,
+                                            routeId
+                                    );
+
+                    if (usedByAnotherRoute) {
+
+                        String errorMsg = String.format(
+                                "Duplicate route not allowed: path '%s' with method '%s' is already used by another route",
+                                path,
+                                method
+                        );
+
+                        audit(
+                                routeId,
+                                -1,
+                                "duplicate-route",
+                                errorMsg,
+                                userEmail,
+                                "FAILED"
+                        );
+
+                        throw new RuntimeException(errorMsg);
+                    }
+                }
+
+                // -----------------------------------------------------
+                // Invalid operation
+                // -----------------------------------------------------
+
+                else {
+
+                    throw new RuntimeException(
+                            "Invalid operation: " + operation
+                    );
                 }
             }
 
-            List<DynamicRouteEntity> versions = routeRepository.findByRouteIdOrderByVersionDesc(routeId);
-            log.info("found {} versions", versions.size());
+            // =========================================================
+            // 5. Get existing versions for this route
+            // =========================================================
 
-            if (versions.isEmpty() && "update".equalsIgnoreCase(operation)) {
-                throw new RuntimeException("No versions found for this route");
-            } else if (!versions.isEmpty() && "update".equalsIgnoreCase(operation)) {
-                newVersion = versions.get(0).getVersion() + 1;
-            } else if (!versions.isEmpty() && "create".equalsIgnoreCase(operation)) {
-                throw new RuntimeException("Versions already exist for this route");
-            } else if (versions.isEmpty() && "create".equalsIgnoreCase(operation)) {
+            List<DynamicRouteEntity> versions =
+                    routeRepository
+                            .findByRouteIdOrderByVersionDesc(routeId);
+
+            log.info(
+                    "Found {} versions for route {}",
+                    versions.size(),
+                    routeId
+            );
+
+            // =========================================================
+            // 6. Determine new version
+            // =========================================================
+
+            if ("update".equalsIgnoreCase(operation)) {
+
+                // UPDATE requires an existing route
+
+                if (versions.isEmpty()) {
+
+                    throw new RuntimeException(
+                            "No versions found for route '" + routeId + "'"
+                    );
+                }
+
+                newVersion =
+                        versions.get(0).getVersion() + 1;
+
+            }
+
+            else if ("create".equalsIgnoreCase(operation)) {
+
+                // CREATE requires a completely new route
+
+                if (!versions.isEmpty()) {
+
+                    throw new RuntimeException(
+                            "Versions already exist for route '" + routeId + "'"
+                    );
+                }
+
                 newVersion = 1;
             }
 
-            // Deactivate existing versions
-            versions.forEach(v -> {
-                v.setActive(false);
-                v.setDefaultVersion(false);
+            else {
+
+                throw new RuntimeException(
+                        "Invalid operation: " + operation
+                );
+            }
+
+            // =========================================================
+            // 7. Deactivate previous versions
+            // =========================================================
+
+            versions.forEach(version -> {
+                version.setActive(false);
+                version.setDefaultVersion(false);
             });
 
-            routeRepository.saveAll(versions);
+            if (!versions.isEmpty()) {
+                routeRepository.saveAll(versions);
+            }
 
-            // Load into Camel Context
+            // =========================================================
+            // 8. Load route into Camel
+            // =========================================================
+
             loadRoute(yamlContent);
 
-            DynamicRouteEntity entity = new DynamicRouteEntity();
+            // =========================================================
+            // 9. Create new version entity
+            // =========================================================
+
+            DynamicRouteEntity entity =
+                    new DynamicRouteEntity();
+
             entity.setRouteId(routeId);
             entity.setVersion(newVersion);
+
             entity.setYamlContent(yamlContent);
+
             entity.setActive(true);
             entity.setDefaultVersion(true);
+
             entity.setDescription(description);
-            entity.setPath(path);
-            entity.setHttpMethod(method);
+
+            // Save normalized values
+            entity.setPath(normalizedPath);
+            entity.setHttpMethod(normalizedMethod);
+
             entity.setCreatedAt(LocalDateTime.now());
-            entity.setComment(comment);
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String emailUser = authentication.getName();
-            entity.setCreatedBy(emailUser);
-            entity.setCreatedAt(LocalDateTime.now());
-            entity.setUpdatedBy(emailUser);
+            entity.setCreatedBy(userEmail);
+
             entity.setUpdatedAt(LocalDateTime.now());
+            entity.setUpdatedBy(userEmail);
+
+            entity.setComment(comment);
+
             routeRepository.save(entity);
 
-            // Save RouteId Into Permissions ...
-            RoutesPermissionsRequest r = RoutesPermissionsRequest.builder()
-                    .routeId(entity.getRouteId())
-                    .build();
-            perService.save(r);
+            // =========================================================
+            // 10. Save RouteId into permissions
+            // =========================================================
 
-            log.info("Uploaded route {} version {}", routeId, newVersion);
-            audit(routeId, newVersion, "upload", comment == null ? ""
-                    : "Uploaded new version with comment: " + comment, userEmail, "SUCCESS");
+            RoutesPermissionsRequest request =
+                    RoutesPermissionsRequest.builder()
+                            .routeId(entity.getRouteId())
+                            .build();
 
-            return "Route " + routeId + " uploaded as version " + newVersion;
+            perService.save(request);
+
+            // =========================================================
+            // 11. Log success
+            // =========================================================
+
+            log.info(
+                    "Uploaded route {} version {}",
+                    routeId,
+                    newVersion
+            );
+
+            audit(
+                    routeId,
+                    newVersion,
+                    "upload",
+                    comment == null
+                            ? ""
+                            : "Uploaded new version with comment: "
+                            + comment,
+                    userEmail,
+                    "SUCCESS"
+            );
+
+            return "Route " + routeId
+                    + " uploaded as version " + newVersion;
 
         } catch (Exception ex) {
-            log.error("Failed to process route update for routeId={} version={} operation={} : {}",
-                    routeId, newVersion, operation, ex.getMessage(), ex);
-            audit(routeId, newVersion != null ? newVersion : -1, "error",
-                    "Failed to " + operation + " route. Reason: " + ex.getMessage(), userEmail,
-                    "FAILED");
-            throw ex; // rethrow to trigger transaction rollback
+
+            // =========================================================
+            // Error handling
+            // =========================================================
+
+            log.error(
+                    "Failed to process route update for routeId={} " +
+                            "version={} operation={} : {}",
+                    routeId,
+                    newVersion,
+                    operation,
+                    ex.getMessage(),
+                    ex
+            );
+
+            audit(
+                    routeId,
+                    newVersion != null ? newVersion : -1,
+                    "error",
+                    "Failed to " + operation
+                            + " route. Reason: "
+                            + ex.getMessage(),
+                    userEmail,
+                    "FAILED"
+            );
+
+            throw ex;
         }
     }
 // في DynamicRouteService.java

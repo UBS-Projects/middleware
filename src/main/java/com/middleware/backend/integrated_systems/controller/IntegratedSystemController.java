@@ -6,6 +6,7 @@ import com.middleware.backend.integrated_systems.service.IntegratedSystemService
 import com.middleware.backend.integrated_systems.spec.IntegratedSystemSpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -140,6 +141,9 @@ public class IntegratedSystemController {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (DataIntegrityViolationException e) {
+            // Double-submit / concurrent create with the same code
+            return ResponseEntity.badRequest().body("Key already exists");
         }
     }
 

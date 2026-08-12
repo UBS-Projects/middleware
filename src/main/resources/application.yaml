@@ -33,15 +33,15 @@ spring:
 #          spring.quartz.properties.org.quartz.jobStore.isClustered: false
 #          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
 #STATIC EMAIL CONFIG
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: mohammadkadoumi77@gmail.com
-    password: 71727737371
-    properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
-      from: no-reply@middleware.org
+#  mail:
+#    host: smtp.gmail.com
+#    port: 587
+#    username: email@email.com
+#    password: 71727737371
+#    properties:
+#      mail.smtp.auth: true
+#      mail.smtp.starttls.enable: true
+#      from: no-reply@middleware.org
 
 app:
   security:
