@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -58,8 +59,16 @@ public class IntegratedSystemService {
      * @param body the DTO containing details of the system to create
      * @return the created {@link IntegratedSystemDto}, or null if a system with the same code already exists
      */
+    @Transactional
     public IntegratedSystemDto create(IntegratedSystemDto body) {
         IntegratedSystemValidator.applyDefaultsAndValidate(body);
+        if (body.getCode() != null) {
+            body.setCode(body.getCode().trim());
+        }
+        if (body.getCode() == null || body.getCode().isEmpty()) {
+            throw new IllegalArgumentException("Code is required");
+        }
+
         Optional<IntegratedSystem> exists = repo.findByCode(body.getCode());
         if (exists.isPresent())
             return null;

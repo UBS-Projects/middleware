@@ -47,7 +47,7 @@ import org.apache.camel.spi.Metadata;
         firstVersion = "1.0.0",
         scheme = "config",
         title = "Config",
-        syntax = "config",
+        syntax = "config:operation",
         category = { Category.MESSAGING },
         producerOnly = true
 )

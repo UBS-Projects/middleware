@@ -32,23 +32,24 @@ spring:
         properties:
           spring.quartz.job-store-type: jdbc
           spring.quartz.jdbc.initialize-schema: always
-  #          spring.quartz.properties.org.quartz.jobStore.isClustered: false
-  #          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
-  #STATIC EMAIL CONFIG
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: mohammadkadoumi77@gmail.com
-    password: 67890
-    properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
-      from: no-reply@middleware.org
+#          spring.quartz.properties.org.quartz.jobStore.isClustered: false
+#          spring.quartz.properties.org.quartz.scheduler.instanceId: AUTO
+#STATIC EMAIL CONFIG
+#  mail:
+#    host: smtp.gmail.com
+#    port: 587
+#    username: email@email.com
+#    password: 71727737371
+#    properties:
+#      mail.smtp.auth: true
+#      mail.smtp.starttls.enable: true
+#      from: no-reply@middleware.org
 
 app:
   security:
     auth-mode: application
-
+#    keycloak
+# application
 
 # JWT SECRET
 jwt:
@@ -71,7 +72,7 @@ security:
     server-url: http://localhost:8082
     realm: middleware
     client-id: middleware-client
-    client-secret: JENrok9lo1mH5bnoYbvxhUoZWoReSYCj
+    client-secret: iXaRoUGkc0kPb2FcspkCQFiGACbMkjfp
     redirect-uri: http://localhost:8081/api/auth/keycloak/exchange
 keycloak:
   admin:
@@ -138,4 +139,3 @@ cache:
 
 #http://localhost:8081/swagger-ui/index.html
 #https://generate-uuid.com/?utm_source=chatgpt.com#
-#  kc.bat start-dev --http-port=8082 --hostname=localhost
