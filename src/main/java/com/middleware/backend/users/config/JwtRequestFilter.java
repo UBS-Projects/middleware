@@ -79,7 +79,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 String path = request.getRequestURI();
                 String method = request.getMethod();
                 AntPathMatcher matcher = new AntPathMatcher();
-                String normalizedPath = path.replaceFirst("^/camel", "");
+                String normalizedPath = path.replaceFirst("^/camel", "").toLowerCase(java.util.Locale.ROOT);
                 List<DynamicRouteEntity> dbRoutes = routeService.getActiveRoutes();
                 boolean isAdmin = userDetails.getAuthorities().stream()
                         .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
